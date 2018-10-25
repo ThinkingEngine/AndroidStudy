@@ -1,0 +1,73 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.chengsheng.cala.htcm"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        debug {
+            keyAlias "tempKey"
+            keyPassword "123456"
+            storeFile file("D:/developToolkit/Android/AndroidTestKey.jks")
+            storePassword "123456"
+        }
+
+        release {
+            keyAlias "keyCS"
+            keyPassword "123456"
+            storeFile file("D:/developToolkit/Android/key-cs-android.jks")
+            storePassword "123456"
+        }
+    }
+
+    buildTypes {
+
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    applicationVariants.all {
+        variant ->
+            variant.outputs.all {
+                output ->
+                    // def apkName = "HTCM_${buildType.name}_v${variant.versionName}_${getTime()}.apk"
+                    def apkName = "HTCM_${buildType.name}.apk"
+                    def outFile = output.outputFile
+                    if (outFile != null && outFile.name.endsWith('.apk')) {
+                        outputFileName = apkName
+                    }
+
+            }
+    }
+}
+
+def getTime() {
+    String today = new Date().format('YY-MM-DD-HH-mm')
+    return today
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.fragments.SMSCodeFragment">
+
+    <include
+        android:id="@+id/top_panel_sms"
+        layout="@layout/title_bar_type_two_layout">
+
+    </include>
+
+    <LinearLayout
+        android:id="@+id/cut_off_sms"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorCutoff"
+        android:layout_below="@id/top_panel_sms"
+        android:orientation="horizontal"></LinearLayout>
+
+    <EditText
+        android:id="@+id/get_number_sms"
+        android:layout_width="330dp"
+        android:layout_height="20dp"
+        android:background="@null"
+        android:hint="13778041212"
+        android:textColor="@color/colorText"
+        android:textSize="16sp"
+        android:layout_below="@id/cut_off_sms"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"/>
+
+    <LinearLayout
+        android:id="@+id/cut_off_get_number"
+        android:layout_width="330dp"
+        android:layout_height="0.5dp"
+        android:background="@color/colorCutoff"
+        android:layout_below="@id/get_number_sms"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp"
+        android:layout_centerHorizontal="true"></LinearLayout>
+
+
+        <EditText
+            android:id="@+id/is_ok_passwd_set"
+            android:layout_width="330dp"
+            android:layout_height="20dp"
+            android:layout_below="@id/cut_off_get_number"
+            android:background="@null"
+            android:hint="验证码"
+            android:textColor="@color/colorText"
+            android:textSize="16sp"
+            android:layout_marginTop="15dp"
+            android:layout_centerHorizontal="true"/>
+
+
+    <LinearLayout
+        android:id="@+id/cut_off_get_code"
+        android:layout_width="330dp"
+        android:layout_height="0.5dp"
+        android:background="@color/colorCutoff"
+        android:layout_below="@id/is_ok_passwd_set"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp"
+        android:layout_centerHorizontal="true"></LinearLayout>
+
+    <Button
+        android:id="@+id/complete_button"
+        android:layout_width="311dp"
+        android:layout_height="44dp"
+        android:background="@drawable/login_button_bg"
+        android:text="@string/is_ok"
+        android:textColor="@color/colorWhite"
+        android:textSize="17sp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/cut_off_get_code"
+        android:layout_marginTop="24dp"/>
+
+</RelativeLayout>

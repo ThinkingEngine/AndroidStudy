@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPageBackground"
+    tools:context=".views.activitys.MyDevicesActivity">
+
+    <include
+        android:id="@+id/title_header_my_devices"
+        layout="@layout/title_bar_type_two_layout"/>
+    <Button
+        android:id="@+id/immediate_effect_button"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:background="@drawable/title_bar_back_type_one"
+        android:text="@string/immediate_effect"
+        android:textSize="16sp"
+        android:textColor="@color/colorWhite"
+        android:layout_alignParentBottom="true"/>
+    <ImageView
+        android:id="@+id/null_device_icon"
+        android:layout_width="159dp"
+        android:layout_height="156dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/title_header_my_devices"
+        android:src="@mipmap/shebei_kong"
+        android:layout_marginTop="103dp"/>
+    <TextView
+        android:id="@+id/connect_device_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/null_device_icon"
+        android:layout_centerHorizontal="true"
+        android:text="暂无已连接设备"
+        android:textSize="14sp"
+        android:textColor="@color/colorThrText"
+        android:layout_marginTop="21dp"/>
+</RelativeLayout>

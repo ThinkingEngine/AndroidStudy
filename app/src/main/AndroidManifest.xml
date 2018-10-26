@@ -30,7 +30,13 @@
         <activity android:name=".views.activitys.SettingActivity" />
         <activity android:name=".views.activitys.FAQActivity" />
         <activity android:name=".views.activitys.MyDevicesActivity" />
-        <activity android:name=".views.activitys.AccountSettingActivity"></activity>
+        <activity android:name=".views.activitys.AccountSettingActivity" />
+        <activity android:name=".views.activitys.MessageActivity" />
+        <activity android:name=".views.activitys.SecuritySettingsActivity" />
+        <activity android:name=".views.activitys.CommonUseActivity" />
+        <activity android:name=".views.activitys.FeedbackActivity" />
+        <activity android:name=".views.activitys.AboutActivity" />
+        <activity android:name=".views.activitys.GesturesUnlockActivity"></activity>
     </application>
 
 </manifest>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPageBackground"
+    android:orientation="vertical"
+    tools:context=".views.activitys.MessageActivity">
+
+    <include
+        android:id="@+id/message_title_header"
+        layout="@layout/message_header_layout"/>
+    <FrameLayout
+        android:id="@+id/service_notification_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></FrameLayout>
+
+</LinearLayout>

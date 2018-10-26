@@ -37,5 +37,16 @@
     <string name="header_icon">头像</string>
     <string name="login_password">登录密码</string>
     <string name="nickname">昵称</string>
+    <string name="gestures_unlock">手势解锁</string>
+    <string name="not_setting">未设置</string>
+    <string name="push_notification">推送通知</string>
+    <string name="clear_cache">清除缓存</string>
+    <string name="contact_info">联系方式</string>
+    <string name="commit">提交</string>
+    <string name="htcm">成都中医大健康管理中心</string>
+    <string name="check_update">检查更新</string>
+    <string name="protocol_explain">协议与说明</string>
+    <string name="setting_gestures_code">设置手势密码</string>
+    <string name="immediately_certification">立即认证</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

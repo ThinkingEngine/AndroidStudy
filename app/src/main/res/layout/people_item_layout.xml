@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPageBackground">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/people_icon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@mipmap/touxiang"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="24dp"/>
+
+        <TextView
+            android:id="@+id/people_name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="李凯旋"
+            android:textSize="20sp"
+            android:textColor="@color/colorBlackText"
+            android:layout_toRightOf="@id/people_icon"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="10dp"/>
+
+        <Button
+            android:id="@+id/people_mark"
+            android:layout_width="36dp"
+            android:layout_height="16dp"
+            android:background="@drawable/orange_button_bg"
+            android:text="丈夫"
+            android:textColor="@color/colorWhite"
+            android:textSize="10sp"
+            android:layout_toRightOf="@id/people_name_text"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="36dp"/>
+        
+        <Button
+            android:id="@+id/immediately_certification_button"
+            android:layout_width="72dp"
+            android:layout_height="28dp"
+            android:background="@drawable/code_button_bg"
+            android:text="@string/immediately_certification"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="14dp"/>
+
+    </RelativeLayout>
+</FrameLayout>

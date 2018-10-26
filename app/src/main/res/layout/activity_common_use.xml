@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPageBackground"
+    android:orientation="vertical"
+    tools:context=".views.activitys.CommonUseActivity">
+
+    <include
+        android:id="@+id/title_header_common_use"
+        layout="@layout/title_bar_type_two_layout"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="11dp"
+        android:background="@color/colorWhite">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/push_notification"
+            android:textSize="16sp"
+            android:textColor="@color/colorText"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="14dp"/>
+       <com.suke.widget.SwitchButton
+           android:id="@+id/is_need_push_notification"
+           android:layout_width="43dp"
+           android:layout_height="23dp"
+           android:layout_centerVertical="true"
+           android:layout_alignParentRight="true"
+           android:layout_marginRight="14dp"
+           app:sb_background="@color/colorPrimary"
+           app:sb_uncheckcircle_radius="0dp"
+           app:sb_checked="false"
+           app:sb_button_color="@color/colorWhite"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:orientation="vertical"
+            android:background="@color/colorCutoff"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="14dp"></LinearLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/colorWhite">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/clear_cache"
+            android:textSize="16sp"
+            android:textColor="@color/colorText"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="14dp"/>
+        <ImageView
+            android:id="@+id/into_clear_cache"
+            android:layout_width="6dp"
+            android:layout_height="12dp"
+            android:src="@mipmap/liebiaojinru"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"/>
+
+        <TextView
+            android:id="@+id/current_cache_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50.0M"
+            android:textColor="@color/colorThrText"
+            android:textSize="14sp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/into_clear_cache"
+            android:layout_marginRight="10dp"/>
+    </RelativeLayout>
+</LinearLayout>

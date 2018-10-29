@@ -49,4 +49,15 @@ public class FuncUtils {
 
         return  myContext.getSharedPreferences("config",myContext.MODE_PRIVATE);
     }
+
+    public static int px2dip(Context context,int px){
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (px/scale + 0.5f);
+    }
+
+    public static int dip2px(int dp){
+        final float density = myContext.getResources().getDisplayMetrics().density;
+
+        return (int) (dp*density+0.5);
+    }
 }

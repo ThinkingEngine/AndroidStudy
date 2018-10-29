@@ -13,12 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.views.adapters.FMRecyclerAdapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class HealthFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
@@ -71,7 +74,7 @@ public class HealthFragment extends Fragment {
         }
 
         peopleRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        final FMRecyclerAdapter fmRecyclerAdapter = new FMRecyclerAdapter(getContext(),data);
+        final FMRecyclerAdapter fmRecyclerAdapter = new FMRecyclerAdapter(getContext(),tempDatas());
         peopleRecycler.setAdapter(fmRecyclerAdapter);
 
         freahPeopleRecycler.setColorSchemeColors(Color.BLUE);
@@ -79,7 +82,8 @@ public class HealthFragment extends Fragment {
         freahPeopleRecycler.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                data.add("new");
+//                data.add("new");
+                Toast.makeText(getContext(),"下拉刷新--",Toast.LENGTH_SHORT).show();
                 fmRecyclerAdapter.notifyDataSetChanged();
                 freahPeopleRecycler.setRefreshing(false);
             }
@@ -114,5 +118,31 @@ public class HealthFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    //临时测试数据(完成测试后删除)
+    private List<Map<String,String>> tempDatas(){
+        List<Map<String,String>> datas = new ArrayList<>();
+        Map<String,String> user_a = new HashMap<>();
+        Map<String,String> user_b = new HashMap<>();
+        Map<String,String> user_c = new HashMap<>();
+        user_a.put("NAME","王树彤");
+        user_a.put("MARK","本人");
+        user_a.put("USER_ID","511 623 000 66");
+        user_a.put("VERIFY","TRUE");
+
+        user_b.put("NAME","王树同");
+        user_b.put("MARK","女儿");
+        user_b.put("USER_ID","511 623 000 66");
+        user_b.put("VERIFY","TRUE");
+
+        user_c.put("NAME","李凯旋");
+        user_c.put("MARK","丈夫");
+        user_c.put("VERIFY","FALSE");
+
+        datas.add(user_a);
+        datas.add(user_b);
+        datas.add(user_c);
+        return datas;
     }
 }

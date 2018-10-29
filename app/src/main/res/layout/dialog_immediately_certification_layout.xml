@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="298dp"
+        android:layout_height="478dp"
+        android:background="@mipmap/renzhegnkuang_zhankai">
+        <TextView
+            android:id="@+id/certification_mark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="131dp"
+            android:text="@string/immediately_certification"
+            android:textSize="20sp"
+            android:textColor="@color/colorWhite"/>
+
+        <EditText
+            android:id="@+id/input_box_certification"
+            android:layout_width="200dp"
+            android:layout_height="36dp"
+            android:background="@drawable/input_certification_box_bg"
+            android:layout_marginTop="165dp"
+            android:layout_centerHorizontal="true"
+            android:hint="请输入验证码"
+            android:textColor="@color/colorSecText"
+            android:textSize="16sp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/certification_text"
+            android:layout_width="258dp"
+            android:layout_height="147dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/input_box_certification"
+            android:layout_marginTop="44dp"
+            android:textSize="14sp"/>
+
+        <Button
+            android:id="@+id/cancel_certification_button"
+            android:layout_width="120dp"
+            android:layout_height="36dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/certification_text"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/code_button_bg"
+            android:text="暂不认证"
+            android:textSize="16sp"
+            android:textColor="@color/colorPrimary"/>
+        <Button
+            android:id="@+id/certification_button"
+            android:layout_width="120dp"
+            android:layout_height="36dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/certification_text"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/login_button_bg"
+            android:text="认证"
+            android:textSize="16sp"
+            android:textColor="@color/colorWhite"/>
+    </RelativeLayout>
+</RelativeLayout>

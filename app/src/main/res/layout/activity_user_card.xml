@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPageBackground"
+    tools:context=".views.activitys.UserCardActivity">
+
+    <ImageView
+        android:id="@+id/close_user_card_button"
+        android:layout_width="19dp"
+        android:layout_height="19dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="33dp"
+        android:layout_marginRight="20dp"
+        android:src="@mipmap/gaobaoguanbi"/>
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/user_header_card"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="88dp"
+        android:src="@mipmap/touxiang"/>
+
+    <TextView
+        android:id="@+id/user_name_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/user_header_card"
+        android:layout_marginTop="12dp"
+        android:textSize="28sp"
+        android:textColor="@color/colorText"
+        android:text="王树彤"/>
+
+    <ImageView
+        android:id="@+id/user_qr_card"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/user_name_card"
+        android:layout_marginTop="40dp"
+        android:src="@mipmap/zhineng_erwema"/>
+
+    <TextView
+        android:id="@+id/speical_mark_a"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/user_qr_card"
+        android:layout_marginTop="60dp"
+        android:textColor="@color/colorSecText"
+        android:textSize="16sp"
+        android:text="@string/htcm_center"/>
+    
+    <TextView
+        android:id="@+id/user_id_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/speical_mark_a"
+        android:layout_marginTop="8dp"
+        android:textSize="24sp"
+        android:textColor="@color/colorText"
+        android:text="511 623 000 08"/>
+</RelativeLayout>

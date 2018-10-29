@@ -48,5 +48,6 @@
     <string name="protocol_explain">协议与说明</string>
     <string name="setting_gestures_code">设置手势密码</string>
     <string name="immediately_certification">立即认证</string>
+    <string name="htcm_center">成都中医大健康体检中心</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

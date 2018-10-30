@@ -1,6 +1,7 @@
 package com.chengsheng.cala.htcm.views.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.views.activitys.FamilyManageActivity;
 import com.chengsheng.cala.htcm.views.adapters.FMRecyclerAdapter;
 
 import java.util.ArrayList;
@@ -67,6 +69,14 @@ public class HealthFragment extends Fragment {
         title.setText("健康");
         imageView.setVisibility(View.INVISIBLE);
         childTitle.setText("家人管理");
+
+        childTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(),FamilyManageActivity.class);
+                startActivity(intent);
+            }
+        });
 
         final List<String> data = new ArrayList<>();
         for(int i = 0;i < 5;i++){

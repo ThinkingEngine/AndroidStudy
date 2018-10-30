@@ -1,48 +1,37 @@
 package com.chengsheng.cala.htcm.views.fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.views.adapters.FamiliesItemRecyclerAdapter;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link FamilyListFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link FamilyListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class FamilyListFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    private OnFamilyListInteractionListener mListener;
 
     public FamilyListFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FamilyListFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static FamilyListFragment newInstance(String param1, String param2) {
         FamilyListFragment fragment = new FamilyListFragment();
         Bundle args = new Bundle();
@@ -64,22 +53,39 @@ public class FamilyListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_family_list, container, false);
+        View rootViews = inflater.inflate(R.layout.fragment_family_list, container, false);
+
+        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) rootViews.findViewById(R.id.fresh_family_recycler);
+        RecyclerView recyclerView = (RecyclerView) rootViews.findViewById(R.id.families_recycler);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        final FamiliesItemRecyclerAdapter familiesItemRecyclerAdapter = new FamiliesItemRecyclerAdapter(getContext(),tempDatas());
+        recyclerView.setAdapter(familiesItemRecyclerAdapter);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+//                data.add("new");
+                Toast.makeText(getContext(),"下拉刷新--",Toast.LENGTH_SHORT).show();
+                familiesItemRecyclerAdapter.notifyDataSetChanged();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
+        return rootViews;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+    public void onButtonPressed(Bundle data) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onFamilyListInteraction(data);
         }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnFamilyListInteractionListener) {
+            mListener = (OnFamilyListInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -92,18 +98,36 @@ public class FamilyListFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
+    public interface OnFamilyListInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFamilyListInteraction(Bundle data);
+    }
+    //临时测试数据（测试完成后删除）
+    private List<Map<String,String>> tempDatas(){
+        List<Map<String,String>> datas = new ArrayList<>();
+        Map<String,String> a = new HashMap<>();
+        Map<String,String> b = new HashMap<>();
+        Map<String,String> c = new HashMap<>();
+        a.put("FAMILIES_NAME","王树彤");
+        a.put("FAMILIES_MARK","本人");
+        a.put("FAMILIES_TEL","199****7068");
+        a.put("FAMILIES_ID","51061419980808****");
+        a.put("AUTHENTICATION","true");
+        b.put("FAMILIES_NAME","王洛已");
+        b.put("FAMILIES_MARK","女儿");
+        b.put("FAMILIES_TEL","199****7068");
+        b.put("FAMILIES_ID","51061419808****");
+        b.put("AUTHENTICATION","true");
+        c.put("FAMILIES_NAME","李凯旋");
+        c.put("FAMILIES_MARK","丈夫");
+        c.put("FAMILIES_TEL","199****7068");
+        c.put("FAMILIES_ID","51061419808****");
+        c.put("AUTHENTICATION","false");
+
+        datas.add(a);
+        datas.add(b);
+        datas.add(c);
+
+        return datas;
     }
 }

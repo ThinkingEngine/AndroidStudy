@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    <RelativeLayout
+        android:id="@+id/families_item"
+        android:layout_width="match_parent"
+        android:layout_height="116dp"
+        android:background="@drawable/fmailies_item_bg"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/families_header_icon"
+            android:layout_width="66dp"
+            android:layout_height="66dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp"
+            android:src="@mipmap/touxiang"/>
+
+        <TextView
+            android:id="@+id/families_name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="王树彤"
+            android:textColor="@color/colorText"
+            android:textSize="20dp"
+            android:layout_toRightOf="@id/families_header_icon"
+            android:layout_marginTop="23dp"
+            android:layout_marginLeft="10dp"/>
+
+        <TextView
+            android:id="@+id/families_tel_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="199****7068"
+            android:textSize="14sp"
+            android:textColor="@color/colorSecText"
+            android:layout_toRightOf="@id/families_header_icon"
+            android:layout_below="@id/families_name_text"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="10dp"/>
+        
+        <Button
+            android:id="@+id/families_mark"
+            android:layout_width="36dp"
+            android:layout_height="16dp"
+            android:text="本人"
+            android:textColor="@color/colorWhite"
+            android:textSize="10sp"
+            android:background="@drawable/orange_button_bg"
+            android:layout_toRightOf="@id/families_name_text"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="6dp"/>
+
+        <TextView
+            android:id="@+id/families_id_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="51061419980808****"
+            android:textSize="14sp"
+            android:textColor="@color/colorSecText"
+            android:layout_below="@id/families_tel_text"
+            android:layout_toRightOf="@id/families_header_icon"
+            android:layout_marginLeft="10dp"/>
+        
+        <ImageView
+            android:id="@+id/families_qr"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:src="@mipmap/erweima"/>
+        
+        <Button
+            android:id="@+id/families_certification_button"
+            android:layout_width="70dp"
+            android:layout_height="28dp"
+            android:background="@drawable/login_button_bg"
+            android:text="@string/immediately_certification"
+            android:textColor="@color/colorWhite"
+            android:textSize="12sp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"/>
+
+        <TextView
+            android:id="@+id/certification_note_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/families_header_icon"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:text="请前往机构获取认证码进行认证"
+            android:textSize="10sp"
+            android:textColor="@color/colorThrText"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

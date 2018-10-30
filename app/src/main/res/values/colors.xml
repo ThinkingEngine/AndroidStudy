@@ -15,4 +15,5 @@
     <color name="colorBlackText">#0a0a0a</color>
     <color name="colorOrange">#ffbb4c</color>
     <color name="colorForText">#4a4a4a</color>
+    <color name="colorBlackTextB">#151515</color>
 </resources>

@@ -38,7 +38,8 @@
         <activity android:name=".views.activitys.AboutActivity" />
         <activity android:name=".views.activitys.GesturesUnlockActivity" />
         <activity android:name=".views.activitys.UserCardActivity" />
-        <activity android:name=".views.activitys.FamilyManageActivity"></activity>
+        <activity android:name=".views.activitys.FamilyManageActivity" />
+        <activity android:name=".views.activitys.FamiliesDetailsActivity"></activity>
     </application>
 
 </manifest>

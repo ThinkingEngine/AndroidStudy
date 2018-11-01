@@ -40,7 +40,9 @@
         <activity android:name=".views.activitys.UserCardActivity" />
         <activity android:name=".views.activitys.FamilyManageActivity" />
         <activity android:name=".views.activitys.FamiliesDetailsActivity" />
-        <activity android:name=".views.activitys.ExamAppointmentActivity"></activity>
+        <activity android:name=".views.activitys.ExamAppointmentActivity" />
+        <activity android:name=".views.activitys.AIAssistantActivity" />
+        <activity android:name=".views.activitys.MyExamActivity"></activity>
     </application>
 
 </manifest>

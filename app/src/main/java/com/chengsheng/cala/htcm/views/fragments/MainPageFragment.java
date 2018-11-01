@@ -16,10 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.views.activitys.AIAssistantActivity;
 import com.chengsheng.cala.htcm.views.activitys.ExamAppointmentActivity;
+import com.chengsheng.cala.htcm.views.activitys.MyExamActivity;
 import com.chengsheng.cala.htcm.views.adapters.AIAssistantRecyclerAdapter;
 import com.chengsheng.cala.htcm.views.adapters.BannerAdapter;
 import com.chengsheng.cala.htcm.views.adapters.NewsRecyclerAdapter;
@@ -46,6 +49,8 @@ public class MainPageFragment extends Fragment {
     private RecyclerView appointmentRecyclerView,newsRecyclerView;
     private SwipeRefreshLayout refreshPage;
     private ImageView appointmentExamMark;
+    private ImageView myExamMark;
+    private RelativeLayout aiAssistant;
 
     private int[] newsImages = new int[]{R.mipmap.tuijianzixun_imga,R.mipmap.tuijianzixun_imgb,R.mipmap.tuijianzixun_imgc,R.mipmap.tuijianzixun_imgd};
 
@@ -83,6 +88,8 @@ public class MainPageFragment extends Fragment {
         newsRecyclerView = rootView.findViewById(R.id.recommend_news_recycler_view);
         refreshPage = rootView.findViewById(R.id.refresh_main_page);
         appointmentExamMark = rootView.findViewById(R.id.appointment_exam_mark);
+        myExamMark = rootView.findViewById(R.id.my_exam_mark);
+        aiAssistant = rootView.findViewById(R.id.ai_assistant);
 
         List<Map<String,String>> datas = tempNewsDatas();
         AIAssistantRecyclerAdapter appointment = new AIAssistantRecyclerAdapter(getContext());
@@ -95,8 +102,25 @@ public class MainPageFragment extends Fragment {
 
         appointmentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         appointmentRecyclerView.setAdapter(appointment);
+        appointmentRecyclerView.setNestedScrollingEnabled(false);
         newsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         newsRecyclerView.setAdapter(newsAppointment);
+        newsRecyclerView.setNestedScrollingEnabled(false);
+
+        aiAssistant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(),AIAssistantActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
+        myExamMark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(),MyExamActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
 
         refreshPage.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

@@ -14,30 +14,22 @@
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:layout_alignParentTop="true"/>
-    <RelativeLayout
-        android:id="@+id/rl1"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#aa00ff00"
-        android:visibility="gone"
-        android:layout_below="@id/title_header_exam_appointment">
-        <TextView
-            android:textSize="20sp"
-            android:textColor="#ffffff"
-            android:gravity="center"
-            android:text="滑动到顶部悬浮"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </RelativeLayout>
 
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_exam_appointment_page"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_header_exam_appointment">
     <com.chengsheng.cala.htcm.views.customviews.HeaderScrollView
         android:id="@+id/scroll_view_header"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:focusableInTouchMode="true"
         android:layout_below="@id/title_header_exam_appointment">
         <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:descendantFocusability="blocksDescendants"
         android:orientation="vertical">
         <ImageView
             android:layout_width="match_parent"
@@ -48,27 +40,26 @@
         <RelativeLayout
             android:id="@+id/rl2"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="#66ff0000">
-            <TextView
-                android:textSize="20sp"
-                android:textColor="#ffffff"
-                android:gravity="center"
-                android:text="滑动到顶部悬浮"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+            android:layout_height="50dp">
+           <include layout="@layout/exam_info_filtration_colum_layout"/>
         </RelativeLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/exam_appointment_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="800dp">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/exam_appointment_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </android.support.v7.widget.RecyclerView>
-
+                </android.support.v7.widget.RecyclerView>
     </LinearLayout>
 
     </com.chengsheng.cala.htcm.views.customviews.HeaderScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
-
+    <RelativeLayout
+        android:id="@+id/rl1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:visibility="gone"
+        android:layout_below="@id/title_header_exam_appointment">
+        <include layout="@layout/exam_info_filtration_colum_layout"/>
+    </RelativeLayout>
 </RelativeLayout>

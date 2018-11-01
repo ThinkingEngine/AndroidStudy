@@ -14,7 +14,7 @@ public class HeaderScrollView extends ScrollView {
 
     public HeaderScrollView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        upH = dp2px(200);
+        upH = dp2px(127);
     }
 
     public HeaderScrollView(Context context, AttributeSet attrs, int defStyleAttr) {

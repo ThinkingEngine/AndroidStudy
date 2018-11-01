@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="44dp">
+
+    <ImageView
+        android:layout_width="63dp"
+        android:layout_height="22dp"
+        android:layout_centerInParent="true"
+        android:src="@mipmap/logo"/>
+    
+    <ImageView
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/xiaoxi"
+        android:layout_marginRight="14dp"/>
+
+</RelativeLayout>

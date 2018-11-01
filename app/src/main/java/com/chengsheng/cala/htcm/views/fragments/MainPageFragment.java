@@ -1,48 +1,59 @@
 package com.chengsheng.cala.htcm.views.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.views.activitys.ExamAppointmentActivity;
+import com.chengsheng.cala.htcm.views.adapters.AIAssistantRecyclerAdapter;
+import com.chengsheng.cala.htcm.views.adapters.BannerAdapter;
+import com.chengsheng.cala.htcm.views.adapters.NewsRecyclerAdapter;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link MainPageFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link MainPageFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class MainPageFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
+    int[] images = new int[]{R.mipmap.bannera,R.mipmap.bannerb,R.mipmap.bannerc};
+    Handler mHandler = new Handler();
+
+    private ViewPager bodyBanner;
+    private RecyclerView appointmentRecyclerView,newsRecyclerView;
+    private SwipeRefreshLayout refreshPage;
+    private ImageView appointmentExamMark;
+
+    private int[] newsImages = new int[]{R.mipmap.tuijianzixun_imga,R.mipmap.tuijianzixun_imgb,R.mipmap.tuijianzixun_imgc,R.mipmap.tuijianzixun_imgd};
+
     public MainPageFragment() {
-        // Required empty public constructor
+
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MainPageFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static MainPageFragment newInstance(String param1, String param2) {
         MainPageFragment fragment = new MainPageFragment();
         Bundle args = new Bundle();
@@ -64,8 +75,48 @@ public class MainPageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main_page, container, false);
+
+        View rootView = inflater.inflate(R.layout.fragment_main_page, container, false);
+
+        bodyBanner = rootView.findViewById(R.id.banner_a);
+        appointmentRecyclerView = rootView.findViewById(R.id.appointment_recycler_view);
+        newsRecyclerView = rootView.findViewById(R.id.recommend_news_recycler_view);
+        refreshPage = rootView.findViewById(R.id.refresh_main_page);
+        appointmentExamMark = rootView.findViewById(R.id.appointment_exam_mark);
+
+        List<Map<String,String>> datas = tempNewsDatas();
+        AIAssistantRecyclerAdapter appointment = new AIAssistantRecyclerAdapter(getContext());
+        NewsRecyclerAdapter newsAppointment = new NewsRecyclerAdapter(getContext(),datas);
+
+        List<ImageView> data = new ArrayList<>();
+
+        BannerAdapter bannerAdapter = new BannerAdapter(getContext(),data);
+        bodyBanner.setAdapter(bannerAdapter);
+
+        appointmentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        appointmentRecyclerView.setAdapter(appointment);
+        newsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        newsRecyclerView.setAdapter(newsAppointment);
+
+        refreshPage.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+//                data.add("new");
+                Toast.makeText(getContext(),"下拉刷新--",Toast.LENGTH_SHORT).show();
+//                appointment.notifyDataSetChanged();
+                refreshPage.setRefreshing(false);
+            }
+        });
+
+        appointmentExamMark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(),ExamAppointmentActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -92,18 +143,23 @@ public class MainPageFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+    private List<Map<String,String>> tempNewsDatas(){
+        List<Map<String,String>> result = new ArrayList<>();
+        for(int i = 0;i < newsImages.length;i++){
+            Map<String,String> data = new HashMap<>();
+            data.put("ICON",String.valueOf(newsImages[i]));
+            data.put("TITLE","新闻:"+i);
+            data.put("BROWSE",String.valueOf(i*1000));
+            result.add(data);
+        }
+
+        return result;
+    }
+
 }

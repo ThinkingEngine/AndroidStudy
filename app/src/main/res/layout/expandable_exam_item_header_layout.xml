@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/has_bottom_line_item_bg">
+
+        <ImageView
+            android:id="@+id/exam_item_image_mark"
+            android:layout_width="22dp"
+            android:layout_height="23dp"
+            android:src="@mipmap/xin"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="14dp"/>
+        <TextView
+            android:id="@+id/exam_item_name_expandable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="普通检查"
+            android:textSize="16sp"
+            android:textColor="@color/colorText"
+            android:layout_toRightOf="@id/exam_item_image_mark"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"/>
+        <TextView
+            android:id="@+id/exam_item_stats_expandable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已检"
+            android:textSize="14sp"
+            android:textColor="@color/colorSecText"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="8dp"/>
+    </RelativeLayout>
+
+</LinearLayout>

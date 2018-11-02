@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="262dp"
+        android:background="@color/colorWhite">
+
+        <ImageView
+            android:id="@+id/main_page_image"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:src="@mipmap/taocanxiangqing"
+            android:layout_alignParentTop="true"/>
+        <TextView
+            android:id="@+id/combo_name_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/main_page_image"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="14dp"
+            android:text="老年健康体检套餐"
+            android:textSize="18sp"
+            android:textColor="@color/colorText"/>
+        <ImageView
+            android:id="@+id/combo_hot_mark"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:layout_toRightOf="@id/combo_name_detail"
+            android:src="@mipmap/hot"
+            android:layout_below="@id/main_page_image"
+            android:layout_marginTop="24dp"
+            android:layout_marginLeft="8dp"/>
+        <GridView
+            android:id="@+id/combo_marks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numColumns="6"
+            android:layout_below="@id/combo_name_detail"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="105dp"></GridView>
+        <TextView
+            android:id="@+id/combo_has_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="118人已检"
+            android:textSize="12sp"
+            android:textColor="@color/colorSecText"
+            android:layout_below="@id/combo_marks"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/combo_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¥2888.00"
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/main_page_image"
+            android:layout_marginTop="31dp"
+            android:layout_marginRight="13dp"/>
+    </RelativeLayout>
+
+</FrameLayout>

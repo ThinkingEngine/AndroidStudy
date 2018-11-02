@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@color/colorWhite"
+        android:layout_marginTop="1dp">
+
+        <ImageView
+            android:id="@+id/appointment_icon"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"/>
+        <TextView
+            android:id="@+id/appointment_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="老年健康体检套餐（男）"
+            android:textSize="18sp"
+            android:textColor="@color/colorText"
+            android:layout_toRightOf="@id/appointment_icon"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="15dp"/>
+        <TextView
+            android:id="@+id/group_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="体检机构：成都市中医药大学附属医院"
+            android:textSize="14sp"
+            android:textColor="@color/colorSecText"
+            android:layout_toRightOf="@id/appointment_icon"
+            android:layout_below="@id/appointment_name"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"/>
+        <TextView
+            android:id="@+id/appointment_total_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¥ 2888.00"
+            android:textSize="14sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_toRightOf="@id/appointment_icon"
+            android:layout_below="@id/group_name"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"/>
+    </RelativeLayout>
+
+</FrameLayout>

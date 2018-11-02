@@ -1,6 +1,7 @@
 package com.chengsheng.cala.htcm.views.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.views.activitys.ExamDetailsActivity;
 
 import java.util.List;
 import java.util.Map;
@@ -35,8 +37,14 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AssistantViewHolder viewHolder, int i) {
-
+    public void onBindViewHolder(@NonNull AssistantViewHolder viewHolder, final int i) {
+        viewHolder.aiAssistantItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,ExamDetailsActivity.class);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

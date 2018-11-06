@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.views.activitys.AIAssistantActivity;
 import com.chengsheng.cala.htcm.views.activitys.ExamAppointmentActivity;
+import com.chengsheng.cala.htcm.views.activitys.ExamReportActivity;
 import com.chengsheng.cala.htcm.views.activitys.MyExamActivity;
 import com.chengsheng.cala.htcm.views.adapters.AIAssistantRecyclerAdapter;
 import com.chengsheng.cala.htcm.views.adapters.BannerAdapter;
@@ -50,6 +51,7 @@ public class MainPageFragment extends Fragment {
     private SwipeRefreshLayout refreshPage;
     private ImageView appointmentExamMark;
     private ImageView myExamMark;
+    private ImageView examEeportMark;
     private RelativeLayout aiAssistant;
 
     private int[] newsImages = new int[]{R.mipmap.tuijianzixun_imga,R.mipmap.tuijianzixun_imgb,R.mipmap.tuijianzixun_imgc,R.mipmap.tuijianzixun_imgd};
@@ -90,6 +92,7 @@ public class MainPageFragment extends Fragment {
         appointmentExamMark = rootView.findViewById(R.id.appointment_exam_mark);
         myExamMark = rootView.findViewById(R.id.my_exam_mark);
         aiAssistant = rootView.findViewById(R.id.ai_assistant);
+        examEeportMark = rootView.findViewById(R.id.exam_report_mark);
 
         List<Map<String,String>> datas = tempNewsDatas();
         AIAssistantRecyclerAdapter appointment = new AIAssistantRecyclerAdapter(getContext());
@@ -118,6 +121,13 @@ public class MainPageFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(),MyExamActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
+        examEeportMark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(),ExamReportActivity.class);
                 getContext().startActivity(intent);
             }
         });

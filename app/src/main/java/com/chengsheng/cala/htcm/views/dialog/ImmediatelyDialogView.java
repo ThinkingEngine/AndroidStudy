@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.chengsheng.cala.htcm.R;
 
 public class ImmediatelyDialogView extends Dialog {
+
     public ImmediatelyDialogView(Context context) {
         super(context);
     }
@@ -26,7 +27,7 @@ public class ImmediatelyDialogView extends Dialog {
         super(context, themeResId);
     }
 
-    protected ImmediatelyDialogView(Context context, boolean cancelable,DialogInterface.OnCancelListener cancelListener) {
+    protected ImmediatelyDialogView(Context context, boolean cancelable, DialogInterface.OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
     }
 
@@ -34,7 +35,7 @@ public class ImmediatelyDialogView extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        View rootView = inflater.inflate(R.layout.dialog_immediately_certification_layout,null);
+        View rootView = inflater.inflate(R.layout.dialog_immediately_certification_layout, null);
         setContentView(rootView);
 
         TextView certificationText = (TextView) rootView.findViewById(R.id.certification_text);
@@ -43,12 +44,12 @@ public class ImmediatelyDialogView extends Dialog {
 
 
         String str_start = "\"认证码\"是本软件中将体检人和体检数据相互关联的唯一标识码，需要体检人到体检机构进行认证以后获得。" +
-                           "为了保护体检人的健康隐私，只有在体检人成功认证后，用户才可以查看其体检数据。若您还未取得“认证码”，" +
-                           "请前往体检登记处或拨打客服电话";
+                "为了保护体检人的健康隐私，只有在体检人成功认证后，用户才可以查看其体检数据。若您还未取得“认证码”，" +
+                "请前往体检登记处或拨打客服电话";
         String str_tagert = "028-7654321";
-        TelClickableSpan telClickableSpan = new TelClickableSpan(str_tagert,getContext());
+        TelClickableSpan telClickableSpan = new TelClickableSpan(str_tagert, getContext());
         SpannableString spannTagert = new SpannableString(str_tagert);
-        spannTagert.setSpan(telClickableSpan,0,str_tagert.length(),Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        spannTagert.setSpan(telClickableSpan, 0, str_tagert.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         certificationText.setText(str_start);
         certificationText.append(spannTagert);
         certificationText.append("进行咨询。");
@@ -71,11 +72,11 @@ public class ImmediatelyDialogView extends Dialog {
         setCancelable(true);
     }
 
-    class TelClickableSpan extends ClickableSpan{
+    class TelClickableSpan extends ClickableSpan {
         private String str;
         private Context context;
 
-        public TelClickableSpan(String str,Context context){
+        public TelClickableSpan(String str, Context context) {
             super();
             this.context = context;
             this.str = str;
@@ -83,13 +84,13 @@ public class ImmediatelyDialogView extends Dialog {
 
         @Override
         public void updateDrawState(TextPaint ds) {
-           ds.setColor(context.getResources().getColor(R.color.colorPrimary));
+            ds.setColor(context.getResources().getColor(R.color.colorPrimary));
         }
 
         @Override
         public void onClick(View widget) {
 
-            Toast.makeText(context,"点击测试",Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "点击测试", Toast.LENGTH_SHORT).show();
 
         }
     }

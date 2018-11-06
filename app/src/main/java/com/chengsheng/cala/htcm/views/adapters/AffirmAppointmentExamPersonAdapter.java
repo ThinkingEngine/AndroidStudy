@@ -1,17 +1,21 @@
 package com.chengsheng.cala.htcm.views.adapters;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chengsheng.cala.htcm.R;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +23,8 @@ public class AffirmAppointmentExamPersonAdapter extends RecyclerView.Adapter<Aff
 
     private Context context;
     private List<Map<String,String>> datas;
+
+    private Calendar calendar;
 
     public AffirmAppointmentExamPersonAdapter(Context context){
         this.context = context;
@@ -33,7 +39,13 @@ public class AffirmAppointmentExamPersonAdapter extends RecyclerView.Adapter<Aff
 
     @Override
     public void onBindViewHolder(@NonNull ExamPersonAdapter viewHolder, int i) {
+        viewHolder.checkExamDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDate();
 
+            }
+        });
     }
 
     @Override
@@ -62,5 +74,18 @@ public class AffirmAppointmentExamPersonAdapter extends RecyclerView.Adapter<Aff
             examPersonTel = itemView.findViewById(R.id.exam_person_tel);
             checkExamDate = itemView.findViewById(R.id.check_exam_date);
         }
+    }
+
+    private void getDate(){
+        if(calendar == null){
+            calendar = Calendar.getInstance();
+        }
+
+        new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                Toast.makeText(context,"您选择了：" + year + "年" + (month+1)+ "月" + dayOfMonth + "日",Toast.LENGTH_SHORT).show();
+            }
+        },calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 }

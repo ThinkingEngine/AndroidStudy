@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:background="@drawable/has_bottom_line_item_bg">
+        <TextView
+            android:id="@+id/exam_report_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2017-02-09"
+            android:textSize="18sp"
+            android:textColor="@color/colorText"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="14dp"/>
+        <TextView
+            android:id="@+id/exam_report_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="承晟集团入职体检"
+            android:textSize="14sp"
+            android:textColor="@color/colorSecText"
+            android:layout_below="@id/exam_report_date"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="4dp"/>
+        <TextView
+            android:id="@+id/exam_report_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="报告编号：R180416000018"
+            android:textSize="12sp"
+            android:textColor="@color/colorThrText"
+            android:layout_below="@id/exam_report_title"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="4dp"/>
+        
+        <ImageView
+            android:id="@+id/report_detail"
+            android:layout_width="8dp"
+            android:layout_height="16dp"
+            android:src="@mipmap/liebiaojinru"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="21dp"/>
+        <ImageView
+            android:id="@+id/report_radio"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/selecter_radio_button_bg"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="21dp"/>
+
+    </RelativeLayout>
+</FrameLayout>

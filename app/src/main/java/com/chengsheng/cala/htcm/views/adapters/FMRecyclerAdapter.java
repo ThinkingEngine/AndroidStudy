@@ -95,7 +95,7 @@ public class FMRecyclerAdapter extends RecyclerView.Adapter<FMRecyclerAdapter.FM
 
         viewHolder.peopleName.setText(data.get("NAME"));
         viewHolder.peopleMark.setText(data.get("MARK"));
-        final ImmediatelyDialogView immediatelyDialogView = new ImmediatelyDialogView(context,R.style.aert_dialog);
+        final ImmediatelyDialogView immediatelyDialogView = new ImmediatelyDialogView(context);
 
         viewHolder.qcCode.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +108,7 @@ public class FMRecyclerAdapter extends RecyclerView.Adapter<FMRecyclerAdapter.FM
         viewHolder.immediatelyCertification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                immediatelyDialogView.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                 immediatelyDialogView.show();
             }
         });

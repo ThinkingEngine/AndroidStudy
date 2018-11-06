@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.views.adapters.ExamAppointmentRecyclerAdapter;
 import com.chengsheng.cala.htcm.views.customviews.HeaderScrollView;
+import com.chengsheng.cala.htcm.views.customviews.PriceSeletionPopupWindow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,17 +27,26 @@ public class ExamAppointmentActivity extends AppCompatActivity implements Header
     private RecyclerView examAppointmentItem;
     private SwipeRefreshLayout refreshExamAppointmentPage;
 
+    private TextView title;
+    private ImageView back,search;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exam_appointment);
-        headerScrollView = (HeaderScrollView) findViewById(R.id.scroll_view_header);
+
+        title = findViewById(R.id.title_header_exam_appointment).findViewById(R.id.menu_bar_title);
+        back = findViewById(R.id.title_header_exam_appointment).findViewById(R.id.back_login);
+        search = findViewById(R.id.title_header_exam_appointment).findViewById(R.id.search_button);
+        headerScrollView = findViewById(R.id.scroll_view_header);
         imageView = findViewById(R.id.rl1);
         textView = findViewById(R.id.rl2);
         examAppointmentItem = findViewById(R.id.exam_appointment_recycler);
         refreshExamAppointmentPage = findViewById(R.id.refresh_exam_appointment_page);
 
+
+        title.setText("体检预约");
         //测试数据
         List<String> datas = new ArrayList<>();
         for(int i = 0; i < 5;i++){
@@ -63,6 +73,10 @@ public class ExamAppointmentActivity extends AppCompatActivity implements Header
                 refreshExamAppointmentPage.setRefreshing(false);
             }
         });
+
+//        PriceSeletionPopupWindow popupWindow = new PriceSeletionPopupWindow(this,R.layout.condition_selection_combo_bg_layout,RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
+//        popupWindow.showAtLocation();
+//        popupWindow.showAsDropDown(imageView,0,0);
 
         headerScrollView.setCallback(this);
 

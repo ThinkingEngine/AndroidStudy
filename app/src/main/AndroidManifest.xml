@@ -45,7 +45,10 @@
         <activity android:name=".views.activitys.MyExamActivity" />
         <activity android:name=".views.activitys.ExamDetailsActivity" />
         <activity android:name=".views.activitys.ComboDetailActivity" />
-        <activity android:name=".views.activitys.AffirmAppointmentActivity"></activity>
+        <activity android:name=".views.activitys.AffirmAppointmentActivity" />
+        <activity android:name=".views.activitys.ModePaymentActivity" />
+        <activity android:name=".views.activitys.PayResultActivity" />
+        <activity android:name=".views.activitys.AddExamPersonActivity"></activity>
     </application>
 
 </manifest>

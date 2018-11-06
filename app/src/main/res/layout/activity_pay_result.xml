@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPageBackground"
+    tools:context=".views.activitys.PayResultActivity">
+
+    <include
+        android:id="@+id/title_header_pay_result"
+        layout="@layout/title_bar_type_two_layout"/>
+    <ImageView
+        android:id="@+id/pay_result_mark"
+        android:layout_width="200dp"
+        android:layout_height="127dp"
+        android:layout_below="@id/title_header_pay_result"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:src="@mipmap/zhineng_chenggong"/>
+
+    <TextView
+        android:id="@+id/pay_result_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="订单支付成功!"
+        android:textSize="20dp"
+        android:textColor="@color/colorPaySuccess"
+        android:layout_below="@id/pay_result_mark"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"/>
+
+    <Button
+        android:id="@+id/look_order_form"
+        android:layout_width="311dp"
+        android:layout_height="44dp"
+        android:background="@drawable/code_button_bg"
+        android:layout_below="@id/pay_result_text"
+        android:layout_marginTop="43dp"
+        android:layout_centerHorizontal="true"
+        android:text="查看订单详情"
+        android:textSize="18sp"
+        android:textColor="@color/colorPrimary"/>
+    <TextView
+        android:id="@+id/order_form_pay_mode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="支付方式：支付宝支付"
+        android:textSize="14sp"
+        android:textColor="@color/colorThrText"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/look_order_form"
+        android:layout_marginTop="30dp"
+        android:paddingLeft="32dp"/>
+    <TextView
+        android:id="@+id/order_form_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="下单时间：2018-4-24 23:59:59"
+        android:textSize="14sp"
+        android:textColor="@color/colorThrText"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/order_form_pay_mode"
+        android:layout_marginTop="14dp"
+        android:paddingLeft="32dp"/>
+</RelativeLayout>

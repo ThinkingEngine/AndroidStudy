@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!--底层使用蓝色填充色-->
     <item>
         <shape>
             <solid android:color="@color/colorWhite"/>
-            <corners android:radius="6dp"/>
         </shape>
     </item>
 
-    <item android:width="30dp" android:height="30dp">
-        <bitmap android:src="@mipmap/jianakngkabianjiao"/>
+    <item android:height="1dp" android:gravity="bottom" >
+        <shape>
+            <solid android:color="@color/colorCutoff"/>
+        </shape>
     </item>
 </layer-list>

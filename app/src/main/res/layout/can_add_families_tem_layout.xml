@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="16dp"
+        android:background="@mipmap/kuang">
+        
+        <ImageView
+            android:id="@+id/add_families_button"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/selecter_radio_button_bg"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"/>
+
+        <TextView
+            android:id="@+id/exam_person_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="13dp"
+            android:layout_toRightOf="@id/add_families_button"
+            android:text="王可可"
+            android:textColor="@color/colorText"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/exam_person_mark"
+            android:layout_width="33dp"
+            android:layout_height="16dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="18dp"
+            android:layout_toRightOf="@id/exam_person_name"
+            android:background="@drawable/orange_button_bg"
+            android:gravity="center"
+            android:text="本人"
+            android:textColor="@color/colorWhite"
+            android:textSize="10dp" />
+
+        <TextView
+            android:id="@+id/exam_person_tel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/exam_person_name"
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="13dp"
+            android:text="电话号码 188****0901"
+            android:textColor="@color/colorSecText"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/exam_person_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/exam_person_tel"
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="13dp"
+            android:text="身份证号 51072525253647****"
+            android:textColor="@color/colorSecText"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/authentication_mark_a"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="21dp"
+            android:background="@drawable/selecter_authentication_bg" />
+
+        <TextView
+            android:id="@+id/authentication_text_a"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/authentication_mark_a"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:text="已认证"
+            android:textColor="@color/colorThrText"
+            android:textSize="8sp" />
+    </RelativeLayout>
+</FrameLayout>

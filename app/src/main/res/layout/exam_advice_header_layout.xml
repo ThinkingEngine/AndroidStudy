@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="89dp"
+        android:background="@color/colorWhite">
+
+        <ImageView
+            android:id="@+id/exam_advice_mark"
+            android:layout_width="80dp"
+            android:layout_height="70dp"
+            android:src="@mipmap/zhujianjianyi"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="14dp"/>
+        <TextView
+            android:id="@+id/exam_advice_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="主检建议"
+            android:textSize="18sp"
+            android:textColor="@color/colorText"
+            android:layout_toRightOf="@id/exam_advice_mark"
+            android:layout_marginTop="17dp"
+            android:layout_marginLeft="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="综合报告内检查项目给出的建议与指导"
+            android:textSize="12sp"
+            android:textColor="@color/colorThrText"
+            android:layout_toRightOf="@id/exam_advice_mark"
+            android:layout_below="@id/exam_advice_title"
+            android:layout_marginTop="7dp"
+            android:layout_marginLeft="10dp"/>
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/details_item_bg"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/has_bottom_line_no_off_bg">
+        <ImageView
+            android:id="@+id/theme_dot"
+            android:layout_width="4dp"
+            android:layout_height="4dp"
+            android:src="@drawable/theme_annulus_bg"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="14dp"/>
+        <TextView
+            android:id="@+id/exam_item_name_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="心率"
+            android:textSize="16sp"
+            android:textColor="@color/colorText"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/theme_dot"
+            android:layout_marginLeft="4dp"/>
+
+        <TextView
+            android:id="@+id/exam_item_advice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="腹壁明显紧张，强直硬如木板"
+            android:textSize="14sp"
+            android:textColor="@color/colorSecText"
+            android:layout_marginLeft="128dp"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+</FrameLayout>

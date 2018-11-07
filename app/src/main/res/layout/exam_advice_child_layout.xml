@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        android:background="@color/colorPageBackground"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="335dp"
+            android:layout_height="126dp"
+            android:text="1、体检结果
+            电焊烟尘作业检查目前未见异常噪声作业检查目前未见异常
+                          2、职业建议
+            本次职业健康检查各项指标均在正常值范围内。无职业禁忌证。可从事电焊烟尘作业。"
+            android:textSize="14sp"
+            android:textColor="@color/colorSecText"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"/>
+        <ImageView
+            android:id="@+id/doc_signature_mark"
+            android:layout_width="81dp"
+            android:layout_height="30dp"
+            android:src="@drawable/login_button_bg"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="14dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="主检医生"
+            android:textSize="14sp"
+            android:textColor="@color/colorThrText"
+            android:layout_toLeftOf="@id/doc_signature_mark"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="23dp"
+            android:layout_marginRight="7dp"/>
+    </RelativeLayout>
+
+</LinearLayout>

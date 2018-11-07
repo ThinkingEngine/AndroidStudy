@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="347dp"
+        android:layout_height="192dp"
+        android:background="@color/colorContainerBG">
+
+        <TextView
+            android:id="@+id/item_explain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="17dp"
+            android:layout_marginRight="14dp"
+            android:text="白细胞总数偏高多见于急性化脓性感染、尿毒症、白血病、组织损伤、急性出血等"
+            android:textColor="@color/colorSecText"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/text3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/item_explain"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="8dp"
+            android:text="建议："
+            android:textColor="@color/colorSecText"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/item_advices"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1、多喝水，一天保证在1800ml-2500ml的饮水量，注意休息。…"
+            android:textSize="14sp"
+            android:textColor="@color/colorSecText"
+            android:layout_below="@id/text3"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginTop="8dp"/>
+        <TextView
+            android:id="@+id/check_all_advice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="查看全部"
+            android:textSize="14sp"
+            android:textColor="@color/colorPrimary"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="14dp"/>
+    </RelativeLayout>
+</FrameLayout>

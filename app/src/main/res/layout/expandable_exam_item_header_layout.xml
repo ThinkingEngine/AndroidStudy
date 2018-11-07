@@ -24,6 +24,13 @@
             android:layout_toRightOf="@id/exam_item_image_mark"
             android:layout_centerVertical="true"
             android:layout_marginLeft="8dp"/>
+        <ImageView
+            android:id="@+id/arrow_mark"
+            android:layout_width="6dp"
+            android:layout_height="12dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"/>
         <TextView
             android:id="@+id/exam_item_stats_expandable"
             android:layout_width="wrap_content"
@@ -31,9 +38,10 @@
             android:text="已检"
             android:textSize="14sp"
             android:textColor="@color/colorSecText"
+            android:layout_toLeftOf="@id/arrow_mark"
             android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
             android:layout_marginRight="8dp"/>
+
     </RelativeLayout>
 
 </LinearLayout>

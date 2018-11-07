@@ -15,7 +15,7 @@ import com.chengsheng.cala.htcm.views.fragments.AddFamilyFragment;
 import com.chengsheng.cala.htcm.views.fragments.FamilyListFragment;
 
 public class FamilyManageActivity extends AppCompatActivity implements FamilyListFragment.OnFamilyListInteractionListener,
-                                                                       AddFamilyFragment.OnAddFamilyFragmentInteractionListener{
+        AddFamilyFragment.OnAddFamilyFragmentInteractionListener {
 
     private ImageView backHomeButton;
     private TextView titleHeader;
@@ -33,13 +33,13 @@ public class FamilyManageActivity extends AppCompatActivity implements FamilyLis
 
         initViews();
 
-        familyListFragment = FamilyListFragment.newInstance("","");
-        addFamilyFragment = AddFamilyFragment.newInstance("","");
+        familyListFragment = FamilyListFragment.newInstance("", "");
+        addFamilyFragment = AddFamilyFragment.newInstance("", "");
 
         final FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
 
-        ft.add(R.id.family_manage_container,familyListFragment);
+        ft.add(R.id.family_manage_container, familyListFragment);
         ft.commit();
         stats = "manage";
 
@@ -47,14 +47,14 @@ public class FamilyManageActivity extends AppCompatActivity implements FamilyLis
             @Override
             public void onClick(View v) {
                 FragmentTransaction ft = fm.beginTransaction();
-                if(stats.equals("manage")){
-                    ft.replace(R.id.family_manage_container,addFamilyFragment);
+                if (stats.equals("manage")) {
+                    ft.replace(R.id.family_manage_container, addFamilyFragment);
                     ft.commit();
                     stats = "add";
                     titleHeader.setText("添加家人");
                     addFamily.setVisibility(View.INVISIBLE);
-                }else{
-                    Log.e("states","当前状态错误");
+                } else {
+                    Log.e("states", "当前状态错误");
                 }
 
             }
@@ -64,15 +64,15 @@ public class FamilyManageActivity extends AppCompatActivity implements FamilyLis
             @Override
             public void onClick(View v) {
                 FragmentTransaction ft = fm.beginTransaction();
-                if(stats.equals("add")){
-                    ft.add(R.id.family_manage_container,familyListFragment);
+                if (stats.equals("add")) {
+                    ft.add(R.id.family_manage_container, familyListFragment);
                     ft.commit();
                     stats = "manage";
                     titleHeader.setText("家人管理");
                     addFamily.setVisibility(View.VISIBLE);
 
-                }else if(stats.equals("manage")){
-                    Intent intent = new Intent(FamilyManageActivity.this,HomePageActivity.class);
+                } else if (stats.equals("manage")) {
+                    Intent intent = new Intent(FamilyManageActivity.this, HomePageActivity.class);
                     startActivity(intent);
                 }
             }
@@ -80,7 +80,7 @@ public class FamilyManageActivity extends AppCompatActivity implements FamilyLis
 
     }
 
-    private void initViews(){
+    private void initViews() {
         backHomeButton = (ImageView) findViewById(R.id.title_header_family_manage).findViewById(R.id.back_login);
         titleHeader = (TextView) findViewById(R.id.title_header_family_manage).findViewById(R.id.menu_bar_title);
         addFamily = (TextView) findViewById(R.id.title_header_family_manage).findViewById(R.id.message_mark_text);

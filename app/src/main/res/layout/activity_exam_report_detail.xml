@@ -125,13 +125,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ExpandableListView
+            <com.chengsheng.cala.htcm.views.customviews.MyExpandableListView
                 android:id="@+id/exam_advices_expandable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp">
 
-            </ExpandableListView>
+            </com.chengsheng.cala.htcm.views.customviews.MyExpandableListView>
 
             <RelativeLayout
                 android:id="@+id/container_a"

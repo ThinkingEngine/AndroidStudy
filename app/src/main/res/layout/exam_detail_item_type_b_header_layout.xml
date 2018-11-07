@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="346dp"
+        android:layout_height="140dp"
+        android:background="@drawable/fmailies_item_bg">
+
+        <ImageView
+            android:id="@+id/dot_b"
+            android:layout_width="4dp"
+            android:layout_height="4dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="26dp"
+            android:background="@drawable/theme_annulus_bg" />
+
+        <TextView
+            android:id="@+id/item_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="18dp"
+            android:layout_toRightOf="@id/dot_b"
+            android:text="白细胞计数(10^g/L)"
+            android:textColor="@color/colorText"
+            android:textSize="16sp" />
+        
+        <ImageView
+            android:id="@+id/warning_mark"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/yichangjingbao"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"/>
+
+        <RelativeLayout
+            android:id="@+id/line13"
+            android:layout_width="250dp"
+            android:layout_height="4dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="93dp"
+            android:background="@color/colorLineA" />
+
+        <RelativeLayout
+            android:id="@+id/line14"
+            android:layout_width="154dp"
+            android:layout_height="4dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="93dp"
+            android:background="@color/colorPrimary" />
+
+        <LinearLayout
+            android:id="@+id/float_mark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="141dp"
+            android:layout_marginTop="52dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/float_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="65"
+                android:textColor="@color/colorPrimary"
+                android:textSize="24sp" />
+
+            <ImageView
+                android:id="@+id/float_image"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/yuandian_zhegnchang" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/line13"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="14dp"
+            android:text="正常"
+            android:textColor="@color/colorThrText"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/line13"
+            android:layout_alignParentLeft="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="91dp"
+            android:layout_marginTop="14dp"
+            android:text="60"
+            android:textColor="@color/colorThrText"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/line13"
+            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="14dp"
+            android:layout_marginRight="91dp"
+            android:text="83"
+            android:textColor="@color/colorThrText"
+            android:textSize="12sp" />
+    </RelativeLayout>
+</FrameLayout>

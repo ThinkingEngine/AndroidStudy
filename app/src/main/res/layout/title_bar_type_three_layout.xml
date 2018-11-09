@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:background="@drawable/has_bottom_line_no_off_bg">
+
+    <ImageView
+        android:id="@+id/back_login"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@mipmap/fanhui"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="21dp"/>
+    
+    <LinearLayout
+        android:id="@+id/click_container"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_centerInParent="true"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/menu_bar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="标题"
+            android:textColor="@color/colorText"
+            android:textSize="16sp"
+            android:layout_centerInParent="true" />
+        <ImageView
+            android:id="@+id/arrow_up_down"
+            android:layout_width="12dp"
+            android:layout_height="18dp"
+            android:src="@drawable/selecter_arrow_up_down_type"
+            android:layout_marginLeft="5dp"/>
+    </LinearLayout>
+    
+
+
+</RelativeLayout>

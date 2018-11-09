@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPageBackground"
+    tools:context=".views.activitys.OrderDetailActivity">
+
+    <include
+        android:id="@+id/title_header_order_detail"
+        layout="@layout/title_bar_type_two_layout" />
+
+    <LinearLayout
+        android:id="@+id/container_c"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorWhite"
+        android:gravity="center_vertical|right"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/pay_function_a"
+            android:layout_width="84dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="14dp"
+            android:background="@drawable/wire_frame_bg_type_a"
+            android:gravity="center"
+            android:text="申请退款"
+            android:textColor="@color/colorThrText"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/pay_function_b"
+            android:layout_width="84dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="14dp"
+            android:background="@drawable/code_button_bg"
+            android:gravity="center"
+            android:text="继续支付"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14dp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title_header_order_detail"
+        android:layout_above="@id/container_c">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/has_bottom_line_no_off_bg">
+
+                <TextView
+                    android:id="@+id/payment_state_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="14dp"
+                    android:text="待付款"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/order_detail_exam_person"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/payment_state_text"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="14dp"
+                    android:text="体检人:   "
+                    android:textColor="@color/colorThrText"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/order_detail_exam_person_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/payment_state_text"
+                    android:layout_marginTop="14dp"
+                    android:layout_toRightOf="@id/order_detail_exam_person"
+                    android:text="周子萱"
+                    android:textColor="@color/colorText"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/order_detail_appointment_date_text"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/order_detail_exam_person"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="10dp"
+                    android:text="预约日期："
+                    android:textColor="@color/colorThrText"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/order_detail_appointment_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/order_detail_exam_person"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/order_detail_appointment_date_text"
+                    android:text="2018-04-08"
+                    android:textColor="@color/colorText"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/order_detail_appointment_num_text"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/order_detail_appointment_date_text"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="10dp"
+                    android:text="预约号: "
+                    android:textColor="@color/colorThrText"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/order_detail_appointment_num_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/order_detail_appointment_date_text"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="14dp"
+                    android:layout_toRightOf="@id/order_detail_appointment_num_text"
+                    android:text="2018033100012"
+                    android:textColor="@color/colorText"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/copy_appointment_num"
+                    android:layout_width="35dp"
+                    android:layout_height="20dp"
+                    android:layout_below="@id/order_detail_appointment_date_text"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_toRightOf="@id/order_detail_appointment_num_date"
+                    android:background="@drawable/code_button_bg"
+                    android:gravity="center"
+                    android:text="复制"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite">
+
+                <TextView
+                    android:id="@+id/order_detail_group_text"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="14dp"
+                    android:text="体检机构："
+                    android:textColor="@color/colorThrText"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/order_detail_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:layout_toRightOf="@id/order_detail_group_text"
+                    android:text="成都中医大健康管理中心"
+                    android:textColor="@color/colorText"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/order_detail_group_address_text"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/order_detail_group_text"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="10dp"
+                    android:text="体检地址："
+                    android:textColor="@color/colorThrText"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/order_detail_group_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/order_detail_group_text"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/order_detail_group_address_text"
+                    android:text="成都市武侯区人民南路四段17号"
+                    android:textColor="@color/colorText"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/order_detail_cellphone_text"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/order_detail_group_address_text"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="10dp"
+                    android:text="手机号："
+                    android:textColor="@color/colorThrText"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/order_detail_cellphone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/order_detail_group_address_text"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/order_detail_cellphone_text"
+                    android:text="18739487629"
+                    android:textColor="@color/colorText"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/order_detail_create_time_text"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/order_detail_cellphone_text"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="10dp"
+                    android:text="创建时间："
+                    android:textColor="@color/colorThrText"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/order_detail_create_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/order_detail_cellphone_text"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="14dp"
+                    android:layout_toRightOf="@id/order_detail_create_time_text"
+                    android:text="2018-03-30 08:30:00"
+                    android:textColor="@color/colorText"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <com.chengsheng.cala.htcm.views.customviews.MyExpandableListView
+                android:id="@+id/order_item_expandable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+            </com.chengsheng.cala.htcm.views.customviews.MyExpandableListView>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/has_bottom_line_no_off_bg">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="订单合计:"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorText"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="14dp"/>
+                <TextView
+                    android:id="@+id/pay_total_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¥ 170.00"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorText"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="14dp"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite">
+                <TextView
+                    android:id="@+id/real_pay_money_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="实付金额:"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorText"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginLeft="14dp"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/real_pay_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¥ 90.00"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorText"
+                    android:layout_marginTop="14dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="14dp"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/waiting_pay_money_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="待付金额:"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorText"
+                    android:layout_below="@id/real_pay_money_text"
+                    android:layout_marginTop="17dp"
+                    android:layout_marginLeft="14dp"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/waiting_pay_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¥ 60.00"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_below="@id/real_pay_money"
+                    android:layout_marginTop="17dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="14dp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="14dp"/>
+            </RelativeLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>

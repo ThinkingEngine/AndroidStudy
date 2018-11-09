@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:id="@+id/into_exam_order_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorWhite">
+
+        <TextView
+            android:id="@+id/exam_order_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="14dp"
+            android:text="体检人: 周子萱萱"
+            android:textColor="@color/colorSecText"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/exam_order_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="14dp"
+            android:layout_toRightOf="@id/exam_order_name"
+            android:text="预约日期: 2018-04-08"
+            android:textColor="@color/colorSecText"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/exam_order_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/exam_order_name"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="10dp"
+            android:text="预约号: 20180331000121201201"
+            android:textColor="@color/colorSecText"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/payment_state"
+            android:layout_width="56dp"
+            android:layout_height="18dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:src="@mipmap/dingdan_daifukuan" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/child_order_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/exam_order_num"
+            android:layout_alignParentStart="true">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <LinearLayout
+            android:id="@+id/container_b"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/child_order_item"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="14dp"
+            android:layout_marginRight="14dp"
+            android:layout_marginBottom="14dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/real_pay_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="8dp"
+                android:text="实付金额:"
+                android:textColor="@color/colorSecText"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/real_pay_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="13dp"
+                android:layout_marginBottom="14dp"
+                android:text="¥ 180.00"
+                android:textColor="@color/colorSecText"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/obligation_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="8dp"
+                android:text="待付金额:"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/obligation_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity=""
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="13dp"
+                android:layout_marginBottom="14dp"
+                android:text="¥ 180.00"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/continue_pay"
+            android:layout_width="84dp"
+            android:layout_height="30dp"
+            android:layout_below="@id/container_b"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="14dp"
+            android:layout_marginBottom="14dp"
+            android:background="@drawable/code_button_bg"
+            android:text="立即支付"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+</FrameLayout>

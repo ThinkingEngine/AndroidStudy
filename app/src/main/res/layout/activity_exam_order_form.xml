@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPageBackground"
+    tools:context=".views.activitys.ExamOrderFormActivity">
+
+    <include
+        android:id="@+id/title_header_exam_order_form"
+        layout="@layout/exam_appointment_header_layout"/>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/order_form_select_header"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_below="@id/title_header_exam_order_form"
+        app:tabSelectedTextColor="@color/colorPrimary"
+        app:tabTextColor="@color/colorThrText"
+        app:tabIndicatorColor="@color/colorPrimary"
+        app:tabBackground="@color/colorWhite">
+
+    </android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/order_form_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/order_form_select_header">
+
+    </android.support.v4.view.ViewPager>
+</RelativeLayout>

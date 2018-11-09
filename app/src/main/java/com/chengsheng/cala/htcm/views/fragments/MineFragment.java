@@ -11,10 +11,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.model.businesslogic.DataFlow;
 import com.chengsheng.cala.htcm.views.activitys.AccountSettingActivity;
+import com.chengsheng.cala.htcm.views.activitys.ExamOrderFormActivity;
 import com.chengsheng.cala.htcm.views.adapters.MineItemBaseAdapter;
 
 import java.util.ArrayList;
@@ -63,10 +65,12 @@ public class MineFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View rootView = inflater.inflate(R.layout.fragment_mine, container, false);
+
         ListView groupA = (ListView) rootView.findViewById(R.id.mine_group_a);
         ListView groupB = (ListView) rootView.findViewById(R.id.mine_group_b);
+        TextView medicalExamOrderText = rootView.findViewById(R.id.medical_exam_order_text);//体检订单文本
         ImageView inputPersonalInfo = (ImageView) rootView.findViewById(R.id.input_personal_info);
 
         List<Map<String,String>> dataGroupA = DataFlow.minePageItemModelA(4,iconsA,titleA,typeA);
@@ -79,6 +83,14 @@ public class MineFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(),AccountSettingActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
+
+        medicalExamOrderText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(),ExamOrderFormActivity.class);
                 getContext().startActivity(intent);
             }
         });

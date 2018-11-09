@@ -1,6 +1,7 @@
 package com.chengsheng.cala.htcm.views.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.views.activitys.ExamReportCompareActivity;
 import com.chengsheng.cala.htcm.views.adapters.ExamReportRecyclerAdapter;
 
 import java.util.ArrayList;
@@ -31,6 +33,7 @@ public class ExamReprotListFragment extends Fragment {
     private LinearLayout childButtonContainer;
     private TextView reportCompare,cancelReportCompare,startReportCompare;
     private RecyclerView targetExamReportList;
+
 
     public ExamReprotListFragment() {
 
@@ -92,6 +95,8 @@ public class ExamReprotListFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(),"开始对比报告",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getContext(),ExamReportCompareActivity.class);
+                getContext().startActivity(intent);
             }
         });
 

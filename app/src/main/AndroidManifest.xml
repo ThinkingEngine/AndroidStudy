@@ -52,7 +52,10 @@
         <activity android:name=".views.activitys.ExamReportActivity" />
         <activity android:name=".views.activitys.ExamReportDetailActivity" />
         <activity android:name=".views.activitys.ExamResultUnscrambleActivity" />
-        <activity android:name=".views.activitys.BeforeExamActivity"></activity>
+        <activity android:name=".views.activitys.BeforeExamActivity" />
+        <activity android:name=".views.activitys.ExamOrderFormActivity" />
+        <activity android:name=".views.activitys.OrderDetailActivity" />
+        <activity android:name=".views.activitys.ExamReportCompareActivity"></activity>
     </application>
 
 </manifest>

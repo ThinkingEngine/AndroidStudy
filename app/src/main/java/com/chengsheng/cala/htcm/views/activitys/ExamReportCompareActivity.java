@@ -4,6 +4,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +18,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.views.adapters.CompareReportRecyclerAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ExamReportCompareActivity extends AppCompatActivity {
     private ImageView back, arrow;
     private LinearLayout clickContainer;
     private TextView title;
+    private RecyclerView compareItemRecycler;
 
     private PopupWindow window;
 
@@ -34,6 +41,13 @@ public class ExamReportCompareActivity extends AppCompatActivity {
         initViews();
         setPopupWindow();
 
+        List<String> datas = new ArrayList<>();
+        datas.add("实验室检查");
+        datas.add("内科");
+        datas.add("血常规");
+        CompareReportRecyclerAdapter adapter = new CompareReportRecyclerAdapter(this,0,datas);
+        compareItemRecycler.setLayoutManager(new LinearLayoutManager(this));
+        compareItemRecycler.setAdapter(adapter);
 
 
         clickContainer.setOnClickListener(new View.OnClickListener() {
@@ -55,8 +69,10 @@ public class ExamReportCompareActivity extends AppCompatActivity {
         arrow = findViewById(R.id.title_header_exam_report_compare).findViewById(R.id.arrow_up_down);
         clickContainer = findViewById(R.id.title_header_exam_report_compare).findViewById(R.id.click_container);
         title = findViewById(R.id.title_header_exam_report_compare).findViewById(R.id.menu_bar_title);
+        compareItemRecycler = findViewById(R.id.compare_item_recycler);
 
         title.setText("全部");
+
         arrow.setSelected(false);
     }
 
@@ -68,7 +84,8 @@ public class ExamReportCompareActivity extends AppCompatActivity {
         window = new PopupWindow(contentView);
         window.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         window.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        window.setBackgroundDrawable(null);
         window.setOutsideTouchable(true);
         window.setTouchable(true);
     }
@@ -101,4 +118,6 @@ public class ExamReportCompareActivity extends AppCompatActivity {
             return view;
         }
     }
+
+
 }

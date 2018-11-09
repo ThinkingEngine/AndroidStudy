@@ -22,7 +22,7 @@ public class BannerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return data.size();
+        return Integer.MAX_VALUE;
     }
 
     @Override
@@ -31,9 +31,16 @@ public class BannerAdapter extends PagerAdapter {
         return view == o;
     }
 
+    @Override
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+        ((ViewGroup)container).removeView((View) object);
+        object = null;
+    }
+
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
+        position = position%data.size();
         container.addView(data.get(position));
         return data.get(position);
     }

@@ -29,15 +29,7 @@ public class SetNewPWFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SetNewPWFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static SetNewPWFragment newInstance(String param1, String param2) {
         SetNewPWFragment fragment = new SetNewPWFragment();
         Bundle args = new Bundle();
@@ -57,14 +49,13 @@ public class SetNewPWFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_set_new_pw,container,false);
 
-        TextView title = (TextView) rootView.findViewById(R.id.top_panel_sms).findViewById(R.id.menu_bar_title);
-        ImageView backLoginNpdButton = (ImageView) rootView.findViewById(R.id.top_panel_sms).findViewById(R.id.back_login);
-        TextView completeButton = (TextView) rootView.findViewById(R.id.complete_button);
+        TextView title = rootView.findViewById(R.id.top_panel_sms).findViewById(R.id.menu_bar_title);
+        ImageView backLoginNpdButton = rootView.findViewById(R.id.top_panel_sms).findViewById(R.id.back_login);
+        TextView completeButton = rootView.findViewById(R.id.complete_button);
 
         title.setText("设置新密码");
 
@@ -114,16 +105,6 @@ public class SetNewPWFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnSetNewPWFFragmentInteractionListener {
         // TODO: Update argument type and name
         void onSetNewPWFFragmentInteraction(Bundle bundle);

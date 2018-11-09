@@ -9,6 +9,51 @@
 
     <include
         android:id="@+id/title_header_exam_report_compare"
-        layout="@layout/title_bar_type_three_layout"/>
+        layout="@layout/title_bar_type_three_layout" />
+
+    <LinearLayout
+        android:id="@+id/container_d"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/title_header_exam_report_compare"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="项目名称"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/compare_a"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="2015-02-09"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/compare_b"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="2016-03-19"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/compare_item_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/container_d">
+
+    </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>

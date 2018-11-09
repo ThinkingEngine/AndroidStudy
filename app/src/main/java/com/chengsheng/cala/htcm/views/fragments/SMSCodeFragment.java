@@ -4,25 +4,21 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chengsheng.cala.htcm.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link SMSCodeFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link SMSCodeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class SMSCodeFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -36,15 +32,7 @@ public class SMSCodeFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SMSCodeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static SMSCodeFragment newInstance(String param1, String param2) {
         SMSCodeFragment fragment = new SMSCodeFragment();
         Bundle args = new Bundle();
@@ -65,11 +53,41 @@ public class SMSCodeFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View rootView = inflater.inflate(R.layout.fragment_smscode, container, false);
 
-        TextView nextButton = (TextView) rootView.findViewById(R.id.next_button);
-        ImageView backLoginPdButton = (ImageView) rootView.findViewById(R.id.top_panel_sms).findViewById(R.id.back_login);
+        TextView nextButton = rootView.findViewById(R.id.next_button);
+        ImageView backLoginPdButton = rootView.findViewById(R.id.top_panel_sms).findViewById(R.id.back_login);
+        EditText getNumberSms = rootView.findViewById(R.id.get_number_sms);
+        EditText getCodeFormSms = rootView.findViewById(R.id.get_code_form_sms);
+        final Button getCodeSmsButton = rootView.findViewById(R.id.get_code_sms_button);
+
+        getCodeSmsButton.setBackground(getResources().getDrawable(R.drawable.code_button_bg));
+        getCodeSmsButton.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+        getNumberSms.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s != null){
+                    getCodeSmsButton.setBackground(getResources().getDrawable(R.drawable.code_button_gray_box));
+                    getCodeSmsButton.setTextColor(getResources().getColor(R.color.colorThrText));
+                }
+                if(s.length() == 0){
+                    getCodeSmsButton.setBackground(getResources().getDrawable(R.drawable.code_button_bg));
+                    getCodeSmsButton.setTextColor(getResources().getColor(R.color.colorPrimary));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +112,7 @@ public class SMSCodeFragment extends Fragment {
         return rootView;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+
     public void onButtonPressed(Bundle bundle) {
         if (mListener != null) {
             mListener.onSMSCodeFragmentInteraction(bundle);
@@ -117,16 +135,7 @@ public class SMSCodeFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+
     public interface OnSMSCodeFragmentInteractionListener {
         // TODO: Update argument type and name
         void onSMSCodeFragmentInteraction(Bundle bundle);

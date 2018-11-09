@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/compare_item_title_container"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/colorPrimary">
+
+            <ImageView
+                android:layout_width="3dp"
+                android:layout_height="14dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="14dp"
+                android:src="@color/colorWhite" />
+
+            <TextView
+                android:id="@+id/compare_item_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="24dp"
+                android:text="对比标题"
+                android:textColor="@color/colorWhite"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+        <com.chengsheng.cala.htcm.views.customviews.MyGridView
+            android:id="@+id/compare_table"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:numColumns="3"
+            android:layout_below="@id/compare_item_title_container">
+
+        </com.chengsheng.cala.htcm.views.customviews.MyGridView>
+    </RelativeLayout>
+</FrameLayout>

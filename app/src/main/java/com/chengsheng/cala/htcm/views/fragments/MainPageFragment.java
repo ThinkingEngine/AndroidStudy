@@ -53,7 +53,9 @@ public class MainPageFragment extends Fragment {
     private ImageView myExamMark;
     private ImageView examEeportMark;
     private RelativeLayout aiAssistant;
+    private LinearLayout pointGroup;
 
+    private int[] barImages = {R.mipmap.bannera,R.mipmap.bannerb,R.mipmap.bannerc};//bar图片数据
     private int[] newsImages = new int[]{R.mipmap.tuijianzixun_imga,R.mipmap.tuijianzixun_imgb,R.mipmap.tuijianzixun_imgc,R.mipmap.tuijianzixun_imgd};
 
     public MainPageFragment() {
@@ -80,12 +82,12 @@ public class MainPageFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+        //生成主页面视图.
         View rootView = inflater.inflate(R.layout.fragment_main_page, container, false);
 
-        bodyBanner = rootView.findViewById(R.id.banner_a);
+        //关联主页面控件。
+        bodyBanner = rootView.findViewById(R.id.banner_a);//bar
         appointmentRecyclerView = rootView.findViewById(R.id.appointment_recycler_view);
         newsRecyclerView = rootView.findViewById(R.id.recommend_news_recycler_view);
         refreshPage = rootView.findViewById(R.id.refresh_main_page);
@@ -94,14 +96,73 @@ public class MainPageFragment extends Fragment {
         aiAssistant = rootView.findViewById(R.id.ai_assistant);
         examEeportMark = rootView.findViewById(R.id.exam_report_mark);
 
+        pointGroup = rootView.findViewById(R.id.point_group);
+
+        //为“智能助理”列表注入数据
         List<Map<String,String>> datas = tempNewsDatas();
         AIAssistantRecyclerAdapter appointment = new AIAssistantRecyclerAdapter(getContext());
         NewsRecyclerAdapter newsAppointment = new NewsRecyclerAdapter(getContext(),datas);
 
-        List<ImageView> data = new ArrayList<>();
+
+        final List<ImageView> data = new ArrayList<>();
+        for(int i = 0;i < barImages.length;i++){
+            ImageView imageView = new ImageView(getContext());
+            imageView.setImageResource(barImages[i]);
+            data.add(imageView);
+        }
+        for(int i = 0;i<barImages.length;i++){
+            ImageView point = new ImageView(getContext());
+            point.setImageResource(R.drawable.selecter_white_dot);
+            int pointSize = getResources().getDimensionPixelSize(R.dimen.point);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(pointSize,pointSize);
+            if(i > 0){
+                params.leftMargin = getResources().getDimensionPixelSize(R.dimen.point);
+                point.setSelected(false);
+            }else{
+                point.setSelected(true);
+            }
+
+            point.setLayoutParams(params);
+            pointGroup.addView(point);
+        }
 
         BannerAdapter bannerAdapter = new BannerAdapter(getContext(),data);
         bodyBanner.setAdapter(bannerAdapter);
+
+        bodyBanner.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            int lastPosition;
+            @Override
+            public void onPageSelected(int i) {
+                i = i % data.size();
+                pointGroup.getChildAt(i).setSelected(true);
+                pointGroup.getChildAt(lastPosition).setSelected(false);
+                lastPosition = i;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
+
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                int currentPosition = bodyBanner.getCurrentItem();
+                if(currentPosition == bodyBanner.getAdapter().getCount() - 1){
+                    bodyBanner.setCurrentItem(0);
+                }else{
+                    bodyBanner.setCurrentItem(currentPosition+1);
+                }
+
+                mHandler.postDelayed(this,5000);
+            }
+        },5000);
 
         appointmentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         appointmentRecyclerView.setAdapter(appointment);
@@ -110,6 +171,7 @@ public class MainPageFragment extends Fragment {
         newsRecyclerView.setAdapter(newsAppointment);
         newsRecyclerView.setNestedScrollingEnabled(false);
 
+        //跳转到“智能助理”
         aiAssistant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,6 +179,7 @@ public class MainPageFragment extends Fragment {
                 getContext().startActivity(intent);
             }
         });
+        //跳转到 “我的体检”
         myExamMark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,6 +187,7 @@ public class MainPageFragment extends Fragment {
                 getContext().startActivity(intent);
             }
         });
+        //跳转到“体检报告”
         examEeportMark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,6 +196,7 @@ public class MainPageFragment extends Fragment {
             }
         });
 
+        //刷新主页面
         refreshPage.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -142,6 +207,7 @@ public class MainPageFragment extends Fragment {
             }
         });
 
+        //跳转到“体检预约”
         appointmentExamMark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

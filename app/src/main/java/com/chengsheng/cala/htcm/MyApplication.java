@@ -7,4 +7,10 @@ public class MyApplication extends Application {
 
     public static Context myContext;
 
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        myContext = this;
+    }
 }

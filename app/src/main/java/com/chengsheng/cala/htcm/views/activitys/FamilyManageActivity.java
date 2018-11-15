@@ -81,9 +81,9 @@ public class FamilyManageActivity extends AppCompatActivity implements FamilyLis
     }
 
     private void initViews() {
-        backHomeButton = (ImageView) findViewById(R.id.title_header_family_manage).findViewById(R.id.back_login);
-        titleHeader = (TextView) findViewById(R.id.title_header_family_manage).findViewById(R.id.menu_bar_title);
-        addFamily = (TextView) findViewById(R.id.title_header_family_manage).findViewById(R.id.message_mark_text);
+        backHomeButton = findViewById(R.id.title_header_family_manage).findViewById(R.id.back_login);
+        titleHeader = findViewById(R.id.title_header_family_manage).findViewById(R.id.menu_bar_title);
+        addFamily = findViewById(R.id.title_header_family_manage).findViewById(R.id.message_mark_text);
 
         titleHeader.setText("家人管理");
         addFamily.setText("添加家人");

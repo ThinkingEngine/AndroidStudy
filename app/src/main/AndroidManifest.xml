@@ -10,6 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
         <activity
             android:name=".LaunchActivity"
             android:theme="@style/AppTheme">
@@ -56,6 +57,18 @@
         <activity android:name=".views.activitys.ExamOrderFormActivity" />
         <activity android:name=".views.activitys.OrderDetailActivity" />
         <activity android:name=".views.activitys.ExamReportCompareActivity"></activity>
+
+        <receiver android:name=".model.broadcasts.NeworkChangeReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+            </intent-filter>
+        </receiver>
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
 </manifest>

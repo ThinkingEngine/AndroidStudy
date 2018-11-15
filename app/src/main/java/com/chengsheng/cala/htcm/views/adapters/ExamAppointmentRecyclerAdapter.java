@@ -11,8 +11,10 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.model.datamodel.ExamAppointment;
 import com.chengsheng.cala.htcm.views.activitys.ComboDetailActivity;
 import com.chengsheng.cala.htcm.views.activitys.ExamAppointmentActivity;
 
@@ -21,9 +23,9 @@ import java.util.List;
 public class ExamAppointmentRecyclerAdapter extends RecyclerView.Adapter<ExamAppointmentRecyclerAdapter.ExamAppointmentViewHolder> {
 
     private Context context;
-    private List<String> datas;
+    private List<ExamAppointment> datas;
 
-    public ExamAppointmentRecyclerAdapter(Context context,List<String> datas){
+    public ExamAppointmentRecyclerAdapter(Context context,List<ExamAppointment> datas){
         this.context = context;
         this.datas = datas;
     }
@@ -37,13 +39,30 @@ public class ExamAppointmentRecyclerAdapter extends RecyclerView.Adapter<ExamApp
 
     @Override
     public void onBindViewHolder(@NonNull ExamAppointmentViewHolder viewHolder, final int i) {
-        viewHolder.examItemName.setText(datas.get(i));
-        viewHolder.itemMark.setVisibility(View.INVISIBLE);
+        final ExamAppointment dataItem = datas.get(i);
+
+        viewHolder.examItemName.setText(dataItem.getName());
+        if(dataItem.isIs_hot()){
+            viewHolder.examHotDegreeMark.setVisibility(View.VISIBLE);
+        }else{
+            viewHolder.examHotDegreeMark.setVisibility(View.INVISIBLE);
+        }
+        viewHolder.examPriceNum.setText(dataItem.getPrice());
+        viewHolder.examHadNum.setText(String.valueOf(dataItem.getActual_sales_num()));
+        final String comboId = String.valueOf(dataItem.getId());
+
+
         viewHolder.examItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context,ComboDetailActivity.class);
-                context.startActivity(intent);
+                if(dataItem.getId() == 2){
+                    Intent intent = new Intent(context,ComboDetailActivity.class);
+                    intent.putExtra("COMBO_ID",comboId);
+                    context.startActivity(intent);
+                }else{
+                    Toast.makeText(context,"当前条目，后台数据不支持！",Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }

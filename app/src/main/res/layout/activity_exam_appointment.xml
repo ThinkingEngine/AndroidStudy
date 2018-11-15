@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/colorPageBackground"
+    android:orientation="vertical"
     tools:context=".views.activitys.ExamAppointmentActivity">
 
     <include
@@ -13,58 +13,64 @@
         layout="@layout/exam_appointment_header_layout"
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        android:layout_alignParentTop="true"/>
+        android:layout_alignParentTop="true" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refresh_exam_appointment_page"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/title_header_exam_appointment">
-    <com.chengsheng.cala.htcm.views.customviews.HeaderScrollView
-        android:id="@+id/scroll_view_header"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:focusableInTouchMode="true"
-        android:layout_below="@id/title_header_exam_appointment">
-        <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:descendantFocusability="blocksDescendants"
-        android:orientation="vertical">
-        <ImageView
-            android:id="@+id/combo_recommend_button"
-            android:layout_width="match_parent"
-            android:layout_height="127dp"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/tijianyuyue_dingzhi" />
 
-        <RelativeLayout
-            android:id="@+id/rl2"
+        <com.chengsheng.cala.htcm.views.customviews.HeaderScrollView
+            android:id="@+id/scroll_view_header"
             android:layout_width="match_parent"
-            android:layout_height="40dp">
-           <include
-               android:id="@+id/price_model_a"
-               layout="@layout/exam_info_filtration_colum_layout"/>
-        </RelativeLayout>
+            android:layout_height="match_parent"
+            android:layout_below="@id/title_header_exam_appointment"
+            android:focusableInTouchMode="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:descendantFocusability="blocksDescendants"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/combo_recommend_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="127dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/tijianyuyue_dingzhi" />
+
+                <RelativeLayout
+                    android:id="@+id/rl2"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <include
+                        android:id="@+id/price_model_a"
+                        layout="@layout/exam_info_filtration_colum_layout" />
+                </RelativeLayout>
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/exam_appointment_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="800dp">
 
                 </android.support.v7.widget.RecyclerView>
-    </LinearLayout>
+            </LinearLayout>
 
-    </com.chengsheng.cala.htcm.views.customviews.HeaderScrollView>
+        </com.chengsheng.cala.htcm.views.customviews.HeaderScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <RelativeLayout
         android:id="@+id/rl1"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:visibility="gone"
-        android:layout_below="@id/title_header_exam_appointment">
+        android:layout_below="@id/title_header_exam_appointment"
+        android:visibility="gone">
+
         <include
             android:id="@+id/price_model_b"
-            layout="@layout/exam_info_filtration_colum_layout"/>
+            layout="@layout/exam_info_filtration_colum_layout" />
     </RelativeLayout>
 </RelativeLayout>

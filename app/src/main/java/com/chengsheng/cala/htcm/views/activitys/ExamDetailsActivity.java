@@ -21,8 +21,8 @@ public class ExamDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_exam_details);
         initViews();
 
-        ExamItemExpandableListViewAdapter adapter = new ExamItemExpandableListViewAdapter(this);
-        examItemExpandable.setAdapter(adapter);
+//        ExamItemExpandableListViewAdapter adapter = new ExamItemExpandableListViewAdapter(this);
+//        examItemExpandable.setAdapter(adapter);
     }
 
     private void initViews(){

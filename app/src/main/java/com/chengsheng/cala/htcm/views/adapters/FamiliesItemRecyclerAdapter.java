@@ -11,8 +11,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.model.datamodel.FamiliesListItem;
 import com.chengsheng.cala.htcm.views.activitys.FamiliesDetailsActivity;
 import com.chengsheng.cala.htcm.views.activitys.UserCardActivity;
 import com.chengsheng.cala.htcm.views.dialog.ImmediatelyDialogView;
@@ -25,9 +27,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class FamiliesItemRecyclerAdapter extends RecyclerView.Adapter<FamiliesItemRecyclerAdapter.MyViewHolder> {
 
     private Context context;
-    private List<Map<String,String>> datas;
+    private List<FamiliesListItem> datas;
 
-    public FamiliesItemRecyclerAdapter(Context context,List<Map<String,String>> datas){
+    public FamiliesItemRecyclerAdapter(Context context,List<FamiliesListItem> datas){
         this.context = context;
         this.datas = datas;
     }
@@ -42,14 +44,14 @@ public class FamiliesItemRecyclerAdapter extends RecyclerView.Adapter<FamiliesIt
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder viewHolder, final int i) {
 
-        Map<String,String> data = datas.get(i);
-        if(data.get("AUTHENTICATION").equals("true")){
+        final FamiliesListItem data = datas.get(i);
+        if(data.isIs_auth()){
             viewHolder.certification.setVisibility(View.INVISIBLE);
             viewHolder.familiesQR.setVisibility(View.VISIBLE);
             viewHolder.familiesID.setVisibility(View.VISIBLE);
             viewHolder.note.setVisibility(View.INVISIBLE);
 
-            viewHolder.familiesID.setText(data.get("FAMILIES_ID"));
+            viewHolder.familiesID.setText(data.getId_card_no());
         }else{
             viewHolder.certification.setVisibility(View.VISIBLE);
             viewHolder.familiesQR.setVisibility(View.INVISIBLE);
@@ -57,9 +59,9 @@ public class FamiliesItemRecyclerAdapter extends RecyclerView.Adapter<FamiliesIt
             viewHolder.note.setVisibility(View.VISIBLE);
         }
 
-        viewHolder.familiesName.setText(data.get("FAMILIES_NAME"));
-        viewHolder.familiesTel.setText(data.get("FAMILIES_TEL"));
-        viewHolder.mark.setText(data.get("FAMILIES_MARK"));
+        viewHolder.familiesName.setText(data.getFullname());
+        viewHolder.familiesTel.setText(data.getMobile());
+        viewHolder.mark.setText(data.getOwner_relationship());
 
         viewHolder.familiesQR.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,11 +79,19 @@ public class FamiliesItemRecyclerAdapter extends RecyclerView.Adapter<FamiliesIt
             }
         });
 
+        //获取家人详细信息
         viewHolder.familiesItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context,FamiliesDetailsActivity.class);
-                context.startActivity(intent);
+                if(data.getId() == 9){
+                    Intent intent = new Intent(context,FamiliesDetailsActivity.class);
+                    String familiesID = String.valueOf(data.getId());
+                    intent.putExtra("FAMILIES_ID",familiesID);
+                    context.startActivity(intent);
+                }else{
+                    Toast.makeText(context,"id:"+data.getId()+" 无效",Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }

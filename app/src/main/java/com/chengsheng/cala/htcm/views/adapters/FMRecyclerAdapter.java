@@ -95,7 +95,7 @@ public class FMRecyclerAdapter extends RecyclerView.Adapter<FMRecyclerAdapter.FM
 
         viewHolder.peopleName.setText(data.get("NAME"));
         viewHolder.peopleMark.setText(data.get("MARK"));
-        final ImmediatelyDialogView immediatelyDialogView = new ImmediatelyDialogView(context);
+        final ImmediatelyDialogView immediatelyDialogView = new ImmediatelyDialogView(context,1);
 
         viewHolder.qcCode.setOnClickListener(new View.OnClickListener() {
             @Override

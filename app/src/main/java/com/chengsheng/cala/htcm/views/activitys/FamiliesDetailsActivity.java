@@ -63,14 +63,14 @@ public class FamiliesDetailsActivity extends AppCompatActivity {
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new DisposableObserver<FamiliesDetailInfo>() {
             @Override
             public void onNext(FamiliesDetailInfo info) {
-                Log.e("FAMILIES", "数据请求成功:" + info.toString());
+                Log.e("FAMILIES", "家人详细信息 数据请求成功:" + info.toString());
                 setViews(info);
 
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.e("FAMILIES", "数据请求失败:" + e.toString());
+                Log.e("FAMILIES", "家人详细信息 数据请求失败:" + e.toString());
             }
 
             @Override
@@ -145,6 +145,7 @@ public class FamiliesDetailsActivity extends AppCompatActivity {
             sexSelecterFemale.setVisibility(View.INVISIBLE);
             familiesSexHad.setVisibility(View.VISIBLE);
 
+
             healthCardNum.setText(info.getHealth_card_no());
             familiesSexHad.setText(info.getSex());
 
@@ -163,7 +164,7 @@ public class FamiliesDetailsActivity extends AppCompatActivity {
         }
 
         familiesNameHad.setText(info.getFullname());
-        familiesAgeHad.setText(info.getAge());
+        familiesAgeHad.setText(String.valueOf(info.getAge())+"岁");
         familiesIdNumHad.setText(info.getId_card_no());
         familiesTelNumHad.setText(info.getMobile());
         familiesRelationHad.setText(info.getOwner_relationship());

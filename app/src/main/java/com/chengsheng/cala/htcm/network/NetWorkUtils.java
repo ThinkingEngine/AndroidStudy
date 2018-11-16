@@ -6,6 +6,8 @@ import android.net.NetworkInfo;
 
 import com.chengsheng.cala.htcm.GlobalConstant;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class NetWorkUtils {
 
 
@@ -25,4 +27,5 @@ public class NetWorkUtils {
 
         return GlobalConstant.NETWORK_NONE;
     }
+
 }

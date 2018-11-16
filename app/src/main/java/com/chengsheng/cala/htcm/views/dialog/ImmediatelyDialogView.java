@@ -3,32 +3,58 @@ package com.chengsheng.cala.htcm.views.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chengsheng.cala.htcm.GlobalConstant;
+import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.model.datamodel.Message;
+import com.chengsheng.cala.htcm.network.MyRetrofit;
+import com.chengsheng.cala.htcm.network.NetService;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import retrofit2.Retrofit;
 
 public class ImmediatelyDialogView extends Dialog {
+    private Context context;
+    private int id;
 
-    public ImmediatelyDialogView(Context context) {
+    public ImmediatelyDialogView(Context context,int ID) {
         super(context);
+        this.context = context;
+        this.id = ID;
     }
 
-    public ImmediatelyDialogView(Context context, int themeResId) {
+    public ImmediatelyDialogView(Context context, int ID,int themeResId) {
         super(context, themeResId);
+        this.context = context;
+        this.id = ID;
     }
 
-    protected ImmediatelyDialogView(Context context, boolean cancelable, DialogInterface.OnCancelListener cancelListener) {
+    protected ImmediatelyDialogView(Context context, int ID,boolean cancelable, DialogInterface.OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
+        this.id = ID;
     }
 
     @Override
@@ -38,9 +64,10 @@ public class ImmediatelyDialogView extends Dialog {
         View rootView = inflater.inflate(R.layout.dialog_immediately_certification_layout, null);
         setContentView(rootView);
 
-        TextView certificationText = (TextView) rootView.findViewById(R.id.certification_text);
-        Button cancelCer = (Button) rootView.findViewById(R.id.cancel_certification_button);
-        Button certification = (Button) rootView.findViewById(R.id.certification_button);
+        TextView certificationText = rootView.findViewById(R.id.certification_text);
+        Button cancelCer = rootView.findViewById(R.id.cancel_certification_button);
+        Button certification = rootView.findViewById(R.id.certification_button);
+        final EditText inputBoxCertification = rootView.findViewById(R.id.input_box_certification);
 
 
         String str_start = "\"认证码\"是本软件中将体检人和体检数据相互关联的唯一标识码，需要体检人到体检机构进行认证以后获得。" +
@@ -65,7 +92,46 @@ public class ImmediatelyDialogView extends Dialog {
         certification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dismiss();
+                if(inputBoxCertification.getText().toString().equals("")){
+                    inputBoxCertification.setText("");
+                    inputBoxCertification.setHint("请输入验证码！");
+                    Log.e("AUTH","请输入验证码！");
+                }else{
+                    String code = inputBoxCertification.getText().toString();
+                    HTCMApp app = HTCMApp.create(context);
+                    MyRetrofit myRetrofit = MyRetrofit.createInstance();
+                    Retrofit retrofit = myRetrofit.createURL(GlobalConstant.API_BASE_URL);
+                    NetService service = retrofit.create(NetService.class);
+
+                    RequestBody codeBody = RequestBody.create(MediaType.parse("multipart/form-data"),code);
+                    Map<String, RequestBody> mapa = new HashMap<>();
+                    mapa.put("auth_code",codeBody);
+                    Log.e("AUTH",String.valueOf(id));
+                    Log.e("AUTH",app.getTokenType()+" "+app.getAccessToken());
+                    Log.e("AUTH",code);
+                    service.authenticationFamilies(app.getTokenType()+" "+app.getAccessToken(),String.valueOf(id),mapa)
+                            .subscribeOn(Schedulers.newThread())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new DisposableObserver<Message>() {
+                        @Override
+                        public void onNext(Message o) {
+                            Log.e("AUTH","验证成功"+o.toString());
+                            dismiss();
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.e("AUTH","验证失败!"+e);
+                            dismiss();
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+                }
+
             }
         });
 

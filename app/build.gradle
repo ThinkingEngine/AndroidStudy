@@ -79,6 +79,12 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.facebook.fresco:fresco:0.14.1'
+    implementation 'com.facebook.fresco:webpsupport:0.14.1'
+    implementation 'com.facebook.fresco:imagepipeline-okhttp3:0.14.1'
+    implementation 'me.gujun.android.taggroup:library:1.4@aar'
+    implementation 'com.google.zxing:core:3.3.0'
+    implementation 'com.google.zxing:android-core:3.3.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

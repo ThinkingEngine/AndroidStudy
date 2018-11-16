@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.views.fragments.AddFamilyFragment;
 import com.chengsheng.cala.htcm.views.fragments.FamilyListFragment;
@@ -26,6 +27,8 @@ public class FamilyManageActivity extends AppCompatActivity implements FamilyLis
 
     private String stats = "manage";
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,8 +36,9 @@ public class FamilyManageActivity extends AppCompatActivity implements FamilyLis
 
         initViews();
 
-        familyListFragment = FamilyListFragment.newInstance("", "");
-        addFamilyFragment = AddFamilyFragment.newInstance("", "");
+        HTCMApp app = HTCMApp.create(this);
+        familyListFragment = FamilyListFragment.newInstance(app.getTokenType(), app.getAccessToken());
+        addFamilyFragment = AddFamilyFragment.newInstance(app.getTokenType(), app.getAccessToken());
 
         final FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();

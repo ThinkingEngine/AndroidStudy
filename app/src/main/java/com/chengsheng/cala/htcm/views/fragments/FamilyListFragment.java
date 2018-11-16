@@ -46,6 +46,9 @@ public class FamilyListFragment extends Fragment {
 
     private FamiliesList parentDatas;
 
+    private String toeknType;
+    private String AccessToken;
+
     private OnFamilyListInteractionListener mListener;
 
     public FamilyListFragment() {
@@ -67,10 +70,7 @@ public class FamilyListFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        app = HTCMApp.create(getContext());
-        //创建碎片时进行第一次网络访问。
-        MyRetrofit myRetrofit = MyRetrofit.createInstance();
-        getFamiliesList = myRetrofit.createURL(GlobalConstant.API_BASE_URL);
+
     }
 
     @Override
@@ -81,33 +81,37 @@ public class FamilyListFragment extends Fragment {
         recyclerView = rootViews.findViewById(R.id.families_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
-        if (getFamiliesList != null) {
-            NetService service = getFamiliesList.create(NetService.class);
-            service.getFamiliesList(app.getTokenType() + " " + app.getAccessToken())
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread()).subscribe(new DisposableObserver<FamiliesList>() {
-                @Override
-                public void onNext(FamiliesList datas) {
-                    Log.e("FAMILIES", "请求成功:" + datas.toString());
-                    parentDatas = datas;
-                    familiesItemRecyclerAdapter = new FamiliesItemRecyclerAdapter(getContext(), datas.getItems());
-                    recyclerView.setAdapter(familiesItemRecyclerAdapter);
-                }
-
-                @Override
-                public void onError(Throwable e) {
-                    Log.e("FAMILIES", "请求失败:" + e);
-                }
-
-                @Override
-                public void onComplete() {
-
-                }
-            });
-        } else {
-            Log.e("FAMILIES", "Retrofit实例化失败:");
+        app = HTCMApp.create(getContext());
+        //创建碎片时进行第一次网络访问。
+        toeknType = app.getTokenType();
+        AccessToken = app.getAccessToken();
+        MyRetrofit myRetrofit = MyRetrofit.createInstance();
+        if (getFamiliesList == null) {
+            getFamiliesList = myRetrofit.createURL(GlobalConstant.API_BASE_URL);
         }
+        NetService service = getFamiliesList.create(NetService.class);
+        Log.e("FAMILIES","标签:"+toeknType+" "+ AccessToken);
+        service.getFamiliesList(toeknType + " " + AccessToken)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new DisposableObserver<FamiliesList>() {
+            @Override
+            public void onNext(FamiliesList datas) {
+                Log.e("FAMILIES", "家人列表信息 请求成功:" + datas.toString());
+                parentDatas = datas;
+                familiesItemRecyclerAdapter = new FamiliesItemRecyclerAdapter(getContext(),datas.getItems());
+                recyclerView.setAdapter(familiesItemRecyclerAdapter);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("FAMILIES", "家人列表信息 请求失败:" + e);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
 
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -128,43 +132,6 @@ public class FamilyListFragment extends Fragment {
         }
     }
 
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-////        recyclerView = rootViews.findViewById(R.id.families_recycler);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        if(parentDatas == null){
-//            if (getFamiliesList != null) {
-//                NetService service = getFamiliesList.create(NetService.class);
-//                service.getFamiliesList(app.getTokenType() + " " + app.getAccessToken())
-//                        .subscribeOn(Schedulers.newThread())
-//                        .observeOn(AndroidSchedulers.mainThread()).subscribe(new DisposableObserver<FamiliesList>() {
-//                    @Override
-//                    public void onNext(FamiliesList datas) {
-//                        Log.e("FAMILIES", "请求成功:" + datas.toString());
-//                        familiesItemRecyclerAdapter = new FamiliesItemRecyclerAdapter(getContext(), datas.getItems());
-//                        recyclerView.setAdapter(familiesItemRecyclerAdapter);
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        Log.e("FAMILIES", "请求失败:" + e);
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//
-//                    }
-//                });
-//            } else {
-//                Log.e("FAMILIES", "Retrofit实例化失败:");
-//            }
-//        }else{
-//            familiesItemRecyclerAdapter = new FamiliesItemRecyclerAdapter(getContext(), parentDatas.getItems());
-//            recyclerView.setAdapter(familiesItemRecyclerAdapter);
-//        }
-//
-//    }
 
     @Override
     public void onAttach(Context context) {

@@ -5,17 +5,30 @@ import com.chengsheng.cala.htcm.model.datamodel.ExamApponitments;
 import com.chengsheng.cala.htcm.model.datamodel.FamiliesDetailInfo;
 import com.chengsheng.cala.htcm.model.datamodel.FamiliesList;
 import com.chengsheng.cala.htcm.model.datamodel.LoginData;
+import com.chengsheng.cala.htcm.model.datamodel.Message;
 import com.chengsheng.cala.htcm.model.datamodel.SMSVerificationResult;
+import com.chengsheng.cala.htcm.model.datamodel.URLResult;
 
+
+import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 import retrofit2.http.Url;
 
 public interface NetService {
@@ -65,4 +78,21 @@ public interface NetService {
 
     @GET
     Observable<FamiliesDetailInfo> getFamiliesDetail(@Url String url,@Header("Authorization") String header);//获取家人详细信息
+
+    @FormUrlEncoded
+    @POST("api/family/account-family-members/sms-validation-code")
+    Observable<Message> addFamiliesCodeRequest(@Header("Authorization") String header,@Field("mobile") String cellphone);
+
+    @Multipart
+    @POST("api/file-storage/files")
+    Observable<URLResult> uploadFile(@Header("Authorization")String header, @PartMap Map<String,RequestBody> map, @Part MultipartBody.Part file);//上传文件
+
+
+    @FormUrlEncoded
+    @POST("api/family/account-family-members")
+    Observable<ResponseBody> upLoadFamiliesInfo(@Header("Authorization") String header,@FieldMap Map<String,String> params);
+
+    @Multipart
+    @POST("api/family/account-family-members/15/authentication")
+    Observable<Message> authenticationFamilies(@Header("Authorization")String header,@Path("familiesId")String familiesID,@PartMap Map<String,RequestBody> map);//家人认证
 }

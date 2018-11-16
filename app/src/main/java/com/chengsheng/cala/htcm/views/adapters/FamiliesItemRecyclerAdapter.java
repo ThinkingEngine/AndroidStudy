@@ -2,6 +2,7 @@ package com.chengsheng.cala.htcm.views.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import com.chengsheng.cala.htcm.model.datamodel.FamiliesListItem;
 import com.chengsheng.cala.htcm.views.activitys.FamiliesDetailsActivity;
 import com.chengsheng.cala.htcm.views.activitys.UserCardActivity;
 import com.chengsheng.cala.htcm.views.dialog.ImmediatelyDialogView;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
 import java.util.Map;
@@ -63,21 +65,31 @@ public class FamiliesItemRecyclerAdapter extends RecyclerView.Adapter<FamiliesIt
         viewHolder.familiesTel.setText(data.getMobile());
         viewHolder.mark.setText(data.getOwner_relationship());
 
+        viewHolder.familiesIcon.setImageURI(data.getAvatar_path());
+
+        //跳转到含二维码的页面.
         viewHolder.familiesQR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context,UserCardActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("FAMILIES_INFO",data);
+                intent.putExtras(bundle);
                 context.startActivity(intent);
             }
         });
 
+
         viewHolder.certification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ImmediatelyDialogView immediatelyDialogView = new ImmediatelyDialogView(context,R.style.aert_dialog);
+                ImmediatelyDialogView immediatelyDialogView = new ImmediatelyDialogView(context,data.getId());
+                immediatelyDialogView.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                 immediatelyDialogView.show();
             }
         });
+
+
 
         //获取家人详细信息
         viewHolder.familiesItem.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +115,7 @@ public class FamiliesItemRecyclerAdapter extends RecyclerView.Adapter<FamiliesIt
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         RelativeLayout familiesItem;
-        CircleImageView familiesIcon;
+        SimpleDraweeView familiesIcon;
         TextView familiesName;
         TextView familiesTel;
         TextView familiesID;

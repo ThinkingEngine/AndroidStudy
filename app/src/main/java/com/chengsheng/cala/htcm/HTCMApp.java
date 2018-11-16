@@ -77,11 +77,12 @@ public class HTCMApp {
     }
 
     public String getAccessToken() {
-        return accessToken;
+
+        return FuncUtils.getString("ACCESSTOKEN","");
     }
 
     public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
+        FuncUtils.putString("ACCESSTOKEN",accessToken);
     }
 
     public String getExpiresIn() {
@@ -93,10 +94,12 @@ public class HTCMApp {
     }
 
     public String getTokenType() {
-        return tokenType;
+
+        return FuncUtils.getString("TOKENTYPE","");
     }
 
     public void setTokenType(String tokenType) {
-        this.tokenType = tokenType;
+        FuncUtils.putString("TOKENTYPE",tokenType);
+
     }
 }

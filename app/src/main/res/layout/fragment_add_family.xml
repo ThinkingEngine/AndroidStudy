@@ -139,14 +139,14 @@
                 android:layout_marginLeft="2dp"
                 android:src="@mipmap/jingao" />
 
-            <EditText
+            <TextView
                 android:id="@+id/input_families_age"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="77dp"
                 android:background="@null"
-                android:hint="请输入年龄"
+                android:hint="请选择入年龄"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -291,21 +291,23 @@
                 android:layout_toRightOf="@id/position_a"
                 android:src="@mipmap/jingao" />
 
-            <me.gujun.android.taggroup.TagGroup
+            <co.lujun.androidtagview.TagContainerLayout
                 android:id="@+id/families_relation_selecter"
                 android:layout_width="237dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="123dp"
                 android:layout_marginTop="14dp"
                 android:layout_marginBottom="14dp"
-                app:atg_backgroundColor="@color/colorWhite"
-                app:atg_borderColor="@color/colorSecText"
-                app:atg_checkedBackgroundColor="@color/colorOrange"
-                app:atg_checkedBorderColor="@color/colorOrange"
-                app:atg_checkedTextColor="@color/colorWhite"
-                app:atg_isAppendMode="true"
-                app:atg_textColor="@color/colorSecText"
-                app:atg_textSize="14sp" />
+                app:container_enable_drag="false"
+                app:horizontal_interval="10dp"
+                app:tag_clickable="true"
+                app:vertical_interval="10dp"
+
+                app:container_background_color="@color/colorWhite"
+                app:tag_text_size="14sp"
+                app:tag_text_color="@color/colorThrText"
+                app:tag_border_width="1dp"
+                app:tag_border_color="@color/colorThrText"/>
 
 
         </RelativeLayout>
@@ -315,9 +317,9 @@
             android:layout_width="311dp"
             android:layout_height="44dp"
             android:layout_below="@id/add_item_h"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="10dp"
-            android:layout_centerHorizontal="true"
             android:background="@drawable/login_button_bg"
             android:text="@string/is_ok"
             android:textColor="@color/colorWhite"
@@ -327,10 +329,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/commit_families_info_button"
-            android:layout_marginTop="33dp"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="33dp"
             android:text="温馨提示：为了保证你顺利的体检和获取报告，请填写准确信息"
-            android:textSize="10sp"/>
+            android:textSize="10sp" />
     </RelativeLayout>
 
 </ScrollView>

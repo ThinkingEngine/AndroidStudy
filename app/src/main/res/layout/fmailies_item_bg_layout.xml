@@ -27,7 +27,6 @@
             android:layout_marginLeft="20dp"
             fresco:actualImageScaleType="centerInside"
             fresco:roundAsCircle="true"
-
             fresco:backgroundImage="@color/colorPrimary"/>
 
 

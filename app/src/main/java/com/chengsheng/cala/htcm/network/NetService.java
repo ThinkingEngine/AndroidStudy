@@ -93,6 +93,6 @@ public interface NetService {
     Observable<ResponseBody> upLoadFamiliesInfo(@Header("Authorization") String header,@FieldMap Map<String,String> params);
 
     @Multipart
-    @POST("api/family/account-family-members/15/authentication")
+    @POST("api/family/account-family-members/{familiesId}/authentication")
     Observable<Message> authenticationFamilies(@Header("Authorization")String header,@Path("familiesId")String familiesID,@PartMap Map<String,RequestBody> map);//家人认证
 }

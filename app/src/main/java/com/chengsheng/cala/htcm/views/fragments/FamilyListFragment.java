@@ -18,6 +18,8 @@ import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.model.datamodel.FamiliesList;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
+import com.chengsheng.cala.htcm.utils.AuthStateCallBack;
+import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
 import com.chengsheng.cala.htcm.views.adapters.FamiliesItemRecyclerAdapter;
 
 import java.util.ArrayList;
@@ -30,7 +32,7 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
-public class FamilyListFragment extends Fragment {
+public class FamilyListFragment extends Fragment implements AuthStateCallBack {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -70,6 +72,8 @@ public class FamilyListFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        CallBackDataAuth.setAuthStateCallBack(this);
 
     }
 
@@ -148,6 +152,11 @@ public class FamilyListFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void authResult(Map<String, String> result) {
+        Toast.makeText(getContext(),result.get("STATE")+":"+result.get("REASON"),Toast.LENGTH_LONG).show();
     }
 
     public interface OnFamilyListInteractionListener {

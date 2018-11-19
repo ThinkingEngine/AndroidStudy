@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="14dp"
+        android:background="@mipmap/jiankang_wuchengyuan">
+
+        <TextView
+            android:id="@+id/text_mark_b"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="暂无成员"
+            android:textSize="16sp"
+            android:textColor="@color/colorThrText"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"/>
+        
+        <Button
+            android:id="@+id/add_new_families"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:background="@drawable/login_button_bg"
+            android:layout_below="@id/text_mark_b"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="立即添加"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"/>
+
+    </RelativeLayout>
+
+</FrameLayout>

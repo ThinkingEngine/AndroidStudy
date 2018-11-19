@@ -23,10 +23,16 @@ import com.chengsheng.cala.htcm.GlobalConstant;
 import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.model.datamodel.Message;
+import com.chengsheng.cala.htcm.model.datamodel.TextMessage;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
+import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
+import com.google.gson.Gson;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -34,11 +40,16 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.HttpException;
 import retrofit2.Retrofit;
 
 public class ImmediatelyDialogView extends Dialog {
     private Context context;
     private int id;
+
+    private Map<String,String> resultBody = new HashMap<>();
+
 
     public ImmediatelyDialogView(Context context,int ID) {
         super(context);
@@ -116,12 +127,33 @@ public class ImmediatelyDialogView extends Dialog {
                         @Override
                         public void onNext(Message o) {
                             Log.e("AUTH","验证成功"+o.toString());
+                            resultBody.put("STATE","验证成功");
+                            resultBody.put("REASON","");
+
+                            CallBackDataAuth.doAuthStateCallBack(resultBody);
                             dismiss();
                         }
 
                         @Override
                         public void onError(Throwable e) {
-                            Log.e("AUTH","验证失败!"+e);
+                            if(e instanceof HttpException){
+                                ResponseBody body = ((HttpException)e).response().errorBody();
+                                try {
+                                    String info = body.string();
+                                    Gson gson = new Gson();
+                                    TextMessage message = gson.fromJson(info,TextMessage.class);
+                                    resultBody.put("STATE","验证失败");
+                                    resultBody.put("REASON",message.getMessage());
+
+                                    CallBackDataAuth.doAuthStateCallBack(resultBody);
+                                    Log.e("AUTH","验证失败!"+info);
+                                    Log.e("AUTH",message.toString());
+                                } catch (IOException e1) {
+                                    e1.printStackTrace();
+                                }
+                            }
+
+
                             dismiss();
                         }
 

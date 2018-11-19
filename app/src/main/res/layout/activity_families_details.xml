@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -75,14 +75,18 @@
             android:paddingLeft="3dp"
             android:paddingRight="3dp"
             android:layout_marginRight="14dp"/>
-        <de.hdodenhof.circleimageview.CircleImageView
+
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/families_header_icon_had"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@mipmap/touxiang"
             android:layout_toLeftOf="@id/input_change_header_icon"
             android:layout_centerVertical="true"
-            android:layout_marginRight="14dp"/>
+            android:layout_marginRight="14dp"
+            fresco:actualImageScaleType="centerInside"
+            fresco:roundAsCircle="true"
+            fresco:backgroundImage="@color/colorPrimary"/>
     </RelativeLayout>
     
     <RelativeLayout

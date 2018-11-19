@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chengsheng.cala.htcm.GlobalConstant;
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.model.datamodel.FamiliesList;
+import com.chengsheng.cala.htcm.network.MyRetrofit;
+import com.chengsheng.cala.htcm.network.NetService;
+import com.chengsheng.cala.htcm.utils.AuthStateCallBack;
+import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
 import com.chengsheng.cala.htcm.views.activitys.FamilyManageActivity;
 import com.chengsheng.cala.htcm.views.adapters.FMRecyclerAdapter;
 
@@ -25,14 +32,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HealthFragment extends Fragment {
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Retrofit;
+
+public class HealthFragment extends Fragment implements AuthStateCallBack {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     private String mParam1;
     private String mParam2;
 
+    private RecyclerView peopleRecycler;
+
+    private MyRetrofit myRetrofit;
+    private Retrofit getFamiliesList;
+    private FMRecyclerAdapter fmRecyclerAdapter;
+
     private OnFragmentInteractionListener mListener;
+
 
     public HealthFragment() {
         // Required empty public constructor
@@ -54,38 +73,61 @@ public class HealthFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
+        CallBackDataAuth.setAuthStateCallBack(this);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_health, container, false);
 
-        TextView title = (TextView) rootView.findViewById(R.id.title_header_health).findViewById(R.id.menu_bar_title);
-        ImageView imageView = (ImageView) rootView.findViewById(R.id.title_header_health).findViewById(R.id.back_login);
-        TextView childTitle = (TextView) rootView.findViewById(R.id.title_header_health).findViewById(R.id.message_mark_text);
-        RecyclerView peopleRecycler = (RecyclerView) rootView.findViewById(R.id.family_manage_recycler);
-        final SwipeRefreshLayout freahPeopleRecycler = (SwipeRefreshLayout) rootView.findViewById(R.id.fresh_people_recycler);
+        TextView title = rootView.findViewById(R.id.title_header_health).findViewById(R.id.menu_bar_title);
+        ImageView imageView = rootView.findViewById(R.id.title_header_health).findViewById(R.id.back_login);
+        TextView childTitle = rootView.findViewById(R.id.title_header_health).findViewById(R.id.message_mark_text);
+        peopleRecycler = rootView.findViewById(R.id.family_manage_recycler);
+        final SwipeRefreshLayout freahPeopleRecycler = rootView.findViewById(R.id.fresh_people_recycler);
 
         title.setText("健康");
         imageView.setVisibility(View.INVISIBLE);
         childTitle.setText("家人管理");
 
+        peopleRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
+        myRetrofit = MyRetrofit.createInstance();
+        getFamiliesList = myRetrofit.createURL(GlobalConstant.API_BASE_URL);
+        NetService service = getFamiliesList.create(NetService.class);
+        service.getFamiliesList(mParam1 + " " + mParam2)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableObserver<FamiliesList>() {
+                    @Override
+                    public void onNext(FamiliesList datas) {
+                        Log.e("FAMILIES",datas.toString());
+                        fmRecyclerAdapter = new FMRecyclerAdapter(getContext(), datas.getItems());
+                        peopleRecycler.setAdapter(fmRecyclerAdapter);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("FAMILIES",e.toString());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
         childTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(),FamilyManageActivity.class);
+                Intent intent = new Intent(getContext(), FamilyManageActivity.class);
                 startActivity(intent);
             }
         });
 
-        final List<String> data = new ArrayList<>();
-        for(int i = 0;i < 5;i++){
-            data.add("input_data");
-        }
-
-        peopleRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        final FMRecyclerAdapter fmRecyclerAdapter = new FMRecyclerAdapter(getContext(),tempDatas());
-        peopleRecycler.setAdapter(fmRecyclerAdapter);
 
         freahPeopleRecycler.setColorSchemeColors(Color.BLUE);
 
@@ -93,7 +135,7 @@ public class HealthFragment extends Fragment {
             @Override
             public void onRefresh() {
 //                data.add("new");
-                Toast.makeText(getContext(),"下拉刷新--",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "下拉刷新--", Toast.LENGTH_SHORT).show();
                 fmRecyclerAdapter.notifyDataSetChanged();
                 freahPeopleRecycler.setRefreshing(false);
             }
@@ -125,34 +167,14 @@ public class HealthFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void authResult(Map<String, String> result) {
+        Toast.makeText(getContext(),result.get("STATE")+":"+result.get("REASON"),Toast.LENGTH_LONG).show();
+    }
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 
-    //临时测试数据(完成测试后删除)
-    private List<Map<String,String>> tempDatas(){
-        List<Map<String,String>> datas = new ArrayList<>();
-        Map<String,String> user_a = new HashMap<>();
-        Map<String,String> user_b = new HashMap<>();
-        Map<String,String> user_c = new HashMap<>();
-        user_a.put("NAME","王树彤");
-        user_a.put("MARK","本人");
-        user_a.put("USER_ID","511 623 000 66");
-        user_a.put("VERIFY","TRUE");
-
-        user_b.put("NAME","王树同");
-        user_b.put("MARK","女儿");
-        user_b.put("USER_ID","511 623 000 66");
-        user_b.put("VERIFY","TRUE");
-
-        user_c.put("NAME","李凯旋");
-        user_c.put("MARK","丈夫");
-        user_c.put("VERIFY","FALSE");
-
-        datas.add(user_a);
-        datas.add(user_b);
-        datas.add(user_c);
-        return datas;
-    }
 }

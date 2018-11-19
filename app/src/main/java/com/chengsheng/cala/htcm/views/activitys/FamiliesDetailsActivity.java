@@ -1,5 +1,6 @@
 package com.chengsheng.cala.htcm.views.activitys;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -104,6 +105,34 @@ public class FamiliesDetailsActivity extends AppCompatActivity {
                 sexSelecterFemale.setTextColor(getResources().getColor(R.color.colorWhite));
             }
         });
+
+        //点击进入修改手机号码界面.
+        inputChangeCellphone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FamiliesDetailsActivity.this,ModeFamiliesInfoActivity.class);
+                intent.putExtra("MODE","CELLPHONE");
+                startActivity(intent);
+            }
+        });
+        //点击进入修改家人关系页面
+        inputChangeRelation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FamiliesDetailsActivity.this,ModeFamiliesInfoActivity.class);
+                intent.putExtra("MODE","RELATION");
+                startActivity(intent);
+            }
+        });
+        //点击进入修改家人关系页面
+        inputChangeName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FamiliesDetailsActivity.this,ModeFamiliesInfoActivity.class);
+                intent.putExtra("MODE","NAME");
+                startActivity(intent);
+            }
+        });
     }
 
     private void initViews() {
@@ -113,11 +142,11 @@ public class FamiliesDetailsActivity extends AppCompatActivity {
         healthCardNum = findViewById(R.id.health_card_num);
         authenticationMark = findViewById(R.id.authentication_mark);//立即认证 按钮
         inputChangeHeaderIcon = findViewById(R.id.input_change_header_icon);//
-        inputChangeName = findViewById(R.id.input_change_name);
+        inputChangeName = findViewById(R.id.input_change_name);//修改家人姓名
         inputChangeAge = findViewById(R.id.input_change_age);
         inputChangeIdNum = findViewById(R.id.input_change_id_num);
-        inputChangeCellphone = findViewById(R.id.input_change_cellphone);
-        inputChangeRelation = findViewById(R.id.input_change_relation);
+        inputChangeCellphone = findViewById(R.id.input_change_cellphone);//修改手机号码按钮
+        inputChangeRelation = findViewById(R.id.input_change_relation);//修改家人关系按钮
         familiesHeaderIconHad = findViewById(R.id.families_header_icon_had);
         familiesNameHad = findViewById(R.id.families_name_had);
         sexSelecterMale = findViewById(R.id.sex_selecter_male);
@@ -164,7 +193,7 @@ public class FamiliesDetailsActivity extends AppCompatActivity {
         }
 
         familiesNameHad.setText(info.getFullname());
-        familiesAgeHad.setText(String.valueOf(info.getAge())+"岁");
+        familiesAgeHad.setText(String.valueOf(info.getAge()) + "岁");
         familiesIdNumHad.setText(info.getId_card_no());
         familiesTelNumHad.setText(info.getMobile());
         familiesRelationHad.setText(info.getOwner_relationship());

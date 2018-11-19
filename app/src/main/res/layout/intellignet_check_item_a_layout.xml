@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/container_h"
+        android:layout_width="match_parent"
+        android:layout_height="76dp"
+        android:background="@drawable/has_bottom_line_off_bg">
+
+        <TextView
+            android:id="@+id/check_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="20dp"
+            android:text="血常规"
+            android:textColor="@color/colorText"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/check_item_child"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/check_item_name"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="4dp"
+            android:text="体检大楼A区305 采样台1"
+            android:textColor="@color/colorThrText"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/item_select_button"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="14dp"
+            android:background="@drawable/selecter_radio_button_bg" />
+        <LinearLayout
+            android:id="@+id/current_waiting_number_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="14dp"
+            android:gravity="center_horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="当前排队"
+                android:textSize="12sp"
+                android:textColor="@color/colorThrText"/>
+            <TextView
+                android:id="@+id/current_waiting_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5人"
+                android:textSize="20sp"
+                android:textColor="@color/colorPrimary"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/checked_mark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已检"
+            android:textSize="18sp"
+            android:textColor="@color/colorThrText"
+            android:textStyle="bold"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="14dp"/>
+    </RelativeLayout>
+
+</FrameLayout>

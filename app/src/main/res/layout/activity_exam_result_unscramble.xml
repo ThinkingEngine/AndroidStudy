@@ -44,8 +44,8 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="14dp"
-            android:text="已检"
-            android:textColor="@color/colorSecText"
+            android:text="异常项数"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="14sp" />
 
     </RelativeLayout>
@@ -61,58 +61,64 @@
             android:id="@+id/doc_result_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="小结：肺部有杂音"
-            android:textSize="14sp"
-            android:textColor="@color/colorText"
+            android:layout_marginLeft="14dp"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="14dp"/>
+            android:text="小结：肺部有杂音"
+            android:textColor="@color/colorText"
+            android:textSize="14sp" />
 
         <ImageView
             android:id="@+id/doc_signature_mark_b"
             android:layout_width="81dp"
             android:layout_height="29dp"
-            android:src="@color/colorPrimary"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
             android:layout_marginRight="14dp"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="20dp"
+            android:src="@color/colorPrimary" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="分检医生"
-            android:layout_toLeftOf="@id/doc_signature_mark_b"
             android:layout_alignParentBottom="true"
+            android:layout_marginRight="4dp"
             android:layout_marginBottom="22dp"
-            android:layout_marginRight="4dp"/>
+            android:layout_toLeftOf="@id/doc_signature_mark_b"
+            android:text="分检医生" />
     </RelativeLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/exam_detail_type_a"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/doc_signature_container"
-        android:layout_marginTop="10dp"
         android:layout_marginStart="14dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="14dp"
         android:background="@drawable/fmailies_item_bg"
         android:padding="14dp">
 
     </android.support.v7.widget.RecyclerView>
+
     <ExpandableListView
         android:id="@+id/exam_detail_type_b"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/exam_detail_type_a">
+        android:layout_below="@id/doc_signature_container"
+        android:groupIndicator="@null"
+        android:divider="@null">
 
     </ExpandableListView>
+
     <TextView
         android:id="@+id/tips"
         android:layout_width="299dp"
         android:layout_height="30dp"
-        android:text="温馨提示：此次体检结果，仅对本次查体，检查、检验样本负责。
-本报告不能用于二次诊断或其他任何医学判断目的使用。"
-        android:textSize="10dp"
-        android:textColor="@color/colorSecText"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"/>
+        android:layout_marginBottom="30dp"
+        android:text="温馨提示：此次体检结果，仅对本次查体，检查、检验样本负责。
+本报告不能用于二次诊断或其他任何医学判断目的使用。"
+        android:textColor="@color/colorSecText"
+        android:textSize="10dp" />
 </RelativeLayout>

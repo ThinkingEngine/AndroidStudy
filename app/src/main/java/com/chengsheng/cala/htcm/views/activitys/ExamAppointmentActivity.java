@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -27,13 +28,6 @@ import com.chengsheng.cala.htcm.network.NetService;
 import com.chengsheng.cala.htcm.views.adapters.ExamAppointmentRecyclerAdapter;
 import com.chengsheng.cala.htcm.views.customviews.HeaderScrollView;
 import com.chengsheng.cala.htcm.views.dialog.CustomComboDialog;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -84,6 +78,8 @@ public class ExamAppointmentActivity extends AppCompatActivity implements Header
         refreshExamAppointmentPage = findViewById(R.id.refresh_exam_appointment_page);
         comboRecommendButton = findViewById(R.id.combo_recommend_button);
 
+        title.setText("体检预约");//修改标题
+
         allPriceA = findViewById(R.id.price_model_a).findViewById(R.id.all_price);
         allPriceB = findViewById(R.id.price_model_b).findViewById(R.id.all_price);
 
@@ -122,6 +118,7 @@ public class ExamAppointmentActivity extends AppCompatActivity implements Header
                     }
                 });
 
+        //下拉刷新
         refreshExamAppointmentPage.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -133,7 +130,8 @@ public class ExamAppointmentActivity extends AppCompatActivity implements Header
 
         //测试数据
         List<Map<String, Object>> listadata = new ArrayList<>();
-        String[] d = new String[]{"100元以内", "100元-200元", "100元-200元", "100元-200元", "1000元-2000元", "10000元-200000元"};
+        final String[] d = new String[]{"100元以内", "100元-200元", "100元-200元", "100元-200元", "1000元-2000元", "10000元-200000元"};
+        final boolean[] select = {false,false,false,false,false,false};
         for (int i = 0; i < d.length; i++) {
             Map<String, Object> map = new HashMap<>();
             map.put("text", d[i]);
@@ -149,6 +147,21 @@ public class ExamAppointmentActivity extends AppCompatActivity implements Header
         GridView gridView = popupView.findViewById(R.id.price_selecter);
         SimpleAdapter simpleAdapter = new SimpleAdapter(this, listadata, R.layout.price_bg_layout, from, to);
         gridView.setAdapter(simpleAdapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView price = view.findViewById(R.id.price_text);
+                if(select[position]){
+                    select[position] = false;
+                    price.setTextColor(getResources().getColor(R.color.colorSecText));
+                    price.setSelected(false);
+                }else{
+                    select[position] = true;
+                    price.setSelected(true);
+                    price.setTextColor(getResources().getColor(R.color.colorPrimary));
+                }
+            }
+        });
 
         window.setBackgroundDrawable(new ColorDrawable(Color.BLACK));
         window.setOutsideTouchable(true);
@@ -178,6 +191,7 @@ public class ExamAppointmentActivity extends AppCompatActivity implements Header
 
         final CustomComboDialog dialog = new CustomComboDialog(ExamAppointmentActivity.this);
 
+        //定制套餐
         comboRecommendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

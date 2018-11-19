@@ -7,7 +7,8 @@
         android:id="@+id/condition_screening_list"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/fmailies_item_bg"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/wire_frame_bg_type_a"
         android:padding="5dp">
 
     </ListView>

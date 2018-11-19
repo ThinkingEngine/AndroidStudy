@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chengsheng.cala.htcm.R;
@@ -22,11 +23,16 @@ import java.util.List;
 public class ConditionPopupWindow extends PopupWindow {
 
     private Context context;
+    private List<String> datas;
+
+
     private ListView listView;
 
-    public ConditionPopupWindow(Context context){
+
+    public ConditionPopupWindow(Context context,List<String> datas){
         super(context);
         this.context = context;
+        this.datas = datas;
         init();
     }
 
@@ -35,10 +41,7 @@ public class ConditionPopupWindow extends PopupWindow {
         View rootView = layoutInflater.inflate(R.layout.condition_screening_model_a_layout,null);
 
         listView = rootView.findViewById(R.id.condition_screening_list);
-        List<String> datas = new ArrayList<>();
-        datas.add("1");
-        datas.add("2");
-        datas.add("T");
+
         listView.setAdapter(new MyBaseAdapter(datas));
 
         setContentView(rootView);
@@ -89,8 +92,9 @@ public class ConditionPopupWindow extends PopupWindow {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             TextView selectConditionText;
-            ImageView selectMark;
+            final ImageView selectMark;
             TextView okButton;
+            RelativeLayout selectItemBg;
 
             if(convertView == null){
                 convertView = LayoutInflater.from(context).inflate(R.layout.condition_screening_item_layout,null);
@@ -98,6 +102,7 @@ public class ConditionPopupWindow extends PopupWindow {
             selectConditionText = convertView.findViewById(R.id.select_condition_text);
             selectMark = convertView.findViewById(R.id.select_mark);
             okButton = convertView.findViewById(R.id.ok_button);
+            selectItemBg = convertView.findViewById(R.id.select_item_bg);
 
 
             if(position == (datas.size()-1)){
@@ -108,7 +113,28 @@ public class ConditionPopupWindow extends PopupWindow {
                 okButton.setVisibility(View.INVISIBLE);
                 selectConditionText.setVisibility(View.VISIBLE);
                 selectMark.setVisibility(View.VISIBLE);
+
+                selectConditionText.setText(datas.get(position));
             }
+
+            selectItemBg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(selectMark.isSelected()){
+                        selectMark.setSelected(false);
+                    }else{
+                        selectMark.setSelected(true);
+                    }
+                }
+            });
+
+            okButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dismiss();
+                }
+            });
+
 
             return convertView;
         }

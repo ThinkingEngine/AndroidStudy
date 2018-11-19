@@ -13,11 +13,13 @@
 
     <RelativeLayout
         android:id="@+id/families_manage_box"
-        android:layout_width="345dp"
+        android:layout_width="match_parent"
         android:layout_height="63dp"
         android:layout_below="@id/title_header_add_exam_person"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:background="@mipmap/jiarenguanli_bg">
 
         <ImageView

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="309dp"
+        android:background="@color/colorWhite">
+
+        <LinearLayout
+            android:id="@+id/share_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="29dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="1dp"
+                android:background="@color/colorPageBackground" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="11dp"
+                android:layout_marginRight="11dp"
+                android:text="分享至"
+                android:textColor="@color/colorThrText"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="1dp"
+                android:background="@color/colorPageBackground" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/share_down"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorPageBackground"
+            android:text="取消"
+            android:textColor="@color/colorThrText"
+            android:textSize="18sp" />
+
+        <GridView
+            android:id="@+id/share_way"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/share_down"
+            android:layout_below="@id/share_up"
+            android:layout_marginLeft="35dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginRight="35dp"
+            android:layout_marginBottom="11dp"
+            android:numColumns="4">
+
+        </GridView>
+
+
+    </RelativeLayout>
+
+</FrameLayout>

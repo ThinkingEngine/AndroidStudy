@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.chengsheng.cala.htcm">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -10,7 +17,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
         <activity
             android:name=".LaunchActivity"
             android:theme="@style/AppTheme">
@@ -56,7 +62,7 @@
         <activity android:name=".views.activitys.BeforeExamActivity" />
         <activity android:name=".views.activitys.ExamOrderFormActivity" />
         <activity android:name=".views.activitys.OrderDetailActivity" />
-        <activity android:name=".views.activitys.ExamReportCompareActivity"></activity>
+        <activity android:name=".views.activitys.ExamReportCompareActivity" />
 
         <receiver android:name=".model.broadcasts.NeworkChangeReceiver">
             <intent-filter>
@@ -73,13 +79,11 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/paths" />
         </provider>
-    </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+        <activity android:name=".views.activitys.ModeFamiliesInfoActivity" />
+        <activity android:name=".views.activitys.BarCodeActivity" />
+        <activity android:name=".views.activitys.IntelligentCheckActivity" />
+        <activity android:name=".views.activitys.ServiceOrderActivity"></activity>
+    </application>
 
 </manifest>

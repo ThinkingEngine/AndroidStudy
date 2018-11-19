@@ -7,11 +7,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.views.adapters.MyExamPagerViewAdapter;
+import com.chengsheng.cala.htcm.views.customviews.ConditionPopupWindow;
 import com.chengsheng.cala.htcm.views.fragments.MyExamAllFragment;
 
 
@@ -48,6 +50,20 @@ public class MyExamActivity extends AppCompatActivity implements TabLayout.OnTab
         for(int i = 0; i < tabs.length;i++){
             myExamTabLayout.getTabAt(i).setText(tabs[i]);
         }
+
+        //临时数据
+        List<String> listDatas = new ArrayList<>();
+        listDatas.add("全部");
+        listDatas.add("周子轩");
+        listDatas.add("周父");
+        listDatas.add("周母");
+        final ConditionPopupWindow window = new ConditionPopupWindow(this,listDatas);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                window.showAsDropDown(searchButton);
+            }
+        });
 
     }
 

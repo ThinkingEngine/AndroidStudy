@@ -4,35 +4,41 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
+        android:id="@+id/select_item_bg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <ImageView
             android:id="@+id/select_mark"
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:src="@drawable/selecter_radio_button_bg"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="14dp"/>
+            android:layout_marginLeft="14dp"
+            android:src="@drawable/selecter_radio_button_bg" />
+
         <TextView
             android:id="@+id/select_condition_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="全部"
-            android:textSize="18sp"
-            android:textColor="@color/colorText"
-            android:layout_toRightOf="@id/select_mark"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="7dp"/>
+            android:layout_marginLeft="7dp"
+            android:layout_toRightOf="@id/select_mark"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="全部"
+            android:textColor="@color/colorText"
+            android:textSize="18sp" />
+
         <TextView
             android:id="@+id/ok_button"
-            android:layout_width="100dp"
-            android:layout_height="25dp"
+            android:layout_width="60dp"
+            android:layout_height="20dp"
+            android:layout_centerInParent="true"
             android:background="@drawable/login_button_bg"
-            android:text="确定"
-            android:textSize="16sp"
-            android:textColor="@color/colorWhite"
             android:gravity="center"
-            android:layout_centerInParent="true"/>
+            android:text="确定"
+            android:textColor="@color/colorWhite"
+            android:textSize="14sp" />
     </RelativeLayout>
-    
+
 </FrameLayout>

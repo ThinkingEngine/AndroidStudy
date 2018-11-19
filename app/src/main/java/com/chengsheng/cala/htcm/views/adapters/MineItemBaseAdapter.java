@@ -52,11 +52,11 @@ public class MineItemBaseAdapter extends BaseAdapter {
         if(convertView == null){
             convertView = LayoutInflater.from(context).inflate(R.layout.mine_linst_item_layout,null);
             holder = new ViewHolder();
-            holder.icon = (ImageView) convertView.findViewById(R.id.mine_list_item_icon);
-            holder.title = (TextView) convertView.findViewById(R.id.mine_list_item_text);
-            holder.input = (ImageView) convertView.findViewById(R.id.input_mine_item_icon);
-            holder.cellphone = (TextView) convertView.findViewById(R.id.service_cellphone_num);
-            holder.bottom = (LinearLayout) convertView.findViewById(R.id.mine_item_bottom_cut_off);
+            holder.icon = convertView.findViewById(R.id.mine_list_item_icon);
+            holder.title = convertView.findViewById(R.id.mine_list_item_text);
+            holder.input = convertView.findViewById(R.id.input_mine_item_icon);
+            holder.cellphone = convertView.findViewById(R.id.service_cellphone_num);
+            holder.bottom = convertView.findViewById(R.id.mine_item_bottom_cut_off);
 
             convertView.setTag(holder);
         }else{

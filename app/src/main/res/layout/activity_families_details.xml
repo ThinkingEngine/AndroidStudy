@@ -67,11 +67,13 @@
 
         <ImageView
             android:id="@+id/input_change_header_icon"
-            android:layout_width="6dp"
-            android:layout_height="12dp"
+            android:layout_width="12dp"
+            android:layout_height="match_parent"
             android:src="@mipmap/liebiaojinru"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
             android:layout_marginRight="14dp"/>
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/families_header_icon_had"
@@ -105,11 +107,13 @@
             android:layout_marginLeft="2dp"/>
         <ImageView
             android:id="@+id/input_change_name"
-            android:layout_width="6dp"
-            android:layout_height="12dp"
+            android:layout_width="12dp"
+            android:layout_height="match_parent"
             android:src="@mipmap/liebiaojinru"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
             android:layout_marginRight="14dp"/>
         <TextView
             android:id="@+id/families_name_had"
@@ -193,11 +197,13 @@
             android:layout_marginLeft="2dp"/>
         <ImageView
             android:id="@+id/input_change_age"
-            android:layout_width="6dp"
-            android:layout_height="12dp"
+            android:layout_width="12dp"
+            android:layout_height="match_parent"
             android:src="@mipmap/liebiaojinru"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
             android:layout_marginRight="14dp"/>
         <TextView
             android:id="@+id/families_age_had"
@@ -224,11 +230,13 @@
             android:layout_marginLeft="14dp"/>
         <ImageView
             android:id="@+id/input_change_id_num"
-            android:layout_width="6dp"
-            android:layout_height="12dp"
+            android:layout_width="12dp"
+            android:layout_height="match_parent"
             android:src="@mipmap/liebiaojinru"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
             android:layout_marginRight="14dp"/>
         <TextView
             android:id="@+id/families_id_num_had"
@@ -262,20 +270,22 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/f_n_d"
             android:layout_marginLeft="2dp"/>
+
         <ImageView
             android:id="@+id/input_change_cellphone"
-            android:layout_width="6dp"
-            android:layout_height="12dp"
-            android:src="@mipmap/liebiaojinru"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="14dp"/>
+            android:layout_width="12dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="13dp"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:src="@mipmap/liebiaojinru" />
         <TextView
             android:id="@+id/families_tel_num_had"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            
             android:layout_marginRight="14dp"
             android:layout_toLeftOf="@id/input_change_cellphone"
             android:text="199****7068"
@@ -317,11 +327,13 @@
             android:textColor="@color/colorSecText"/>
         <ImageView
             android:id="@+id/input_change_relation"
-            android:layout_width="6dp"
-            android:layout_height="12dp"
+            android:layout_width="12dp"
+            android:layout_height="match_parent"
             android:src="@mipmap/liebiaojinru"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
             android:layout_marginRight="14dp"/>
     </RelativeLayout>
 </LinearLayout>

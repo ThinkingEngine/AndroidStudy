@@ -73,6 +73,6 @@ public class ExamResultUnscrambleActivity extends AppCompatActivity {
         tips = findViewById(R.id.tips);
 
         title.setText("检查详情");
-        childTitle.setVisibility(View.INVISIBLE);
+        childTitle.setText("报告解读");
     }
 }

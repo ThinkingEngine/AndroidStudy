@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.activitys.BarCodeActivity">
+
+    <ImageButton
+        android:id="@+id/close_bar_code"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="31dp"
+        android:layout_marginRight="20dp"
+        android:background="@mipmap/gaobaoguanbi" />
+    
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="222dp">
+        <ImageView
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:src="@mipmap/shuruqingkogn"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="检查前请向体检医生出示该条形码"
+            android:textColor="@color/colorThrText"
+            android:textSize="14sp"
+            android:layout_marginLeft="6dp"/>
+    </LinearLayout>
+    
+    <ImageView
+        android:id="@+id/bar_code_mark"
+        android:layout_width="320dp"
+        android:layout_height="85dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="250dp"
+        android:background="@color/colorText"/>
+    <TextView
+        android:id="@+id/number_bar_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bar_code_mark"
+        android:text="180 515 000 01"
+        android:layout_centerHorizontal="true"
+        android:textSize="24dp"
+        android:textColor="@color/colorText"
+        android:layout_marginTop="14dp"/>
+</RelativeLayout>

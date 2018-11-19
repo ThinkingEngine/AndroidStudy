@@ -1,6 +1,7 @@
 package com.chengsheng.cala.htcm.views.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,9 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.views.activitys.IntelligentCheckActivity;
 import com.daimajia.swipe.SwipeLayout;
 
 import java.util.List;
@@ -33,10 +36,18 @@ public class AIAssistantSubRecyclerView extends RecyclerView.Adapter<AIAssistant
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AIAssistantSubViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull AIAssistantSubViewHolder viewHolder, final int i) {
         viewHolder.aiAssistantListItem.setShowMode(SwipeLayout.ShowMode.LayDown);
         viewHolder.deleteExamItem.setVisibility(View.INVISIBLE);
         viewHolder.userNameAiAssistant.setText(datas.get(i));
+
+        viewHolder.aiAssistantItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,IntelligentCheckActivity.class);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -49,6 +60,7 @@ public class AIAssistantSubRecyclerView extends RecyclerView.Adapter<AIAssistant
         LinearLayout bottomWrapper;
         ImageView deleteExamItem;
         TextView userNameAiAssistant;
+        RelativeLayout aiAssistantItem;
 
         public AIAssistantSubViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -56,6 +68,7 @@ public class AIAssistantSubRecyclerView extends RecyclerView.Adapter<AIAssistant
             bottomWrapper = itemView.findViewById(R.id.bottom_wrapper);
             deleteExamItem = itemView.findViewById(R.id.ai_assistant_sub_item).findViewById(R.id.delete_exam_item);
             userNameAiAssistant = itemView.findViewById(R.id.ai_assistant_sub_item).findViewById(R.id.user_name_ai_assistant);
+            aiAssistantItem = itemView.findViewById(R.id.ai_assistant_sub_item).findViewById(R.id.ai_assistant_item);
         }
     }
 }

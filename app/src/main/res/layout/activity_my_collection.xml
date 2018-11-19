@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPageBackground"
+    android:orientation="vertical"
+    tools:context="com.chengsheng.cala.htcm.views.activitys.MyCollectionActivity">
+
+    <include
+        android:id="@+id/title_header_my_collection"
+        layout="@layout/title_bar_type_two_layout"/>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/my_collection_tab_header"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        app:tabBackground="@color/colorWhite"
+        app:tabTextColor="@color/colorHitText"
+        app:tabSelectedTextColor="@color/colorPrimary"
+        app:tabIndicatorColor="@color/colorPrimary">
+    </android.support.design.widget.TabLayout>
+
+</LinearLayout>

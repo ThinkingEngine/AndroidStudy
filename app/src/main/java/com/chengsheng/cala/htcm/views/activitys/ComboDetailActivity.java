@@ -1,12 +1,24 @@
 package com.chengsheng.cala.htcm.views.activitys;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
+import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +33,8 @@ import com.chengsheng.cala.htcm.views.adapters.ExamItemExpandableListViewAdapter
 import com.chengsheng.cala.htcm.views.customviews.MyExpandableListView;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.transform.Templates;
 
@@ -44,6 +58,10 @@ public class ComboDetailActivity extends AppCompatActivity {
     private TextView comboBriefText;
     private TextView userNeedNote;
 
+    private Dialog dialog;
+    private View dialogView;
+    private TranslateAnimation ta;
+    private List<String> shareList;
 
     private boolean isCollect = false;
     private AppointmentDetail fatherDatas;
@@ -109,6 +127,7 @@ public class ComboDetailActivity extends AppCompatActivity {
                         setViews(appointmentDetail);
                         ExamItemExpandableListViewAdapter adapter = new ExamItemExpandableListViewAdapter(ComboDetailActivity.this, appointmentDetail.getItems());
                         examItemComboExpandable.setAdapter(adapter);
+                        examItemComboExpandable.setIndicatorBounds(examItemComboExpandable.getWidth()-140,examItemComboExpandable.getWidth()-10);
                         Log.e("TEST", appointmentDetail.toString());
                     }
 
@@ -184,6 +203,20 @@ public class ComboDetailActivity extends AppCompatActivity {
             }
         });
 
+        //分享该套餐
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareList = new ArrayList<>();
+                shareList.add("朋友圈");
+                shareList.add("微信好友");
+                shareList.add("QQ好友");
+                shareList.add("QQ空间");
+                shareList.add("复制链接");
+                shareSelection();
+            }
+        });
+
 
         immediateAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,7 +231,7 @@ public class ComboDetailActivity extends AppCompatActivity {
     private void initViews() {
         title = findViewById(R.id.title_header_combo_detail).findViewById(R.id.menu_bar_title);
         collect = findViewById(R.id.title_header_combo_detail).findViewById(R.id.collect_icon);
-        share = findViewById(R.id.title_header_combo_detail).findViewById(R.id.share);
+        share = findViewById(R.id.title_header_combo_detail).findViewById(R.id.share);//分享按钮
         back = findViewById(R.id.title_header_combo_detail).findViewById(R.id.back_login);
         immediateAppointment = findViewById(R.id.immediate_appointment);//立即预约按钮
         examItemComboExpandable = findViewById(R.id.exam_item_combo_expandable);
@@ -241,5 +274,72 @@ public class ComboDetailActivity extends AppCompatActivity {
 
     }
 
+    private void shareSelection() {
+        if (dialog == null) {
+
+            dialog = new Dialog(this, R.style.dialog_bottom);
+            dialogView = LayoutInflater.from(this).inflate(R.layout.share_combo_bg_layout, null);
+            dialog.setContentView(dialogView);
+        }
+
+        Window window = dialog.getWindow();
+        window.setGravity(Gravity.BOTTOM);
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.show();
+
+
+        GridView gridView = dialogView.findViewById(R.id.share_way);
+        Button dissen = dialogView.findViewById(R.id.share_down);
+
+
+        ta = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 0, Animation.RELATIVE_TO_PARENT, 1, Animation.RELATIVE_TO_PARENT, 0);
+        ta.setInterpolator(new AccelerateInterpolator());
+        ta.setDuration(200);
+
+
+        dissen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        ShareAdapter adapter = new ShareAdapter();
+        gridView.setAdapter(adapter);
+
+
+    }
+
+    public class ShareAdapter extends BaseAdapter {
+
+
+        @Override
+        public int getCount() {
+            return shareList.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return shareList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                convertView = LayoutInflater.from(ComboDetailActivity.this).inflate(R.layout.share_way_icon_bg_layout, null);
+            }
+
+            TextView textView = convertView.findViewById(R.id.share_way_text);
+            textView.setText(shareList.get(position));
+
+            return convertView;
+        }
+
+    }
 
 }

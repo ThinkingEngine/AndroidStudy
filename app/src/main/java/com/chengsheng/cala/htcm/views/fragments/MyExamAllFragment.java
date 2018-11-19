@@ -18,6 +18,8 @@ import com.chengsheng.cala.htcm.views.adapters.MyExamRecyclerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.security.AccessController.getContext;
+
 
 public class MyExamAllFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match

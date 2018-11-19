@@ -6,20 +6,23 @@
 
     <ImageView
         android:id="@+id/back_login"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:src="@mipmap/fanhui"
+        android:layout_width="32dp"
+        android:layout_height="match_parent"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="21dp"/>
+        android:layout_marginLeft="21dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:src="@mipmap/fanhui" />
+
     <TextView
         android:id="@+id/menu_bar_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:gravity="center"
         android:text="@string/sms_code"
         android:textColor="@color/colorText"
-        android:textSize="16sp"
-        android:layout_centerInParent="true" />
+        android:textSize="16sp" />
 
 
 </RelativeLayout>

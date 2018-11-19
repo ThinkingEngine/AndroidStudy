@@ -50,7 +50,14 @@ public class ExamOrderFormActivity extends AppCompatActivity implements ExamOrde
         title.setText("体检订单");
         iconButton.setImageResource(R.mipmap.tijian_xuanren);
 
-        final ConditionPopupWindow window = new ConditionPopupWindow(this);
+        //临时数据
+        List<String> listDatas = new ArrayList<>();
+        listDatas.add("全部");
+        listDatas.add("周子轩");
+        listDatas.add("周父");
+        listDatas.add("周母");
+
+        final ConditionPopupWindow window = new ConditionPopupWindow(this,listDatas);
         iconButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

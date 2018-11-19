@@ -20,4 +20,5 @@
     <color name="colorContainerBG">#F5FAF8</color>
     <color name="colorLineA">#FFDEDE</color>
     <color name="colorItemBg">#FAFAFA</color>
+    <color name="colorGreen">#93DC21</color>
 </resources>

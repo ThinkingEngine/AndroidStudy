@@ -20,6 +20,8 @@ import com.chengsheng.cala.htcm.views.activitys.ExamAppointmentActivity;
 
 import java.util.List;
 
+import me.gujun.android.taggroup.TagGroup;
+
 public class ExamAppointmentRecyclerAdapter extends RecyclerView.Adapter<ExamAppointmentRecyclerAdapter.ExamAppointmentViewHolder> {
 
     private Context context;
@@ -47,10 +49,11 @@ public class ExamAppointmentRecyclerAdapter extends RecyclerView.Adapter<ExamApp
         }else{
             viewHolder.examHotDegreeMark.setVisibility(View.INVISIBLE);
         }
-        viewHolder.examPriceNum.setText(dataItem.getPrice());
-        viewHolder.examHadNum.setText(String.valueOf(dataItem.getActual_sales_num()));
+        viewHolder.examPriceNum.setText("¥"+dataItem.getPrice());
+        viewHolder.examHadNum.setText(String.valueOf(dataItem.getActual_sales_num())+"人已检");
         final String comboId = String.valueOf(dataItem.getId());
 
+        viewHolder.itemMark.setTags(dataItem.getPackage_tag());
 
         viewHolder.examItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +81,7 @@ public class ExamAppointmentRecyclerAdapter extends RecyclerView.Adapter<ExamApp
         TextView examItemName;
         ImageView examHotDegreeMark;
         TextView examPriceNum;
-        GridView itemMark;
+        TagGroup itemMark;
         TextView examHadNum;
 
         public ExamAppointmentViewHolder(@NonNull View itemView) {

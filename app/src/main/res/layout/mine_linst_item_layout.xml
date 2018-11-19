@@ -3,52 +3,59 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="45dp">
 
-    <ImageView
-        android:id="@+id/mine_list_item_icon"
-        android:layout_width="22dp"
-        android:layout_height="22dp"
-        android:src="@mipmap/jiarengaunli"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="14dp"/>
-    <TextView
-        android:id="@+id/mine_list_item_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorText"
-        android:textSize="16sp"
-        android:text="家人管理"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/mine_list_item_icon"
-        android:layout_marginLeft="18dp"/>
-    <ImageView
-        android:id="@+id/input_mine_item_icon"
-        android:layout_width="6dp"
-        android:layout_height="12dp"
-        android:src="@mipmap/liebiaojinru"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="15dp"/>
-    <TextView
-        android:id="@+id/service_cellphone_num"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:textColor="@color/colorThrText"
-        android:layout_centerVertical="true"
-        android:text="028-05056666"
-        android:layout_toLeftOf="@id/input_mine_item_icon"/>
-    <LinearLayout
-        android:id="@+id/mine_item_bottom_cut_off"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:orientation="vertical"
-        android:background="@color/colorCutoff"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="54dp"></LinearLayout>
+        <ImageView
+            android:id="@+id/mine_list_item_icon"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="14dp"
+            android:src="@mipmap/jiarengaunli" />
+
+        <TextView
+            android:id="@+id/mine_list_item_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="18dp"
+            android:layout_toRightOf="@id/mine_list_item_icon"
+            android:text="家人管理"
+            android:textColor="@color/colorText"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/input_mine_item_icon"
+            android:layout_width="38dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:src="@mipmap/liebiaojinru" />
+
+        <TextView
+            android:id="@+id/service_cellphone_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:text="028-05056666"
+            android:textColor="@color/colorThrText"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:id="@+id/mine_item_bottom_cut_off"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="54dp"
+            android:background="@color/colorCutoff"
+            android:orientation="vertical"></LinearLayout>
     </RelativeLayout>
 </FrameLayout>

@@ -9,26 +9,22 @@
 
     <include
         android:id="@+id/title_header_ai_assistant"
-        android:layout_alignParentTop="true"
+        layout="@layout/message_header_layout"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        layout="@layout/message_header_layout"/>
+        android:layout_alignParentTop="true" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refresh_ai_assistant"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/title_header_ai_assistant"
-        android:layout_marginLeft="14dp"
-        android:layout_marginRight="14dp">
+        android:layout_below="@id/title_header_ai_assistant">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/ai_assistant_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            android:layout_height="match_parent" />
 
-        </android.support.v7.widget.RecyclerView>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

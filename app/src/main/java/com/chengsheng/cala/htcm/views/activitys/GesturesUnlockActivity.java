@@ -7,9 +7,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chengsheng.cala.htcm.BaseActivity;
 import com.chengsheng.cala.htcm.R;
 
-public class GesturesUnlockActivity extends AppCompatActivity {
+public class GesturesUnlockActivity extends BaseActivity {
     private TextView titleText;
     private ImageView noProtectIcon,startProtectIcon,inappProtectIcon;
     private ImageView noProtectMark,startProtectMark,inappProtectMark;

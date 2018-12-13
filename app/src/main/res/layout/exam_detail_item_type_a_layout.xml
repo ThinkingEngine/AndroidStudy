@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -7,7 +7,8 @@
         android:id="@+id/details_item_bg"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@drawable/has_bottom_line_no_off_bg">
+        android:background="@drawable/fmailies_item_bg"
+        android:layout_marginTop="10dp">
         <ImageView
             android:id="@+id/theme_dot"
             android:layout_width="4dp"
@@ -28,12 +29,14 @@
 
         <TextView
             android:id="@+id/exam_item_advice"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="腹壁明显紧张，强直硬如木板"
             android:textSize="14sp"
             android:textColor="@color/colorSecText"
-            android:layout_marginLeft="128dp"
+            android:layout_toRightOf="@id/exam_item_name_detail"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
-</FrameLayout>
+</RelativeLayout>

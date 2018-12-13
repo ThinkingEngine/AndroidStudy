@@ -9,36 +9,41 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.model.datamodel.childmodelb.ExamItem;
+import com.chengsheng.cala.htcm.model.datamodel.childmodelb.ExamPackages;
+
+
+import java.util.List;
 
 public class OrderDetailExpandableListViewAdapter extends BaseExpandableListAdapter {
 
     private Context context;
-    //模拟数据
-    private String[] groups = {"入职体检套餐","自选项目（3）"};
-    private String[][] childs = {{"一般检查","耳鼻喉","心电图"},{"血常规","血压检查","肝功能二项"}};
+    private List<ExamPackages> datas;
 
-    public OrderDetailExpandableListViewAdapter(Context context){
+
+    public OrderDetailExpandableListViewAdapter(Context context,List<ExamPackages> datas){
         this.context = context;
+        this.datas = datas;
     }
 
     @Override
     public int getGroupCount() {
-        return groups.length;
+        return datas.size();
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return childs[groupPosition].length;
+        return datas.get(groupPosition).getExam_item_charges().size();
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-        return groups[groupPosition];
+        return datas.get(groupPosition);
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return childs[groupPosition][childPosition];
+        return datas.get(groupPosition).getExam_item_charges().get(childPosition);
     }
 
     @Override
@@ -71,7 +76,8 @@ public class OrderDetailExpandableListViewAdapter extends BaseExpandableListAdap
             vh = (GroupVH) convertView.getTag();
         }
 
-        vh.orderDetailItemName.setText(groups[groupPosition]);
+        ExamPackages data = datas.get(groupPosition);
+        vh.orderDetailItemName.setText(data.getName());
         if(groupPosition == 0){
             vh.orderDetailPayStateMark.setVisibility(View.VISIBLE);
         }else{
@@ -95,7 +101,16 @@ public class OrderDetailExpandableListViewAdapter extends BaseExpandableListAdap
             vh = (ChildVH) convertView.getTag();
         }
 
-        vh.childOrderItemName.setText(childs[groupPosition][childPosition]);
+        ExamItem data = datas.get(groupPosition).getExam_item_charges().get(childPosition);
+        vh.childOrderItemName.setText(data.getName());
+        if(data.getPayment_status() == 0){
+            vh.childOrderItemValue.setText("未付");
+            vh.childOrderItemValue.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark));
+        }else{
+            vh.childOrderItemValue.setText("已付");
+            vh.childOrderItemValue.setTextColor(context.getResources().getColor(R.color.colorText));
+        }
+
         return convertView;
     }
 

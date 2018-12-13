@@ -7,9 +7,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chengsheng.cala.htcm.BaseActivity;
 import com.chengsheng.cala.htcm.R;
 
-public class SecuritySettingsActivity extends AppCompatActivity {
+public class SecuritySettingsActivity extends BaseActivity {
     private TextView securitySettings;
     private ImageView intoSettingGesturesUnlock;
 

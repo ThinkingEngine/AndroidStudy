@@ -4,13 +4,14 @@ import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.chengsheng.cala.htcm.BaseActivity;
 import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.views.adapters.MainViewPagerAdapter;
@@ -22,7 +23,7 @@ import com.chengsheng.cala.htcm.views.fragments.MineFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomePageActivity extends AppCompatActivity implements MainPageFragment.OnFragmentInteractionListener,
+public class HomePageActivity extends BaseActivity implements MainPageFragment.OnFragmentInteractionListener,
         HealthFragment.OnFragmentInteractionListener,
         FindFragment.OnFragmentInteractionListener,
         MineFragment.OnFragmentInteractionListener {
@@ -39,12 +40,12 @@ public class HomePageActivity extends AppCompatActivity implements MainPageFragm
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_page);
-
         app = HTCMApp.create(this);
+        setContentView(R.layout.activity_home_page);
 
         initView();
         initFragemnts();
+
         final ViewPager mainPager = findViewById(R.id.main_view_pager);
         mainPager.addOnPageChangeListener(new ViewPagerOnPagerChangedLisenter());
         FragmentManager fm = getSupportFragmentManager();
@@ -167,7 +168,6 @@ public class HomePageActivity extends AppCompatActivity implements MainPageFragm
         public void onPageSelected(int i) {
             boolean[] state = new boolean[dataFragments.size()];
             state[i] = true;
-
             updateButtonSelected(state[0], state[1], state[2], state[3]);
         }
 

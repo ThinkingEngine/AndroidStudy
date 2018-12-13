@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,34 +17,35 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ConditionPopupWindow extends PopupWindow {
 
     private Context context;
-    private List<String> datas;
-
+    private List<Map<String, String>> datas, selectedData;
 
     private ListView listView;
 
 
-    public ConditionPopupWindow(Context context,List<String> datas){
+    public ConditionPopupWindow(Context context, List<Map<String, String>> datas) {
         super(context);
         this.context = context;
         this.datas = datas;
+        selectedData = new ArrayList<>();
         init();
     }
 
-    private void init(){
+    private void init() {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View rootView = layoutInflater.inflate(R.layout.condition_screening_model_a_layout,null);
+        View rootView = layoutInflater.inflate(R.layout.condition_screening_model_a_layout, null);
 
         listView = rootView.findViewById(R.id.condition_screening_list);
-
         listView.setAdapter(new MyBaseAdapter(datas));
-
         setContentView(rootView);
 
         this.setOutsideTouchable(true);
@@ -67,16 +69,21 @@ public class ConditionPopupWindow extends PopupWindow {
         context.getWindow().setAttributes(lp);
     }
 
-    public class MyBaseAdapter extends BaseAdapter{
-        private List<String> datas;
+    public class MyBaseAdapter extends BaseAdapter {
+        private List<Map<String, String>> datas;
 
-        public MyBaseAdapter(List<String> datas){
+        public MyBaseAdapter(List<Map<String, String>> datas) {
             this.datas = datas;
         }
 
         @Override
         public int getCount() {
-            return datas.size();
+            if (datas.isEmpty()) {
+                return 2;
+            } else {
+                return datas.size() + 1;
+            }
+
         }
 
         @Override
@@ -90,40 +97,101 @@ public class ConditionPopupWindow extends PopupWindow {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, final ViewGroup parent) {
             TextView selectConditionText;
             final ImageView selectMark;
             TextView okButton;
             RelativeLayout selectItemBg;
 
-            if(convertView == null){
-                convertView = LayoutInflater.from(context).inflate(R.layout.condition_screening_item_layout,null);
+            if (convertView == null) {
+                convertView = LayoutInflater.from(context).inflate(R.layout.condition_screening_item_layout, null);
             }
+
             selectConditionText = convertView.findViewById(R.id.select_condition_text);
             selectMark = convertView.findViewById(R.id.select_mark);
             okButton = convertView.findViewById(R.id.ok_button);
             selectItemBg = convertView.findViewById(R.id.select_item_bg);
 
 
-            if(position == (datas.size()-1)){
-                okButton.setVisibility(View.VISIBLE);
-                selectConditionText.setVisibility(View.INVISIBLE);
-                selectMark.setVisibility(View.INVISIBLE);
-            }else{
-                okButton.setVisibility(View.INVISIBLE);
-                selectConditionText.setVisibility(View.VISIBLE);
-                selectMark.setVisibility(View.VISIBLE);
+            if (!datas.isEmpty()) {
+                if (position < datas.size()) {
+                    Map<String, String> map = datas.get(position);
+                    if (map.get("SELECT").equals("true")) {
+                        selectMark.setSelected(true);
+                    } else if (map.get("SELECT").equals("false")) {
+                        selectMark.setSelected(false);
+                    }
+                    selectConditionText.setText(map.get("DATA"));
+                }
 
-                selectConditionText.setText(datas.get(position));
+                if (position == (datas.size())) {
+                    okButton.setVisibility(View.VISIBLE);
+                    selectConditionText.setVisibility(View.INVISIBLE);
+                    selectMark.setVisibility(View.INVISIBLE);
+                } else if (position == 0) {
+                    okButton.setVisibility(View.INVISIBLE);
+                    selectConditionText.setVisibility(View.VISIBLE);
+                    selectMark.setVisibility(View.VISIBLE);
+                    selectConditionText.setText("全部");
+                } else {
+                    okButton.setVisibility(View.INVISIBLE);
+                    selectConditionText.setVisibility(View.VISIBLE);
+                    selectMark.setVisibility(View.VISIBLE);
+
+                }
+            } else {
+                if (position == 0) {
+                    okButton.setVisibility(View.INVISIBLE);
+                    selectConditionText.setVisibility(View.VISIBLE);
+                    selectConditionText.setText("无数据");
+                    selectMark.setVisibility(View.INVISIBLE);
+                } else {
+                    okButton.setVisibility(View.VISIBLE);
+                    selectConditionText.setVisibility(View.INVISIBLE);
+                    selectMark.setVisibility(View.INVISIBLE);
+                }
             }
+
 
             selectItemBg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(selectMark.isSelected()){
+                    if (selectMark.isSelected()) {
                         selectMark.setSelected(false);
-                    }else{
+                        if (position == 0) {
+                            for (int i = 0; i < datas.size(); i++) {
+                                datas.get(i).put("SELECT", "false");
+                                selectedData.clear();
+                            }
+                            notifyDataSetChanged();
+                        } else if(position != 0 && position < datas.size()){
+                            if (datas.get(0).get("SELECT").equals("true")) {
+                                datas.get(0).put("SELECT", "false");
+                                datas.get(position).put("SELECT", "false");
+                                notifyDataSetChanged();
+                            }
+
+                            selectedData.remove(datas.get(position));
+                        }
+                    } else {
                         selectMark.setSelected(true);
+                        if (position == 0) {
+                            for (int i = 0; i < datas.size(); i++) {
+                                datas.get(i).put("SELECT", "true");
+                                selectedData.clear();
+                                selectedData.addAll(datas);
+                            }
+                            notifyDataSetChanged();
+                        } else if(position != 0 && position < datas.size()){
+                            selectedData.add(datas.get(position));
+                            Log.e("TAG","mark:"+selectedData.size());
+                            if(selectedData.size() == (datas.size()-1)){
+                                for(int i = 0;i <datas.size();i++){
+                                    datas.get(i).put("SELECT", "true");
+                                }
+                                notifyDataSetChanged();
+                            }
+                        }
                     }
                 }
             });
@@ -131,6 +199,7 @@ public class ConditionPopupWindow extends PopupWindow {
             okButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    CallBackDataAuth.doUpdateConditionInterface(selectedData,true);
                     dismiss();
                 }
             });

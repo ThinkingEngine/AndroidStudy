@@ -4,16 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.fragments.MyExamAllFragment">
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/refresh_my_exam"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <android.support.v7.widget.RecyclerView
+
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
         android:id="@+id/my_exam_all_state"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPageBackground">
+        android:background="@color/colorPageBackground" />
 
-    </android.support.v7.widget.RecyclerView>
-    </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>

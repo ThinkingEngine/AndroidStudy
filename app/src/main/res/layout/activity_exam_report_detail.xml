@@ -7,139 +7,106 @@
     android:background="@color/colorPageBackground"
     tools:context=".views.activitys.ExamReportDetailActivity">
 
-    <RelativeLayout
-        android:id="@+id/top_container"
-        android:layout_width="match_parent"
-        android:layout_height="204dp"
-        android:layout_alignParentTop="true"
-        android:background="@mipmap/baogaobg">
-
-        <ImageView
-            android:id="@+id/back_exam_report"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:layout_marginLeft="14dp"
-            android:layout_marginTop="14dp"
-            android:src="@mipmap/fanhui" />
-
-        <LinearLayout
-            android:id="@+id/title_container"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="48dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="18dp"
-                android:src="@mipmap/baogaomingcheng_zuo" />
-
-            <TextView
-                android:id="@+id/exam_report_detail_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="入职体检报告"
-                android:textColor="@color/colorWhite"
-                android:textSize="20sp" />
-
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="18dp"
-                android:src="@mipmap/baogaomigncheng_you" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/exam_report_detail_person"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/title_container"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:text="周子萱"
-            android:textColor="@color/colorWhite"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/exam_report_detail_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/exam_report_detail_person"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="14dp"
-            android:text="体检号：9484958403"
-            android:textColor="@color/colorWhite"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/exam_report_detail_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/exam_report_detail_num"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="4dp"
-            android:text="体检日期：2019-02-10"
-            android:textColor="@color/colorWhite"
-            android:textSize="14sp" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/abnormal_meg_container"
-        android:layout_width="311dp"
-        android:layout_height="44dp"
-        android:layout_below="@id/top_container"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="-22dp"
-        android:background="@drawable/corner_bg_type_a">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="30dp"
-            android:text="异常解读"
-            android:textColor="@color/colorText"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/abnormal_tips"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="30dp"
-            android:drawableRight="@mipmap/liebiaojinru"
-            android:text="共3项异常"
-            android:textColor="@color/colorPrimaryDark" />
-    </RelativeLayout>
+    <include
+        android:id="@+id/title_header_exam_report_detail"
+        layout="@layout/title_bar_type_two_layout" />
 
     <ScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/abnormal_meg_container">
+        android:layout_below="@id/title_header_exam_report_detail">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <RelativeLayout
+                android:id="@+id/top_container"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_alignParentTop="true"
+                android:background="@mipmap/baogaobg">
+
+                <TextView
+                    android:id="@+id/exam_report_detail_person"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="30dp"
+                    android:text="周子萱"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/exam_report_detail_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/exam_report_detail_person"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="14dp"
+                    android:text="体检号：9484958403"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/exam_report_detail_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/exam_report_detail_num"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="4dp"
+                    android:text="体检日期：2019-02-10"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+            
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:background="@color/colorWhite"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="24dp"
+                    android:src="@mipmap/tijianbaogao"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="16dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="标准报告"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorText"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="46dp"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/code_button_bg"
+                    android:text="下载"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="10dp"/>
+            </RelativeLayout>
+            
             <com.chengsheng.cala.htcm.views.customviews.MyExpandableListView
                 android:id="@+id/exam_advices_expandable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
-
-            </com.chengsheng.cala.htcm.views.customviews.MyExpandableListView>
+                android:layout_marginTop="10dp"/>
 
             <RelativeLayout
                 android:id="@+id/container_a"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:layout_below="@id/line9"
-                android:background="@drawable/has_bottom_line_item_bg"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="5dp"
+                android:background="@drawable/has_bottom_line_item_bg">
 
                 <ImageView
                     android:layout_width="3dp"
@@ -157,12 +124,13 @@
                     android:textColor="@color/colorText"
                     android:textSize="16sp" />
             </RelativeLayout>
-            <android.support.v7.widget.RecyclerView
+
+            <com.chengsheng.cala.htcm.views.customviews.MyRecyclerView
                 android:id="@+id/exam_result_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"/>
 
-            </android.support.v7.widget.RecyclerView>
         </LinearLayout>
     </ScrollView>
 

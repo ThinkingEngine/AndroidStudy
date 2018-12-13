@@ -21,11 +21,9 @@ import com.chengsheng.cala.htcm.network.NetService;
 import com.chengsheng.cala.htcm.utils.AuthStateCallBack;
 import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
 import com.chengsheng.cala.htcm.views.adapters.FamiliesItemRecyclerAdapter;
+import com.zyao89.view.zloading.ZLoadingDialog;
+import com.zyao89.view.zloading.Z_TYPE;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
@@ -40,18 +38,17 @@ public class FamilyListFragment extends Fragment implements AuthStateCallBack {
     private String mParam2;
 
     private RecyclerView recyclerView;
-
-
     private HTCMApp app;
     private Retrofit getFamiliesList;
     private FamiliesItemRecyclerAdapter familiesItemRecyclerAdapter;
 
-    private FamiliesList parentDatas;
 
     private String toeknType;
     private String AccessToken;
 
     private OnFamilyListInteractionListener mListener;
+
+    private ZLoadingDialog loadingDialog;
 
     public FamilyListFragment() {
     }
@@ -72,7 +69,12 @@ public class FamilyListFragment extends Fragment implements AuthStateCallBack {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
+        app = HTCMApp.create(getContext());
+        loadingDialog = new ZLoadingDialog(getContext());
+        loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
+        loadingDialog.setDialogBackgroundColor(getContext().getResources().getColor(R.color.colorText));
+        loadingDialog.setLoadingColor(getContext().getResources().getColor(R.color.colorPrimary));
+        loadingDialog.setHintTextColor(getContext().getResources().getColor(R.color.colorPrimary));
         CallBackDataAuth.setAuthStateCallBack(this);
 
     }
@@ -85,44 +87,45 @@ public class FamilyListFragment extends Fragment implements AuthStateCallBack {
         recyclerView = rootViews.findViewById(R.id.families_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        app = HTCMApp.create(getContext());
-        //创建碎片时进行第一次网络访问。
         toeknType = app.getTokenType();
         AccessToken = app.getAccessToken();
         MyRetrofit myRetrofit = MyRetrofit.createInstance();
+
         if (getFamiliesList == null) {
             getFamiliesList = myRetrofit.createURL(GlobalConstant.API_BASE_URL);
         }
+
+        loadingDialog.setHintText("加载中...");
+        loadingDialog.show();
         NetService service = getFamiliesList.create(NetService.class);
-        Log.e("FAMILIES","标签:"+toeknType+" "+ AccessToken);
         service.getFamiliesList(toeknType + " " + AccessToken)
                 .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(new DisposableObserver<FamiliesList>() {
-            @Override
-            public void onNext(FamiliesList datas) {
-                Log.e("FAMILIES", "家人列表信息 请求成功:" + datas.toString());
-                parentDatas = datas;
-                familiesItemRecyclerAdapter = new FamiliesItemRecyclerAdapter(getContext(),datas.getItems());
-                recyclerView.setAdapter(familiesItemRecyclerAdapter);
-            }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableObserver<FamiliesList>() {
+                    @Override
+                    public void onNext(FamiliesList datas) {
+                        Log.e("FAMILIES", "家人列表信息 请求成功:" + datas.toString());
+                        setViews(datas);
+                        loadingDialog.cancel();
+                    }
 
-            @Override
-            public void onError(Throwable e) {
-                Log.e("FAMILIES", "家人列表信息 请求失败:" + e);
-            }
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.cancel();
+                        Log.e("FAMILIES", "家人列表信息 请求失败:" + e);
+                    }
 
-            @Override
-            public void onComplete() {
+                    @Override
+                    public void onComplete() {
 
-            }
-        });
+                    }
+                });
 
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Toast.makeText(getContext(), "下拉刷新--", Toast.LENGTH_SHORT).show();
-                familiesItemRecyclerAdapter.notifyDataSetChanged();
+                updateData();
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -155,8 +158,10 @@ public class FamilyListFragment extends Fragment implements AuthStateCallBack {
     }
 
     @Override
-    public void authResult(Map<String, String> result) {
-        Toast.makeText(getContext(),result.get("STATE")+":"+result.get("REASON"),Toast.LENGTH_LONG).show();
+    public void authResult(boolean result) {
+        if (result) {
+            updateData();
+        }
     }
 
     public interface OnFamilyListInteractionListener {
@@ -164,4 +169,38 @@ public class FamilyListFragment extends Fragment implements AuthStateCallBack {
         void onFamilyListInteraction(Bundle data);
     }
 
+    private void setViews(FamiliesList datas) {
+        familiesItemRecyclerAdapter = new FamiliesItemRecyclerAdapter(getContext(), datas.getItems());
+        recyclerView.setAdapter(familiesItemRecyclerAdapter);
+    }
+
+    private void updateData() {
+        if (getFamiliesList == null) {
+            getFamiliesList = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
+        }
+
+        loadingDialog.show();
+        NetService service = getFamiliesList.create(NetService.class);
+        service.getFamiliesList(toeknType + " " + AccessToken)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableObserver<FamiliesList>() {
+                    @Override
+                    public void onNext(FamiliesList datas) {
+                        setViews(datas);
+                        loadingDialog.cancel();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("FAMILIES", "家人列表信息 请求失败:" + e);
+                        loadingDialog.cancel();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
 }

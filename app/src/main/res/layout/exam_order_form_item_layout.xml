@@ -48,8 +48,7 @@
             android:layout_width="56dp"
             android:layout_height="18dp"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="10dp"
-            android:src="@mipmap/dingdan_daifukuan" />
+            android:layout_marginTop="10dp" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/child_order_item"
@@ -70,28 +69,6 @@
             android:layout_marginRight="14dp"
             android:layout_marginBottom="14dp"
             android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/real_pay_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginRight="8dp"
-                android:text="实付金额:"
-                android:textColor="@color/colorSecText"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/real_pay_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginRight="13dp"
-                android:layout_marginBottom="14dp"
-                android:text="¥ 180.00"
-                android:textColor="@color/colorSecText"
-                android:textSize="14sp" />
-
             <TextView
                 android:id="@+id/obligation_text"
                 android:layout_width="wrap_content"
@@ -106,13 +83,13 @@
                 android:id="@+id/obligation_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity=""
                 android:layout_marginTop="12dp"
                 android:layout_marginRight="13dp"
                 android:layout_marginBottom="14dp"
                 android:text="¥ 180.00"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="14sp" />
+
         </LinearLayout>
 
         <Button

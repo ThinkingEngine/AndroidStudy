@@ -1,30 +1,31 @@
 package com.chengsheng.cala.htcm.views.activitys;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chengsheng.cala.htcm.BaseActivity;
+import com.chengsheng.cala.htcm.GlobalConstant;
+import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.model.datamodel.childmodela.examItemResult;
 import com.chengsheng.cala.htcm.views.adapters.ExamDetailTypeARecyclerAdapter;
-import com.chengsheng.cala.htcm.views.adapters.ExamDetailTypeBExpandableListViewAdapter;
+import com.chengsheng.cala.htcm.views.customviews.MyRecyclerView;
+import com.facebook.drawee.view.SimpleDraweeView;
 
-import java.util.ArrayList;
-import java.util.List;
 
-public class ExamResultUnscrambleActivity extends AppCompatActivity {
+public class ExamResultUnscrambleActivity extends BaseActivity {
 
     private TextView title,childTitle;
     private ImageView back;
     private TextView examDetailName,examAbnormalTips;
     private TextView docResultText;
-    private ImageView docSignatureMarkB;
-    private RecyclerView examDetailTypeA;
-    private ExpandableListView examDetailTypeB;
+    private SimpleDraweeView docSignatureMarkB;
+    private MyRecyclerView examDetailTypeA;
     private TextView tips;
 
 
@@ -34,30 +35,31 @@ public class ExamResultUnscrambleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exam_result_unscramble);
 
-        String str = getIntent().getBundleExtra("mesg").getString("TYPE");
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        HTCMApp.EXACT_SCREEN_WIDTH = metrics.widthPixels;
+        HTCMApp.EXACT_SCREEN_HEIGHT = metrics.heightPixels;
+
+        examItemResult result = (examItemResult) getIntent().getBundleExtra("mesg").getSerializable("ExamResult");
+
         initViews();
-        if(str.equals("table_a")){
-            examDetailTypeB.setVisibility(View.INVISIBLE);
-            examDetailTypeA.setVisibility(View.VISIBLE);
-            tips.setVisibility(View.VISIBLE);
-
-            List<String> datas = new ArrayList<>();
-            datas.add("心率");
-            datas.add("心音");
-            datas.add("肺部听诊");
-            datas.add("肝脏触及");
-            datas.add("脾肺触诊");
-            ExamDetailTypeARecyclerAdapter adapter = new ExamDetailTypeARecyclerAdapter(this,datas);
-            examDetailTypeA.setLayoutManager(new LinearLayoutManager(this));
-            examDetailTypeA.setAdapter(adapter);
-
-        }else if(str.equals("table_b")){
-            examDetailTypeB.setVisibility(View.VISIBLE);
-            examDetailTypeA.setVisibility(View.INVISIBLE);
-            tips.setVisibility(View.INVISIBLE);
-            ExamDetailTypeBExpandableListViewAdapter adapter = new ExamDetailTypeBExpandableListViewAdapter(this);
-            examDetailTypeB.setAdapter(adapter);
+        examDetailName.setText(result.getName());
+        if(result.getException_count() == 0){
+            examAbnormalTips.setVisibility(View.INVISIBLE);
+        }else{
+            examAbnormalTips.setVisibility(View.VISIBLE);
+            examAbnormalTips.setText(result.getException_count()+"项异常数");
         }
+
+        docResultText.setText("小结:"+result.getSummary());
+
+        docSignatureMarkB.setImageURI(result.getDoctor_sign());
+
+        Log.e("TAG","result.getType():"+result.getType());
+        ExamDetailTypeARecyclerAdapter adapter = new ExamDetailTypeARecyclerAdapter(this,result.getSingle_item_result(),result.getType());
+        examDetailTypeA.setLayoutManager(new LinearLayoutManager(this));
+        examDetailTypeA.setAdapter(adapter);
+
     }
 
     private void initViews(){
@@ -69,10 +71,9 @@ public class ExamResultUnscrambleActivity extends AppCompatActivity {
         docResultText = findViewById(R.id.doc_result_text);
         docSignatureMarkB = findViewById(R.id.doc_signature_mark_b);
         examDetailTypeA = findViewById(R.id.exam_detail_type_a);
-        examDetailTypeB = findViewById(R.id.exam_detail_type_b);
         tips = findViewById(R.id.tips);
 
         title.setText("检查详情");
-        childTitle.setText("报告解读");
+        childTitle.setVisibility(View.INVISIBLE);
     }
 }

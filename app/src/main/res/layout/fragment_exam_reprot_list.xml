@@ -5,58 +5,61 @@
     android:layout_height="match_parent"
     tools:context=".views.fragments.ExamReprotListFragment">
 
-   <RelativeLayout
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:background="@color/colorWhite">
-       <android.support.v7.widget.RecyclerView
-           android:id="@+id/target_exam_report_list"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_alignParentTop="true">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite">
 
-       </android.support.v7.widget.RecyclerView>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/target_exam_report_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true" />
 
-       <RelativeLayout
-           android:layout_width="match_parent"
-           android:layout_height="50dp"
-           android:layout_alignParentBottom="true">
-           <TextView
-               android:id="@+id/report_compare"
-               android:layout_width="match_parent"
-               android:layout_height="match_parent"
-               android:background="@color/colorPrimary"
-               android:text="报告对比"
-               android:textSize="18sp"
-               android:textColor="@color/colorWhite"
-               android:gravity="center"/>
-           <LinearLayout
-               android:id="@+id/child_button_container"
-               android:layout_width="match_parent"
-               android:layout_height="match_parent"
-               android:orientation="horizontal">
-               <TextView
-                   android:id="@+id/cancel_report_compare"
-                   android:layout_width="match_parent"
-                   android:layout_height="match_parent"
-                   android:layout_weight="1"
-                   android:background="@color/colorWhite"
-                   android:text="取消"
-                   android:textSize="18sp"
-                   android:textColor="@color/colorThrText"
-                   android:gravity="center"/>
-               <TextView
-                   android:id="@+id/start_report_compare"
-                   android:layout_width="match_parent"
-                   android:layout_height="match_parent"
-                   android:layout_weight="1"
-                   android:background="@color/colorPrimary"
-                   android:text="开始对比"
-                   android:textSize="18sp"
-                   android:textColor="@color/colorWhite"
-                   android:gravity="center"/>
-           </LinearLayout>
-       </RelativeLayout>
-   </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true">
+
+            <TextView
+                android:id="@+id/report_compare"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:text="报告对比"
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:id="@+id/child_button_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/cancel_report_compare"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/colorWhite"
+                    android:gravity="center"
+                    android:text="取消"
+                    android:textColor="@color/colorThrText"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/start_report_compare"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary"
+                    android:gravity="center"
+                    android:text="开始对比"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
 
 </FrameLayout>

@@ -7,9 +7,10 @@
     tools:context=".views.fragments.ServiceOrderFragment">
 
 
-    <android.support.v7.widget.RecyclerView
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
         android:id="@+id/service_order_recycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        android:background="@color/colorPageBackground"/>
 
 </FrameLayout>

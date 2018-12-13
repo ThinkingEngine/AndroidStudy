@@ -1,26 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center">
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/header_icon_report"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:src="@drawable/selecter_image_bg" />
+            android:src="@drawable/selecter_image_bg"
+            fresco:actualImageScaleType="centerInside"
+            fresco:roundAsCircle="true"
+            fresco:backgroundImage="@mipmap/morentouxiang_wode"/>
         <TextView
             android:id="@+id/name_report"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="王洛伊"
             android:textColor="@drawable/selecter_text_color"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:layout_marginTop="5dp"/>
     </LinearLayout>
 </LinearLayout>

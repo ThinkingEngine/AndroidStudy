@@ -1,7 +1,11 @@
 package com.chengsheng.cala.htcm.views.adapters;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +17,8 @@ import android.widget.TextView;
 
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.views.activitys.FAQActivity;
+import com.chengsheng.cala.htcm.views.activitys.FamilyManageActivity;
+import com.chengsheng.cala.htcm.views.activitys.MyCollectionActivity;
 import com.chengsheng.cala.htcm.views.activitys.MyDevicesActivity;
 import com.chengsheng.cala.htcm.views.activitys.SettingActivity;
 
@@ -80,6 +86,13 @@ public class MineItemBaseAdapter extends BaseAdapter {
             holder.bottom.setVisibility(View.INVISIBLE);
         }
 
+        holder.cellphone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog();
+            }
+        });
+
         holder.input.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,6 +105,12 @@ public class MineItemBaseAdapter extends BaseAdapter {
                 }else if(data.get("TITLE").equals("我的设备")){
                     Intent intent = new Intent(context,MyDevicesActivity.class);
                     context.startActivity(intent);
+                }else if(data.get("TITLE").equals("家人管理")){
+                    Intent intent = new Intent(context,FamilyManageActivity.class);
+                    context.startActivity(intent);
+                }else if(data.get("TITLE").equals("收藏")){
+                    Intent intent = new Intent(context,MyCollectionActivity.class);
+                    context.startActivity(intent);
                 }
             }
         });
@@ -99,7 +118,26 @@ public class MineItemBaseAdapter extends BaseAdapter {
         return convertView;
     }
 
+    private void showDialog(){
+        AlertDialog alertDialog;
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("拨号提示");
+        builder.setMessage("确认向客服中心拨打电话?");
+        builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                Uri data = Uri.parse("tel:"+"400-028-3020");
+                intent.setData(data);
+                context.startActivity(intent);
+            }
+        });
 
+        builder.setNegativeButton("暂不",null);
+
+        alertDialog = builder.create();
+        alertDialog.show();
+    }
 
     public static class ViewHolder{
         public ImageView icon;

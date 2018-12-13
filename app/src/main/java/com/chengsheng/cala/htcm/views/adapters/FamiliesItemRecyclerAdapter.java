@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.model.datamodel.FamiliesListItem;
 import com.chengsheng.cala.htcm.views.activitys.FamiliesDetailsActivity;
+import com.chengsheng.cala.htcm.views.activitys.FamilyManageActivity;
 import com.chengsheng.cala.htcm.views.activitys.UserCardActivity;
 import com.chengsheng.cala.htcm.views.dialog.ImmediatelyDialogView;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -127,7 +128,10 @@ public class FamiliesItemRecyclerAdapter extends RecyclerView.Adapter<FamiliesIt
             viewHolder.addNewFamilies.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "请添加家庭成员!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context,FamilyManageActivity.class);
+                    intent.putExtra("ADD_MARK",true);
+                    context.startActivity(intent);
+                    
                 }
             });
         }

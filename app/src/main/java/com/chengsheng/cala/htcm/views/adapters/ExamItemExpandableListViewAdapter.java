@@ -1,29 +1,22 @@
 package com.chengsheng.cala.htcm.views.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chengsheng.cala.htcm.R;
-import com.chengsheng.cala.htcm.model.datamodel.ExamItem;
+import com.chengsheng.cala.htcm.model.datamodel.childmodelb.ExamItem;
 
-import java.util.ArrayList;
+
 import java.util.List;
-import java.util.Map;
 
 public class ExamItemExpandableListViewAdapter extends BaseExpandableListAdapter {
     private Context context;
-//    private List<Map<String,String>> datasHeader;
-//    private List<List<Map<String,String>>> datasChild;
     private List<ExamItem> datas;
-
-    String[] a;
-    String[][] b;
-
 
     public ExamItemExpandableListViewAdapter(Context context, List<ExamItem> datas){
         this.context = context;
@@ -76,9 +69,13 @@ public class ExamItemExpandableListViewAdapter extends BaseExpandableListAdapter
             groupViewHolder = (GroupViewHolder) convertView.getTag();
         }
 
-        groupViewHolder.examItemStatsExpandable.setVisibility(View.INVISIBLE);
-//        Log.e("TEST",);
+        if(datas.size() > 1 && groupPosition == datas.size()-1){
+            groupViewHolder.examResultContainer.setBackgroundColor(context.getResources().getColor(R.color.white));
+        }
+
+//        groupViewHolder.examItemStatsExpandable.setVisibility(View.INVISIBLE);
         groupViewHolder.examItemNameExpandable.setText(datas.get(groupPosition).getName());
+
         return convertView;
     }
 
@@ -93,9 +90,9 @@ public class ExamItemExpandableListViewAdapter extends BaseExpandableListAdapter
             childViewHolder = (ChildViewHolder) convertView.getTag();
         }
 
-        childViewHolder.examTargetDetailExpandable.setText(datas.get(groupPosition).getExam_purpose());
-        childViewHolder.examNotesDetailExpandable.setText(datas.get(groupPosition).getPrecautions());
-        childViewHolder.examIncludeDetailExpandable.setText(datas.get(groupPosition).getContent());
+        childViewHolder.examTargetExpandable.setText("包含内容");
+
+        childViewHolder.examTargetDetailExpandable.setText(datas.get(groupPosition).getContent());
 
         return convertView;
     }
@@ -106,10 +103,12 @@ public class ExamItemExpandableListViewAdapter extends BaseExpandableListAdapter
     }
 
     public class GroupViewHolder{
+        RelativeLayout examResultContainer;
         TextView examItemNameExpandable;
         TextView examItemStatsExpandable;
 
         public GroupViewHolder(View convertView){
+            examResultContainer = convertView.findViewById(R.id.exam_result_container);
             examItemNameExpandable = convertView.findViewById(R.id.exam_item_name_expandable);
             examItemStatsExpandable = convertView.findViewById(R.id.exam_item_stats_expandable);
         }
@@ -118,18 +117,12 @@ public class ExamItemExpandableListViewAdapter extends BaseExpandableListAdapter
     public class ChildViewHolder{
         TextView examTargetExpandable;
         TextView examTargetDetailExpandable;
-        TextView examNotesExpandable;
-        TextView examNotesDetailExpandable;
-        TextView examIncludeExpandable;
-        TextView examIncludeDetailExpandable;
+
 
         public ChildViewHolder(View convertView){
             examTargetExpandable = convertView.findViewById(R.id.exam_target_expandable);
             examTargetDetailExpandable = convertView.findViewById(R.id.exam_target_detail_expandable);
-            examNotesExpandable = convertView.findViewById(R.id.exam_notes_expandable);
-            examNotesDetailExpandable = convertView.findViewById(R.id.exam_notes_detail_expandable);
-            examIncludeExpandable = convertView.findViewById(R.id.exam_include_expandable);
-            examIncludeDetailExpandable = convertView.findViewById(R.id.exam_include_detail_expandable);
+
         }
     }
 }

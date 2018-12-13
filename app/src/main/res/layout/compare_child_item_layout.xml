@@ -1,30 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
 
     <RelativeLayout
-        android:id="@+id/compare_element_bg"
+        android:id="@+id/compare_item_a_bg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/colorPageBackground">
 
-        <LinearLayout
-            android:id="@+id/container_e"
+        <TextView
+            android:id="@+id/compare_item_header_a"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="4dp"
+            android:gravity="center"
+            android:textColor="@color/colorText"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:id="@+id/compare_title_a_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/compare_item_header_a"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="10dp"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="invisible">
 
             <ImageView
-                android:id="@+id/index_mark"
+                android:id="@+id/compare_item_a_mark"
                 android:layout_width="10dp"
                 android:layout_height="14dp"
                 android:src="@mipmap/piandi" />
 
             <TextView
-                android:id="@+id/index"
+                android:id="@+id/compare_item_a_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -32,16 +47,128 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="16sp" />
         </LinearLayout>
+
         <TextView
-            android:id="@+id/index_scope"
+            android:id="@+id/compare_item_a_unit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/container_e"
-            android:text="(37～75)"
-            android:textSize="12sp"
-            android:textColor="@color/colorThrText"
+            android:layout_below="@id/compare_item_header_a"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="11dp"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/colorThrText"
+            android:textSize="12sp"
+            android:visibility="invisible" />
     </RelativeLayout>
-</FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/compare_item_b_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/compare_item_header_b"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="4dp"
+            android:gravity="center"
+            android:textColor="@color/colorText"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:id="@+id/compare_title_b_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/compare_item_header_b"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="invisible">
+
+            <ImageView
+                android:id="@+id/compare_item_b_mark"
+                android:layout_width="10dp"
+                android:layout_height="14dp"
+                android:background="@drawable/selecter_arrow_up_down_red" />
+
+            <TextView
+                android:id="@+id/compare_item_b_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/compare_item_b_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/compare_item_header_b"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/colorThrText"
+            android:textSize="12sp"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/compare_item_c_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/compare_item_header_c"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="4dp"
+            android:gravity="center"
+            android:textColor="@color/colorText"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:id="@+id/compare_title_c_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/compare_item_header_c"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="invisible">
+
+            <ImageView
+                android:id="@+id/compare_item_c_mark"
+                android:layout_width="10dp"
+                android:layout_height="14dp"
+                android:background="@drawable/selecter_arrow_up_down_red" />
+
+            <TextView
+                android:id="@+id/compare_item_c_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/compare_item_c_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/compare_item_header_c"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/colorThrText"
+            android:textSize="12sp"
+            android:visibility="invisible" />
+    </RelativeLayout>
+</LinearLayout>

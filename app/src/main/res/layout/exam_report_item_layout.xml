@@ -49,12 +49,14 @@
             android:layout_marginRight="5dp"/>
         <ImageView
             android:id="@+id/report_radio"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:src="@drawable/selecter_radio_button_bg"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="21dp"/>
+            android:layout_marginRight="1dp"/>
 
     </RelativeLayout>
 </FrameLayout>

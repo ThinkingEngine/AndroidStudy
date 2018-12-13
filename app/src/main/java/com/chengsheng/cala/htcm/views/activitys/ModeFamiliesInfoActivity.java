@@ -2,16 +2,14 @@ package com.chengsheng.cala.htcm.views.activitys;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-import android.widget.ImageView;
-import android.widget.TextView;
 
+import com.chengsheng.cala.htcm.BaseActivity;
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.model.datamodel.FamiliesDetailInfo;
 import com.chengsheng.cala.htcm.views.fragments.ModeFamiliesFragment;
 
-public class ModeFamiliesInfoActivity extends AppCompatActivity implements ModeFamiliesFragment.OnFragmentInteractionListener{
+public class ModeFamiliesInfoActivity extends BaseActivity implements ModeFamiliesFragment.OnFragmentInteractionListener{
 
     private ModeFamiliesFragment fragment;
 
@@ -20,8 +18,10 @@ public class ModeFamiliesInfoActivity extends AppCompatActivity implements ModeF
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mode_families_info);
 
+        Bundle bundle = getIntent().getExtras();
+        FamiliesDetailInfo info = (FamiliesDetailInfo) bundle.getSerializable("FAMILIES_INFO");
         String modeParam = getIntent().getStringExtra("MODE");
-        fragment = ModeFamiliesFragment.newInstance(modeParam,"");
+        fragment = ModeFamiliesFragment.newInstance(modeParam,info);
 
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();

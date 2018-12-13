@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.model.datamodel.childmodelb.ExamItem;
 import com.daimajia.swipe.SwipeLayout;
 
 import java.util.List;
@@ -17,9 +18,9 @@ import java.util.Map;
 
 public class IntelligentCheckBRecyclerAdapter extends RecyclerView.Adapter<IntelligentCheckBRecyclerAdapter.MyViewHolder> {
     private Context context;
-    private List<Map<String,String>> datas;
+    private List<ExamItem> datas;
 
-    public IntelligentCheckBRecyclerAdapter(Context context,List<Map<String,String>> datas){
+    public IntelligentCheckBRecyclerAdapter(Context context,List<ExamItem> datas){
         this.context = context;
         this.datas = datas;
     }
@@ -34,12 +35,10 @@ public class IntelligentCheckBRecyclerAdapter extends RecyclerView.Adapter<Intel
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder viewHolder, int i) {
 
-        Map<String,String> data = datas.get(i);
-        if(data.get("STATE").equals("TYPE_A")){
-            viewHolder.checkedMarkB.setVisibility(View.INVISIBLE);
-        }else{
-            viewHolder.checkedMarkB.setVisibility(View.VISIBLE);
-        }
+        ExamItem data = datas.get(i);
+
+        viewHolder.checkItemName.setText(data.getName());
+        viewHolder.checkItemChild.setText(data.getExam_address());
 
         viewHolder.backOutButton.setOnClickListener(new View.OnClickListener() {
             @Override

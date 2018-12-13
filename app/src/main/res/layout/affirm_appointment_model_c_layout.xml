@@ -14,30 +14,64 @@
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_below="@id/line9"
-            android:background="@drawable/has_bottom_line_item_bg">
+            android:background="@color/colorWhite">
 
-            <ImageView
-                android:layout_width="3dp"
-                android:layout_height="14dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="14dp"
-                android:src="@mipmap/dabiaoti_shuxian" />
-
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_centerVertical="true">
+                <ImageView
+                    android:layout_width="3dp"
+                    android:layout_height="14dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="14dp"
+                    android:src="@mipmap/dabiaoti_shuxian"
+                    android:layout_gravity="center"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="7dp"
+                    android:text="体检日期"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorText"
+                    android:textSize="16sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="(必选)"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="14dp"
+                    android:layout_marginLeft="4dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/select_appointment_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="24dp"
-                android:text="其他可选项目"
-                android:textColor="@color/colorText"
-                android:textSize="16sp" />
+                android:layout_marginRight="7dp">
+                <TextView
+                    android:id="@+id/appointment_date_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2018-12-06"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorPrimary"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/liebiaojinru"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="7dp" />
+            </LinearLayout>
+
+
         </RelativeLayout>
 
-       <android.support.v7.widget.RecyclerView
-           android:id="@+id/other_select_item_recycler"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_below="@id/others_select_item_coatiner"/>
 
     </RelativeLayout>
 </FrameLayout>

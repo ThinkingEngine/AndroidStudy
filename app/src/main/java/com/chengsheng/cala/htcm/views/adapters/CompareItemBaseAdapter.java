@@ -48,13 +48,13 @@ public class CompareItemBaseAdapter extends BaseAdapter {
 
         }else{
             convertView = LayoutInflater.from(context).inflate(R.layout.compare_child_item_layout,null);
-            ImageView indexMark = convertView.findViewById(R.id.index_mark);
-            TextView  index = convertView.findViewById(R.id.index);
-            TextView indexScope = convertView.findViewById(R.id.index_scope);
-            RelativeLayout compareElementBg = convertView.findViewById(R.id.compare_element_bg);
+//            ImageView indexMark = convertView.findViewById(R.id.index_mark);
+//            TextView  index = convertView.findViewById(R.id.index);
+//            TextView indexScope = convertView.findViewById(R.id.index_scope);
+//            RelativeLayout compareElementBg = convertView.findViewById(R.id.compare_element_bg);
 
             if(position % 3 == 0 && position != 0){
-                compareElementBg.setBackground(context.getDrawable(R.color.colorItemBg));
+//                compareElementBg.setBackground(context.getDrawable(R.color.colorItemBg));
             }
         }
         return convertView;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -31,13 +31,12 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </RelativeLayout>
-        <com.chengsheng.cala.htcm.views.customviews.MyGridView
-            android:id="@+id/compare_table"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:numColumns="3"
-            android:layout_below="@id/compare_item_title_container">
 
-        </com.chengsheng.cala.htcm.views.customviews.MyGridView>
+        <com.chengsheng.cala.htcm.views.customviews.MyListView
+            android:id="@+id/compare_item_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/compare_item_title_container" />
     </RelativeLayout>
-</FrameLayout>
+
+</RelativeLayout>

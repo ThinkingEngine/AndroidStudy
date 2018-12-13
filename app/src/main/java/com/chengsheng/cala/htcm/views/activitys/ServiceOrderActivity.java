@@ -4,7 +4,6 @@ import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,18 +14,19 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.chengsheng.cala.htcm.BaseActivity;
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.views.adapters.MainViewPagerAdapter;
 import com.chengsheng.cala.htcm.views.customviews.ConditionPopupWindow;
-import com.chengsheng.cala.htcm.views.fragments.ExamOrderFormFragment;
 import com.chengsheng.cala.htcm.views.fragments.ServiceOrderFragment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class ServiceOrderActivity extends AppCompatActivity implements ServiceOrderFragment.OnFragmentInteractionListener{
+public class ServiceOrderActivity extends BaseActivity implements ServiceOrderFragment.OnFragmentInteractionListener{
 
     private TabLayout serviceOrderSelectHeader;
     private ViewPager serviceOrderFragment;
@@ -55,11 +55,19 @@ public class ServiceOrderActivity extends AppCompatActivity implements ServiceOr
         }
 
         //临时数据
-        List<String> listDatas = new ArrayList<>();
-        listDatas.add("全部");
-        listDatas.add("周子轩");
-        listDatas.add("周父");
-        listDatas.add("周母");
+        List<Map<String,String>> listDatas = new ArrayList<>();
+        Map<String,String> mapa = new HashMap<>();
+        mapa.put("SELECT","false");
+        mapa.put("DATA","周子轩");
+        Map<String,String> mapb = new HashMap<>();
+        mapb.put("SELECT","false");
+        mapb.put("DATA","周父");
+        Map<String,String> mapc = new HashMap<>();
+        mapc.put("SELECT","false");
+        mapc.put("DATA","周母");
+        listDatas.add(mapa);
+        listDatas.add(mapb);
+        listDatas.add(mapc);
 
         final ConditionPopupWindow window = new ConditionPopupWindow(this,listDatas);
 
@@ -73,13 +81,8 @@ public class ServiceOrderActivity extends AppCompatActivity implements ServiceOr
         clickContainerServiceOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(window == null){
-                    Toast.makeText(ServiceOrderActivity.this,"window null",Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(ServiceOrderActivity.this,"window ok",Toast.LENGTH_SHORT).show();
-                }
-
                 windowB.showAsDropDown(clickContainerServiceOrder);
+                arrowUpDownServiceOrder.setSelected(true);
             }
         });
     }
@@ -94,7 +97,20 @@ public class ServiceOrderActivity extends AppCompatActivity implements ServiceOr
         arrowUpDownServiceOrder = findViewById(R.id.title_header_service_oder).findViewById(R.id.arrow_up_down_service_order);
         menuBarTitle = findViewById(R.id.title_header_service_oder).findViewById(R.id.menu_bar_title);
 
+        setTitle(conditions[0]);
 
+        backLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+    }
+
+    private void setTitle(String title){
+        menuBarTitle.setText(title);
+        arrowUpDownServiceOrder.setSelected(false);
     }
 
     private void initDatas(){
@@ -114,6 +130,8 @@ public class ServiceOrderActivity extends AppCompatActivity implements ServiceOr
 
     private void setPopupWindow() {
         View contentView = LayoutInflater.from(this).inflate(R.layout.condition_screening_model_b_layout, null);
+
+
         ListView conditionScreeningListB = contentView.findViewById(R.id.condition_screening_list_b);
         conditionScreeningListB.setAdapter(new MyBaseAdapter());
 
@@ -153,8 +171,17 @@ public class ServiceOrderActivity extends AppCompatActivity implements ServiceOr
         public View getView(int position, View convertView, ViewGroup parent) {
             View view = LayoutInflater.from(ServiceOrderActivity.this).inflate(R.layout.single_text_layout,null);
 
-            TextView textView = view.findViewById(R.id.text_mark);
+            final TextView textView = view.findViewById(R.id.text_mark);
             textView.setText(conditions[position]);
+
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setTitle(textView.getText().toString());
+                    arrowUpDownServiceOrder.setSelected(false);
+                    windowB.dismiss();
+                }
+            });
 
             return view;
         }

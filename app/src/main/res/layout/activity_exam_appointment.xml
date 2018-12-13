@@ -44,20 +44,17 @@
                 <RelativeLayout
                     android:id="@+id/rl2"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp">
+                    android:layout_height="wrap_content">
 
                     <include
                         android:id="@+id/price_model_a"
                         layout="@layout/exam_info_filtration_colum_layout" />
                 </RelativeLayout>
 
-                <android.support.v7.widget.RecyclerView
+                <com.chengsheng.cala.htcm.views.customviews.MyRecyclerView
                     android:id="@+id/exam_appointment_recycler"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="80dp">
-
-                </android.support.v7.widget.RecyclerView>
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
         </com.chengsheng.cala.htcm.views.customviews.HeaderScrollView>
@@ -66,7 +63,7 @@
     <RelativeLayout
         android:id="@+id/rl1"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_below="@id/title_header_exam_appointment"
         android:visibility="gone">
 

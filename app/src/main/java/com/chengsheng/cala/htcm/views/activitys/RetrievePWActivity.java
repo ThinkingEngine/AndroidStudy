@@ -8,16 +8,18 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.chengsheng.cala.htcm.BaseActivity;
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.views.fragments.SMSCodeFragment;
 import com.chengsheng.cala.htcm.views.fragments.SMSCodeFragment.OnSMSCodeFragmentInteractionListener;
 import com.chengsheng.cala.htcm.views.fragments.SetNewPWFragment;
 
-public class RetrievePWActivity extends AppCompatActivity implements SetNewPWFragment.OnSetNewPWFFragmentInteractionListener
+public class RetrievePWActivity extends BaseActivity implements SetNewPWFragment.OnSetNewPWFFragmentInteractionListener
         , OnSMSCodeFragmentInteractionListener {
     private SMSCodeFragment smsCodeFragment;
     private SetNewPWFragment setNewPWFragment;
@@ -52,8 +54,16 @@ public class RetrievePWActivity extends AppCompatActivity implements SetNewPWFra
             startActivity(intent);
         }
         if (EVENT.equals("click") && SOURCE.equals("next")) {
+
+            String phone = bundle.getString("V_PHONE");
+            String vID = bundle.getString("V_ID");
+            String code = bundle.getString("CODE");
+            Log.e("TAG","V_ID:"+vID);
+            Log.e("TAG","code:"+code);
             if (fragmentManager != null) {
                 FragmentTransaction ft = fragmentManager.beginTransaction();
+                Log.e("TAG","VID+CODE::"+vID+"."+code);
+                SetNewPWFragment setNewPWFragment = SetNewPWFragment.newInstance(phone,vID+"/"+code);
                 ft.replace(R.id.retrieve_container, setNewPWFragment);
                 ft.commit();
             }
@@ -95,7 +105,7 @@ public class RetrievePWActivity extends AppCompatActivity implements SetNewPWFra
         alert.setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(RetrievePWActivity.this,"继续进行",Toast.LENGTH_SHORT).show();
+                Toast.makeText(RetrievePWActivity.this, "继续进行", Toast.LENGTH_SHORT).show();
             }
         });
 

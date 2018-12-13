@@ -9,12 +9,15 @@
     <include
         android:id="@+id/title_header_exam_report"
         layout="@layout/title_bar_type_two_layout"/>
+
+
     <android.support.design.widget.TabLayout
         android:id="@+id/exam_report_header"
         android:layout_width="match_parent"
         android:layout_height="98dp"
         android:layout_below="@id/title_header_exam_report"
-        app:tabGravity="center">
+        app:tabGravity="center"
+        app:tabMode="scrollable">
 
     </android.support.design.widget.TabLayout>
     <android.support.v4.view.ViewPager
@@ -24,4 +27,31 @@
         android:layout_below="@id/exam_report_header">
 
     </android.support.v4.view.ViewPager>
+
+    <RelativeLayout
+        android:id="@+id/no_families_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        android:layout_below="@id/title_header_exam_report">
+
+        <ImageView
+            android:id="@+id/no_contents_f"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/no_contents"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="80dp"/>
+        <TextView
+            android:id="@+id/current_no_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/no_contents_f"
+            android:text="当前无内容,点击图片进行刷新"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/colorThrText"
+            android:textSize="14sp"
+            android:layout_marginTop="8dp"/>
+    </RelativeLayout>
 </RelativeLayout>

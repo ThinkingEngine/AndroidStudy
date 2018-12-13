@@ -3,19 +3,19 @@ package com.chengsheng.cala.htcm.views.activitys;
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chengsheng.cala.htcm.BaseActivity;
 import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.views.fragments.AddFamilyFragment;
 import com.chengsheng.cala.htcm.views.fragments.FamilyListFragment;
 
-public class FamilyManageActivity extends AppCompatActivity implements FamilyListFragment.OnFamilyListInteractionListener,
+public class FamilyManageActivity extends BaseActivity implements FamilyListFragment.OnFamilyListInteractionListener,
         AddFamilyFragment.OnAddFamilyFragmentInteractionListener {
 
     private ImageView backHomeButton;
@@ -43,7 +43,12 @@ public class FamilyManageActivity extends AppCompatActivity implements FamilyLis
         final FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
 
-        ft.add(R.id.family_manage_container, familyListFragment);
+        boolean addMark = getIntent().getBooleanExtra("ADD_MARK",false);
+        if(addMark){
+            ft.add(R.id.family_manage_container, addFamilyFragment);
+        }else{
+            ft.add(R.id.family_manage_container, familyListFragment);
+        }
         ft.commit();
         stats = "manage";
 

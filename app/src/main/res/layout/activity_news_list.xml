@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.activitys.NewsListActivity">
+
+    <include
+        android:id="@+id/title_header_news_list"
+        layout="@layout/title_bar_type_two_layout"/>
+    <android.support.design.widget.TabLayout
+        android:id="@+id/news_select_header"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_below="@id/title_header_news_list"
+        app:tabTextColor="@color/colorThrText"
+        app:tabSelectedTextColor="@color/colorPrimary"
+        app:tabIndicatorColor="@color/colorPrimary"
+        app:tabIndicatorFullWidth="false"/>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/news_list_child"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/news_select_header"/>
+
+</RelativeLayout>

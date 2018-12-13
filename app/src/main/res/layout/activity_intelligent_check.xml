@@ -107,12 +107,23 @@
                 </LinearLayout>
             </RelativeLayout>
 
-            <android.support.v7.widget.RecyclerView
+            <TextView
+                android:id="@+id/checked_line_a"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorPrimary"
+                android:gravity="center_vertical"
+                android:paddingLeft="14dp"
+                android:text="体检中"
+                android:textColor="@color/colorWhite"
+                android:textSize="14sp" />
+
+            <com.chengsheng.cala.htcm.views.customviews.MyRecyclerView
                 android:id="@+id/intelligent_check_recycler_a"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/container_g"
-                android:layout_marginTop="10dp" />
+                android:layout_below="@id/checked_line_a" />
 
             <TextView
                 android:id="@+id/checked_line"
@@ -122,11 +133,11 @@
                 android:background="@color/colorPrimary"
                 android:gravity="center_vertical"
                 android:paddingLeft="14dp"
-                android:text="已完成"
+                android:text="已体检"
                 android:textColor="@color/colorWhite"
                 android:textSize="14sp" />
 
-            <android.support.v7.widget.RecyclerView
+            <com.chengsheng.cala.htcm.views.customviews.MyRecyclerView
                 android:id="@+id/intelligent_check_recycler_b"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

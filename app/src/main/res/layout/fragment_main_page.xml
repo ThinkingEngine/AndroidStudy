@@ -8,181 +8,194 @@
 
     <include
         android:id="@+id/title_header_main_page"
-        layout="@layout/main_page_header_layout"/>
+        layout="@layout/main_page_header_layout" />
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refresh_main_page"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/colorPageBackground">
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/banner_a"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="145dp"
-            android:background="@color/colorPrimary">
+            android:layout_height="match_parent">
 
-        </android.support.v4.view.ViewPager>
-        <LinearLayout
-            android:id="@+id/point_group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="-38dp"
-            android:layout_gravity="center_horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorPageBackground"
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/banner_a"
+                    android:layout_width="match_parent"
+                    android:layout_height="185dp"
+                    android:background="@color/colorPrimary">
+
+                </android.support.v4.view.ViewPager>
+
+                <LinearLayout
+                    android:id="@+id/point_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="-38dp"
+                    android:orientation="horizontal">
+
+                </LinearLayout>
 
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="96dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/fmailies_item_bg"
-            android:layout_marginLeft="14dp"
-            android:layout_marginRight="14dp"
-            android:elevation="4dp"
-            android:layout_marginTop="10dp">
-            <ImageView
-                android:id="@+id/exam_report_mark"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="15dp"
-                android:src="@mipmap/shouye_tijianbaogao"/>
-            <TextView
-                android:id="@+id/exam_report_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textColor="@color/colorText"
-                android:text="@string/medical_exam_report"
-                android:layout_below="@id/exam_report_mark"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"/>
-            <ImageView
-                android:id="@+id/appointment_exam_mark"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:src="@mipmap/shouye_yuyuetijian"
-                android:layout_alignParentLeft="true"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="47dp"/>
-            <TextView
-                android:id="@+id/appointment_exam_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textColor="@color/colorText"
-                android:text="@string/medical_appointment"
-                android:layout_below="@id/appointment_exam_mark"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="10dp"/>
-            <ImageView
-                android:id="@+id/my_exam_mark"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:src="@mipmap/shouye_wodetijian"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="47dp"/>
-            <TextView
-                android:id="@+id/my_exam_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textColor="@color/colorText"
-                android:text="我的体检"
-                android:layout_below="@id/my_exam_mark"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="40dp"
-                android:layout_marginTop="10dp"/>
-        </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="96dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="14dp"
+                    android:background="@drawable/fmailies_item_bg"
+                    android:elevation="4dp">
 
-        <RelativeLayout
-            android:id="@+id/ai_assistant"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="14dp"
-            android:layout_marginRight="14dp">
+                    <ImageView
+                        android:id="@+id/exam_report_mark"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp"
+                        android:src="@mipmap/shouye_tijianbaogao" />
 
-            <ImageView
-                android:layout_width="3dp"
-                android:layout_height="16dp"
-                android:src="@mipmap/dabiaoti_shuxian"
-                android:layout_centerVertical="true"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="22dp"
-                android:text="智能助理"
-                android:textSize="18sp"
-                android:textColor="@color/colorText"
-                android:layout_centerVertical="true"/>
-            <ImageView
-                android:layout_width="6dp"
-                android:layout_height="12dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="14dp"
-                android:src="@mipmap/liebiaojinru"/>
+                    <TextView
+                        android:id="@+id/exam_report_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/exam_report_mark"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/medical_exam_report"
+                        android:textColor="@color/colorText"
+                        android:textSize="14sp" />
 
-        </RelativeLayout>
+                    <ImageView
+                        android:id="@+id/appointment_exam_mark"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="47dp"
+                        android:layout_marginTop="15dp"
+                        android:src="@mipmap/shouye_yuyuetijian" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/appointment_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/appointment_exam_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/appointment_exam_mark"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/medical_appointment"
+                        android:textColor="@color/colorText"
+                        android:textSize="14sp" />
 
-        </android.support.v7.widget.RecyclerView>
-        <RelativeLayout
-            android:id="@+id/recommend_news"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="14dp"
-            android:layout_marginRight="14dp">
+                    <ImageView
+                        android:id="@+id/my_exam_mark"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="47dp"
+                        android:src="@mipmap/shouye_wodetijian" />
 
-            <ImageView
-                android:layout_width="3dp"
-                android:layout_height="16dp"
-                android:src="@mipmap/dabiaoti_shuxian"
-                android:layout_centerVertical="true"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="22dp"
-                android:text="推荐咨询"
-                android:textSize="18sp"
-                android:textColor="@color/colorText"
-                android:layout_centerVertical="true"/>
-            <ImageView
-                android:layout_width="6dp"
-                android:layout_height="12dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="14dp"
-                android:src="@mipmap/liebiaojinru"/>
+                    <TextView
+                        android:id="@+id/my_exam_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/my_exam_mark"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="40dp"
+                        android:text="我的体检"
+                        android:textColor="@color/colorText"
+                        android:textSize="14sp" />
+                </RelativeLayout>
 
-        </RelativeLayout>
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recommend_news_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:id="@+id/ai_assistant"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="14dp"
+                    android:layout_marginBottom="10dp">
 
-        </android.support.v7.widget.RecyclerView>
-    </LinearLayout>
-    </ScrollView>
+                    <ImageView
+                        android:layout_width="3dp"
+                        android:layout_height="16dp"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/dabiaoti_shuxian" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="22dp"
+                        android:text="智能助理"
+                        android:textColor="@color/colorText"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="6dp"
+                        android:layout_height="12dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="14dp"
+                        android:src="@mipmap/liebiaojinru" />
+
+                </RelativeLayout>
+
+                <com.chengsheng.cala.htcm.views.customviews.MyRecyclerView
+                    android:id="@+id/appointment_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <RelativeLayout
+                    android:id="@+id/recommend_news"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="14dp"
+                    android:layout_marginBottom="10dp">
+
+                    <ImageView
+                        android:layout_width="3dp"
+                        android:layout_height="16dp"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/dabiaoti_shuxian" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="22dp"
+                        android:text="推荐咨询"
+                        android:textColor="@color/colorText"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="6dp"
+                        android:layout_height="12dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="14dp"
+                        android:src="@mipmap/liebiaojinru" />
+
+                </RelativeLayout>
+
+                <com.chengsheng.cala.htcm.views.customviews.MyRecyclerView
+                    android:id="@+id/recommend_news_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </ScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>
 
 

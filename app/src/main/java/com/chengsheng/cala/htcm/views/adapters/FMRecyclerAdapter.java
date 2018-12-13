@@ -4,32 +4,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.model.datamodel.FamiliesListItem;
-import com.chengsheng.cala.htcm.utils.FuncUtils;
-import com.chengsheng.cala.htcm.utils.ViewsUtils;
+import com.chengsheng.cala.htcm.views.activitys.FamilyManageActivity;
 import com.chengsheng.cala.htcm.views.activitys.UserCardActivity;
 import com.chengsheng.cala.htcm.views.dialog.ImmediatelyDialogView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FMRecyclerAdapter extends RecyclerView.Adapter<FMRecyclerAdapter.FMRViewHolder> {
 
@@ -50,9 +42,6 @@ public class FMRecyclerAdapter extends RecyclerView.Adapter<FMRecyclerAdapter.FM
         }else{
             holder = new FMRViewHolder(LayoutInflater.from(context).inflate(R.layout.people_item_layout,viewGroup,false));
         }
-
-
-
         return holder;
     }
 
@@ -121,7 +110,10 @@ public class FMRecyclerAdapter extends RecyclerView.Adapter<FMRecyclerAdapter.FM
             viewHolder.addNewFamilies.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context,"测试",Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context,"测试",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context,FamilyManageActivity.class);
+                    intent.putExtra("ADD_MARK",true);
+                    context.startActivity(intent);
                 }
             });
         }

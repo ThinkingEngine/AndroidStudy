@@ -1,27 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/ai_assistant_item_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:text="2018-04-07 11:58"
+        android:textColor="@color/colorThrText"
+        android:textSize="12sp" />
 
     <RelativeLayout
         android:id="@+id/ai_assistant_item"
         android:layout_width="match_parent"
-        android:layout_height="147dp"
+        android:layout_height="167dp"
         android:layout_marginLeft="14dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="56dp"
         android:layout_marginRight="14dp"
-        android:layout_marginBottom="6dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/fmailies_item_bg"
         android:elevation="4dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/user_header_icon_ai_assistant"
             android:layout_width="38dp"
             android:layout_height="38dp"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="14dp"
             android:layout_marginTop="14dp"
-            android:src="@mipmap/tianjiatouxiang" />
+            fresco:actualImageScaleType="centerInside"
+            fresco:backgroundImage="@mipmap/morentouxiang_wode"
+            fresco:roundAsCircle="true" />
 
         <TextView
             android:id="@+id/user_name_ai_assistant"
@@ -54,8 +67,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:src="@mipmap/wh_shanchu" />
+            android:layout_marginRight="10dp"/>
 
         <ImageView
             android:id="@+id/user_bitmap_mark"
@@ -74,7 +86,7 @@
             android:layout_below="@id/user_header_icon_ai_assistant"
             android:layout_marginTop="14dp"
             android:background="@color/colorCutoff"
-            android:orientation="vertical"></LinearLayout>
+            android:orientation="vertical"/>
 
         <TextView
             android:id="@+id/item_big_notes"
@@ -86,6 +98,15 @@
             android:text="您预约了2018年6月25日的复查"
             android:textColor="@color/colorText"
             android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/item_big_notes_mark"
+            android:layout_width="39dp"
+            android:layout_height="18dp"
+            android:layout_below="@id/ai_assistant_item_line"
+            android:layout_marginTop="22dp"
+            android:layout_toRightOf="@id/item_big_notes"
+            android:src="@mipmap/tuijian" />
 
         <TextView
             android:id="@+id/item_sec_notes"
@@ -99,14 +120,38 @@
             android:textSize="12sp" />
 
         <TextView
+            android:id="@+id/show_wait_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ai_assistant_item_line"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:layout_marginTop="13dp"
+            android:layout_marginRight="14dp"/>
+        <TextView
             android:id="@+id/day_num"
             android:layout_width="54dp"
             android:layout_height="54dp"
             android:layout_below="@id/ai_assistant_item_line"
             android:layout_alignParentRight="true"
+            android:visibility="invisible"
+            android:gravity="center"
             android:layout_marginTop="13dp"
             android:layout_marginRight="14dp"
             android:background="@drawable/white_annulus_bg" />
+        <Button
+            android:id="@+id/unscramble_mark"
+            android:layout_width="56dp"
+            android:layout_height="28dp"
+            android:background="@drawable/login_button_bg"
+            android:text="解读"
+            android:textColor="@color/colorWhite"
+            android:textSize="14sp"
+            android:visibility="invisible"
+            android:layout_below="@id/ai_assistant_item_line"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="14dp"
+            android:layout_marginTop="26dp"/>
 
         <LinearLayout
             android:id="@+id/user_notifition"
@@ -115,7 +160,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:layout_marginRight="14dp"
-            android:layout_marginBottom="21dp"
+            android:layout_marginBottom="14dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 

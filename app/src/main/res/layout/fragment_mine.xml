@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.fragments.MineFragment">
+    tools:context=".views.fragments.MineFragment"
+    tools:ignore="NamespaceTypo">
 
 
     <LinearLayout
@@ -19,29 +20,41 @@
             android:layout_alignParentTop="true"
             android:background="@mipmap/gerenbg">
 
-            <de.hdodenhof.circleimageview.CircleImageView
+
+            <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/user_icon"
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
                 android:layout_marginStart="51dp"
-                android:src="@mipmap/touxiang"
-                app:civ_border_color="@color/colorWhite"
-                app:civ_border_width="2dp" />
+                android:layout_marginTop="43dp"
+                android:padding="5dp"
+                fresco:actualImageScaleType="centerInside"
+                fresco:backgroundImage="@mipmap/morentouxiang_wode"
+                fresco:roundAsCircle="true" />
 
             <FrameLayout
-                android:id="@+id/message_icon_container"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+                android:id="@+id/message_icon_container_mine"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="11dp"
+                android:layout_marginTop="1dp"
                 android:layout_marginRight="14dp">
 
                 <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="center"
                     android:src="@mipmap/xiaoxi" />
+
+                <ImageView
+                    android:id="@+id/current_has_message_mine"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="11dp"
+                    android:layout_marginRight="14dp"
+                    android:background="@drawable/red_dot" />
             </FrameLayout>
 
             <ImageView
@@ -51,16 +64,16 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="11dp"
                 android:layout_marginRight="56dp"
-                android:src="@mipmap/saoyisao" />
+                android:src="@mipmap/saoyisao"
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/user_name_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="18dp"
-                android:layout_marginTop="55dp"
+                android:layout_marginTop="45dp"
                 android:layout_toRightOf="@id/user_icon"
-                android:text="周子萱"
                 android:textColor="@color/colorWhite"
                 android:textSize="20sp" />
 
@@ -72,17 +85,18 @@
                 android:layout_marginLeft="18dp"
                 android:layout_marginTop="6dp"
                 android:layout_toRightOf="@id/user_icon"
-                android:text="18782668345"
                 android:textColor="@color/colorWhite"
                 android:textSize="16sp" />
 
             <ImageView
                 android:id="@+id/input_personal_info"
-                android:layout_width="8dp"
-                android:layout_height="16dp"
+                android:layout_width="40dp"
+                android:layout_height="48dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="68dp"
                 android:layout_marginRight="20dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
                 android:src="@mipmap/gerenjinru" />
 
         </RelativeLayout>

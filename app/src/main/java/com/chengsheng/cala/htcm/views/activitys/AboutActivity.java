@@ -3,9 +3,10 @@ package com.chengsheng.cala.htcm.views.activitys;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.chengsheng.cala.htcm.BaseActivity;
 import com.chengsheng.cala.htcm.R;
 
-public class AboutActivity extends AppCompatActivity {
+public class AboutActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

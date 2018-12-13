@@ -12,15 +12,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.model.datamodel.childmodelb.ExamItem;
 
 import java.util.List;
 import java.util.Map;
 
 public class IntelligentCheckARecyclerAdapter extends RecyclerView.Adapter<IntelligentCheckARecyclerAdapter.MyViewHolder> {
     private Context context;
-    private List<Map<String,String>> datas;
+    private List<ExamItem> datas;
 
-    public IntelligentCheckARecyclerAdapter(Context context,List<Map<String,String>> datas){
+    public IntelligentCheckARecyclerAdapter(Context context,List<ExamItem> datas){
         this.context = context;
         this.datas = datas;
     }
@@ -34,36 +35,22 @@ public class IntelligentCheckARecyclerAdapter extends RecyclerView.Adapter<Intel
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder viewHolder, int i) {
-        Map<String,String> data = datas.get(i);
+        ExamItem data = datas.get(i);
 
-        if(i == datas.size()-1){
-            viewHolder.box.setBackgroundColor(context.getResources().getColor(R.color.colorWhite));
-        }
+        viewHolder.currentWaitingNumber.setText(String.valueOf(data.getWait_person()));
+        viewHolder.checkItemName.setText(data.getName());
+        viewHolder.checkItemChild.setText(data.getExam_address());
 
-        if(data.get("STATE").equals("TYPE_A")){
-            viewHolder.currentWaitingNumberBox.setVisibility(View.INVISIBLE);
-            viewHolder.checkedMark.setVisibility(View.INVISIBLE);
-            viewHolder.itemSelectButton.setVisibility(View.VISIBLE);
-        }else if(data.get("STATE").equals("TYPE_B")){
-            viewHolder.currentWaitingNumberBox.setVisibility(View.VISIBLE);
-            viewHolder.checkedMark.setVisibility(View.INVISIBLE);
-            viewHolder.itemSelectButton.setVisibility(View.INVISIBLE);
-        }else{
-            viewHolder.currentWaitingNumberBox.setVisibility(View.INVISIBLE);
-            viewHolder.checkedMark.setVisibility(View.VISIBLE);
-            viewHolder.itemSelectButton.setVisibility(View.INVISIBLE);
-        }
-
-        viewHolder.itemSelectButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(viewHolder.itemSelectButton.isSelected()){
-                    viewHolder.itemSelectButton.setSelected(false);
-                }else{
-                    viewHolder.itemSelectButton.setSelected(true);
-                }
-            }
-        });
+//        viewHolder.itemSelectButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(viewHolder.itemSelectButton.isSelected()){
+//                    viewHolder.itemSelectButton.setSelected(false);
+//                }else{
+//                    viewHolder.itemSelectButton.setSelected(true);
+//                }
+//            }
+//        });
 
     }
 

@@ -18,6 +18,7 @@
         android:orientation="vertical"
         android:layout_marginTop="1dp">
         <EditText
+            android:id="@+id/text_area"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_marginLeft="14dp"
@@ -30,7 +31,7 @@
             android:id="@+id/input_text_num"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:text="0/100"
+            android:text="100/100"
             android:textColor="@color/colorThrText"
             android:textSize="12sp"
             android:gravity="right"
@@ -58,7 +59,7 @@
            android:layout_height="wrap_content"
            android:textSize="16sp"
            android:background="@null"
-           android:hint="请输入"
+           android:hint="请输入你的联系方式"
            android:layout_centerVertical="true"
            android:layout_toRightOf="@id/mark_contact_info"
            android:layout_marginLeft="30dp"/>

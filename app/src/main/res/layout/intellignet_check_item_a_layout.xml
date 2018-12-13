@@ -37,42 +37,47 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="14dp"
-            android:background="@drawable/selecter_radio_button_bg" />
+            android:background="@drawable/selecter_radio_button_bg"
+            android:visibility="invisible" />
+
         <LinearLayout
             android:id="@+id/current_waiting_number_box"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="14dp"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="当前排队"
-                android:textSize="12sp"
-                android:textColor="@color/colorThrText"/>
+                android:textColor="@color/colorThrText"
+                android:textSize="12sp" />
+
             <TextView
                 android:id="@+id/current_waiting_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="5人"
-                android:textSize="20sp"
-                android:textColor="@color/colorPrimary"/>
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/checked_mark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="已检"
-            android:textSize="18sp"
-            android:textColor="@color/colorThrText"
-            android:textStyle="bold"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="14dp"/>
+            android:layout_marginRight="14dp"
+            android:text="已检"
+            android:textColor="@color/colorThrText"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="invisible" />
     </RelativeLayout>
 
 </FrameLayout>

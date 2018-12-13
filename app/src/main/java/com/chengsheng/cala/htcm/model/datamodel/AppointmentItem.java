@@ -1,9 +1,10 @@
 package com.chengsheng.cala.htcm.model.datamodel;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class AppointmentItem {
-
+public class AppointmentItem implements Serializable {
+    private static final long serialVersionUID = -7060210544600464481L;
     private int id;
     private String name;
     private String explain;

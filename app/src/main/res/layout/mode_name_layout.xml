@@ -21,18 +21,21 @@
 
             <EditText
                 android:id="@+id/input_new_name"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="14dp"
                 android:background="@null"
+                android:layout_toLeftOf="@id/clean_input"
                 android:hint="请输入新的名字"
                 android:textColor="@color/colorText"
                 android:textSize="16sp" />
 
             <ImageView
                 android:id="@+id/clean_input"
-                android:layout_width="14dp"
+                android:layout_width="54dp"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"

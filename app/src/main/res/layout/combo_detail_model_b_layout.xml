@@ -2,11 +2,12 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:background="@color/colorWhite"
-        android:layout_marginTop="10dp">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorWhite">
 
         <RelativeLayout
             android:id="@+id/group_info_coatiner"
@@ -14,74 +15,102 @@
             android:layout_height="55dp"
             android:layout_below="@id/line9"
             android:background="@drawable/has_bottom_line_item_bg">
+
             <ImageView
                 android:layout_width="3dp"
                 android:layout_height="14dp"
-                android:src="@mipmap/dabiaoti_shuxian"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="14dp"/>
+                android:layout_marginLeft="14dp"
+                android:src="@mipmap/dabiaoti_shuxian" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="机构信息"
-                android:textSize="16sp"
-                android:textColor="@color/colorText"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="24dp"/>
+                android:layout_marginLeft="24dp"
+                android:text="机构信息"
+                android:textColor="@color/colorText"
+                android:textSize="16sp" />
         </RelativeLayout>
+
         <TextView
             android:id="@+id/group_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="成都中医药大学附属医院"
-            android:textSize="16sp"
-            android:textColor="@color/colorText"
             android:layout_below="@id/group_info_coatiner"
             android:layout_marginLeft="14dp"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="20dp"
+            android:text="成都中医药大学附属医院"
+            android:textColor="@color/colorText"
+            android:textSize="16sp" />
+
         <TextView
             android:id="@+id/group_mark"
             android:layout_width="62dp"
             android:layout_height="16dp"
+            android:layout_below="@id/group_info_coatiner"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="24dp"
+            android:layout_toRightOf="@id/group_name"
             android:background="@drawable/login_button_bg"
             android:gravity="center"
             android:text="公立三甲"
-            android:textSize="12sp"
             android:textColor="@color/colorWhite"
-            android:layout_below="@id/group_info_coatiner"
-            android:layout_toRightOf="@id/group_name"
-            android:layout_marginTop="24dp"
-            android:layout_marginLeft="8dp"/>
-        <TextView
-            android:id="@+id/group_tel"
-            android:layout_width="wrap_content"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:id="@+id/container_j"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="电话 028-05056666"
-            android:textSize="14sp"
-            android:textColor="@color/colorSecText"
             android:layout_below="@id/group_name"
-            android:layout_marginLeft="14dp"
-            android:layout_marginTop="14dp"/>
-        <TextView
-            android:id="@+id/group_address"
-            android:layout_width="wrap_content"
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:text="电话"
+                android:textColor="@color/colorThrText"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/group_tel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/group_name"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/colorSecText"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="地址 四川省成都市金牛区二桥路333号"
-            android:textSize="14sp"
-            android:textColor="@color/colorSecText"
-            android:layout_below="@id/group_tel"
-            android:layout_marginLeft="14dp"
-            android:layout_marginTop="14dp"/>
-        <ImageView
-            android:id="@+id/group_address_mark"
-            android:layout_width="16dp"
-            android:layout_height="20dp"
-            android:src="@mipmap/dingwei"
-            android:layout_toRightOf="@id/group_address"
-            android:layout_below="@id/group_tel"
-            android:layout_marginTop="12dp"
-            android:layout_marginLeft="8dp"
-            android:background="@color/colorWhite"/>
+            android:layout_below="@id/container_j"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="19dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:text="地址"
+                android:textColor="@color/colorThrText"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/group_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="14dp"
+                android:textColor="@color/colorSecText"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+
     </RelativeLayout>
 
 </FrameLayout>

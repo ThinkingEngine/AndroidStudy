@@ -25,9 +25,9 @@
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
-            fresco:actualImageScaleType="centerInside"
+            fresco:actualImageScaleType="fitCenter"
             fresco:roundAsCircle="true"
-            fresco:backgroundImage="@color/colorPrimary"/>
+            fresco:backgroundImage="@mipmap/morentouxiang_wode"/>
 
 
         <TextView

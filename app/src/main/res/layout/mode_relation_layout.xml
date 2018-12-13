@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:zhy="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,30 +14,61 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@id/title_header_mode_relation"
-            android:layout_marginTop="11dp"
             android:background="@color/colorWhite">
 
-            <me.gujun.android.taggroup.TagGroup
-                android:id="@+id/mode_relation_group"
+
+            <com.zhy.view.flowlayout.TagFlowLayout
+                android:id="@+id/families_relation_selecter_mode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginEnd="50dp"
-                android:layout_marginStart="50dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
                 android:layout_marginTop="10dp"
-                app:atg_isAppendMode="true"
-                app:atg_textSize="14sp"
-                app:atg_textColor="@color/colorThrText"
-                app:atg_backgroundColor="@color/colorWhite"
-                app:atg_borderColor="@color/colorThrText"
-                app:atg_borderStrokeWidth="1dp"
-                app:atg_checkedBackgroundColor="@color/colorOrange"
-                app:atg_checkedBorderColor="@color/colorOrange"
-                app:atg_checkedTextColor="@color/colorWhite"/>
+                android:layout_marginBottom="14dp"
+                zhy:max_select="1" />
 
+            <LinearLayout
+                android:id="@+id/add_families_marks_box_mode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/families_relation_selecter_mode"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="4dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
+                <EditText
+                    android:id="@+id/new_families_mark_input_mode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/corner_white_mark"
+                    android:hint="请输入与家人的其他关系"
+                    android:paddingStart="8dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:textSize="14sp"
+                    android:layout_weight="3"/>
+
+                <Button
+                    android:id="@+id/add_families_marks_button_mode"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:background="@drawable/login_button_bg"
+                    android:gravity="center"
+                    android:text="添加"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="12sp"
+                    android:layout_weight="7"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginRight="14dp"/>
+            </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>
 

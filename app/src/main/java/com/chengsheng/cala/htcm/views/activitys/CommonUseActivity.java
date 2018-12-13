@@ -4,9 +4,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.chengsheng.cala.htcm.BaseActivity;
 import com.chengsheng.cala.htcm.R;
 
-public class CommonUseActivity extends AppCompatActivity {
+public class CommonUseActivity extends BaseActivity {
     private TextView titleText;
 
     @Override

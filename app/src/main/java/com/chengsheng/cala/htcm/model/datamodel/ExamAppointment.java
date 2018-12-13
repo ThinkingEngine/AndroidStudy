@@ -1,21 +1,21 @@
 package com.chengsheng.cala.htcm.model.datamodel;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class ExamAppointment {
-    private int id;
-    private String name;
-    private String price;
-    private String applicable_sex_text;
+    private int id;//
+    private String name;//
+    private String price;//
+    private String applicable_sex;//
     private String photo_path;
-    private int actual_sales_num;
+    private int display_order;//
+    private int current_sales_num;//
     private String intro;
     private String exam_notice;
     private boolean is_hot;
-    private int[] age_group;
-    private String[] package_tag;
-    private int[] screen_disease_type;
-    private boolean pc_deleted;
+    private List<PackageTag> package_tag;
+    private boolean pc_deleted;//
 
 
     public int getId() {
@@ -42,12 +42,12 @@ public class ExamAppointment {
         this.price = price;
     }
 
-    public String getApplicable_sex_text() {
-        return applicable_sex_text;
+    public String getApplicable_sex() {
+        return applicable_sex;
     }
 
-    public void setApplicable_sex_text(String applicable_sex_text) {
-        this.applicable_sex_text = applicable_sex_text;
+    public void setApplicable_sex(String applicable_sex) {
+        this.applicable_sex = applicable_sex;
     }
 
     public String getPhoto_path() {
@@ -58,12 +58,20 @@ public class ExamAppointment {
         this.photo_path = photo_path;
     }
 
-    public int getActual_sales_num() {
-        return actual_sales_num;
+    public int getDisplay_order() {
+        return display_order;
     }
 
-    public void setActual_sales_num(int actual_sales_num) {
-        this.actual_sales_num = actual_sales_num;
+    public void setDisplay_order(int display_order) {
+        this.display_order = display_order;
+    }
+
+    public int getCurrent_sales_num() {
+        return current_sales_num;
+    }
+
+    public void setCurrent_sales_num(int current_sales_num) {
+        this.current_sales_num = current_sales_num;
     }
 
     public String getIntro() {
@@ -90,28 +98,12 @@ public class ExamAppointment {
         this.is_hot = is_hot;
     }
 
-    public int[] getAge_group() {
-        return age_group;
-    }
-
-    public void setAge_group(int[] age_group) {
-        this.age_group = age_group;
-    }
-
-    public String[] getPackage_tag() {
+    public List<PackageTag> getPackage_tag() {
         return package_tag;
     }
 
-    public void setPackage_tag(String[] package_tag) {
+    public void setPackage_tag(List<PackageTag> package_tag) {
         this.package_tag = package_tag;
-    }
-
-    public int[] getScreen_disease_type() {
-        return screen_disease_type;
-    }
-
-    public void setScreen_disease_type(int[] screen_disease_type) {
-        this.screen_disease_type = screen_disease_type;
     }
 
     public boolean isPc_deleted() {
@@ -128,15 +120,14 @@ public class ExamAppointment {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", price='" + price + '\'' +
-                ", applicable_sex_text='" + applicable_sex_text + '\'' +
+                ", applicable_sex='" + applicable_sex + '\'' +
                 ", photo_path='" + photo_path + '\'' +
-                ", actual_sales_num=" + actual_sales_num +
+                ", display_order=" + display_order +
+                ", current_sales_num=" + current_sales_num +
                 ", intro='" + intro + '\'' +
                 ", exam_notice='" + exam_notice + '\'' +
                 ", is_hot=" + is_hot +
-                ", age_group=" + Arrays.toString(age_group) +
-                ", package_tag=" + Arrays.toString(package_tag) +
-                ", screen_disease_type=" + Arrays.toString(screen_disease_type) +
+                ", package_tag=" + package_tag +
                 ", pc_deleted=" + pc_deleted +
                 '}';
     }

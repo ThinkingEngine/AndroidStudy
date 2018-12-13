@@ -26,11 +26,9 @@ import com.chengsheng.cala.htcm.utils.AuthStateCallBack;
 import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
 import com.chengsheng.cala.htcm.views.activitys.FamilyManageActivity;
 import com.chengsheng.cala.htcm.views.adapters.FMRecyclerAdapter;
+import com.zyao89.view.zloading.ZLoadingDialog;
+import com.zyao89.view.zloading.Z_TYPE;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
@@ -52,9 +50,10 @@ public class HealthFragment extends Fragment implements AuthStateCallBack {
 
     private OnFragmentInteractionListener mListener;
 
+    private ZLoadingDialog loadingDialog;
+
 
     public HealthFragment() {
-        // Required empty public constructor
     }
 
     public static HealthFragment newInstance(String param1, String param2) {
@@ -74,7 +73,11 @@ public class HealthFragment extends Fragment implements AuthStateCallBack {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-
+        loadingDialog = new ZLoadingDialog(getContext());
+        loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
+        loadingDialog.setHintTextColor(getContext().getResources().getColor(R.color.colorPrimary));
+        loadingDialog.setDialogBackgroundColor(getContext().getResources().getColor(R.color.colorText));
+        loadingDialog.setLoadingColor(getContext().getResources().getColor(R.color.colorPrimary));
         CallBackDataAuth.setAuthStateCallBack(this);
     }
 
@@ -83,7 +86,7 @@ public class HealthFragment extends Fragment implements AuthStateCallBack {
         View rootView = inflater.inflate(R.layout.fragment_health, container, false);
 
         TextView title = rootView.findViewById(R.id.title_header_health).findViewById(R.id.menu_bar_title);
-        ImageView imageView = rootView.findViewById(R.id.title_header_health).findViewById(R.id.back_login);
+        final ImageView imageView = rootView.findViewById(R.id.title_header_health).findViewById(R.id.back_login);
         TextView childTitle = rootView.findViewById(R.id.title_header_health).findViewById(R.id.message_mark_text);
         peopleRecycler = rootView.findViewById(R.id.family_manage_recycler);
         final SwipeRefreshLayout freahPeopleRecycler = rootView.findViewById(R.id.fresh_people_recycler);
@@ -94,7 +97,8 @@ public class HealthFragment extends Fragment implements AuthStateCallBack {
 
         peopleRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
+        loadingDialog.setHintText("加载中.....");
+        loadingDialog.show();
         myRetrofit = MyRetrofit.createInstance();
         getFamiliesList = myRetrofit.createURL(GlobalConstant.API_BASE_URL);
         NetService service = getFamiliesList.create(NetService.class);
@@ -104,14 +108,15 @@ public class HealthFragment extends Fragment implements AuthStateCallBack {
                 .subscribe(new DisposableObserver<FamiliesList>() {
                     @Override
                     public void onNext(FamiliesList datas) {
-                        Log.e("FAMILIES",datas.toString());
-                        fmRecyclerAdapter = new FMRecyclerAdapter(getContext(), datas.getItems());
-                        peopleRecycler.setAdapter(fmRecyclerAdapter);
+                        Log.e("FAMILIES", datas.toString());
+                        setViews(datas);
+                        loadingDialog.cancel();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("FAMILIES",e.toString());
+                        Log.e("FAMILIES", e.toString());
+                        loadingDialog.cancel();
                     }
 
                     @Override
@@ -124,19 +129,18 @@ public class HealthFragment extends Fragment implements AuthStateCallBack {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), FamilyManageActivity.class);
+                intent.putExtra("ADD_MARK",false);
                 startActivity(intent);
             }
         });
 
 
         freahPeopleRecycler.setColorSchemeColors(Color.BLUE);
-
         freahPeopleRecycler.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-//                data.add("new");
-                Toast.makeText(getContext(), "下拉刷新--", Toast.LENGTH_SHORT).show();
-                fmRecyclerAdapter.notifyDataSetChanged();
+                updateData();
+//                fmRecyclerAdapter.notifyDataSetChanged();
                 freahPeopleRecycler.setRefreshing(false);
             }
         });
@@ -168,13 +172,55 @@ public class HealthFragment extends Fragment implements AuthStateCallBack {
     }
 
     @Override
-    public void authResult(Map<String, String> result) {
-        Toast.makeText(getContext(),result.get("STATE")+":"+result.get("REASON"),Toast.LENGTH_LONG).show();
+    public void authResult(boolean isAuth) {
+        if(isAuth){
+            updateData();
+        }
     }
+
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void setViews(FamiliesList datas) {
+        fmRecyclerAdapter = new FMRecyclerAdapter(getContext(), datas.getItems());
+        peopleRecycler.setAdapter(fmRecyclerAdapter);
+    }
+
+    private void updateData() {
+        if (getFamiliesList == null) {
+            getFamiliesList = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
+        }
+
+        loadingDialog.setHintText("加载中....");
+        loadingDialog.show();
+        NetService service = getFamiliesList.create(NetService.class);
+        service.getFamiliesList(mParam1 + " " + mParam2)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableObserver<FamiliesList>() {
+                    @Override
+                    public void onNext(FamiliesList datas) {
+                        Log.e("FAMILIES", datas.toString());
+                        setViews(datas);
+                        loadingDialog.cancel();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.cancel();
+                        Log.e("FAMILIES", e.toString());
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
     }
 
 }

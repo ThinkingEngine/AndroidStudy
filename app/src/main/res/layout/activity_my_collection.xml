@@ -13,13 +13,20 @@
         layout="@layout/title_bar_type_two_layout"/>
 
     <android.support.design.widget.TabLayout
-        android:id="@+id/my_collection_tab_header"
+        android:id="@+id/collection_header"
         android:layout_width="match_parent"
         android:layout_height="44dp"
+        android:layout_below="@id/title_header_my_collection"
         app:tabBackground="@color/colorWhite"
-        app:tabTextColor="@color/colorHitText"
+        app:tabIndicatorColor="@color/colorPrimary"
         app:tabSelectedTextColor="@color/colorPrimary"
-        app:tabIndicatorColor="@color/colorPrimary">
-    </android.support.design.widget.TabLayout>
+        app:tabTextColor="@color/colorThrText"/>
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/collection_body"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/collection_header"/>
 
 </LinearLayout>

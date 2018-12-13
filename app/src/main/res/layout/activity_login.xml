@@ -55,11 +55,11 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="24dp"
+        android:paddingBottom="15dp"
         android:background="@drawable/has_bottom_line_no_off_bg"
         android:hint="@string/cellphone_number"
-        android:paddingBottom="15dp"
         android:textColor="@color/colorText"
-        android:textSize="16sp" />
+        android:textSize="16sp"/>
 
     <RelativeLayout
         android:id="@+id/container_f"
@@ -74,11 +74,13 @@
 
         <EditText
             android:id="@+id/password_edittext"
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_alignParentLeft="true"
             android:layout_marginBottom="16dp"
-            android:background="@null"
+            android:layout_marginEnd="64dp"
+            android:layout_centerVertical="true"
+            android:background="@color/colorWhite"
             android:hint="@string/passwd"
             android:textColor="@color/colorText"
             android:textSize="16sp" />
@@ -142,10 +144,11 @@
             android:textSize="12sp" />
 
         <TextView
+            android:id="@+id/login_tel_service"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
-            android:text="400-600-311"
+            android:text="@string/service_tel_num"
             android:textColor="@color/colorPrimary"
             android:textSize="12sp" />
     </LinearLayout>

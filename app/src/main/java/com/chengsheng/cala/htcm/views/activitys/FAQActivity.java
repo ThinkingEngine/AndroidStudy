@@ -4,9 +4,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.chengsheng.cala.htcm.BaseActivity;
 import com.chengsheng.cala.htcm.R;
 
-public class FAQActivity extends AppCompatActivity {
+public class FAQActivity extends BaseActivity {
     private TextView titleText;
 
     @Override

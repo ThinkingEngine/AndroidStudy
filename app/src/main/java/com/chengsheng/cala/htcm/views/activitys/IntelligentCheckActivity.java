@@ -1,64 +1,90 @@
 package com.chengsheng.cala.htcm.views.activitys;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chengsheng.cala.htcm.BaseActivity;
+import com.chengsheng.cala.htcm.GlobalConstant;
+import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.model.datamodel.childmodelb.IntelligentCheck;
+import com.chengsheng.cala.htcm.network.MyRetrofit;
+import com.chengsheng.cala.htcm.network.NetService;
+import com.chengsheng.cala.htcm.utils.FuncUtils;
+import com.chengsheng.cala.htcm.utils.QRCodeUtil;
 import com.chengsheng.cala.htcm.views.adapters.IntelligentCheckARecyclerAdapter;
 import com.chengsheng.cala.htcm.views.adapters.IntelligentCheckBRecyclerAdapter;
+import com.chengsheng.cala.htcm.views.customviews.MyRecyclerView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class IntelligentCheckActivity extends AppCompatActivity {
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+import okhttp3.ResponseBody;
+import retrofit2.HttpException;
+import retrofit2.Retrofit;
+
+public class IntelligentCheckActivity extends BaseActivity {
     private ImageView back;
     private TextView title;
     private ImageView barCodeMarkIntelligent;
     private TextView numberBarCodeIntelligent;
-    private TextView itemPersonName,itemPersonSex,itemPersonAge;
-    private RecyclerView intelligentCheckRecyclerA,intelligentCheckRecyclerB;
+    private TextView itemPersonName, itemPersonSex, itemPersonAge;
+    private MyRecyclerView intelligentCheckRecyclerA, intelligentCheckRecyclerB;
     private TextView checkedLine;
+
+    private Retrofit retrofit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        HTCMApp app = HTCMApp.create(getApplicationContext());
         setContentView(R.layout.activity_intelligent_check);
 
         initViews();
 
-        List<Map<String,String>> datasA = new ArrayList<>();
-        List<Map<String,String>> datasB = new ArrayList<>();
-        Map<String,String> dataA = new HashMap<>();
-        dataA.put("STATE","TYPE_B");
-        Map<String,String> dataB = new HashMap<>();
-        dataB.put("STATE","TYPE_A");
-        Map<String,String> dataC = new HashMap<>();
-        dataC.put("STATE","TYPE_C");
-        Map<String,String> dataE = new HashMap<>();
-        dataE.put("STATE","TYPE_A");
-        Map<String,String> dataD = new HashMap<>();
-        dataD.put("STATE","TYPE_C");
-        datasA.add(dataA);
-        datasA.add(dataB);
-        datasA.add(dataC);
-        datasB.add(dataD);
-        datasB.add(dataE);
+        String orderID = getIntent().getStringExtra("EXAM_ID");
+        Log.e("TAG","orderID"+orderID);
+        if (retrofit == null) {
+            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
+        }
 
-        IntelligentCheckARecyclerAdapter adapter1 = new IntelligentCheckARecyclerAdapter(this,datasA);
-        IntelligentCheckBRecyclerAdapter adapter2 = new IntelligentCheckBRecyclerAdapter(this,datasB);
-        intelligentCheckRecyclerA.setLayoutManager(new LinearLayoutManager(this));
-        intelligentCheckRecyclerB.setLayoutManager(new LinearLayoutManager(this));
-        intelligentCheckRecyclerA.setSaveEnabled(false);
-        intelligentCheckRecyclerB.setSaveEnabled(false);
-        intelligentCheckRecyclerA.setAdapter(adapter1);
-        intelligentCheckRecyclerB.setAdapter(adapter2);
+        NetService service = retrofit.create(NetService.class);
+        service.getIntelligentCheckInfo(app.getTokenType() + " " + app.getAccessToken(), GlobalConstant.INTELLIGENT_CHECK+ orderID)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableObserver<IntelligentCheck>() {
+                    @Override
+                    public void onNext(IntelligentCheck userExamDetail) {
+                        Log.e("TAG", "智能体检数据请求成功:");
+                        setViews(userExamDetail);
+                    }
 
+                    @Override
+                    public void onError(Throwable e) {
+                        if (e instanceof HttpException) {
+                            ResponseBody body = ((HttpException) e).response().errorBody();
+                            try {
+                                Log.e("TAG", "智能体检数据请求失败:" + body.string());
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     private void initViews() {
@@ -74,5 +100,23 @@ public class IntelligentCheckActivity extends AppCompatActivity {
         checkedLine = findViewById(R.id.checked_line);
 
         title.setText("智能导检");
+    }
+
+    private void setViews(IntelligentCheck intelligentCheck){
+        String id = intelligentCheck.getExam_customer().getExam_or_registration().getId();
+        barCodeMarkIntelligent.setImageBitmap(QRCodeUtil.createBarcode(id,FuncUtils.px2dip(280),FuncUtils.px2dip(74)));
+        numberBarCodeIntelligent.setText(id);
+        itemPersonName.setText(intelligentCheck.getExam_customer().getName());
+        itemPersonSex.setText(intelligentCheck.getExam_customer().getSex());
+        itemPersonAge.setText(intelligentCheck.getExam_customer().getAge()+"岁");
+
+        IntelligentCheckARecyclerAdapter adapter1 = new IntelligentCheckARecyclerAdapter(this, intelligentCheck.getUnexamined().getItems());
+        IntelligentCheckBRecyclerAdapter adapter2 = new IntelligentCheckBRecyclerAdapter(this, intelligentCheck.getExamined().getItems());
+        intelligentCheckRecyclerA.setLayoutManager(new LinearLayoutManager(this));
+        intelligentCheckRecyclerB.setLayoutManager(new LinearLayoutManager(this));
+        intelligentCheckRecyclerA.setSaveEnabled(false);
+        intelligentCheckRecyclerB.setSaveEnabled(false);
+        intelligentCheckRecyclerA.setAdapter(adapter1);
+        intelligentCheckRecyclerB.setAdapter(adapter2);
     }
 }

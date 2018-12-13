@@ -1,6 +1,5 @@
 package com.chengsheng.cala.htcm.utils;
 
-import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -9,13 +8,14 @@ import android.net.Uri;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
 import android.widget.Toast;
 
 
-import java.sql.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import static com.chengsheng.cala.htcm.MyApplication.myContext;
 
@@ -62,8 +62,8 @@ public class FuncUtils {
         return myContext.getSharedPreferences("config", myContext.MODE_PRIVATE);
     }
 
-    public static int px2dip(Context context, int px) {
-        final float scale = context.getResources().getDisplayMetrics().density;
+    public static int px2dip(int px) {
+        final float scale = myContext.getResources().getDisplayMetrics().density;
         return (int) (px / scale + 0.5f);
     }
 
@@ -159,7 +159,25 @@ public class FuncUtils {
 
     }
 
-    public static String getReal(Context context,Uri uri){
+    public static String getCurrentTime() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        java.util.Date date = new java.util.Date(System.currentTimeMillis());
+        return simpleDateFormat.format(date);
+    }
+
+    public static int dayNum(String date) throws ParseException {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date1 = format.parse(date);
+        calendar.setTime(date1);
+        long time1 = calendar.getTimeInMillis();
+
+        long between = (time1 - System.currentTimeMillis()) / (1000 * 3600 * 24);
+
+        return Integer.parseInt(String.valueOf(between));
+    }
+
+    public static String getReal(Context context, Uri uri) {
         String imagePath = null;
         if (DocumentsContract.isDocumentUri(context, uri)) {
             //如果是document类型的uri，则通过document id处理
@@ -198,5 +216,6 @@ public class FuncUtils {
         }
         return path;
     }
+
 
 }

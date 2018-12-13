@@ -9,14 +9,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.model.datamodel.childmodelb.PackageAndOptional;
 
 import java.util.List;
 
 public class ExamOrderFormChildRecyclerAdapter extends RecyclerView.Adapter<ExamOrderFormChildRecyclerAdapter.ExamOrderFormChildVH> {
     private Context context;
-    private List<String> datas;
+    private List<PackageAndOptional> datas;
 
-    public ExamOrderFormChildRecyclerAdapter(Context context,List<String> datas){
+    public ExamOrderFormChildRecyclerAdapter(Context context,List<PackageAndOptional> datas){
         this.context = context;
         this.datas = datas;
     }
@@ -30,7 +31,9 @@ public class ExamOrderFormChildRecyclerAdapter extends RecyclerView.Adapter<Exam
 
     @Override
     public void onBindViewHolder(@NonNull ExamOrderFormChildVH viewHolder, int i) {
-        viewHolder.childOrderItemName.setText(datas.get(i));
+        PackageAndOptional data = datas.get(i);
+        viewHolder.childOrderItemName.setText(data.getName());
+        viewHolder.childOrderItemValue.setText("¥"+data.getPrice());
     }
 
     @Override

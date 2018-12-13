@@ -13,7 +13,7 @@
         <EditText
             android:id="@+id/get_number_sms_mode"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_below="@id/title_header_mode_families"
             android:layout_centerHorizontal="true"
             android:background="@drawable/has_bottom_line_no_off_bg"
@@ -21,8 +21,7 @@
             android:paddingLeft="24dp"
             android:paddingRight="24dp"
             android:gravity="center_vertical"
-            android:hint="13778041212"
-            android:paddingBottom="17dp"
+            android:hint="请输入新的手机号码"
             android:textColor="@color/colorText"
             android:textSize="16sp" />
 
@@ -44,7 +43,7 @@
                 android:layout_height="20dp"
                 android:background="@null"
                 android:layout_marginLeft="24dp"
-                android:hint="验证码"
+                android:hint="请输入验证码"
                 android:textColor="@color/colorText"
                 android:textSize="16sp" />
 

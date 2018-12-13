@@ -5,65 +5,28 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/exam_target_expandable"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="检查目的"
-            android:textSize="16sp"
-            android:textColor="@color/colorText"
+            android:layout_marginLeft="14dp"
             android:layout_marginTop="6dp"
-            android:layout_marginLeft="14dp"/>
+            android:text="检查目的"
+            android:textColor="@color/colorText"
+            android:textSize="16sp" />
+
         <TextView
             android:id="@+id/exam_target_detail_expandable"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="检查体重是否正常，有无体重过低、超重或肥胖；有无血压脉搏异常"
-            android:textSize="14sp"
-            android:textColor="@color/colorSecText"
             android:layout_marginLeft="14dp"
-            android:layout_marginRight="14dp"
-            android:layout_marginTop="8dp"/>
-        <TextView
-        android:id="@+id/exam_notes_expandable"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="注意事项"
-        android:textSize="16sp"
-        android:textColor="@color/colorText"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="14dp"/>
-        <TextView
-            android:id="@+id/exam_notes_detail_expandable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="详见体检须知"
-            android:textSize="14sp"
-            android:textColor="@color/colorSecText"
-            android:layout_marginLeft="14dp"
-            android:layout_marginRight="14dp"
-            android:layout_marginTop="8dp"/>
-        <TextView
-            android:id="@+id/exam_include_expandable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="包含内容"
-            android:textSize="16sp"
-            android:textColor="@color/colorText"
-            android:layout_marginTop="16dp"
-            android:layout_marginLeft="14dp"/>
-        <TextView
-            android:id="@+id/exam_include_detail_expandable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="身高，体重，体重指数，血压，脉搏"
-            android:textSize="14sp"
-            android:textColor="@color/colorSecText"
-            android:layout_marginLeft="14dp"
-            android:layout_marginRight="14dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="14dp"/>
+            android:layout_marginRight="14dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/colorSecText"
+            android:textSize="14sp" />
     </LinearLayout>
 </LinearLayout>

@@ -1,52 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:background="@color/colorWhite"
-        android:layout_marginTop="1dp">
+        android:layout_marginTop="1dp"
+        android:background="@color/colorWhite">
 
-        <ImageView
+
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/appointment_icon"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@mipmap/ic_launcher"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"/>
+            android:layout_marginLeft="20dp"
+            android:src="@mipmap/ic_launcher"
+            fresco:actualImageScaleType="centerInside"
+            fresco:backgroundImage="@color/colorPrimary"
+            fresco:roundAsCircle="false" />
+
         <TextView
             android:id="@+id/appointment_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="老年健康体检套餐（男）"
-            android:textSize="18sp"
-            android:textColor="@color/colorText"
-            android:layout_toRightOf="@id/appointment_icon"
+            android:layout_marginLeft="15dp"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="15dp"/>
+            android:layout_toRightOf="@id/appointment_icon"
+            android:textStyle="bold"
+            android:textColor="@color/colorText"
+            android:textSize="18sp" />
+
         <TextView
             android:id="@+id/group_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="体检机构：成都市中医药大学附属医院"
-            android:textSize="14sp"
-            android:textColor="@color/colorSecText"
-            android:layout_toRightOf="@id/appointment_icon"
             android:layout_below="@id/appointment_name"
+            android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="15dp"/>
+            android:layout_toRightOf="@id/appointment_icon"
+            android:text="体检机构：成都市中医药大学附属医院"
+            android:textColor="@color/colorSecText"
+            android:textSize="14sp" />
+
         <TextView
             android:id="@+id/appointment_total_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="¥ 2888.00"
-            android:textSize="14sp"
-            android:textColor="@color/colorPrimaryDark"
-            android:layout_toRightOf="@id/appointment_icon"
             android:layout_below="@id/group_name"
+            android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="15dp"/>
+            android:layout_toRightOf="@id/appointment_icon"
+            android:text="¥ 2888.00"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp" />
     </RelativeLayout>
 
 </FrameLayout>

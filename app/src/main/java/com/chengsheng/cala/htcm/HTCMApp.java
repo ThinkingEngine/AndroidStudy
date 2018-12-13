@@ -3,7 +3,13 @@ package com.chengsheng.cala.htcm;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.chengsheng.cala.htcm.model.datamodel.AppointmentDetail;
+import com.chengsheng.cala.htcm.model.datamodel.ExamReportItem;
+import com.chengsheng.cala.htcm.model.datamodel.FamiliesDetailInfo;
 import com.chengsheng.cala.htcm.utils.FuncUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HTCMApp {
 
@@ -12,6 +18,15 @@ public class HTCMApp {
     private String accessToken;
     private String expiresIn;
     private String tokenType;
+    private List<ExamReportItem> exams = new ArrayList<>();
+
+    private FamiliesDetailInfo familiesDetailInfo;
+    private AppointmentDetail appointmentDetail;
+
+    private int orderID;
+
+    public static int EXACT_SCREEN_WIDTH;
+    public static int EXACT_SCREEN_HEIGHT;
 
 
     private static final String clientId = "12aef523-379e-4f0b-894d-1834dc0a80c8";
@@ -102,4 +117,49 @@ public class HTCMApp {
         FuncUtils.putString("TOKENTYPE",tokenType);
 
     }
+
+    public void addExamsID(ExamReportItem exam){
+        exams.add(exam);
+    }
+
+    public void delExamsID(ExamReportItem examID){
+        exams.remove(examID);
+    }
+
+    public void clearExams(){
+        exams.clear();
+    }
+
+    public List<ExamReportItem> getExams(){
+        return exams;
+    }
+
+    public void setOrderID(int orderid){
+        FuncUtils.putString("ORDER_ID",String.valueOf(orderid));
+    }
+
+    public int getOrderID(){
+        return  Integer.valueOf(FuncUtils.getString("ORDER_ID","0"));
+    }
+
+    public void setFamiliesDetailInfo(FamiliesDetailInfo familiesDetailInfo){
+        this.familiesDetailInfo = familiesDetailInfo;
+    }
+
+    public FamiliesDetailInfo getFamiliesDetailInfo(){
+        return familiesDetailInfo;
+    }
+
+    public void setAppointmentDetail(AppointmentDetail appointmentDetail){
+        this.appointmentDetail = appointmentDetail;
+    }
+
+    public AppointmentDetail getAppointmentDetail(){
+        return appointmentDetail;
+    }
+
+    public void clearAppointmentDetail(){
+        this.appointmentDetail = null;
+    }
+
 }

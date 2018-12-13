@@ -7,17 +7,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.model.datamodel.FamiliesListItem;
+import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CanFamiliesListRecycler extends RecyclerView.Adapter<CanFamiliesListRecycler.CanFamiliesListViewHolder> {
     private Context context;
-    private List<String> datas;
+    private List<FamiliesListItem> datas;
+    private List<FamiliesListItem> result = new ArrayList<>();
 
-    public CanFamiliesListRecycler(Context context,List<String> datas){
+    private int currentItem = -1;
+
+    public CanFamiliesListRecycler(Context context, List<FamiliesListItem> datas) {
         this.context = context;
         this.datas = datas;
     }
@@ -25,14 +32,50 @@ public class CanFamiliesListRecycler extends RecyclerView.Adapter<CanFamiliesLis
     @NonNull
     @Override
     public CanFamiliesListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        CanFamiliesListViewHolder holder = new CanFamiliesListViewHolder(LayoutInflater.from(context).inflate(R.layout.can_add_families_tem_layout,null));
+        CanFamiliesListViewHolder holder = new CanFamiliesListViewHolder(LayoutInflater.from(context).inflate(R.layout.can_add_families_tem_layout, null));
 
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CanFamiliesListViewHolder viewHolder, int i) {
-        viewHolder.examPersonName.setText(datas.get(i));
+    public void onBindViewHolder(@NonNull final CanFamiliesListViewHolder viewHolder, int i) {
+        final FamiliesListItem data = datas.get(i);
+
+        if (data.isIs_auth()) {
+            viewHolder.authenticationMarkA.setSelected(true);
+            viewHolder.authenticationTextA.setTextColor(context.getResources().getColor(R.color.colorOrange));
+        } else {
+            viewHolder.authenticationMarkA.setSelected(false);
+            viewHolder.authenticationTextA.setTextColor(context.getResources().getColor(R.color.colorThrText));
+        }
+
+
+        viewHolder.examPersonName.setText(data.getFullname());
+        viewHolder.examPersonTel.setText("电话号码 " + data.getMobile());
+        viewHolder.examPersonId.setText("身份证号 " + data.getId_card_no());
+        if (data.getOwner_relationship().equals("")) {
+            viewHolder.examPersonMark.setVisibility(View.INVISIBLE);
+        } else {
+            viewHolder.examPersonMark.setVisibility(View.VISIBLE);
+            viewHolder.examPersonMark.setText(data.getOwner_relationship());
+        }
+
+        viewHolder.canSelectItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (viewHolder.addFamiliesButton.isSelected()) {
+                    viewHolder.addFamiliesButton.setSelected(false);
+                    result.remove(data);
+                } else {
+                    viewHolder.addFamiliesButton.setSelected(true);
+                    result.add(data);
+                }
+
+            }
+        });
+
+        CallBackDataAuth.doExamPersonCallBack(result);
+
     }
 
     @Override
@@ -40,13 +83,15 @@ public class CanFamiliesListRecycler extends RecyclerView.Adapter<CanFamiliesLis
         return datas.size();
     }
 
-    public class CanFamiliesListViewHolder extends RecyclerView.ViewHolder{
+    public class CanFamiliesListViewHolder extends RecyclerView.ViewHolder {
 
         ImageView addFamiliesButton;
         TextView examPersonName;
         ImageView authenticationMarkA;
         TextView authenticationTextA;
-        TextView examPersonTel,examPersonId;
+        TextView examPersonTel, examPersonId;
+        TextView examPersonMark;
+        RelativeLayout canSelectItem;
 
         public CanFamiliesListViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -56,6 +101,8 @@ public class CanFamiliesListRecycler extends RecyclerView.Adapter<CanFamiliesLis
             authenticationTextA = itemView.findViewById(R.id.authentication_text_a);
             examPersonTel = itemView.findViewById(R.id.exam_person_tel);
             examPersonId = itemView.findViewById(R.id.exam_person_id);
+            examPersonMark = itemView.findViewById(R.id.exam_person_mark);
+            canSelectItem = itemView.findViewById(R.id.can_select_item);
         }
     }
 }

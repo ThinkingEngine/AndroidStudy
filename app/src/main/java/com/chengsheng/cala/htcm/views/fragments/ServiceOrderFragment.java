@@ -4,11 +4,14 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.views.adapters.ServiceOrderRecyclerViewAdapter;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 
 public class ServiceOrderFragment extends Fragment {
@@ -50,6 +53,23 @@ public class ServiceOrderFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_service_order, container, false);
+
+        final XRecyclerView serviceOrderRecycler = rootView.findViewById(R.id.service_order_recycler);
+        serviceOrderRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        serviceOrderRecycler.setAdapter(new ServiceOrderRecyclerViewAdapter(getContext()));
+
+        serviceOrderRecycler.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+                serviceOrderRecycler.refreshComplete();
+            }
+
+            @Override
+            public void onLoadMore() {
+
+            }
+        });
+
         return rootView;
     }
 

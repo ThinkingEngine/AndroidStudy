@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:layout_width="346dp"
+        android:layout_width="match_parent"
         android:layout_height="140dp"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/fmailies_item_bg"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:background="@drawable/fmailies_item_bg">
 
         <ImageView
             android:id="@+id/dot_b"
@@ -22,21 +21,22 @@
             android:id="@+id/item_unit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
+            android:layout_marginStart="4dp"
             android:layout_marginTop="18dp"
             android:layout_toRightOf="@id/dot_b"
             android:text="白细胞计数(10^g/L)"
             android:textColor="@color/colorText"
             android:textSize="16sp" />
-        
+
         <ImageView
             android:id="@+id/warning_mark"
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
             android:src="@mipmap/yichangjingbao"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="15dp"/>
+            android:visibility="invisible" />
 
         <RelativeLayout
             android:id="@+id/line13"
@@ -89,27 +89,25 @@
             android:textSize="12sp" />
 
         <TextView
+            android:id="@+id/low_limit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/line13"
-            android:layout_alignParentLeft="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="91dp"
+            android:layout_marginStart="91dp"
             android:layout_marginTop="14dp"
             android:text="60"
             android:textColor="@color/colorThrText"
             android:textSize="12sp" />
 
         <TextView
+            android:id="@+id/upper_limit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/line13"
-            android:layout_alignParentRight="true"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="14dp"
-            android:layout_marginRight="91dp"
+            android:layout_marginStart="273dp"
             android:text="83"
             android:textColor="@color/colorThrText"
             android:textSize="12sp" />
     </RelativeLayout>
-</FrameLayout>
+</LinearLayout>

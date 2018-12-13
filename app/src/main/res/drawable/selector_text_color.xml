@@ -1,0 +1,13 @@
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_selected="false" >
+        <s android:color="@color/colorThrText"/>
+    </item>
+    <item android:state_selected="true">
+        <color android:color="@color/colorPrimary"/>
+    </item>
+
+</selector>
+
+

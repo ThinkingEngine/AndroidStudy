@@ -1,37 +1,40 @@
 package com.chengsheng.cala.htcm.views.activitys;
 
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chengsheng.cala.htcm.BaseActivity;
 import com.chengsheng.cala.htcm.GlobalConstant;
 import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.model.datamodel.SMSVerificationResult;
+import com.chengsheng.cala.htcm.model.datamodel.childmodela.RegisterError;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
 import com.chengsheng.cala.htcm.utils.FuncUtils;
+import com.google.gson.Gson;
+import com.zyao89.view.zloading.ZLoadingDialog;
+import com.zyao89.view.zloading.Z_TYPE;
 
-import java.util.Observable;
+import java.io.IOException;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
+import retrofit2.HttpException;
 import retrofit2.Retrofit;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends BaseActivity {
 
     private ImageView back;
     private TextView login;
@@ -50,6 +53,12 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        final ZLoadingDialog loadingDialog = new ZLoadingDialog(this);
+        loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
+        loadingDialog.setDialogBackgroundColor(getResources().getColor(R.color.colorText));
+        loadingDialog.setLoadingColor(getResources().getColor(R.color.colorPrimary));
+        loadingDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
 
         final HTCMApp app = HTCMApp.create(getApplicationContext());
         myRetrofit = MyRetrofit.createInstance();
@@ -79,6 +88,8 @@ public class RegisterActivity extends AppCompatActivity {
 
                 final String number = getUserNum.getText().toString();
                 if (FuncUtils.isMobileNO(number)) {
+                    loadingDialog.setHintText("加载中...");
+                    loadingDialog.show();
                     NetService service = retrofitURL.create(NetService.class);
                     service.getSMSVerification(getUserNum.getText().toString())
                             .subscribeOn(Schedulers.newThread())
@@ -88,12 +99,13 @@ public class RegisterActivity extends AppCompatActivity {
                                 public void onNext(SMSVerificationResult s) {
                                     userNum = number;
                                     verificationCodeId = s.getCode_id();
+                                    loadingDialog.cancel();
                                     Toast.makeText(RegisterActivity.this, "请求发送成功，请等待短信消息", Toast.LENGTH_SHORT).show();
                                 }
 
                                 @Override
                                 public void onError(Throwable e) {
-
+                                    loadingDialog.cancel();
                                 }
 
                                 @Override
@@ -105,6 +117,28 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
                 }
 
+            }
+        });
+
+        serviceNum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog alertDialog;
+                AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                builder.setTitle("呼叫客服");
+                builder.setMessage("您确认拨打客服电话？");
+                builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(Intent.ACTION_DIAL);
+                        Uri data = Uri.parse("tel:"+serviceNum.getText().toString());
+                        intent.setData(data);
+                        startActivity(intent);
+                    }
+                });
+                builder.setNegativeButton("暂不",null);
+                alertDialog = builder.create();
+                alertDialog.show();
             }
         });
 
@@ -122,17 +156,19 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "请确认你的密码!", Toast.LENGTH_SHORT).show();
                 } else if (!passwordInput.getText().toString().equals(isOkPasswd.getText().toString())) {
                     Toast.makeText(RegisterActivity.this, "两次密码输入不一致!", Toast.LENGTH_SHORT).show();
-                } else if(verificationCodeId.equals("") || !userNum.equals(getUserNum.getText().toString())){
+                } else if (verificationCodeId.equals("") || !userNum.equals(getUserNum.getText().toString())) {
                     Toast.makeText(RegisterActivity.this, "该号码尚未验证，请先取得验证码!", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     NetService service = retrofitURL.create(NetService.class);
-                    Log.e("TEST", userNum + " " + passwordInput.getText().toString().trim() + " " + getCodeUser.getText().toString() + " " + HTCMApp.getClientId());
+                    loadingDialog.show();
+//                    Log.e("TEST", userNum + " " + passwordInput.getText().toString().trim() + " " + getCodeUser.getText().toString() + " " + HTCMApp.getClientId());
                     service.commitRegistrInfo(getUserNum.getText().toString(), passwordInput.getText().toString().trim(), verificationCodeId, getCodeUser.getText().toString(), HTCMApp.getClientId())
                             .subscribeOn(Schedulers.newThread())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new DisposableObserver<ResponseBody>() {
                                 @Override
                                 public void onNext(ResponseBody o) {
+                                    loadingDialog.cancel();
                                     Toast.makeText(RegisterActivity.this, "注册成功!", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                                     intent.putExtra("USER_NUMBER", getUserNum.getText().toString());
@@ -141,6 +177,17 @@ public class RegisterActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onError(Throwable e) {
+                                    if (e instanceof HttpException) {
+                                        loadingDialog.cancel();
+                                        ResponseBody body = ((HttpException) e).response().errorBody();
+                                        Gson gson = new Gson();
+                                        try {
+                                            RegisterError error = gson.fromJson(body.string(), RegisterError.class);
+                                            showDialog(error);
+                                        } catch (IOException e1) {
+                                            e1.printStackTrace();
+                                        }
+                                    }
                                     Toast.makeText(RegisterActivity.this, "onError 结果:" + e, Toast.LENGTH_SHORT).show();
                                 }
 
@@ -176,5 +223,21 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
+    }
+
+    private void showDialog(RegisterError error) {
+        final AlertDialog alertDialog;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(error.getError());
+        builder.setMessage(error.getMessage());
+        builder.setPositiveButton("请重新更改您的注册信息!", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        alertDialog = builder.create();
+        alertDialog.show();
     }
 }

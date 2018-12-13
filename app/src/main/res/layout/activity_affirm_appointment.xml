@@ -26,11 +26,11 @@
                 android:id="@+id/affirm_appointment_model_a"
                 layout="@layout/affirm_appointment_model_a_layout"/>
             <include
-                android:id="@+id/affirm_appointment_model_b"
-                layout="@layout/affirm_appointment_model_b_layout"/>
-            <include
                 android:id="@+id/affirm_appointment_model_c"
                 layout="@layout/affirm_appointment_model_c_layout"/>
+            <include
+                android:id="@+id/affirm_appointment_model_b"
+                layout="@layout/affirm_appointment_model_b_layout"/>
             <include
                 android:id="@+id/affirm_appointment_model_d"
                 layout="@layout/combo_detail_model_f_layout"/>
@@ -51,7 +51,7 @@
             android:background="@color/colorWhite"
             android:text="合计：¥100.00"
             android:textSize="18sp"
-            android:textColor="@color/colorText"
+            android:textColor="@color/colorPrimaryDark"
             android:gravity="center"/>
         <TextView
             android:id="@+id/immediate_pay"

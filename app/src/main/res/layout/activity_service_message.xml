@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.activitys.ServiceMessageActivity">
+
+    <include
+        android:id="@+id/title_header_service_messages"
+        layout="@layout/message_header_layout" />
+
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/service_message_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title_header_service_messages"
+        android:background="@color/colorPageBackground" />
+
+</RelativeLayout>

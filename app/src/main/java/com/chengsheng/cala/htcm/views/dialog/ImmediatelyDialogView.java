@@ -3,7 +3,6 @@ package com.chengsheng.cala.htcm.views.dialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import android.text.SpannableString;
@@ -22,7 +21,6 @@ import android.widget.Toast;
 import com.chengsheng.cala.htcm.GlobalConstant;
 import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
-import com.chengsheng.cala.htcm.model.datamodel.Message;
 import com.chengsheng.cala.htcm.model.datamodel.TextMessage;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
@@ -30,9 +28,7 @@ import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
 import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -48,7 +44,6 @@ public class ImmediatelyDialogView extends Dialog {
     private Context context;
     private int id;
 
-    private Map<String,String> resultBody = new HashMap<>();
 
 
     public ImmediatelyDialogView(Context context,int ID) {
@@ -105,32 +100,25 @@ public class ImmediatelyDialogView extends Dialog {
             public void onClick(View v) {
                 if(inputBoxCertification.getText().toString().equals("")){
                     inputBoxCertification.setText("");
-                    inputBoxCertification.setHint("请输入验证码！");
-                    Log.e("AUTH","请输入验证码！");
+                    Toast.makeText(context,"请输入验证码！",Toast.LENGTH_SHORT).show();
                 }else{
                     String code = inputBoxCertification.getText().toString();
                     HTCMApp app = HTCMApp.create(context);
                     MyRetrofit myRetrofit = MyRetrofit.createInstance();
                     Retrofit retrofit = myRetrofit.createURL(GlobalConstant.API_BASE_URL);
                     NetService service = retrofit.create(NetService.class);
-
                     RequestBody codeBody = RequestBody.create(MediaType.parse("multipart/form-data"),code);
                     Map<String, RequestBody> mapa = new HashMap<>();
                     mapa.put("auth_code",codeBody);
-                    Log.e("AUTH",String.valueOf(id));
-                    Log.e("AUTH",app.getTokenType()+" "+app.getAccessToken());
-                    Log.e("AUTH",code);
                     service.authenticationFamilies(app.getTokenType()+" "+app.getAccessToken(),String.valueOf(id),mapa)
                             .subscribeOn(Schedulers.newThread())
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new DisposableObserver<Message>() {
+                            .subscribe(new DisposableObserver<ResponseBody>() {
                         @Override
-                        public void onNext(Message o) {
-                            Log.e("AUTH","验证成功"+o.toString());
-                            resultBody.put("STATE","验证成功");
-                            resultBody.put("REASON","");
-
-                            CallBackDataAuth.doAuthStateCallBack(resultBody);
+                        public void onNext(ResponseBody responseBody) {
+                            Log.e("AUTH","验证成功"+responseBody.toString());
+                            Toast.makeText(context,"验证成功:"+responseBody.toString(),Toast.LENGTH_SHORT).show();
+                            CallBackDataAuth.doAuthStateCallBack(true);
                             dismiss();
                         }
 
@@ -142,19 +130,12 @@ public class ImmediatelyDialogView extends Dialog {
                                     String info = body.string();
                                     Gson gson = new Gson();
                                     TextMessage message = gson.fromJson(info,TextMessage.class);
-                                    resultBody.put("STATE","验证失败");
-                                    resultBody.put("REASON",message.getMessage());
-
-                                    CallBackDataAuth.doAuthStateCallBack(resultBody);
-                                    Log.e("AUTH","验证失败!"+info);
-                                    Log.e("AUTH",message.toString());
+                                    Toast.makeText(context,"验证失败:"+message.toString(),Toast.LENGTH_SHORT).show();
                                 } catch (IOException e1) {
                                     e1.printStackTrace();
                                 }
                             }
 
-
-                            dismiss();
                         }
 
                         @Override

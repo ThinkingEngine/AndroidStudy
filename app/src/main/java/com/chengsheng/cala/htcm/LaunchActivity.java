@@ -7,7 +7,7 @@ import android.os.Bundle;
 import com.chengsheng.cala.htcm.views.activitys.HomePageActivity;
 import com.chengsheng.cala.htcm.views.activitys.LoginActivity;
 
-public class LaunchActivity extends AppCompatActivity {
+public class LaunchActivity extends BaseActivity {
 
     private boolean tempJudgeCondition = false;
     private HTCMApp app;

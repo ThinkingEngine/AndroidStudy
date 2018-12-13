@@ -15,6 +15,8 @@ public class FamiliesListItem implements Serializable {
     private String avatar_path;
     private String health_card_no;
 
+    private boolean is_select = false;
+
     public int getId() {
         return id;
     }
@@ -77,6 +79,16 @@ public class FamiliesListItem implements Serializable {
 
     public void setHealth_card_no(String health_card_no) {
         this.health_card_no = health_card_no;
+    }
+
+
+
+    public boolean isIs_select() {
+        return is_select;
+    }
+
+    public void setIs_select(boolean is_select) {
+        this.is_select = is_select;
     }
 
     @Override

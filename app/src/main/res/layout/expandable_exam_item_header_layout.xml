@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
+        android:id="@+id/exam_result_container"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@drawable/has_bottom_line_item_bg">
@@ -35,12 +36,12 @@
             android:id="@+id/exam_item_stats_expandable"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="已检"
+            android:visibility="invisible"
             android:textSize="14sp"
             android:textColor="@color/colorSecText"
             android:layout_toLeftOf="@id/arrow_mark"
             android:layout_centerVertical="true"
-            android:layout_marginRight="8dp"/>
+            android:layout_marginRight="26dp"/>
 
     </RelativeLayout>
 

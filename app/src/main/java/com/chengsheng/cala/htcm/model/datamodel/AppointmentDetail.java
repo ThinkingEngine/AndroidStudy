@@ -1,24 +1,32 @@
 package com.chengsheng.cala.htcm.model.datamodel;
 
+import com.chengsheng.cala.htcm.model.datamodel.childmodelb.ExamItem;
+
+import java.io.Serializable;
 import java.util.List;
 
-public class AppointmentDetail {
+public class AppointmentDetail implements Serializable {
 
-    private int id;
-    private String name;
-    private String price;
-    private String applicable_sex_text;
-    private String photo_path;
-    private int actual_sales_num;
-    private String intro;
-    private String exam_notice;
-    private boolean is_hot;
-    private List<Integer> age_group;
-    private List<String> package_tag;
-    private List<Integer> screen_disease_type;
-    private List<AppointmentItem> optional_exams_item_format;
-    private List<ExamItem> items;
-    private Organization organization;
+    private static final long serialVersionUID = -7060210544600464481L;
+
+    private int id;//
+    private String name;//
+    private String price;//
+    private String applicable_sex;//
+    private String cover_photo;//
+    private String banner_photo;//
+    private int current_sales_num;//
+    private String intro;//
+    private String exam_notice;//
+    private boolean is_hot;//
+    private List<PackageTag> package_tag;//
+    private List<DiseaseType> screen_disease_type;//
+    private List<com.chengsheng.cala.htcm.model.datamodel.childmodelb.ExamItem> exam_items;//
+    private Organization organization;//
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
 
     public int getId() {
         return id;
@@ -44,28 +52,36 @@ public class AppointmentDetail {
         this.price = price;
     }
 
-    public String getApplicable_sex_text() {
-        return applicable_sex_text;
+    public String getApplicable_sex() {
+        return applicable_sex;
     }
 
-    public void setApplicable_sex_text(String applicable_sex_text) {
-        this.applicable_sex_text = applicable_sex_text;
+    public void setApplicable_sex(String applicable_sex) {
+        this.applicable_sex = applicable_sex;
     }
 
-    public String getPhoto_path() {
-        return photo_path;
+    public String getCover_photo() {
+        return cover_photo;
     }
 
-    public void setPhoto_path(String photo_path) {
-        this.photo_path = photo_path;
+    public void setCover_photo(String cover_photo) {
+        this.cover_photo = cover_photo;
     }
 
-    public int getActual_sales_num() {
-        return actual_sales_num;
+    public String getBanner_photo() {
+        return banner_photo;
     }
 
-    public void setActual_sales_num(int actual_sales_num) {
-        this.actual_sales_num = actual_sales_num;
+    public void setBanner_photo(String banner_photo) {
+        this.banner_photo = banner_photo;
+    }
+
+    public int getCurrent_sales_num() {
+        return current_sales_num;
+    }
+
+    public void setCurrent_sales_num(int current_sales_num) {
+        this.current_sales_num = current_sales_num;
     }
 
     public String getIntro() {
@@ -92,44 +108,28 @@ public class AppointmentDetail {
         this.is_hot = is_hot;
     }
 
-    public List<Integer> getAge_group() {
-        return age_group;
-    }
-
-    public void setAge_group(List<Integer> age_group) {
-        this.age_group = age_group;
-    }
-
-    public List<String> getPackage_tag() {
+    public List<PackageTag> getPackage_tag() {
         return package_tag;
     }
 
-    public void setPackage_tag(List<String> package_tag) {
+    public void setPackage_tag(List<PackageTag> package_tag) {
         this.package_tag = package_tag;
     }
 
-    public List<Integer> getScreen_disease_type() {
+    public List<DiseaseType> getScreen_disease_type() {
         return screen_disease_type;
     }
 
-    public void setScreen_disease_type(List<Integer> screen_disease_type) {
+    public void setScreen_disease_type(List<DiseaseType> screen_disease_type) {
         this.screen_disease_type = screen_disease_type;
     }
 
-    public List<AppointmentItem> getOptional_exams_item_format() {
-        return optional_exams_item_format;
+    public List<ExamItem> getExam_items() {
+        return exam_items;
     }
 
-    public void setOptional_exams_item_format(List<AppointmentItem> optional_exams_item_format) {
-        this.optional_exams_item_format = optional_exams_item_format;
-    }
-
-    public List<ExamItem> getItems() {
-        return items;
-    }
-
-    public void setItems(List<ExamItem> items) {
-        this.items = items;
+    public void setExam_items(List<ExamItem> exam_items) {
+        this.exam_items = exam_items;
     }
 
     public Organization getOrganization() {
@@ -146,17 +146,16 @@ public class AppointmentDetail {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", price='" + price + '\'' +
-                ", applicable_sex_text='" + applicable_sex_text + '\'' +
-                ", photo_path='" + photo_path + '\'' +
-                ", actual_sales_num=" + actual_sales_num +
+                ", applicable_sex='" + applicable_sex + '\'' +
+                ", cover_photo='" + cover_photo + '\'' +
+                ", banner_photo='" + banner_photo + '\'' +
+                ", current_sales_num=" + current_sales_num +
                 ", intro='" + intro + '\'' +
                 ", exam_notice='" + exam_notice + '\'' +
                 ", is_hot=" + is_hot +
-                ", age_group=" + age_group +
                 ", package_tag=" + package_tag +
                 ", screen_disease_type=" + screen_disease_type +
-                ", optional_exams_item_format=" + optional_exams_item_format +
-                ", items=" + items +
+                ", exam_items=" + exam_items +
                 ", organization=" + organization +
                 '}';
     }

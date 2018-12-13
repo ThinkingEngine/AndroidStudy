@@ -66,7 +66,6 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
             super(itemView);
 
             commendNewsItem = itemView.findViewById(R.id.commend_news_item);
-            newsItemTopLine = itemView.findViewById(R.id.news_item_top_line);
             newsHeaderIcon = itemView.findViewById(R.id.news_header_icon);
             newsTitle = itemView.findViewById(R.id.news_title);
             browseNum = itemView.findViewById(R.id.browse_num);

@@ -91,10 +91,7 @@ public class OtherSelectionExpandableListViewAdapter extends BaseExpandableListA
 
            holder.examTargetExpandable = convertView.findViewById(R.id.exam_target_expandable);
            holder.examTargetDetailExpandable = convertView.findViewById(R.id.exam_target_detail_expandable);
-           holder.examNotesExpandable = convertView.findViewById(R.id.exam_notes_expandable);
-           holder.examNotesDetailExpandable = convertView.findViewById(R.id.exam_notes_detail_expandable);
-           holder.examIncludeExpandable = convertView.findViewById(R.id.exam_include_expandable);
-           holder.examIncludeDetailExpandable = convertView.findViewById(R.id.exam_include_detail_expandable);
+
 
            convertView.setTag(holder);
        }else{
@@ -118,10 +115,6 @@ public class OtherSelectionExpandableListViewAdapter extends BaseExpandableListA
     public class ChildViewHolder{
         TextView examTargetExpandable;
         TextView examTargetDetailExpandable;
-        TextView examNotesExpandable;
-        TextView examNotesDetailExpandable;
-        TextView examIncludeExpandable;
-        TextView examIncludeDetailExpandable;
 
     }
 }

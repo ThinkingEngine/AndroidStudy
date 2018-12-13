@@ -1,7 +1,10 @@
 package com.chengsheng.cala.htcm.model.datamodel;
 
-public class Organization {
+import java.io.Serializable;
 
+public class Organization implements Serializable {
+
+    private static final long serialVersionUID = -7060210544600464481L;
     //医院名称
     private String name;
     //医院地址

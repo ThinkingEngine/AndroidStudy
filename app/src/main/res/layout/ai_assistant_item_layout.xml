@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/ai_assistant_item"
+        android:layout_width="match_parent"
+        android:layout_height="167dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/fmailies_item_bg"
+        android:elevation="4dp">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/user_header_icon_ai_assistant"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="14dp"
+            fresco:actualImageScaleType="centerInside"
+            fresco:backgroundImage="@mipmap/morentouxiang_wode"
+            fresco:roundAsCircle="true" />
+
+        <TextView
+            android:id="@+id/user_name_ai_assistant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="14dp"
+            android:layout_toRightOf="@id/user_header_icon_ai_assistant"
+            android:text="周子萱"
+            android:textColor="@color/colorText"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/exam_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/user_name_ai_assistant"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="2dp"
+            android:layout_toRightOf="@id/user_header_icon_ai_assistant"
+            android:text="体检号：201803300"
+            android:textColor="@color/colorThrText"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/delete_exam_item"
+            android:layout_width="19dp"
+            android:layout_height="19dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:src="@mipmap/wh_shanchu" />
+
+        <ImageView
+            android:id="@+id/user_bitmap_mark"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="36dp"
+            android:src="@mipmap/erweima" />
+
+        <LinearLayout
+            android:id="@+id/ai_assistant_item_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/user_header_icon_ai_assistant"
+            android:layout_marginTop="14dp"
+            android:background="@color/colorCutoff"
+            android:orientation="vertical" />
+
+        <TextView
+            android:id="@+id/item_big_notes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ai_assistant_item_line"
+            android:layout_marginEnd="75dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="20dp"
+            android:text="您预约了2018年6月25日的复查"
+            android:textColor="@color/colorText"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/item_sec_notes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/item_big_notes"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="12dp"
+            android:text="成都武侯区人民南路四段17号"
+            android:textColor="@color/colorThrText"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/day_num"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:layout_below="@id/ai_assistant_item_line"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="13dp"
+            android:layout_marginRight="14dp"
+            android:background="@drawable/white_annulus_bg"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/show_wait_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ai_assistant_item_line"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="13dp"
+            android:layout_marginRight="14dp"
+            android:gravity="center" />
+
+        <Button
+            android:id="@+id/unscramble_mark"
+            android:layout_width="56dp"
+            android:layout_height="28dp"
+            android:layout_below="@id/ai_assistant_item_line"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="26dp"
+            android:layout_marginRight="14dp"
+            android:background="@drawable/login_button_bg"
+            android:text="解读"
+            android:textColor="@color/colorWhite"
+            android:textSize="14sp"
+            android:visibility="invisible" />
+
+        <LinearLayout
+            android:id="@+id/user_notifition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="14dp"
+            android:layout_marginBottom="11dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@mipmap/jingao" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="请带好随身物品"
+                android:textColor="#ff6262"
+                android:textSize="10dp" />
+        </LinearLayout>
+    </RelativeLayout>
+</FrameLayout>

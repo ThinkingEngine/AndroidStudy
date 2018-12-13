@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/service_message_item_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="2018-04-07 11:58"
+            android:textSize="12sp"
+            android:textColor="@color/colorThrText"/>
+        <RelativeLayout
+            android:id="@+id/service_sms_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginStart="14dp"
+            android:background="@drawable/fmailies_item_bg">
+            <TextView
+                android:id="@+id/message_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:layout_marginTop="14dp"
+                android:text="未结算记录"
+                android:textSize="16sp"
+                android:textColor="@color/colorText"
+                android:textStyle="bold"/>
+            <ImageView
+                android:id="@+id/message_has_read"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:background="@drawable/red_dot"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"/>
+
+            <TextView
+                android:id="@+id/message_body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/message_title"
+                android:layout_marginEnd="14dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="14dp"
+                android:text="入职体检高级VIP套餐加入新的检查项目血常规检查、C14呼气试验检测，计112.00元。立即前往支付"
+                android:textSize="14sp"
+                android:textColor="@color/colorSecText"/>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</FrameLayout>

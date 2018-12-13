@@ -28,9 +28,6 @@
             android:id="@+id/model_b"
             layout="@layout/combo_detail_model_b_layout"/>
         <include
-            android:id="@+id/model_c"
-            layout="@layout/combo_detail_model_c_layout"/>
-        <include
             android:id="@+id/model_d"
             layout="@layout/combo_detail_model_d_layout"/>
         <RelativeLayout
@@ -63,7 +60,6 @@
                 android:id="@+id/exam_item_combo_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"
                 android:textColor="@color/colorSecText"
                 android:text="(20项)"
                 android:layout_toRightOf="@id/exam_item_combo_mark"
@@ -76,9 +72,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/exam_item_combo_coatiner"
             android:divider="@null"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"/>
 
-        </com.chengsheng.cala.htcm.views.customviews.MyExpandableListView>
+
         </RelativeLayout>
         <include 
             android:id="@+id/model_f"
@@ -93,6 +89,7 @@
         android:background="@color/colorWhite">
 
         <TextView
+            android:id="@+id/online_service_tel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"

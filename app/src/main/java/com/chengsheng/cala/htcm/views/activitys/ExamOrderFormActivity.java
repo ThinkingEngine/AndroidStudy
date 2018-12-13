@@ -4,21 +4,43 @@ import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.chengsheng.cala.htcm.BaseActivity;
+import com.chengsheng.cala.htcm.GlobalConstant;
+import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.model.datamodel.FamiliesList;
+import com.chengsheng.cala.htcm.model.datamodel.FamiliesListItem;
+import com.chengsheng.cala.htcm.network.MyRetrofit;
+import com.chengsheng.cala.htcm.network.NetService;
+import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
+import com.chengsheng.cala.htcm.utils.MessageEvent;
+import com.chengsheng.cala.htcm.utils.UpdateConditionInterface;
 import com.chengsheng.cala.htcm.views.adapters.MainViewPagerAdapter;
 import com.chengsheng.cala.htcm.views.customviews.ConditionPopupWindow;
 import com.chengsheng.cala.htcm.views.fragments.ExamOrderFormFragment;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
-public class ExamOrderFormActivity extends AppCompatActivity implements ExamOrderFormFragment.OnFragmentInteractionListener{
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Retrofit;
+
+public class ExamOrderFormActivity extends BaseActivity implements ExamOrderFormFragment.OnFragmentInteractionListener,UpdateConditionInterface {
     private TextView title;
     private ImageView back,iconButton;
     private TabLayout orderFormSelectHeader;
@@ -26,11 +48,23 @@ public class ExamOrderFormActivity extends AppCompatActivity implements ExamOrde
 
     private String[] marks = {"全部","待付款","已付款","待评价","已取消"};
     private List<Fragment> fragments;
+    private List<Map<String,String>> listDatas = new ArrayList<>();
+
+    private Retrofit retrofit;
+    private HTCMApp app;
+
+    private String id;
+    private boolean isGetFamilies = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        app = HTCMApp.create(getApplicationContext());
+        EventBus.getDefault().register(this);
+        CallBackDataAuth.setUpdateConditionInterface(this);
         setContentView(R.layout.activity_exam_order_form);
+
+        id = getIntent().getStringExtra("CUSTOMER_ID");
 
         initViews();
         initDatas();
@@ -49,31 +83,46 @@ public class ExamOrderFormActivity extends AppCompatActivity implements ExamOrde
 
         title.setText("体检订单");
         iconButton.setImageResource(R.mipmap.tijian_xuanren);
+        getFamilies();
 
-        //临时数据
-        List<String> listDatas = new ArrayList<>();
-        listDatas.add("全部");
-        listDatas.add("周子轩");
-        listDatas.add("周父");
-        listDatas.add("周母");
 
         final ConditionPopupWindow window = new ConditionPopupWindow(this,listDatas);
         iconButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("TAG","isGetFamilies:"+isGetFamilies);
                 window.showAsDropDown(iconButton);
             }
         });
 
+
+
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(MessageEvent messageEvent){
+        isGetFamilies = messageEvent.getFamiliesListsState();
     }
 
     private void initDatas(){
 
+        StringBuffer sb = new StringBuffer();
         fragments = new ArrayList<>();
+        if(!listDatas.isEmpty()){
+            for(Map<String,String> map:listDatas){
+                if(listDatas.get(listDatas.size()-1).equals(map)){
+                    sb.append(map.get("ID"));
+                }else{
+                    sb.append(map.get("ID"));
+                }
+            }
+        }
 
+        Log.e("TAG","id:"+sb.toString());
         for(int i = 0;i < marks.length;i++){
             orderFormSelectHeader.addTab(orderFormSelectHeader.newTab().setText(marks[i]));
-            fragments.add(ExamOrderFormFragment.newInstance(marks[i],""));
+            fragments.add(ExamOrderFormFragment.newInstance(marks[i],sb.toString()));
         }
 
         MainViewPagerAdapter adapter = new MainViewPagerAdapter(getSupportFragmentManager(),fragments);
@@ -82,8 +131,59 @@ public class ExamOrderFormActivity extends AppCompatActivity implements ExamOrde
         orderFormSelectHeader.setupWithViewPager(orderFormFragment);
     }
 
+    private void getFamilies(){
+        if(retrofit == null){
+            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
+        }
+
+        NetService service = retrofit.create(NetService.class);
+        service.getFamiliesList(app.getTokenType()+" "+app.getAccessToken())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableObserver<FamiliesList>() {
+                    @Override
+                    public void onNext(FamiliesList familiesList) {
+                        for(FamiliesListItem familiesListItem:familiesList.getItems()){
+                            Map<String,String> map = new HashMap<>();
+                            map.put("SELECT","false");
+                            map.put("DATA",familiesListItem.getFullname());
+                            map.put("ID",String.valueOf(familiesListItem.getId()));
+                            listDatas.add(map);
+
+
+                        }
+                        MessageEvent messageEvent = new MessageEvent();
+                        messageEvent.setFamiliesState(true);
+                        EventBus.getDefault().post(messageEvent);
+
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(ExamOrderFormActivity.this,"没有获取到家人列表!",Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
     @Override
     public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void selectCondition(List<Map<String, String>> datas, boolean update) {
 
     }
 }

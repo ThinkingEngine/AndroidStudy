@@ -6,28 +6,34 @@
 
     <ImageView
         android:id="@+id/back_login"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:src="@mipmap/fanhui"
+        android:layout_width="32dp"
+        android:layout_height="match_parent"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="21dp"/>
+        android:layout_marginLeft="21dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:src="@mipmap/fanhui" />
+
     <TextView
         android:id="@+id/menu_bar_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:gravity="center"
         android:text="消息"
         android:textColor="@color/colorText"
         android:textSize="16sp"
-        android:layout_centerInParent="true" />
+        android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/search_button"
-        android:layout_width="22dp"
-        android:layout_height="22dp"
+        android:layout_width="38dp"
+        android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="14dp"
-        android:src="@mipmap/soosuo"/>
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:src="@mipmap/soosuo" />
 
 </RelativeLayout>

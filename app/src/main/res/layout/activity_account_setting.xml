@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/colorPageBackground"
     tools:context=".views.activitys.AccountSettingActivity">
@@ -15,7 +16,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@color/colorWhite"
+        android:background="@drawable/has_bottom_line_off_bg"
         android:layout_marginTop="10dp">
 
         <TextView
@@ -34,27 +35,25 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="15dp"/>
-        <de.hdodenhof.circleimageview.CircleImageView
+
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/user_header_icon"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@mipmap/touxiang"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/into_header_mod"
-            android:layout_marginRight="10dp"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:orientation="vertical"
-            android:background="@color/colorCutoff"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="14dp"></LinearLayout>
+            android:layout_marginRight="10dp"
+            fresco:actualImageScaleType="centerInside"
+            fresco:roundAsCircle="true"
+            fresco:backgroundImage="@mipmap/morentouxiang_wode"/>
+
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@color/colorWhite">
+        android:background="@drawable/has_bottom_line_off_bg">
 
         <TextView
             android:layout_width="wrap_content"
@@ -82,18 +81,12 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/into_cellphone_mod"
             android:layout_marginRight="10dp"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:orientation="vertical"
-            android:background="@color/colorCutoff"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="14dp"></LinearLayout>
+
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@color/colorWhite">
+        android:background="@drawable/has_bottom_line_off_bg">
 
         <TextView
             android:layout_width="wrap_content"
@@ -121,18 +114,11 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/into_nickname_mod"
             android:layout_marginRight="10dp"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:orientation="vertical"
-            android:background="@color/colorCutoff"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="14dp"></LinearLayout>
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@color/colorWhite">
+        android:background="@drawable/has_bottom_line_off_bg">
 
         <TextView
             android:layout_width="wrap_content"
@@ -160,12 +146,5 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/into_login_password_mod"
             android:layout_marginRight="10dp"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:orientation="vertical"
-            android:background="@color/colorCutoff"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="14dp"></LinearLayout>
     </RelativeLayout>
 </LinearLayout>

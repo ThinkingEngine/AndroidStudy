@@ -1,21 +1,20 @@
 package com.chengsheng.cala.htcm.views.activitys;
 
 import android.graphics.Bitmap;
-import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chengsheng.cala.htcm.BaseActivity;
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.model.datamodel.FamiliesListItem;
 import com.chengsheng.cala.htcm.utils.FuncUtils;
 import com.chengsheng.cala.htcm.utils.QRCodeUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 
-public class UserCardActivity extends AppCompatActivity {
+public class UserCardActivity extends BaseActivity {
 
     private ImageView closeUserCardButton;
     private SimpleDraweeView userHeaderCard;
@@ -33,9 +32,6 @@ public class UserCardActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         FamiliesListItem data = (FamiliesListItem) bundle.getSerializable("FAMILIES_INFO");
 
-        filePath = Environment.getExternalStorageState()+"/htcmTemp/code.jpg";
-        Log.e("QRC",filePath);
-        Log.e("QRC",data.getHealth_card_no());
         Bitmap bitmap = QRCodeUtil.createQRImage(data.getHealth_card_no(),FuncUtils.dip2px(220),FuncUtils.dip2px(220));
         Log.e("QRC","bitmap是否为空:"+ String.valueOf(bitmap == null));
         initViews();

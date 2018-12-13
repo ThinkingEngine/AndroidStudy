@@ -5,16 +5,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.model.datamodel.childmodela.ExamReportDetial;
+import com.chengsheng.cala.htcm.model.datamodel.childmodela.HAItem;
+import com.facebook.drawee.view.SimpleDraweeView;
+
+import java.util.List;
 
 public class ExamAdviceExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
+    private ExamReportDetial item;
 
-    public ExamAdviceExpandableListAdapter(Context context){
+    public ExamAdviceExpandableListAdapter(Context context,ExamReportDetial item){
         this.context = context;
+        this.item = item;
     }
 
     @Override
@@ -67,11 +74,24 @@ public class ExamAdviceExpandableListAdapter extends BaseExpandableListAdapter {
             holder = new ChildViewHolder();
             convertView = LayoutInflater.from(context).inflate(R.layout.exam_advice_child_layout,null);
             holder.docSignatureMark = convertView.findViewById(R.id.doc_signature_mark);
+            holder.docAdvices = convertView.findViewById(R.id.doc_advices);
 
             convertView.setTag(holder);
         }else{
             holder = (ChildViewHolder) convertView.getTag();
         }
+
+
+        StringBuffer sb = new StringBuffer();
+        List<HAItem> items = item.getAdvice().getItems();
+        for(int i = 0;i < items.size();i++){
+            sb.append((i+1)+",");
+            sb.append(items.get(i).getDisease_name());
+            sb.append("\n"+items.get(i).getHealthy_advice()+"\n");
+        }
+        
+        holder.docAdvices.setText(sb.toString());
+        holder.docSignatureMark.setImageURI(item.getDoctor_sign());
 
         return convertView;
     }
@@ -86,6 +106,7 @@ public class ExamAdviceExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     public class ChildViewHolder{
-        ImageView docSignatureMark;
+        TextView docAdvices;
+        SimpleDraweeView docSignatureMark;
     }
 }

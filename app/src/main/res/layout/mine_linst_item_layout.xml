@@ -5,8 +5,10 @@
     android:background="@color/colorWhite">
 
     <RelativeLayout
+        android:id="@+id/mine_item_bg"
         android:layout_width="match_parent"
-        android:layout_height="45dp">
+        android:layout_height="45dp"
+        android:background="@drawable/has_bottom_line_item_bg">
 
         <ImageView
             android:id="@+id/mine_list_item_icon"
@@ -44,18 +46,8 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="16dp"
-            android:text="028-05056666"
             android:textColor="@color/colorThrText"
             android:textSize="14sp" />
 
-        <LinearLayout
-            android:id="@+id/mine_item_bottom_cut_off"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="54dp"
-            android:background="@color/colorCutoff"
-            android:orientation="vertical"></LinearLayout>
     </RelativeLayout>
 </FrameLayout>

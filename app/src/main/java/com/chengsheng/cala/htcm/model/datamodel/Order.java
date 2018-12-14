@@ -4,6 +4,7 @@ public class Order {
     private int id;
     private String discount_receivable;
     private String exam_status;
+    private String updated_at;
     private boolean is_closed_recommend;
 
     public int getId() {
@@ -38,12 +39,21 @@ public class Order {
         this.is_closed_recommend = is_closed_recommend;
     }
 
+    public String getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(String updated_at) {
+        this.updated_at = updated_at;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
                 "id=" + id +
                 ", discount_receivable='" + discount_receivable + '\'' +
                 ", exam_status='" + exam_status + '\'' +
+                ", updated_at='" + updated_at + '\'' +
                 ", is_closed_recommend=" + is_closed_recommend +
                 '}';
     }

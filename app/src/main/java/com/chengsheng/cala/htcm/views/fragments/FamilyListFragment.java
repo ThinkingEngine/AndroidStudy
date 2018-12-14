@@ -187,8 +187,8 @@ public class FamilyListFragment extends Fragment implements AuthStateCallBack {
                 .subscribe(new DisposableObserver<FamiliesList>() {
                     @Override
                     public void onNext(FamiliesList datas) {
-                        setViews(datas);
                         loadingDialog.cancel();
+                        setViews(datas);
                     }
 
                     @Override

@@ -13,7 +13,7 @@ import com.chengsheng.cala.htcm.utils.FuncUtils;
 import com.chengsheng.cala.htcm.utils.QRCodeUtil;
 
 public class BarCodeActivity extends BaseActivity {
-    private ImageButton closeBarCode;
+    private ImageView closeBarCode;
     private ImageView barCodeMark;
     private TextView numberBarCode;
 
@@ -28,7 +28,7 @@ public class BarCodeActivity extends BaseActivity {
 
         String number = getIntent().getStringExtra("FAMILIES_INFO");
 
-        Bitmap bitmap = QRCodeUtil.createBarcode(number,FuncUtils.px2dip(320),FuncUtils.px2dip(85));
+        Bitmap bitmap = QRCodeUtil.createBarcode(number,FuncUtils.dip2px(320),FuncUtils.dip2px(85));
 
         barCodeMark.setImageBitmap(bitmap);
 

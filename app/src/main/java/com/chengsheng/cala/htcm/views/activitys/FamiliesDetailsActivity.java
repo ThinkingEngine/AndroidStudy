@@ -113,60 +113,6 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
         initViews();
 
 
-        //解绑家人
-        unbundle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(FamiliesDetailsActivity.this);
-                builder.setTitle("提示");
-                builder.setMessage("解绑后您将不能再为【王树彤】购买套餐或查看其体检报告，确认解绑吗？");
-                builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String familiesID = String.valueOf(familiesDetailInfo.getId());
-                        NetService service1 = familiesDetailRetrofit.create(NetService.class);
-                        service1.deleteFamilies(unbundleFamilies + familiesID, app.getTokenType() + " " + app.getAccessToken())
-                                .subscribeOn(Schedulers.newThread())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new DisposableObserver<ResponseBody>() {
-                                    @Override
-                                    public void onNext(ResponseBody responseBody) {
-                                        CallBackDataAuth.doAuthStateCallBack(true);
-                                        Toast.makeText(FamiliesDetailsActivity.this, "解绑操作完成", Toast.LENGTH_SHORT).show();
-                                        finish();
-                                    }
-
-                                    @Override
-                                    public void onError(Throwable e) {
-                                        if (e instanceof HttpException) {
-                                            ResponseBody body = ((HttpException) e).response().errorBody();
-                                            try {
-                                                Log.e("DETE", body.string());
-                                                Toast.makeText(FamiliesDetailsActivity.this, "解绑操作失败", Toast.LENGTH_SHORT).show();
-                                            } catch (IOException e1) {
-                                                e1.printStackTrace();
-                                            }
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onComplete() {
-
-                                    }
-                                });
-                    }
-                });
-
-                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(FamiliesDetailsActivity.this, "取消操作", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                builder.show();
-            }
-        });
-
         //认证家人
         authenticationMark.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,10 +122,6 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
                 immediatelyDialogView.show();
             }
         });
-
-
-
-
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -255,8 +197,6 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
             } else {
                 familiesSexHad.setText("女");
             }
-
-
         } else {
             authenticationMark.setVisibility(View.VISIBLE);
             inputChangeHeaderIcon.setVisibility(View.VISIBLE);
@@ -278,6 +218,60 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
         familiesHeaderIconHad.setImageURI(info.getAvatar_path());
 
         setSexModel(info.getSex());
+
+        //解绑家人
+        unbundle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(FamiliesDetailsActivity.this);
+                builder.setTitle("提示");
+                builder.setMessage("解绑后您将不能再为【" + info.getFullname() + "】购买套餐或查看其体检报告，确认解绑吗？");
+                builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String familiesID = String.valueOf(familiesDetailInfo.getId());
+                        NetService service1 = familiesDetailRetrofit.create(NetService.class);
+                        service1.deleteFamilies(unbundleFamilies + familiesID, app.getTokenType() + " " + app.getAccessToken())
+                                .subscribeOn(Schedulers.newThread())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new DisposableObserver<ResponseBody>() {
+                                    @Override
+                                    public void onNext(ResponseBody responseBody) {
+                                        CallBackDataAuth.doAuthStateCallBack(true);
+                                        Toast.makeText(FamiliesDetailsActivity.this, "解绑操作完成", Toast.LENGTH_SHORT).show();
+                                        finish();
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable e) {
+                                        if (e instanceof HttpException) {
+                                            ResponseBody body = ((HttpException) e).response().errorBody();
+                                            try {
+                                                Log.e("DETE", body.string());
+                                                Toast.makeText(FamiliesDetailsActivity.this, "解绑操作失败", Toast.LENGTH_SHORT).show();
+                                            } catch (IOException e1) {
+                                                e1.printStackTrace();
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onComplete() {
+
+                                    }
+                                });
+                    }
+                });
+
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(FamiliesDetailsActivity.this, "取消操作", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.show();
+            }
+        });
 
         //点击进入修改手机号码界面.
         inputChangeCellphone.setOnClickListener(new View.OnClickListener() {
@@ -333,7 +327,7 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
             @Override
             public void onClick(View v) {
                 if (!sexSelecterMale.isSelected()) {
-                    dialog("提示","你确认修改性别!","sex","male");
+                    dialog("提示", "你确认修改性别!", "sex", "male");
                 }
             }
         });
@@ -342,7 +336,7 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
             @Override
             public void onClick(View v) {
                 if (!sexSelecterFemale.isSelected()) {
-                    dialog("提示","你确认修改性别!","sex","female");
+                    dialog("提示", "你确认修改性别!", "sex", "female");
                 }
             }
         });
@@ -354,7 +348,7 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
                 AlertDialog.Builder builder = new AlertDialog.Builder(FamiliesDetailsActivity.this);
                 builder.setTitle("提示");
                 builder.setMessage("您确认要更改你的出生年月!");
-                builder.setNegativeButton("暂不",null);
+                builder.setNegativeButton("暂不", null);
                 builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -368,6 +362,7 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
 
     }
 
+    //获取家人信息
     private void getFamiliesInfo() {
 
         if (familiesDetailRetrofit == null) {
@@ -412,6 +407,7 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
     }
 
 
+    //
     private void modeInfoDialog(String message, FamiliesDetailInfo info) {
         AlertDialog dialog;
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -430,6 +426,7 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
     }
 
 
+    //上传头像图片
     private void updateHeader() {
 
         if (familiesDetailRetrofit == null) {
@@ -470,7 +467,7 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
                 });
     }
 
-    //修改头像。.
+    //修改头像弹窗框.
     private void showPopwindow() {
         final Dialog dialog = new Dialog(this, R.style.dialog_bottom);
         View view = View.inflate(this, R.layout.bottom_select_layout, null);
@@ -554,6 +551,7 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
         }
     }
 
+    //上传更新家人信息
     private void updateFamiliesInfo(URLResult urlResult) {
         if (familiesDetailRetrofit == null) {
             familiesDetailRetrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
@@ -561,7 +559,7 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
 
         FamiliesDetailInfo info = app.getFamiliesDetailInfo();
         NetService service = familiesDetailRetrofit.create(NetService.class);
-        Map<String, String> data = daoTOmap(info,"avatar_path",urlResult.getFile_url());
+        Map<String, String> data = daoTOmap(info, "avatar_path", urlResult.getFile_url());
         loadingDialog.show();
         service.modeFamiliesInfo(app.getTokenType() + " " + app.getAccessToken(), GlobalConstant.MODE_FAMILIES + info.getId(), data)
                 .subscribeOn(Schedulers.newThread())
@@ -594,7 +592,7 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
         }
     }
 
-    private void dialog(String title, String message, final String key,final String val) {
+    private void dialog(String title, String message, final String key, final String val) {
         AlertDialog alertDialog;
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(title);
@@ -604,7 +602,7 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
         builder.setPositiveButton("修改", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                updateInfo(key,val);
+                updateInfo(key, val);
             }
         });
 
@@ -613,13 +611,13 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
 
     }
 
-    private void updateInfo(String key,String val) {
+    private void updateInfo(String key, String val) {
         if (familiesDetailRetrofit == null) {
             familiesDetailRetrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
         }
 
         FamiliesDetailInfo info = app.getFamiliesDetailInfo();
-        Map<String,String> map = daoTOmap(info,key,val);
+        Map<String, String> map = daoTOmap(info, key, val);
 
         NetService service = familiesDetailRetrofit.create(NetService.class);
         loadingDialog.show();
@@ -631,13 +629,13 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
                     public void onNext(ResponseBody responseBody) {
                         loadingDialog.cancel();
                         getFamiliesInfo();
-                        Toast.makeText(FamiliesDetailsActivity.this,"修改成功！",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(FamiliesDetailsActivity.this, "修改成功！", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.cancel();
-                        Toast.makeText(FamiliesDetailsActivity.this,"修改失败！",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(FamiliesDetailsActivity.this, "修改失败！", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -648,21 +646,22 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
 
     }
 
-    private void updateBrithday(){
+    private void updateBrithday() {
 
-        if(calendar == null){
+        if (calendar == null) {
             calendar = Calendar.getInstance();
         }
         DatePickerDialog timePickerDialog = new DatePickerDialog(this, R.style.Theme_AppCompat_DayNight_Dialog_Alert, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 String brith = year + "-" + (month + 1) + "-" + dayOfMonth;
-                updateInfo("birthday",brith);
+                updateInfo("birthday", brith);
             }
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
         timePickerDialog.show();
     }
+
 
     private Map<String, String> daoTOmap(FamiliesDetailInfo info, String key, String val) {
         Map<String, String> map = new HashMap<>();

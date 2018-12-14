@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -22,7 +21,6 @@ import com.chengsheng.cala.htcm.model.businesslogic.DataFlow;
 import com.chengsheng.cala.htcm.model.datamodel.childmodela.UserInfo;
 import com.chengsheng.cala.htcm.network.AccountService;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
-import com.chengsheng.cala.htcm.network.NetService;
 import com.chengsheng.cala.htcm.views.activitys.AccountSettingActivity;
 import com.chengsheng.cala.htcm.views.activitys.ExamOrderFormActivity;
 import com.chengsheng.cala.htcm.views.activitys.ServiceMessageActivity;
@@ -30,8 +28,6 @@ import com.chengsheng.cala.htcm.views.activitys.ServiceOrderActivity;
 import com.chengsheng.cala.htcm.views.adapters.MineItemBaseAdapter;
 import com.facebook.drawee.view.SimpleDraweeView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -196,8 +192,6 @@ public class MineFragment extends Fragment {
         userIcon.setImageURI(userInfo.getAvatar_url());
         userNameText.setText(userInfo.getNickname());
         userCellphoneNum.setText(userInfo.getPhone_number());
-
-        Log.e("TAG","CUSTOMER_ID:"+userInfo.toString());
 
         medicalExamOrderText.setOnClickListener(new View.OnClickListener() {
             @Override

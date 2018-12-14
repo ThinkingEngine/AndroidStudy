@@ -18,7 +18,7 @@ public class ExamItemExpandableListViewAdapter extends BaseExpandableListAdapter
     private Context context;
     private List<ExamItem> datas;
 
-    public ExamItemExpandableListViewAdapter(Context context, List<ExamItem> datas){
+    public ExamItemExpandableListViewAdapter(Context context, List<ExamItem> datas) {
         this.context = context;
         this.datas = datas;
     }
@@ -61,16 +61,19 @@ public class ExamItemExpandableListViewAdapter extends BaseExpandableListAdapter
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         GroupViewHolder groupViewHolder;
-        if(convertView == null){
-            convertView = LayoutInflater.from(context).inflate(R.layout.expandable_exam_item_header_layout,null);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(context).inflate(R.layout.expandable_exam_item_header_layout, null);
             groupViewHolder = new GroupViewHolder(convertView);
             convertView.setTag(groupViewHolder);
-        }else{
+        } else {
             groupViewHolder = (GroupViewHolder) convertView.getTag();
         }
 
-        if(datas.size() > 1 && groupPosition == datas.size()-1){
+        if (groupPosition == datas.size() - 1) {
             groupViewHolder.examResultContainer.setBackgroundColor(context.getResources().getColor(R.color.white));
+        }
+        if (groupPosition == 0 && datas.size() > 1) {
+            groupViewHolder.examResultContainer.setBackground(context.getResources().getDrawable(R.drawable.has_bottom_line_item_bg));
         }
 
 //        groupViewHolder.examItemStatsExpandable.setVisibility(View.INVISIBLE);
@@ -82,11 +85,11 @@ public class ExamItemExpandableListViewAdapter extends BaseExpandableListAdapter
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         ChildViewHolder childViewHolder;
-        if(convertView == null){
-            convertView = LayoutInflater.from(context).inflate(R.layout.expandable_exam_item_child_layout,null);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(context).inflate(R.layout.expandable_exam_item_child_layout, null);
             childViewHolder = new ChildViewHolder(convertView);
             convertView.setTag(childViewHolder);
-        }else{
+        } else {
             childViewHolder = (ChildViewHolder) convertView.getTag();
         }
 
@@ -102,24 +105,24 @@ public class ExamItemExpandableListViewAdapter extends BaseExpandableListAdapter
         return true;
     }
 
-    public class GroupViewHolder{
+    public class GroupViewHolder {
         RelativeLayout examResultContainer;
         TextView examItemNameExpandable;
         TextView examItemStatsExpandable;
 
-        public GroupViewHolder(View convertView){
+        public GroupViewHolder(View convertView) {
             examResultContainer = convertView.findViewById(R.id.exam_result_container);
             examItemNameExpandable = convertView.findViewById(R.id.exam_item_name_expandable);
             examItemStatsExpandable = convertView.findViewById(R.id.exam_item_stats_expandable);
         }
     }
 
-    public class ChildViewHolder{
+    public class ChildViewHolder {
         TextView examTargetExpandable;
         TextView examTargetDetailExpandable;
 
 
-        public ChildViewHolder(View convertView){
+        public ChildViewHolder(View convertView) {
             examTargetExpandable = convertView.findViewById(R.id.exam_target_expandable);
             examTargetDetailExpandable = convertView.findViewById(R.id.exam_target_detail_expandable);
 

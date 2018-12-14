@@ -21,4 +21,6 @@
         <!--是不是只画整个星星，不画半个-->
         <attr name="starIsFull" format="boolean"/>
     </declare-styleable>
+
+
 </resources>

@@ -11,13 +11,19 @@
         layout="@layout/exam_appointment_header_layout" />
 
 
-    <ListView
-        android:id="@+id/bar_ad_listview"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/title_header_bar_ad">
 
-    </ListView>
+
+    <ImageView
+        android:id="@+id/ad_bar_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    </ScrollView>
+
+
 
 
 </RelativeLayout>

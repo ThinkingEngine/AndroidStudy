@@ -158,7 +158,7 @@ public class FamiliesItemRecyclerAdapter extends RecyclerView.Adapter<FamiliesIt
         ImageView familiesQR;
         Button certification;
         TextView note;
-        Button mark;
+        TextView mark;
 
         Button addNewFamilies;
 

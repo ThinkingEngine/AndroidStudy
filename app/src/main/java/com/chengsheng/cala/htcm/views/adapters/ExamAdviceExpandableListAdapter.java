@@ -1,6 +1,7 @@
 package com.chengsheng.cala.htcm.views.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,7 @@ public class ExamAdviceExpandableListAdapter extends BaseExpandableListAdapter {
     private Context context;
     private ExamReportDetial item;
 
-    public ExamAdviceExpandableListAdapter(Context context,ExamReportDetial item){
+    public ExamAdviceExpandableListAdapter(Context context, ExamReportDetial item) {
         this.context = context;
         this.item = item;
     }
@@ -61,8 +62,8 @@ public class ExamAdviceExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        if(convertView == null){
-            convertView = LayoutInflater.from(context).inflate(R.layout.exam_advice_header_layout,null);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(context).inflate(R.layout.exam_advice_header_layout, null);
         }
         return convertView;
     }
@@ -70,26 +71,31 @@ public class ExamAdviceExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         ChildViewHolder holder;
-        if(convertView == null){
+        if (convertView == null) {
             holder = new ChildViewHolder();
-            convertView = LayoutInflater.from(context).inflate(R.layout.exam_advice_child_layout,null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.exam_advice_child_layout, null);
             holder.docSignatureMark = convertView.findViewById(R.id.doc_signature_mark);
             holder.docAdvices = convertView.findViewById(R.id.doc_advices);
 
             convertView.setTag(holder);
-        }else{
+        } else {
             holder = (ChildViewHolder) convertView.getTag();
         }
 
 
         StringBuffer sb = new StringBuffer();
         List<HAItem> items = item.getAdvice().getItems();
-        for(int i = 0;i < items.size();i++){
-            sb.append((i+1)+",");
+        for (int i = 0; i < items.size(); i++) {
+            sb.append((i + 1) + ",");
             sb.append(items.get(i).getDisease_name());
-            sb.append("\n"+items.get(i).getHealthy_advice()+"\n");
+            if (items.get(i).getHealthy_advice() != null) {
+                sb.append("\n" + items.get(i).getHealthy_advice() + "\n");
+            }else{
+                sb.append("\n");
+            }
+
         }
-        
+
         holder.docAdvices.setText(sb.toString());
         holder.docSignatureMark.setImageURI(item.getDoctor_sign());
 
@@ -101,11 +107,11 @@ public class ExamAdviceExpandableListAdapter extends BaseExpandableListAdapter {
         return false;
     }
 
-    public class HeaderViewHolder{
+    public class HeaderViewHolder {
 
     }
 
-    public class ChildViewHolder{
+    public class ChildViewHolder {
         TextView docAdvices;
         SimpleDraweeView docSignatureMark;
     }

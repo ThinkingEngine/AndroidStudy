@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,7 @@ public class ExamOrderFormRecyclerAdapter extends RecyclerView.Adapter<ExamOrder
     @Override
     public ExamOrderFormVH onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         ExamOrderFormVH orderFormVH;
+        Log.e("TAG","onCreateViewHolder:"+datas.size());
         if (datas.isEmpty()) {
             orderFormVH = new ExamOrderFormVH(LayoutInflater.from(context).inflate(R.layout.no_contants_layout, null));
         } else {
@@ -79,7 +81,6 @@ public class ExamOrderFormRecyclerAdapter extends RecyclerView.Adapter<ExamOrder
                 viewHolder.obligationValue.setTextColor(context.getResources().getColor(R.color.colorThrText));
                 viewHolder.obligationText.setTextColor(context.getResources().getColor(R.color.colorThrText));
             }
-
 
             viewHolder.examOrderNum.setText("预约号: " + data.getCustomer().getReservation_or_registration().getId());
             List<PackageAndOptional> childDatas = new ArrayList<>();

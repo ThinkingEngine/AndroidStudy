@@ -36,6 +36,8 @@ public class NewsListFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private XRecyclerView newsList;
+
     private String mParam1;
     private String mParam2;
 
@@ -77,53 +79,12 @@ public class NewsListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_news_list, container, false);
 
-        final XRecyclerView newsList = rootView.findViewById(R.id.news_list);
-
-        if (retrofit == null) {
-            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
-        }
-
-        ArticlesService service = retrofit.create(ArticlesService.class);
-        loadingDialog.show();
-        service.getNewsTitlesFiliter("articleType.id=" + mParam1, "display_order:asc")
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableObserver<RecommendedNews>() {
-                    @Override
-                    public void onNext(RecommendedNews recommendedNews) {
-                        loadingDialog.cancel();
-                        FooterAdapter adapter = new FooterAdapter(recommendedNews.getItems(), getContext());
-                        newsList.setLayoutManager(new LinearLayoutManager(getContext()));
-                        newsList.setAdapter(adapter);
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        loadingDialog.cancel();
-                        Toast.makeText(getContext(), "网络异常！", Toast.LENGTH_SHORT).show();
-                        List<RecommendedItem> list = new ArrayList<>();
-                        FooterAdapter adapter = new FooterAdapter(list, getContext());
-                        adapter.addFooterView(LayoutInflater.from(getContext()).inflate(R.layout.no_content_layout, null));
-                        newsList.setLayoutManager(new LinearLayoutManager(getContext()));
-                        newsList.setAdapter(adapter);
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        loadingDialog.cancel();
-                    }
-                });
-
+        newsList = rootView.findViewById(R.id.news_list);
+        getNews(true);
         newsList.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
-                try {
-                    Thread.sleep(1000);
-                    newsList.refreshComplete();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                getNews(false);
             }
 
             @Override
@@ -162,6 +123,54 @@ public class NewsListFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void getNews(final boolean loading) {
+        if (retrofit == null) {
+            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
+        }
+
+        ArticlesService service = retrofit.create(ArticlesService.class);
+        if (loading) {
+            loadingDialog.show();
+        }
+        service.getNewsTitlesFiliter("articleType.id=" + mParam1, "online_at:desc")
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableObserver<RecommendedNews>() {
+                    @Override
+                    public void onNext(RecommendedNews recommendedNews) {
+                        if (loading) {
+                            loadingDialog.cancel();
+                        }else{
+                            newsList.refreshComplete();
+                        }
+                        FooterAdapter adapter = new FooterAdapter(recommendedNews.getItems(), getContext());
+                        newsList.setLayoutManager(new LinearLayoutManager(getContext()));
+                        newsList.setAdapter(adapter);
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (loading) {
+                            loadingDialog.cancel();
+                        }else{
+                            newsList.refreshComplete();
+                        }
+                        Toast.makeText(getContext(), "网络异常！", Toast.LENGTH_SHORT).show();
+                        List<RecommendedItem> list = new ArrayList<>();
+                        FooterAdapter adapter = new FooterAdapter(list, getContext());
+                        adapter.addFooterView(LayoutInflater.from(getContext()).inflate(R.layout.no_content_layout, null));
+                        newsList.setLayoutManager(new LinearLayoutManager(getContext()));
+                        newsList.setAdapter(adapter);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        loadingDialog.cancel();
+                    }
+                });
     }
 
 }

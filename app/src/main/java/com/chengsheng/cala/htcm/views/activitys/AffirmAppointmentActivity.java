@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,6 +62,7 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
     private TextView appointmentTotalPrice;
     private TextView examTotalPrice;
     private TextView appointmentDateText;
+    private LinearLayout selectAppointmentDate;
 
     private List<FamiliesListItem> families;
     private AppointmentBody uploadBody;//数据上传体
@@ -73,7 +75,6 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
     private HTCMApp app;
     private ZLoadingDialog loadingDialog;
 
-    private String comboID;
     private String comboUrl;
 
     @Override
@@ -87,51 +88,19 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
         loadingDialog.setDialogBackgroundColor(getResources().getColor(R.color.colorText));
 
         CallBackDataAuth.setExamDateInterface(this);
-
+        String comboID = getIntent().getStringExtra("COMBO_ID");
         app = HTCMApp.create(getApplicationContext());
-
-        setContentView(R.layout.activity_affirm_appointment);
-        //初始化Activity的视图。
-        initViews();
-
-
         if (uploadBody == null) {
             uploadBody = new AppointmentBody();
         }
         uploadBody.setCustomer_id(-1);
         uploadBody.setReserve_date("");
+
+        setContentView(R.layout.activity_affirm_appointment);
+        //初始化Activity的视图。
+        initViews(comboID);
         //获取套餐详情
-        comboID = getIntent().getStringExtra("COMBO_ID");
-        if (retrofit == null) {
-            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
-        }
-        service = retrofit.create(NetService.class);
-        loadingDialog.show();
-        service.getCombonDetail(GlobalConstant.EXAM_PACKAGES+comboID, app.getTokenType() + " " + app.getAccessToken())
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableObserver<AppointmentDetail>() {
-                    @Override
-                    public void onNext(AppointmentDetail appointmentDetail) {
-                        FuncUtils.putString("COMBO", String.valueOf(appointmentDetail.getId()));
-                        FuncUtils.putString("COMBO_CAL", appointmentDetail.getPrice());
-                        setView(appointmentDetail);
-                        loadingDialog.cancel();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        loadingDialog.cancel();
-                        Log.e("TEST", "ComboDetail onError!" + e);
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-
-
+        getComboDetail(comboID);
         //获取选择的家人list。
         getFamiliesList();
 
@@ -143,7 +112,7 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
             public void onClick(View v) {
                 if (uploadBody.getCustomer_id() == -1) {
                     Toast.makeText(AffirmAppointmentActivity.this, "对不起，你还没有选择家人的!", Toast.LENGTH_LONG).show();
-                } else if (uploadBody.getReserve_date().equals("") || uploadBody.getReserve_date().equals("请选择日期")) {
+                } else if (uploadBody.getReserve_date().equals("") || uploadBody.getReserve_date().equals("请选择体检日期")) {
                     Toast.makeText(AffirmAppointmentActivity.this, "对不起，你还没有选择体检日期的!", Toast.LENGTH_LONG).show();
                 } else {
                     loadingDialog.setHintText("正在进行支付准备......");
@@ -197,16 +166,7 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
             }
         });
 
-        keyIllnessScreeningCoatiner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                Intent intent = new Intent(AffirmAppointmentActivity.this, AddExamPersonActivity.class);
-                intent.putExtra("COMBO_ID", comboID);
-                startActivity(intent);
-                finish();
-            }
-        });
 
 
 //            otherSelectItemRecycler.setLayoutManager(new LinearLayoutManager(this));
@@ -217,7 +177,7 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
 
     }
 
-    private void initViews() {
+    private void initViews(final String comboId) {
         title = findViewById(R.id.title_header_affirm_appointment).findViewById(R.id.menu_bar_title);
         back = findViewById(R.id.title_header_affirm_appointment).findViewById(R.id.back_login);
         test = findViewById(R.id.affirm_appointment_model_a).findViewById(R.id.appointment_name);
@@ -225,19 +185,28 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
         groupName = findViewById(R.id.affirm_appointment_model_a).findViewById(R.id.group_name);
         appointmentTotalPrice = findViewById(R.id.affirm_appointment_model_a).findViewById(R.id.appointment_total_price);
         examPersonRecycler = findViewById(R.id.affirm_appointment_model_b).findViewById(R.id.exam_person_recycler);
+        selectAppointmentDate = findViewById(R.id.affirm_appointment_model_c).findViewById(R.id.select_appointment_date);
         appointmentDateText = findViewById(R.id.affirm_appointment_model_c).findViewById(R.id.appointment_date_text);
-//        otherSelectItemRecycler = findViewById(R.id.affirm_appointment_model_c).findViewById(R.id.other_select_item_recycler);
         keyIllnessScreeningCoatiner = findViewById(R.id.affirm_appointment_model_b).findViewById(R.id.key_illness_screening_coatiner);
         examTotalPrice = findViewById(R.id.exam_total_price);
         immediatePay = findViewById(R.id.immediate_pay);
 
-        appointmentDateText.setOnClickListener(new View.OnClickListener() {
+        selectAppointmentDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getDate(appointmentDateText);
             }
         });
 
+        keyIllnessScreeningCoatiner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AffirmAppointmentActivity.this, AddExamPersonActivity.class);
+                intent.putExtra("COMBO_ID", comboId);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         title.setText("确认预约");
 
@@ -248,7 +217,7 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
         appointmentIcon.setImageURI(detail.getBanner_photo());
         groupName.setText("体检机构：" + detail.getOrganization().getName());
         appointmentTotalPrice.setText("¥ " + detail.getPrice());
-
+        examTotalPrice.setText("合计：¥"+detail.getPrice()+".00");
         uploadBody.setExam_package_id(detail.getId());
         uploadBody.setReserve_date(appointmentDateText.getText().toString());
     }
@@ -279,14 +248,44 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
                         examPersonRecycler.setLayoutManager(new LinearLayoutManager(AffirmAppointmentActivity.this));
                         examPersonRecycler.setAdapter(adapter);
                         examPersonRecycler.setNestedScrollingEnabled(false);
-//                        Double d = Double.valueOf(FuncUtils.getString("COMBO_CAL", "0"));
-//                        Double t = d * families.size();
-//                        examTotalPrice.setText("合计：¥" + t);
                     }
 
                     @Override
                     public void onError(Throwable e) {
 
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+    }
+
+    private void getComboDetail(String comboId){
+        if(retrofit == null){
+            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
+        }
+
+        service = retrofit.create(NetService.class);
+        loadingDialog.show();
+        service.getCombonDetail(GlobalConstant.EXAM_PACKAGES+comboId, app.getTokenType() + " " + app.getAccessToken())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableObserver<AppointmentDetail>() {
+                    @Override
+                    public void onNext(AppointmentDetail appointmentDetail) {
+                        FuncUtils.putString("COMBO", String.valueOf(appointmentDetail.getId()));
+                        FuncUtils.putString("COMBO_CAL", appointmentDetail.getPrice());
+                        setView(appointmentDetail);
+                        loadingDialog.cancel();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.cancel();
+                        Log.e("TEST", "ComboDetail onError!" + e);
                     }
 
                     @Override

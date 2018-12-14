@@ -73,6 +73,27 @@ public class FuncUtils {
         return (int) (dp * density + 0.5);
     }
 
+    public static boolean isDate2Bigger(String date1,String date2){
+        boolean isBigger = false;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date d1 = null;
+        Date d2 = null;
+        try {
+            d1 = sdf.parse(date1);
+            d2 = sdf.parse(date2);
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+
+        if(d1.getTime() > d2.getTime()){
+            isBigger = false;
+        }else if(d1.getTime() <= d2.getTime()){
+            isBigger = true;
+        }
+
+        return isBigger;
+    }
+
     public static boolean isMobileNO(String mobileNum) {
         /**
          * 判断字符串是否符合手机号码格式
@@ -165,15 +186,19 @@ public class FuncUtils {
         return simpleDateFormat.format(date);
     }
 
+    public static String getCurrentTimeDay() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date date = new java.util.Date(System.currentTimeMillis());
+        return simpleDateFormat.format(date);
+    }
+
     public static int dayNum(String date) throws ParseException {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date date1 = format.parse(date);
         calendar.setTime(date1);
         long time1 = calendar.getTimeInMillis();
-
         long between = (time1 - System.currentTimeMillis()) / (1000 * 3600 * 24);
-
         return Integer.parseInt(String.valueOf(between));
     }
 

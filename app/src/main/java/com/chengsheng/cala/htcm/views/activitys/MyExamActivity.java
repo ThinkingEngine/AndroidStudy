@@ -1,6 +1,5 @@
 package com.chengsheng.cala.htcm.views.activitys;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;

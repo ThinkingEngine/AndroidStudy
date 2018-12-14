@@ -83,7 +83,6 @@ public class ExamDetailTypeARecyclerAdapter extends RecyclerView.Adapter<ExamDet
         }else if(type == 3){
             ExamResultImageRecyclerAdapter adapter = new ExamResultImageRecyclerAdapter(context,data.getImages());
             viewHolder.imageTypeExamResult.setLayoutManager(new GridLayoutManager(context,2));
-            Log.e("TAG",data.getImages()[0]);
             viewHolder.imageTypeExamResult.setAdapter(adapter);
 
         }

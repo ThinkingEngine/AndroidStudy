@@ -39,7 +39,7 @@
                     <ImageView
                         android:layout_width="14dp"
                         android:layout_height="14dp"
-                        android:src="@mipmap/shuruqingkogn" />
+                        android:src="@mipmap/tishi" />
 
                     <TextView
                         android:layout_width="wrap_content"

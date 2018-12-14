@@ -5,7 +5,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,18 +39,19 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
-public class ExamOrderFormActivity extends BaseActivity implements ExamOrderFormFragment.OnFragmentInteractionListener,UpdateConditionInterface {
+public class ExamOrderFormActivity extends BaseActivity implements ExamOrderFormFragment.OnFragmentInteractionListener, UpdateConditionInterface {
     private TextView title;
-    private ImageView back,iconButton;
+    private ImageView back, iconButton;
     private TabLayout orderFormSelectHeader;
     private ViewPager orderFormFragment;
 
-    private String[] marks = {"全部","待付款","已付款","待评价","已取消"};
+    private String[] marks = {"全部", "待付款", "已付款", "待评价", "已取消"};
     private List<Fragment> fragments;
-    private List<Map<String,String>> listDatas = new ArrayList<>();
+    private List<Map<String, String>> listDatas = new ArrayList<>();
 
     private Retrofit retrofit;
     private HTCMApp app;
+    private StringBuffer sb;
 
     private String id;
     private boolean isGetFamilies = false;
@@ -62,38 +62,28 @@ public class ExamOrderFormActivity extends BaseActivity implements ExamOrderForm
         app = HTCMApp.create(getApplicationContext());
         EventBus.getDefault().register(this);
         CallBackDataAuth.setUpdateConditionInterface(this);
+
         setContentView(R.layout.activity_exam_order_form);
 
         id = getIntent().getStringExtra("CUSTOMER_ID");
 
+        getFamilies();
         initViews();
         initDatas();
 
-        for(int i = 0;i < marks.length;i++){
+        for (int i = 0; i < marks.length; i++) {
             orderFormSelectHeader.getTabAt(i).setText(marks[i]);
         }
     }
 
-    private void initViews(){
+    private void initViews() {
         title = findViewById(R.id.title_header_exam_order_form).findViewById(R.id.menu_bar_title);
         back = findViewById(R.id.title_header_exam_order_form).findViewById(R.id.back_login);
         iconButton = findViewById(R.id.title_header_exam_order_form).findViewById(R.id.search_button);
         orderFormSelectHeader = findViewById(R.id.order_form_select_header);
         orderFormFragment = findViewById(R.id.order_form_fragment);
-
         title.setText("体检订单");
         iconButton.setImageResource(R.mipmap.tijian_xuanren);
-        getFamilies();
-
-
-        final ConditionPopupWindow window = new ConditionPopupWindow(this,listDatas);
-        iconButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("TAG","isGetFamilies:"+isGetFamilies);
-                window.showAsDropDown(iconButton);
-            }
-        });
 
 
 
@@ -101,67 +91,60 @@ public class ExamOrderFormActivity extends BaseActivity implements ExamOrderForm
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void Event(MessageEvent messageEvent){
+    public void Event(MessageEvent messageEvent) {
         isGetFamilies = messageEvent.getFamiliesListsState();
     }
 
-    private void initDatas(){
+    private void initDatas() {
 
-        StringBuffer sb = new StringBuffer();
         fragments = new ArrayList<>();
-        if(!listDatas.isEmpty()){
-            for(Map<String,String> map:listDatas){
-                if(listDatas.get(listDatas.size()-1).equals(map)){
-                    sb.append(map.get("ID"));
-                }else{
-                    sb.append(map.get("ID"));
-                }
-            }
-        }
-
-        Log.e("TAG","id:"+sb.toString());
-        for(int i = 0;i < marks.length;i++){
+        for (int i = 0; i < marks.length; i++) {
             orderFormSelectHeader.addTab(orderFormSelectHeader.newTab().setText(marks[i]));
-            fragments.add(ExamOrderFormFragment.newInstance(marks[i],sb.toString()));
+            fragments.add(ExamOrderFormFragment.newInstance(marks[i], ""));
         }
 
-        MainViewPagerAdapter adapter = new MainViewPagerAdapter(getSupportFragmentManager(),fragments);
+        MainViewPagerAdapter adapter = new MainViewPagerAdapter(getSupportFragmentManager(), fragments);
         orderFormFragment.setAdapter(adapter);
 
         orderFormSelectHeader.setupWithViewPager(orderFormFragment);
+
+        final ConditionPopupWindow window = new ConditionPopupWindow(this, listDatas);
+        iconButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                window.showAsDropDown(iconButton);
+            }
+        });
     }
 
-    private void getFamilies(){
-        if(retrofit == null){
+    private void getFamilies() {
+
+        if (retrofit == null) {
             retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
         }
 
         NetService service = retrofit.create(NetService.class);
-        service.getFamiliesList(app.getTokenType()+" "+app.getAccessToken())
+        service.getFamiliesList(app.getTokenType() + " " + app.getAccessToken())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableObserver<FamiliesList>() {
                     @Override
                     public void onNext(FamiliesList familiesList) {
-                        for(FamiliesListItem familiesListItem:familiesList.getItems()){
-                            Map<String,String> map = new HashMap<>();
-                            map.put("SELECT","false");
-                            map.put("DATA",familiesListItem.getFullname());
-                            map.put("ID",String.valueOf(familiesListItem.getId()));
+                        for (FamiliesListItem familiesListItem : familiesList.getItems()) {
+                            Map<String, String> map = new HashMap<>();
+                            map.put("SELECT", "false");
+                            map.put("DATA", familiesListItem.getFullname());
+                            map.put("ID", String.valueOf(familiesListItem.getId()));
                             listDatas.add(map);
-
-
                         }
-                        MessageEvent messageEvent = new MessageEvent();
-                        messageEvent.setFamiliesState(true);
-                        EventBus.getDefault().post(messageEvent);
+
 
 
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Toast.makeText(ExamOrderFormActivity.this,"没有获取到家人列表!",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ExamOrderFormActivity.this, "没有获取到家人列表!", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

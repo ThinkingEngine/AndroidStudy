@@ -175,7 +175,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="22dp"
-                        android:text="推荐咨询"
+                        android:text="推荐资讯"
                         android:textColor="@color/colorText"
                         android:textSize="18sp"
                         android:textStyle="bold" />

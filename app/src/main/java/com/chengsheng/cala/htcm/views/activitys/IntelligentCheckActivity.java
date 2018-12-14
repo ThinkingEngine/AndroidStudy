@@ -18,6 +18,8 @@ import com.chengsheng.cala.htcm.utils.QRCodeUtil;
 import com.chengsheng.cala.htcm.views.adapters.IntelligentCheckARecyclerAdapter;
 import com.chengsheng.cala.htcm.views.adapters.IntelligentCheckBRecyclerAdapter;
 import com.chengsheng.cala.htcm.views.customviews.MyRecyclerView;
+import com.zyao89.view.zloading.ZLoadingDialog;
+import com.zyao89.view.zloading.Z_TYPE;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,49 +44,26 @@ public class IntelligentCheckActivity extends BaseActivity {
     private TextView checkedLine;
 
     private Retrofit retrofit;
+    private HTCMApp app;
+    private ZLoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        HTCMApp app = HTCMApp.create(getApplicationContext());
+        app = HTCMApp.create(getApplicationContext());
+        String orderID = getIntent().getStringExtra("EXAM_ID");
+        loadingDialog = new ZLoadingDialog(this);
+        loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
+        loadingDialog.setDialogBackgroundColor(getResources().getColor(R.color.colorText));
+        loadingDialog.setLoadingColor(getResources().getColor(R.color.colorPrimary));
+        loadingDialog.setHintText("加载中");
+        loadingDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
+
         setContentView(R.layout.activity_intelligent_check);
 
         initViews();
+        getIntelligentCheckInfo(orderID);
 
-        String orderID = getIntent().getStringExtra("EXAM_ID");
-        Log.e("TAG","orderID"+orderID);
-        if (retrofit == null) {
-            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
-        }
-
-        NetService service = retrofit.create(NetService.class);
-        service.getIntelligentCheckInfo(app.getTokenType() + " " + app.getAccessToken(), GlobalConstant.INTELLIGENT_CHECK+ orderID)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableObserver<IntelligentCheck>() {
-                    @Override
-                    public void onNext(IntelligentCheck userExamDetail) {
-                        Log.e("TAG", "智能体检数据请求成功:");
-                        setViews(userExamDetail);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        if (e instanceof HttpException) {
-                            ResponseBody body = ((HttpException) e).response().errorBody();
-                            try {
-                                Log.e("TAG", "智能体检数据请求失败:" + body.string());
-                            } catch (IOException e1) {
-                                e1.printStackTrace();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
     }
 
     private void initViews() {
@@ -104,10 +83,16 @@ public class IntelligentCheckActivity extends BaseActivity {
 
     private void setViews(IntelligentCheck intelligentCheck){
         String id = intelligentCheck.getExam_customer().getExam_or_registration().getId();
-        barCodeMarkIntelligent.setImageBitmap(QRCodeUtil.createBarcode(id,FuncUtils.px2dip(280),FuncUtils.px2dip(74)));
+        barCodeMarkIntelligent.setImageBitmap(QRCodeUtil.createBarcode(id,FuncUtils.dip2px(280),FuncUtils.dip2px(74)));
         numberBarCodeIntelligent.setText(id);
         itemPersonName.setText(intelligentCheck.getExam_customer().getName());
-        itemPersonSex.setText(intelligentCheck.getExam_customer().getSex());
+
+        if(intelligentCheck.getExam_customer().getSex().equals("female")){
+            itemPersonSex.setText("女");
+        }else{
+            itemPersonSex.setText("男");
+        }
+
         itemPersonAge.setText(intelligentCheck.getExam_customer().getAge()+"岁");
 
         IntelligentCheckARecyclerAdapter adapter1 = new IntelligentCheckARecyclerAdapter(this, intelligentCheck.getUnexamined().getItems());
@@ -118,5 +103,42 @@ public class IntelligentCheckActivity extends BaseActivity {
         intelligentCheckRecyclerB.setSaveEnabled(false);
         intelligentCheckRecyclerA.setAdapter(adapter1);
         intelligentCheckRecyclerB.setAdapter(adapter2);
+    }
+
+    private void getIntelligentCheckInfo(String orderId){
+
+        if (retrofit == null) {
+            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
+        }
+        loadingDialog.show();
+        NetService service = retrofit.create(NetService.class);
+        service.getIntelligentCheckInfo(app.getTokenType() + " " + app.getAccessToken(), GlobalConstant.INTELLIGENT_CHECK+ orderId)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableObserver<IntelligentCheck>() {
+                    @Override
+                    public void onNext(IntelligentCheck userExamDetail) {
+                        setViews(userExamDetail);
+                        loadingDialog.cancel();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (e instanceof HttpException) {
+                            ResponseBody body = ((HttpException) e).response().errorBody();
+                            try {
+                                Log.e("TAG", "智能体检数据请求失败:" + body.string());
+                                loadingDialog.cancel();
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }

@@ -15,8 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="160dp"
             android:layout_alignParentTop="true"
-
-            fresco:backgroundImage="@color/colorPrimary"
+            fresco:backgroundImage="@mipmap/taocanxiangqing_banner"
             fresco:actualImageScaleType="fitCenter"/>
 
         <TextView

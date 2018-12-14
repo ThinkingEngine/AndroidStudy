@@ -9,6 +9,7 @@
         android:layout_height="wrap_content">
 
         <RelativeLayout
+            android:id="@+id/ai_assistant_group_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"

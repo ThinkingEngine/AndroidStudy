@@ -89,7 +89,6 @@
             android:layout_marginEnd="75dp"
             android:layout_marginStart="14dp"
             android:layout_marginTop="20dp"
-            android:text="您预约了2018年6月25日的复查"
             android:textColor="@color/colorText"
             android:textSize="16sp" />
 

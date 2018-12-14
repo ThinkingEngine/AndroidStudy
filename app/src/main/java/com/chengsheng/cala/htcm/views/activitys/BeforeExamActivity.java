@@ -14,9 +14,12 @@ import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.model.datamodel.childmodelb.BeforeExam;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
+import com.chengsheng.cala.htcm.utils.FuncUtils;
 import com.chengsheng.cala.htcm.utils.QRCodeUtil;
 import com.chengsheng.cala.htcm.views.adapters.BeforeExamRecyclerViewAdapter;
 import com.chengsheng.cala.htcm.views.customviews.MyRecyclerView;
+import com.zyao89.view.zloading.ZLoadingDialog;
+import com.zyao89.view.zloading.Z_TYPE;
 
 import java.io.IOException;
 
@@ -37,50 +40,27 @@ public class BeforeExamActivity extends BaseActivity {
     private MyRecyclerView beforeExamItems;
 
     private Retrofit retrofit;
+    private HTCMApp app;
+    private ZLoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        HTCMApp app = HTCMApp.create(getApplicationContext());
+        String examID = getIntent().getStringExtra("EXAM_ID");
+        app = HTCMApp.create(getApplicationContext());
+        loadingDialog = new ZLoadingDialog(this);
+        loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
+        loadingDialog.setDialogBackgroundColor(getResources().getColor(R.color.colorText));
+        loadingDialog.setLoadingColor(getResources().getColor(R.color.colorPrimary));
+        loadingDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
+        loadingDialog.setHintText("加载中....");
+
         setContentView(R.layout.activity_before_exam);
 
-        String examID = getIntent().getStringExtra("EXAM_ID");
         initViews();
 
-        if (retrofit == null) {
-            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
-        }
+        getExamBeforeNotice(examID);
 
-        NetService service = retrofit.create(NetService.class);
-        Log.e("TAG","id:"+examID);
-        service.getBeforeExamNotice(app.getTokenType() + " " + app.getAccessToken(), examID)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableObserver<BeforeExam>() {
-                    @Override
-                    public void onNext(BeforeExam beforeExam) {
-                        Log.e("TAG", "检前须知数据请求成功:" + beforeExam.toString());
-                        setViews(beforeExam);
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        if (e instanceof HttpException) {
-                            ResponseBody body = ((HttpException) e).response().errorBody();
-                            try {
-                                Log.e("TAG", "检前须知数据请求失败:" + body.string());
-                            } catch (IOException e1) {
-                                e1.printStackTrace();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
 
     }
 
@@ -106,10 +86,10 @@ public class BeforeExamActivity extends BaseActivity {
         examDateDetailBefore.setText(beforeExam.getMeta().getExam_customer().getExam_or_registration().getDate());
         examAddressDetailBefore.setText(beforeExam.getMeta().getOrganization().getAddress());
         userNameBeforeExam.setText(beforeExam.getMeta().getExam_customer().getName());
-        if(beforeExam.getMeta().getExam_customer().getSex().equals("female")){
-            userSomeInfo.setText("女"+" "+beforeExam.getMeta().getExam_customer().getAge()+"岁");
-        }else{
-            userSomeInfo.setText("男"+" "+beforeExam.getMeta().getExam_customer().getAge()+"岁");
+        if (beforeExam.getMeta().getExam_customer().getSex().equals("female")) {
+            userSomeInfo.setText("女" + " " + beforeExam.getMeta().getExam_customer().getAge() + "岁");
+        } else {
+            userSomeInfo.setText("男" + " " + beforeExam.getMeta().getExam_customer().getAge() + "岁");
         }
 
         back.setOnClickListener(new View.OnClickListener() {
@@ -118,6 +98,45 @@ public class BeforeExamActivity extends BaseActivity {
                 finish();
             }
         });
-        userCode.setImageBitmap(QRCodeUtil.createQRImage(beforeExam.getMeta().getExam_customer().getExam_or_registration().getId(), 80, 80));
+        userCode.setImageBitmap(QRCodeUtil.createQRImage(beforeExam.getMeta().getExam_customer().getExam_or_registration().getId(),
+                FuncUtils.dip2px(150), FuncUtils.dip2px(150)));
+    }
+
+    private void getExamBeforeNotice(String examId){
+        if (retrofit == null) {
+            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
+        }
+
+        loadingDialog.show();
+        NetService service = retrofit.create(NetService.class);
+        service.getBeforeExamNotice(app.getTokenType() + " " + app.getAccessToken(), examId)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableObserver<BeforeExam>() {
+                    @Override
+                    public void onNext(BeforeExam beforeExam) {
+                        Log.e("TAG", "检前须知数据请求成功:" + beforeExam.toString());
+                        setViews(beforeExam);
+                        loadingDialog.cancel();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (e instanceof HttpException) {
+                            ResponseBody body = ((HttpException) e).response().errorBody();
+                            try {
+                                Log.e("TAG", "检前须知数据请求失败:" + body.string());
+                                loadingDialog.cancel();
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        loadingDialog.cancel();
+                    }
+                });
     }
 }

@@ -44,6 +44,9 @@ public class ModePaymentActivity extends BaseActivity {
 
     private String payMode = "";
 
+    private HTCMApp app;
+    private Retrofit retrofit;
+
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -72,43 +75,16 @@ public class ModePaymentActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final HTCMApp app = HTCMApp.create(getApplicationContext());
+        app = HTCMApp.create(getApplicationContext());
         setContentView(R.layout.activity_mode_payment);
 
-        String urlHeader = "api/physical-exam-order/order-payments/ali-sign/" + app.getOrderID();
-        Retrofit retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
+        initViews();
+        getAliSign();
 
-        NetService service = retrofit.create(NetService.class);
-        service.getAliSign(urlHeader, app.getTokenType() + " " + app.getAccessToken())
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableObserver<ZhiFuBaoSign>() {
-            @Override
-            public void onNext(ZhiFuBaoSign zhiFuBaoSign) {
-                Log.e("TAG", "获取支付宝签名成功:" + zhiFuBaoSign.toString());
-                FuncUtils.putString("PAY_SIGN", zhiFuBaoSign.getAli_sign());
-                setViews(zhiFuBaoSign);
-            }
 
-            @Override
-            public void onError(Throwable e) {
-                if (e instanceof HttpException) {
-                    ResponseBody body = ((HttpException) e).response().errorBody();
-                    try {
-                        Log.e("TAG", "获取支付宝签名失败，原因为:" + body.string());
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
-                }
+    }
 
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
-
+    private void initViews() {
         title = findViewById(R.id.title_header_mode_payment).findViewById(R.id.menu_bar_title);
         back = findViewById(R.id.title_header_mode_payment).findViewById(R.id.back_login);
         totalPayText = findViewById(R.id.total_pay_text);
@@ -116,8 +92,9 @@ public class ModePaymentActivity extends BaseActivity {
         selectPayModeButton = findViewById(R.id.select_pay_mode_button);
         immediatePayButton = findViewById(R.id.immediate_pay_button);
 
+        title.setText("支付方式");
 
-        selectPayModeButton.setOnClickListener(new View.OnClickListener() {
+        payModeZhifubaoBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (selectPayModeButton.isSelected()) {
@@ -153,12 +130,46 @@ public class ModePaymentActivity extends BaseActivity {
                 }
             }
         });
-
-        title.setText("支付方式");
     }
 
     private void setViews(ZhiFuBaoSign data) {
         totalPayText.setText("¥" + data.getAmount());
+    }
+
+    private void getAliSign() {
+        if (retrofit == null) {
+            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
+        }
+        NetService service = retrofit.create(NetService.class);
+        service.getAliSign(GlobalConstant.ALI_SIGN + app.getOrderID(), app.getTokenType() + " " + app.getAccessToken())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableObserver<ZhiFuBaoSign>() {
+                    @Override
+                    public void onNext(ZhiFuBaoSign zhiFuBaoSign) {
+                        Log.e("TAG", "获取支付宝签名成功:" + zhiFuBaoSign.toString());
+                        FuncUtils.putString("PAY_SIGN", zhiFuBaoSign.getAli_sign());
+                        setViews(zhiFuBaoSign);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (e instanceof HttpException) {
+                            ResponseBody body = ((HttpException) e).response().errorBody();
+                            try {
+                                Log.e("TAG", "获取支付宝签名失败，原因为:" + body.string());
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     @Override

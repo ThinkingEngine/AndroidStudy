@@ -63,7 +63,7 @@ public class FooterAdapter extends RecyclerView.Adapter<FooterAdapter.NewsViewHo
             final RecommendedItem data = datas.get(position);
             holder.newsHeaderIcon.setImageURI(data.getCover_photo_path());
             holder.newsTitle.setText(data.getTitle());
-            holder.browseNum.setText(String.valueOf(data.getBasic_read_num()));
+            holder.browseNum.setText(String.valueOf(data.getCurrent_read_num()));
             List<String> tags = new ArrayList<>();
             tags.add(data.getArticle_type_name());
             holder.newsMarks.setTags(tags);

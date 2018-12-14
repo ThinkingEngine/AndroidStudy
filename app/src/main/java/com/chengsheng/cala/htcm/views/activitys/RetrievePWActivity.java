@@ -2,15 +2,11 @@ package com.chengsheng.cala.htcm.views.activitys;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.chengsheng.cala.htcm.BaseActivity;
@@ -58,8 +54,6 @@ public class RetrievePWActivity extends BaseActivity implements SetNewPWFragment
             String phone = bundle.getString("V_PHONE");
             String vID = bundle.getString("V_ID");
             String code = bundle.getString("CODE");
-            Log.e("TAG","V_ID:"+vID);
-            Log.e("TAG","code:"+code);
             if (fragmentManager != null) {
                 FragmentTransaction ft = fragmentManager.beginTransaction();
                 Log.e("TAG","VID+CODE::"+vID+"."+code);

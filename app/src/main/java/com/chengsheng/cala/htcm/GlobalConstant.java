@@ -17,7 +17,7 @@ public class GlobalConstant {
 
     public static final String TEST_URL = "http://account.zz-tech.com.cn:85/";
     public static final String API_URL = "http://api.peis-mobile.zz-tech.com.cn:85/api/physical-exam-item/";
-//    public static final String API_BASE_URL = "http://api.peis-mobile.zz-tech.com.cn:85/";
+//    public static final String API_BASE_URL = "http://api.peis-mobile.zz-tech.com.cn:85/";//线上地址
 
     public static final String API_BASE_URL = "http://192.168.1.119:8000/";
 
@@ -29,6 +29,9 @@ public class GlobalConstant {
     public static final String MODE_FAMILIES = "api/family/account-family-members/";
     public static final String FAMILIES_INFO = "api/family/account-family-members/";
     public static final String EXAM_PACKAGES = "api/physical-exam-item/exam-packages/";
+    public static final String COLLECT_EXAM_PACKAGES = "api/physical-exam-item/collector/exam-packages/";
+    public static final String ALI_SIGN = "api/physical-exam-order/order-payments/ali-sign/";
+    public static final String EXAM_RESULT = "api/physical-exam-order/exam-result/";
 
     public static final String TEST = "http://192.168.1.140:8000/";
 

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,11 +13,14 @@ import com.chengsheng.cala.htcm.BaseActivity;
 import com.chengsheng.cala.htcm.GlobalConstant;
 import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.model.datamodel.FamiliesListItem;
 import com.chengsheng.cala.htcm.model.datamodel.childmodelb.UserExamDetail;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
 import com.chengsheng.cala.htcm.views.adapters.ExamItemExpandableListViewAdapter;
 import com.chengsheng.cala.htcm.views.customviews.MyExpandableListView;
+import com.zyao89.view.zloading.ZLoadingDialog;
+import com.zyao89.view.zloading.Z_TYPE;
 
 import java.io.IOException;
 
@@ -41,49 +43,30 @@ public class ExamDetailsActivity extends BaseActivity {
     private LinearLayout reportWaitNumBox;
     private TextView userNeedNote;
     private TextView examItemNum;
+    private TextView examStateText;
 
     private Retrofit retrofit;
+    private HTCMApp app;
+    private ZLoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        HTCMApp app = HTCMApp.create(getApplicationContext());
-        setContentView(R.layout.activity_exam_details);
-        initViews();
+        app = HTCMApp.create(getApplicationContext());
+        loadingDialog = new ZLoadingDialog(this);
+        loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
+        loadingDialog.setDialogBackgroundColor(getResources().getColor(R.color.colorText));
+        loadingDialog.setLoadingColor(getResources().getColor(R.color.colorPrimary));
+        loadingDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
+        loadingDialog.setHintText("加载中....");
 
         String orderID = getIntent().getStringExtra("ORDER_ID");
-        if (retrofit == null) {
-            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
-        }
 
-        NetService service = retrofit.create(NetService.class);
-        service.getUserExamDetail(app.getTokenType() + " " + app.getAccessToken(), GlobalConstant.USER_EXAM_DETAIL + orderID)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableObserver<UserExamDetail>() {
-                    @Override
-                    public void onNext(UserExamDetail userExamDetail) {
-                        Log.e("TAG", "体检详情数据请求成功:" + userExamDetail.toString());
-                        setViews(userExamDetail);
-                    }
+        setContentView(R.layout.activity_exam_details);
 
-                    @Override
-                    public void onError(Throwable e) {
-                        if (e instanceof HttpException) {
-                            ResponseBody body = ((HttpException) e).response().errorBody();
-                            try {
-                                Log.e("TAG", "体检详情数据请求失败:" + body.string());
-                            } catch (IOException e1) {
-                                e1.printStackTrace();
-                            }
-                        }
-                    }
+        initViews();
 
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
+        getUserExamDetail(orderID);
 
 
     }
@@ -105,10 +88,20 @@ public class ExamDetailsActivity extends BaseActivity {
         reportWaitNumBox = findViewById(R.id.report_wait_num_box);
         userNeedNote = findViewById(R.id.user_need_note);
         examItemNum = findViewById(R.id.exam_item_num);
+        examStateText = findViewById(R.id.exam_state_text);
 
         menuBarTitle.setText("详情");
         reportWaitNumBox.setVisibility(View.INVISIBLE);
         examCodeDetail.setVisibility(View.VISIBLE);
+
+        examItemExpandable.setFocusable(false);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void setViews(final UserExamDetail userExamDetail) {
@@ -117,13 +110,19 @@ public class ExamDetailsActivity extends BaseActivity {
             examStatsMark.setText("待体检");
             examStatsMark.setTextColor(getResources().getColor(R.color.colorBule));
             checkExamRepot.setText("检前须知");
+            examCodeDetail.setImageResource(R.mipmap.erweima);
+            examStateText.setText("预约号：");
         } else if (examStats.equals(GlobalConstant.CHECKING)) {
             examStatsMark.setText("体检中");
+            examStateText.setText("体检号：");
             examStatsMark.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
             checkExamRepot.setText("进入导检");
+            examCodeDetail.setImageResource(R.mipmap.tianxingma);
         } else {
             examStatsMark.setText("已体检");
             checkExamRepot.setText("查看报告");
+            examStateText.setText("体检号：");
+            examCodeDetail.setImageResource(R.mipmap.tianxingma);
             if (userExamDetail.getReport().isIssued()) {
                 checkExamRepot.setBackground(getResources().getDrawable(R.drawable.login_button_bg));
             } else {
@@ -137,13 +136,20 @@ public class ExamDetailsActivity extends BaseActivity {
         checkExamRepot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(examStats.equals(GlobalConstant.RESERVATION)){
-                    Intent intent = new Intent(ExamDetailsActivity.this,BeforeExamActivity.class);
-                    intent.putExtra("EXAM_ID",String.valueOf(userExamDetail.getId()));
+                if (examStats.equals(GlobalConstant.RESERVATION)) {
+                    Intent intent = new Intent(ExamDetailsActivity.this, BeforeExamActivity.class);
+                    intent.putExtra("EXAM_ID", String.valueOf(userExamDetail.getId()));
                     startActivity(intent);
-                }else if(examStats.equals(GlobalConstant.CHECKING)){
-                    Intent intent = new Intent(ExamDetailsActivity.this,IntelligentCheckActivity.class);
-                    intent.putExtra("EXAM_ID",String.valueOf(userExamDetail.getId()));
+                } else if (examStats.equals(GlobalConstant.CHECKING)) {
+                    Intent intent = new Intent(ExamDetailsActivity.this, IntelligentCheckActivity.class);
+                    intent.putExtra("EXAM_ID", String.valueOf(userExamDetail.getId()));
+                    startActivity(intent);
+                }else if(examStats.equals(GlobalConstant.CHECKED)){
+                    Intent intent = new Intent(ExamDetailsActivity.this,ExamReportDetailActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(GlobalConstant.EXAM_REPORT_ID,String.valueOf(userExamDetail.getId()));
+                    bundle.putString(GlobalConstant.EXAM_REPORT_NAME,userExamDetail.getName());
+                    intent.putExtras(bundle);
                     startActivity(intent);
                 }
             }
@@ -159,7 +165,26 @@ public class ExamDetailsActivity extends BaseActivity {
             userNeedNote.setText("暂无内容！");
         }
 
-        ExamItemExpandableListViewAdapter adapter = new ExamItemExpandableListViewAdapter(this,userExamDetail.getExam_item());
+        examCodeDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (examStats.equals(GlobalConstant.RESERVATION)) {
+                    FamiliesListItem familiesListItem = new FamiliesListItem();
+                    familiesListItem.setHealth_card_no(userExamDetail.getCustomer().getReservation_or_registration().getId());
+                    Intent intent = new Intent(ExamDetailsActivity.this,UserCardActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("FAMILIES_INFO",familiesListItem);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }else{
+                    Intent intent = new Intent(ExamDetailsActivity.this,BarCodeActivity.class);
+                    intent.putExtra("FAMILIES_INFO",userExamDetail.getCustomer().getReservation_or_registration().getId());
+                    startActivity(intent);
+                }
+            }
+        });
+
+        ExamItemExpandableListViewAdapter adapter = new ExamItemExpandableListViewAdapter(this, userExamDetail.getExam_item());
         examItemExpandable.setAdapter(adapter);
         examItemExpandable.setIndicatorBounds(examItemExpandable.getWidth() - 140, examItemExpandable.getWidth() - 10);
 
@@ -168,8 +193,47 @@ public class ExamDetailsActivity extends BaseActivity {
         examCompany.setText(userExamDetail.getOrganization().getName());
         examCompanyAddress.setText(userExamDetail.getOrganization().getAddress());
         examComboName.setText(userExamDetail.getName());
-        examDateDetail.setText("体检日期："+userExamDetail.getCustomer().getReservation_or_registration().getDate());
-        examItemNum.setText("("+userExamDetail.getExam_item().size()+"项)");
+        examDateDetail.setText("体检日期：" + userExamDetail.getCustomer().getReservation_or_registration().getDate());
+        examItemNum.setText("(" + userExamDetail.getExam_item().size() + "项)");
 
+    }
+
+    private void getUserExamDetail(String orderId) {
+
+        if (retrofit == null) {
+            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
+        }
+
+        loadingDialog.show();
+        NetService service = retrofit.create(NetService.class);
+        service.getUserExamDetail(app.getTokenType() + " " + app.getAccessToken(), GlobalConstant.USER_EXAM_DETAIL + orderId)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableObserver<UserExamDetail>() {
+                    @Override
+                    public void onNext(UserExamDetail userExamDetail) {
+                        Log.e("TAG", "体检详情数据请求成功:" + userExamDetail.toString());
+                        setViews(userExamDetail);
+                        loadingDialog.cancel();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (e instanceof HttpException) {
+                            ResponseBody body = ((HttpException) e).response().errorBody();
+                            try {
+                                Log.e("TAG", "体检详情数据请求失败:" + body.string());
+                                loadingDialog.cancel();
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        loadingDialog.cancel();
+                    }
+                });
     }
 }

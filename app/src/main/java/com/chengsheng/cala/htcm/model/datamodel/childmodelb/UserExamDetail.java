@@ -14,6 +14,7 @@ public class UserExamDetail {
     private String name;
     private String order_status;
     private String exam_status;
+    private boolean can_autonomous;
     private Customer customer;
     private Amount amount;
     private List<String> notices;
@@ -101,6 +102,14 @@ public class UserExamDetail {
         this.report = report;
     }
 
+    public boolean isCan_autonomous() {
+        return can_autonomous;
+    }
+
+    public void setCan_autonomous(boolean can_autonomous) {
+        this.can_autonomous = can_autonomous;
+    }
+
     @Override
     public String toString() {
         return "UserExamDetail{" +
@@ -108,6 +117,7 @@ public class UserExamDetail {
                 ", name='" + name + '\'' +
                 ", order_status='" + order_status + '\'' +
                 ", exam_status='" + exam_status + '\'' +
+                ", can_autonomous=" + can_autonomous +
                 ", customer=" + customer +
                 ", amount=" + amount +
                 ", notices=" + notices +

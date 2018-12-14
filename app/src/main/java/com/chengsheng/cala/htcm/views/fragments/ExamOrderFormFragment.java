@@ -18,6 +18,7 @@ import com.chengsheng.cala.htcm.model.datamodel.childmodelb.ExamOrderItem;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
 import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
+import com.chengsheng.cala.htcm.utils.UpdateConditionInterface;
 import com.chengsheng.cala.htcm.utils.UpdateStateInterface;
 import com.chengsheng.cala.htcm.views.adapters.ExamOrderFormRecyclerAdapter;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -26,6 +27,7 @@ import com.zyao89.view.zloading.Z_TYPE;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
@@ -33,7 +35,7 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
 
-public class ExamOrderFormFragment extends Fragment implements UpdateStateInterface {
+public class ExamOrderFormFragment extends Fragment implements UpdateStateInterface, UpdateConditionInterface {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -50,6 +52,7 @@ public class ExamOrderFormFragment extends Fragment implements UpdateStateInterf
     private HTCMApp app;
     private ZLoadingDialog loadingDialog;
 
+    private String mode = GlobalConstant.MODE_ALL;
     private int currentPage = 1;
 
     public ExamOrderFormFragment() {
@@ -76,6 +79,7 @@ public class ExamOrderFormFragment extends Fragment implements UpdateStateInterf
 
         app = HTCMApp.create(getContext());
         CallBackDataAuth.setUpdateStateInterface(this);
+        CallBackDataAuth.setUpdateConditionInterface(this);
         loadingDialog = new ZLoadingDialog(getContext());
         loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
         loadingDialog.setLoadingColor(getContext().getResources().getColor(R.color.colorPrimary));
@@ -89,16 +93,16 @@ public class ExamOrderFormFragment extends Fragment implements UpdateStateInterf
         View rootView = inflater.inflate(R.layout.fragment_exam_order_form, container, false);
 
         orderList = rootView.findViewById(R.id.order_list);
-        networkQuest(currentPage,true);
+        networkQuest(currentPage, true);
         orderList.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
-                networkQuest(1,false);
+                networkQuest(1, false);
             }
 
             @Override
             public void onLoadMore() {
-                networkQuest(currentPage++,false);
+                networkQuest(currentPage++, false);
             }
         });
         return rootView;
@@ -130,19 +134,36 @@ public class ExamOrderFormFragment extends Fragment implements UpdateStateInterf
 
     @Override
     public void updateServiceMessage(boolean status) {
-        if(status){
-            networkQuest(1,true);
+        if (status) {
+            networkQuest(1, true);
         }
     }
+
+    @Override
+    public void selectCondition(List<Map<String, String>> datas, boolean update) {
+        if (update) {
+            StringBuffer sb = new StringBuffer();
+            for (Map<String, String> map : datas) {
+                if (map != datas.get(datas.size() - 1)) {
+                    sb.append(map.get("ID") + ",");
+                } else {
+                    sb.append(map.get("ID"));
+                }
+            }
+
+            updateData(true, mode, sb.toString(), 1);
+            Log.e("TAG", "字符测试:" + sb.toString());
+        }
+
+    }
+
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 
-    private void networkQuest(int page,boolean loading) {
-
-        String mode = GlobalConstant.MODE_ALL;
+    private void networkQuest(int page, boolean loading) {
         if (mParam1.equals("全部")) {
             mode = GlobalConstant.MODE_ALL;
         } else if (mParam1.equals("待付款")) {
@@ -154,10 +175,10 @@ public class ExamOrderFormFragment extends Fragment implements UpdateStateInterf
         } else if (mParam1.equals("已取消")) {
             mode = GlobalConstant.MODE_CANCEL;
         }
-        updateData(loading, mode, page);
+        updateData(loading, mode, "", page);
     }
 
-    private void updateData(final boolean loading, String mode, int page) {
+    private void updateData(final boolean loading, String mode, String id, int page) {
         final int p = page;
         if (retrofit == null) {
             retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
@@ -167,34 +188,32 @@ public class ExamOrderFormFragment extends Fragment implements UpdateStateInterf
             loadingDialog.show();
         }
         NetService service = retrofit.create(NetService.class);
-        Log.e("TAG","token:"+app.getTokenType() + " " + app.getAccessToken());
-        Log.e("TAG","id:"+mParam2);
-        Log.e("TAG","mode:"+mode);
-        service.getExamOrder(app.getTokenType() + " " + app.getAccessToken(), mParam2, mode, String.valueOf(p))
+
+        service.getExamOrder(app.getTokenType() + " " + app.getAccessToken(), id, mode, String.valueOf(1))
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableObserver<ExamOrder>() {
                     @Override
                     public void onNext(ExamOrder examOrder) {
-                        List<ExamOrderItem> datas;
-                        datas = examOrder.getItems();
-                        if (p > 1) {
-                            datas.addAll(examOrder.getItems());
-                        }
+                        Log.e("TAG","getExamOrder成功");
+                        List<ExamOrderItem> datas = examOrder.getItems();
                         ExamOrderFormRecyclerAdapter adapter = new ExamOrderFormRecyclerAdapter(getContext(), datas);
+                        adapter.notifyDataSetChanged();
                         orderList.setLayoutManager(new LinearLayoutManager(getContext()));
                         orderList.setAdapter(adapter);
 
                         if (loading) {
                             loadingDialog.cancel();
                         }
+
                         orderList.refreshComplete();
                         orderList.loadMoreComplete();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("TAG", "体检订单失败：" + e.toString());
+
+                        Log.e("TAG","getExamOrder失败："+e.toString());
                         List<ExamOrderItem> datas = new ArrayList<>();
                         ExamOrderFormRecyclerAdapter adapter = new ExamOrderFormRecyclerAdapter(getContext(), datas);
                         orderList.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -208,10 +227,6 @@ public class ExamOrderFormFragment extends Fragment implements UpdateStateInterf
 
                     @Override
                     public void onComplete() {
-                        List<ExamOrderItem> datas = new ArrayList<>();
-                        ExamOrderFormRecyclerAdapter adapter = new ExamOrderFormRecyclerAdapter(getContext(), datas);
-                        orderList.setLayoutManager(new LinearLayoutManager(getContext()));
-                        orderList.setAdapter(adapter);
                         if (loading) {
                             loadingDialog.cancel();
                         }

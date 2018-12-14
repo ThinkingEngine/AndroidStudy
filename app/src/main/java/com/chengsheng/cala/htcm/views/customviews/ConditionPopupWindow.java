@@ -20,7 +20,6 @@ import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -164,13 +163,15 @@ public class ConditionPopupWindow extends PopupWindow {
                                 selectedData.clear();
                             }
                             notifyDataSetChanged();
-                        } else if(position != 0 && position < datas.size()){
+                        } else if (position != 0 && position < datas.size()) {
                             if (datas.get(0).get("SELECT").equals("true")) {
                                 datas.get(0).put("SELECT", "false");
                                 datas.get(position).put("SELECT", "false");
                                 notifyDataSetChanged();
+                            }else{
+                                datas.get(position).put("SELECT", "false");
+                                notifyDataSetChanged();
                             }
-
                             selectedData.remove(datas.get(position));
                         }
                     } else {
@@ -182,24 +183,26 @@ public class ConditionPopupWindow extends PopupWindow {
                                 selectedData.addAll(datas);
                             }
                             notifyDataSetChanged();
-                        } else if(position != 0 && position < datas.size()){
+                        } else if (position != 0 && position < datas.size()) {
                             selectedData.add(datas.get(position));
-                            Log.e("TAG","mark:"+selectedData.size());
-                            if(selectedData.size() == (datas.size()-1)){
-                                for(int i = 0;i <datas.size();i++){
+                            if (selectedData.size() == (datas.size() - 1)) {
+                                for (int i = 0; i < datas.size(); i++) {
                                     datas.get(i).put("SELECT", "true");
                                 }
                                 notifyDataSetChanged();
                             }
                         }
                     }
+
+
                 }
             });
 
             okButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CallBackDataAuth.doUpdateConditionInterface(selectedData,true);
+                    CallBackDataAuth.doUpdateConditionInterface(selectedData, true);
+                    selectedData.clear();
                     dismiss();
                 }
             });

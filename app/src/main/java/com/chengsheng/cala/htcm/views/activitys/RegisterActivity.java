@@ -46,23 +46,23 @@ public class RegisterActivity extends BaseActivity {
     private String userNum = "";
     private String verificationCodeId = "";
 
-    private boolean tempIsRegister = true;
-    private MyRetrofit myRetrofit;
+    private Retrofit retrofit;
+    private ZLoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
-
-        final ZLoadingDialog loadingDialog = new ZLoadingDialog(this);
+        loadingDialog = new ZLoadingDialog(this);
         loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
         loadingDialog.setDialogBackgroundColor(getResources().getColor(R.color.colorText));
         loadingDialog.setLoadingColor(getResources().getColor(R.color.colorPrimary));
         loadingDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
+        loadingDialog.setHintText("加载中...");
 
-        final HTCMApp app = HTCMApp.create(getApplicationContext());
-        myRetrofit = MyRetrofit.createInstance();
-        final Retrofit retrofitURL = myRetrofit.createURL(GlobalConstant.TEST_URL);
+        setContentView(R.layout.activity_register);
+
+//        myRetrofit = MyRetrofit.createInstance();
+//        final Retrofit retrofitURL = myRetrofit.createURL(GlobalConstant.TEST_URL);
         initViews();
 
         back.setOnClickListener(new View.OnClickListener() {
@@ -88,31 +88,7 @@ public class RegisterActivity extends BaseActivity {
 
                 final String number = getUserNum.getText().toString();
                 if (FuncUtils.isMobileNO(number)) {
-                    loadingDialog.setHintText("加载中...");
-                    loadingDialog.show();
-                    NetService service = retrofitURL.create(NetService.class);
-                    service.getSMSVerification(getUserNum.getText().toString())
-                            .subscribeOn(Schedulers.newThread())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new DisposableObserver<SMSVerificationResult>() {
-                                @Override
-                                public void onNext(SMSVerificationResult s) {
-                                    userNum = number;
-                                    verificationCodeId = s.getCode_id();
-                                    loadingDialog.cancel();
-                                    Toast.makeText(RegisterActivity.this, "请求发送成功，请等待短信消息", Toast.LENGTH_SHORT).show();
-                                }
-
-                                @Override
-                                public void onError(Throwable e) {
-                                    loadingDialog.cancel();
-                                }
-
-                                @Override
-                                public void onComplete() {
-
-                                }
-                            });
+                    getPhoneCode(number);
                 } else {
                     Toast.makeText(RegisterActivity.this, "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
                 }
@@ -131,12 +107,12 @@ public class RegisterActivity extends BaseActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(Intent.ACTION_DIAL);
-                        Uri data = Uri.parse("tel:"+serviceNum.getText().toString());
+                        Uri data = Uri.parse("tel:" + serviceNum.getText().toString());
                         intent.setData(data);
                         startActivity(intent);
                     }
                 });
-                builder.setNegativeButton("暂不",null);
+                builder.setNegativeButton("暂不", null);
                 alertDialog = builder.create();
                 alertDialog.show();
             }
@@ -159,44 +135,7 @@ public class RegisterActivity extends BaseActivity {
                 } else if (verificationCodeId.equals("") || !userNum.equals(getUserNum.getText().toString())) {
                     Toast.makeText(RegisterActivity.this, "该号码尚未验证，请先取得验证码!", Toast.LENGTH_SHORT).show();
                 } else {
-                    NetService service = retrofitURL.create(NetService.class);
-                    loadingDialog.show();
-//                    Log.e("TEST", userNum + " " + passwordInput.getText().toString().trim() + " " + getCodeUser.getText().toString() + " " + HTCMApp.getClientId());
-                    service.commitRegistrInfo(getUserNum.getText().toString(), passwordInput.getText().toString().trim(), verificationCodeId, getCodeUser.getText().toString(), HTCMApp.getClientId())
-                            .subscribeOn(Schedulers.newThread())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new DisposableObserver<ResponseBody>() {
-                                @Override
-                                public void onNext(ResponseBody o) {
-                                    loadingDialog.cancel();
-                                    Toast.makeText(RegisterActivity.this, "注册成功!", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                                    intent.putExtra("USER_NUMBER", getUserNum.getText().toString());
-                                    startActivity(intent);
-                                }
-
-                                @Override
-                                public void onError(Throwable e) {
-                                    if (e instanceof HttpException) {
-                                        loadingDialog.cancel();
-                                        ResponseBody body = ((HttpException) e).response().errorBody();
-                                        Gson gson = new Gson();
-                                        try {
-                                            RegisterError error = gson.fromJson(body.string(), RegisterError.class);
-                                            showDialog(error);
-                                        } catch (IOException e1) {
-                                            e1.printStackTrace();
-                                        }
-                                    }
-                                    Toast.makeText(RegisterActivity.this, "onError 结果:" + e, Toast.LENGTH_SHORT).show();
-                                }
-
-                                @Override
-                                public void onComplete() {
-
-                                }
-                            });
-
+                    registerNewUser();
                 }
             }
         });
@@ -217,12 +156,94 @@ public class RegisterActivity extends BaseActivity {
         userProtocol = findViewById(R.id.user_protocol);
         serviceNum = findViewById(R.id.service_num);
 
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
+    }
+
+    private void getPhoneCode(final String number) {
+
+        if (retrofit == null) {
+            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.TEST_URL);
+        }
+
+        loadingDialog.show();
+        NetService service = retrofit.create(NetService.class);
+        service.getSMSVerification(getUserNum.getText().toString())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableObserver<SMSVerificationResult>() {
+                    @Override
+                    public void onNext(SMSVerificationResult s) {
+                        userNum = number;
+                        verificationCodeId = s.getCode_id();
+                        loadingDialog.cancel();
+                        Toast.makeText(RegisterActivity.this, "请求发送成功，请等待短信消息", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.cancel();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        loadingDialog.cancel();
+                    }
+                });
+    }
+
+    private void registerNewUser() {
+        if (retrofit == null) {
+            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.TEST_URL);
+        }
+
+        loadingDialog.show();
+        NetService service = retrofit.create(NetService.class);
+        service.commitRegistrInfo(getUserNum.getText().toString(), passwordInput.getText().toString().trim(), verificationCodeId, getCodeUser.getText().toString(), HTCMApp.getClientId())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableObserver<ResponseBody>() {
+                    @Override
+                    public void onNext(ResponseBody o) {
+                        loadingDialog.cancel();
+                        Toast.makeText(RegisterActivity.this, "注册成功!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                        intent.putExtra("USER_NUMBER", getUserNum.getText().toString());
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (e instanceof HttpException) {
+                            loadingDialog.cancel();
+                            ResponseBody body = ((HttpException) e).response().errorBody();
+                            Gson gson = new Gson();
+                            try {
+                                RegisterError error = gson.fromJson(body.string(), RegisterError.class);
+                                showDialog(error);
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                        Toast.makeText(RegisterActivity.this, "onError 结果:" + e, Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     private void showDialog(RegisterError error) {

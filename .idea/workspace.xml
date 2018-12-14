@@ -6,7 +6,7 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="error" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
   </component>
   <component name="CMakeSettings">
@@ -141,6 +141,7 @@
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_register.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_register.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_set_new_pw.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_set_new_pw.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_smscode.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_smscode.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/title_bar_type_one_layout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/title_bar_type_one_layout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterDir="false" />
@@ -182,89 +183,88 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="AffirmAppointmentActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/AffirmAppointmentActivity.java">
+      <file leaf-file-name="NetService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/network/NetService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="714">
-              <caret line="308" column="62" selection-start-line="308" selection-start-column="57" selection-end-line="308" selection-end-column="62" />
+            <state relative-caret-position="221">
+              <caret line="155" column="71" selection-start-line="155" selection-start-column="58" selection-end-line="155" selection-end-column="71" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AIAssistantRecyclerAdapter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/AIAssistantRecyclerAdapter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="197">
+              <caret line="234" column="74" selection-start-line="234" selection-start-column="74" selection-end-line="234" selection-end-column="74" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#5517#8938#0" expanded="true" />
-                <element signature="e#8937#8938#0" expanded="true" />
-                <element signature="e#11509#11510#0" expanded="true" />
-                <element signature="e#11554#11555#0" expanded="true" />
-                <element signature="e#11825#11826#0" expanded="true" />
-                <element signature="e#11858#11859#0" expanded="true" />
-                <element signature="e#13404#13750#0" expanded="true" />
-                <element signature="e#13749#13750#0" expanded="true" />
+                <element signature="e#3959#4126#0" expanded="true" />
+                <element signature="e#4125#4126#0" expanded="true" />
+                <element signature="e#11566#11725#0" expanded="true" />
+                <element signature="e#11724#11725#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AddFamilyFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/fragments/AddFamilyFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="259">
-              <caret line="174" column="112" selection-start-line="174" selection-start-column="18" selection-end-line="174" selection-end-column="112" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#5935#6816#0" expanded="true" />
-                <element signature="e#6162#6583#0" expanded="true" />
-                <element signature="e#6582#6583#0" expanded="true" />
-                <element signature="e#6815#6816#0" expanded="true" />
-                <element signature="e#14942#15694#0" expanded="true" />
-                <element signature="e#15693#15694#0" expanded="true" />
-                <element signature="e#15772#16385#0" expanded="true" />
-                <element signature="e#16384#16385#0" expanded="true" />
-                <element signature="e#18377#19377#0" expanded="true" />
-                <element signature="e#19376#19377#0" expanded="true" />
-                <element signature="e#20234#20387#0" expanded="true" />
-                <element signature="e#20386#20387#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FamiliesDetailsActivity.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/FamiliesDetailsActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="269">
-              <caret line="273" column="49" selection-start-line="273" selection-start-column="49" selection-end-line="273" selection-end-column="49" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#7093#7512#0" expanded="true" />
-                <element signature="e#7511#7512#0" expanded="true" />
-                <element signature="e#9829#10236#0" expanded="true" />
-                <element signature="e#10235#10236#0" expanded="true" />
-                <element signature="e#27287#27679#0" expanded="true" />
-                <element signature="e#27678#27679#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="activity_families_details.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_families_details.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="298">
-              <caret line="239" column="45" selection-start-line="239" selection-start-column="29" selection-end-line="239" selection-end-column="45" />
-            </state>
-          </provider>
+      <file leaf-file-name="ai_assistant_no_content_layout.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/ai_assistant_no_content_layout.xml">
           <provider editor-type-id="android-designer2">
             <state />
           </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="fragment_add_family.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_add_family.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="412">
-              <caret line="104" column="62" selection-start-line="97" selection-start-column="12" selection-end-line="104" selection-end-column="62" />
+            <state relative-caret-position="209">
+              <caret line="11" column="54" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="54" />
             </state>
           </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BarADActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/BarADActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="85" column="57" selection-start-line="85" selection-start-column="57" selection-end-line="85" selection-end-column="57" />
+              <folding>
+                <element signature="e#2816#2958#0" expanded="true" />
+                <element signature="e#2957#2958#0" expanded="true" />
+                <element signature="e#5277#5278#0" expanded="true" />
+                <element signature="e#5324#5325#0" expanded="true" />
+                <element signature="e#5389#5390#0" expanded="true" />
+                <element signature="e#5443#5444#0" expanded="true" />
+                <element signature="e#5508#5509#0" expanded="true" />
+                <element signature="e#5547#5548#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="activity_bar_ad.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_bar_ad.xml">
           <provider editor-type-id="android-designer2">
             <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="110">
+              <caret line="22" column="43" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="43" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="570">
+              <caret line="90" column="39" selection-start-line="90" selection-start-column="31" selection-end-line="90" selection-end-column="39" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AIAssistantSubRecyclerView.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/AIAssistantSubRecyclerView.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="101">
+              <caret line="80" column="38" selection-start-line="80" selection-start-column="38" selection-end-line="80" selection-end-column="38" />
+            </state>
           </provider>
         </entry>
       </file>
@@ -281,19 +281,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getCode</find>
-      <find>otherSelectItemRecycler</find>
-      <find>families</find>
-      <find>conditions</find>
-      <find>setPopupWindow</find>
-      <find>app</find>
-      <find>startReportCompare</find>
-      <find>back</find>
-      <find>ExamDetailsActivity</find>
-      <find>aiAssistantItem</find>
-      <find>cancelReportCompare</find>
-      <find>selectedData</find>
-      <find>updateData</find>
       <find>TagAdapter</find>
       <find>Call</find>
       <find>bodyBanner</find>
@@ -306,11 +293,24 @@
       <find>groupMark</find>
       <find>exam_item_combo_num</find>
       <find>exam_target_detail_expandable</find>
-      <find>examItemComboExpandable</find>
-      <find>comboUrl</find>
-      <find>examPersonRecycler</find>
       <find>appointmentTotalPrice</find>
       <find>familiesAgeHad</find>
+      <find>backButton</find>
+      <find>comboUrl</find>
+      <find>examItemComboExpandable</find>
+      <find>setViews</find>
+      <find>SMSVer</find>
+      <find>browseNum</find>
+      <find>examCodeDetail</find>
+      <find>examNumDetail</find>
+      <find>appointmentDateText</find>
+      <find>examTotalPrice</find>
+      <find>examPersonRecycler</find>
+      <find>listDatas</find>
+      <find>main_page_image</find>
+      <find>item_big_notes</find>
+      <find>aiAssistantItemDate</find>
+      <find>itemBigNotes</find>
     </findStrings>
   </component>
   <component name="GenerateSignedApkSettings">
@@ -2594,63 +2594,63 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/network/NetService.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/network/AccountService.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/fragments/MineFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/ExamOrderFormActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/BannerAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/utils/FuncUtils.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/BarCodeActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/IntelligentCheckActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_main_page.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/exam_detail_item_type_a_layout.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/exam_advice_child_layout.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/ExamAdviceExpandableListAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/model/datamodel/childmodela/singleItemResult.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_exam_report_detail.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/exam_detail_item_type_b_header_layout.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/ExamReportDetailActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_exam_result_unscramble.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/ExamReportCompareActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/CompareContentBaseAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/compare_child_item_layout.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/image_recycler_layout.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/ExamDetailTypeARecyclerAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/single_image_layout.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/ShowImagesViewPager.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/dialog_images_brower_layout.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/ShowImageAdapter.java" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/HTCMApp.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/ExamResultUnscrambleActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/ExamResultImageRecyclerAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/customviews/ShowExamImageDialog.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/AIAssistantRecyclerAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/fragments/MainPageFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_add_family.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/HomePageActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/combo_detail_model_f_layout.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_combo_detail.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/ComboDetailActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/expandable_exam_item_header_layout.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/OtherSelectionExpandableListViewAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/expandable_exam_item_child_layout.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/ExamItemExpandableListViewAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/GlobalConstant.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_affirm_appointment.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/exam_person_item_layout.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/AffirmAppointmentExamPersonAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/AffirmAppointmentActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/utils/FuncUtils.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/fragments/AddFamilyFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_families_details.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/FamiliesDetailsActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/BarCodeActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_user_card.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/fragments/MineFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/MineItemBaseAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/mine_linst_item_layout.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_bar_code.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/BeforeExamActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/affirm_appointment_model_c_layout.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/AffirmAppointmentActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/AffirmAppointmentExamPersonAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/title_bar_type_two_layout.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/AboutActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/SettingActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_exam_details.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/NewsListActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/fragments/NewsListFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/PayResultActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/ModePaymentActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/HomePageActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/MyExamActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/fragments/MyExamAllFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/GlobalConstant.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/ExamReportDetailActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/ExamAdviceExpandableListAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/ExamDetailTypeARecyclerAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/ExamResultImageRecyclerAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/ExamOrderFormActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/ExamOrderFormRecyclerAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/customviews/ConditionPopupWindow.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/fragments/ExamOrderFormFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/combo_detail_model_a_layout.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/affirm_appointment_model_a_layout.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/ComboDetailActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_intelligent_check.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/IntelligentCheckActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/model/datamodel/childmodelb/UserExamDetail.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/ExamDetailsActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/ai_assistant_item_layout.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/ai_assistant_main_page_item_layout.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/model/datamodel/Order.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/AIAssistantSubRecyclerView.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/ai_assistant_no_content_layout.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/AIAssistantRecyclerAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/BarADActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_bar_ad.xml" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="466" />
-    <option name="y" value="7" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
     <option name="width" value="1004" />
     <option name="height" value="688" />
   </component>
@@ -2864,6 +2864,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="AndroidView">
         <subPane>
@@ -2885,7 +2886,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2895,7 +2895,7 @@
     <property name="ExportApk.SignV1" value="true" />
     <property name="ExportApk.SignV2" value="true" />
     <property name="OverrideImplement.combined" value="false" />
-    <property name="SearchEverywhereHistoryKey" value="activity_families_details&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/activity_families_details.xml&#10;affirm_appointment_model_a_layout&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/affirm_appointment_model_a_layout.xml&#10;exam_person_item_layout&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/exam_person_item_layout.xml&#10;AffirmAppointmentExamPersonAdapter&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.views.adapters.AffirmAppointmentExamPersonAdapter&#10;affirm_appointment_model_b_layout&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/affirm_appointment_model_b_layout.xml&#10;activity_affirm_appointment&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/activity_affirm_appointment.xml&#10;expandable_exam_item_header_layout&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/expandable_exam_item_header_layout.xml&#10;expandable_other_item_header_layout&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/expandable_other_item_header_layout.xml&#10;expandable_exam_item_child_layout&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/expandable_exam_item_child_layout.xml&#10;ExamItem&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.model.datamodel.childmodelb.ExamItem&#10;ExamItemExpandableListViewAdapter&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.views.adapters.ExamItemExpandableListViewAdapter&#10;combo_detail_model_b_layout&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/combo_detail_model_b_layout.xml&#10;activity_combo_detail&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/activity_combo_detail.xml&#10;single_text_layout&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/single_text_layout.xml&#10;AIAssistantRecyclerAdapter&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/AIAssistantRecyclerAdapter.java&#10;singleItemResult&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/java/com/chengsheng/cala/htcm/model/datamodel/childmodela/singleItemResult.java&#10;ExamDetailTypeARecyclerAdapter&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/ExamDetailTypeARecyclerAdapter.java&#10;ExamResultUnscrambleActivity&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/ExamResultUnscrambleActivity.java&#10;ExamResultRecyclerAdapter&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.views.adapters.ExamResultRecyclerAdapter&#10;activity_exam_report_detail&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/activity_exam_report_detail.xml&#10;getCompareReport&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.network.ExamReportInterface#getCompareReport&#10;compare_child_item_layout&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/compare_child_item_layout.xml&#10;CompareContentBaseAdapter&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.views.adapters.CompareContentBaseAdapter&#10;compare_table_item_layout&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/compare_table_item_layout.xml&#10;CompareReportRecyclerAdapter&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.views.adapters.CompareReportRecyclerAdapter&#10;activity_exam_result_unscramble&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/activity_exam_result_unscramble.xml&#10;exam_advice_child_layout&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/exam_advice_child_layout.xml&#10;ExamAdviceExpandableListAdapter&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/ExamAdviceExpandableListAdapter.java&#10;getExamReportDetial&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.network.NetService#getExamReportDetial&#10;exam_detail_item_type_b_header_layout&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/exam_detail_item_type_b_header_layout.xml&#10;exam_detail_item_type_a_layout&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/exam_detail_item_type_a_layout.xml&#10;FuncUtils&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.utils.FuncUtils&#10;BannerAdapter&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.views.adapters.BannerAdapter&#10;fragment_main_page&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/fragment_main_page.xml&#10;getUserInfo&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.network.AccountService#getUserInfo&#10;getExamOrder&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.network.NetService#getExamOrder&#10;ExamOrderFormFragment&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.views.fragments.ExamOrderFormFragment&#10;getFamiliesList&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.network.NetService#getFamiliesList&#10;exam_appointment_header_layout&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/exam_appointment_header_layout.xml&#10;activity_my_exam&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/activity_my_exam.xml&#10;activity_search&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/activity_search.xml&#10;getExamListModeMode&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.network.NetService#getExamListModeMode&#10;getExamListMode&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.network.NetService#getExamListMode&#10;MyExamRecyclerAdapter&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.views.adapters.MyExamRecyclerAdapter&#10;getExamList&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.network.NetService#getExamList&#10;MyExamAllFragment&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.views.fragments.MyExamAllFragment&#10;ai_assistant_item_layout&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/ai_assistant_item_layout.xml&#10;exam_report_item_layout&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/exam_report_item_layout.xml&#10;activity_bar_code&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/activity_bar_code.xml&#10;combo_detail_model_a_layout&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/combo_detail_model_a_layout.xml" />
+    <property name="SearchEverywhereHistoryKey" value="activity_bar_ad&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/activity_bar_ad.xml&#10;ai_assistant_no_content_layout&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/ai_assistant_no_content_layout.xml&#10;Order&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.model.datamodel.Order&#10;order&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/ExamOrderFormActivity.java&#10;AssistantItem&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.model.datamodel.AssistantItem&#10;ai_assistant_main_page_item_layout&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/ai_assistant_main_page_item_layout.xml&#10;ai_assistant_list_bg_layout&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/ai_assistant_list_bg_layout.xml&#10;ai_assistant_item_layout&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/ai_assistant_item_layout.xml&#10;ExamReportDetailActivity&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/ExamReportDetailActivity.java&#10;UserExamDetail&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.model.datamodel.childmodelb.UserExamDetail&#10;USER_EXAM_DETAIL&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.GlobalConstant#USER_EXAM_DETAIL&#10;getUserExamDetail&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.network.NetService#getUserExamDetail&#10;activity_intelligent_check&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/activity_intelligent_check.xml&#10;combo_detail_model_a_layout&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/combo_detail_model_a_layout.xml&#10;affirm_appointment_model_a_layout&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/affirm_appointment_model_a_layout.xml&#10;activity_affirm_appointment&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/activity_affirm_appointment.xml&#10;activity_combo_detail&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/activity_combo_detail.xml&#10;doUpdateConditionInterface&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.utils.CallBackDataAuth#doUpdateConditionInterface&#10;ExamOrderFormRecyclerAdapter&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.views.adapters.ExamOrderFormRecyclerAdapter&#10;getExamOrder&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.network.NetService#getExamOrder&#10;GlobalConstant&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/java/com/chengsheng/cala/htcm/GlobalConstant.java&#10;ExamOrderFormFragment&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.views.fragments.ExamOrderFormFragment&#10;ExamResultImageRecyclerAdapter&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.views.adapters.ExamResultImageRecyclerAdapter&#10;ExamAdviceExpandableListAdapter&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.views.adapters.ExamAdviceExpandableListAdapter&#10;ExamResultRecyclerAdapter&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.views.adapters.ExamResultRecyclerAdapter&#10;activity_exam_report_detail&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/activity_exam_report_detail.xml&#10;getExamListModeMode&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.network.NetService#getExamListModeMode&#10;getExamListFilter&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.network.NetService#getExamListFilter&#10;MyExamAllFragment&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.views.fragments.MyExamAllFragment&#10;activity_mode_payment&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/activity_mode_payment.xml&#10;getNewsTitlesFiliter&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.network.ArticlesService#getNewsTitlesFiliter&#10;NewsListFragment&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.views.fragments.NewsListFragment&#10;title_bar_type_two_layout&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/title_bar_type_two_layout.xml&#10;activity_news_list&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/activity_news_list.xml&#10;activity_exam_details&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/activity_exam_details.xml&#10;activity_about&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/activity_about.xml&#10;AffirmAppointmentExamPersonAdapter&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.views.adapters.AffirmAppointmentExamPersonAdapter&#10;affirm_appointment_model_c_layout&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/affirm_appointment_model_c_layout.xml&#10;getFamiliesList&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.network.NetService#getFamiliesList&#10;activity_exam_report&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/activity_exam_report_detail.xml&#10;BeforeExamActivity&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/BeforeExamActivity.java&#10;activity_bar_code&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/activity_bar_code.xml&#10;UserCardActivity&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/UserCardActivity.java&#10;activity_estimate_order&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/activity_estimate_order.xml&#10;fragment_main_page&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/fragment_main_page.xml&#10;mine_linst_item_layout&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/mine_linst_item_layout.xml&#10;MineItemBaseAdapter&#9;PSI&#9;JAVA://com.chengsheng.cala.htcm.views.adapters.MineItemBaseAdapter&#10;activity_before_exam&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/activity_before_exam.xml&#10;activity_user_card&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/activity_user_card.xml&#10;combo_detail_model_f_layout&#9;FILE&#9;file://D:/projectCenter/htcm/app/src/main/res/layout/combo_detail_model_f_layout.xml" />
     <property name="android.sdk.path" value="D:/developToolkit/Android/android-sdk-windows" />
     <property name="device.picker.selection" value="74665b1c" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/drawable" />
@@ -3049,10 +3049,10 @@
       <window_info id="Build Variants" order="2" sideWeight="0.50054526" side_tool="true" weight="0.18017058" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50159913" side_tool="true" weight="0.8037077" />
-      <window_info anchor="right" id="Preview" order="5" weight="0.31449893" />
+      <window_info anchor="right" id="Preview" order="5" visible="true" weight="0.31449893" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.3293348" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" sideWeight="0.49840087" visible="true" weight="0.55179936" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" sideWeight="0.49840087" visible="true" weight="0.55070883" />
       <window_info anchor="bottom" id="Logcat" order="12" sideWeight="0.49840087" weight="0.6695747" />
       <window_info id="Captures" order="2" weight="0.25" />
       <window_info id="Capture Tool" order="2" />
@@ -3074,35 +3074,35 @@
       <window_info anchor="bottom" id="Find" order="1" weight="0.3293348" />
     </layout>
     <layout-to-restore>
-      <window_info anchor="bottom" id="Build" order="7" weight="0.23882225" />
+      <window_info anchor="bottom" id="Build" order="11" weight="0.7666303" />
       <window_info id="Designer" order="2" />
       <window_info id="Build Variants" order="3" sideWeight="0.50054526" side_tool="true" weight="0.18017058" />
       <window_info id="Image Layers" order="4" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Android Profiler" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Android Profiler" order="7" show_stripe_button="false" />
       <window_info id="Favorites" order="5" side_tool="true" />
       <window_info id="Captures" order="6" weight="0.25" />
       <window_info id="Capture Tool" order="7" />
-      <window_info anchor="right" id="Capture Analysis" order="3" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="right" id="Preview" order="4" weight="0.19083156" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50159913" side_tool="true" weight="0.8037077" />
+      <window_info active="true" anchor="right" id="Preview" order="5" visible="true" weight="0.31449893" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Device File Explorer" order="5" side_tool="true" />
-      <window_info anchor="bottom" id="Logcat" order="10" weight="0.6466739" />
-      <window_info anchor="bottom" id="Version Control" order="11" weight="0.3293348" />
-      <window_info anchor="bottom" id="Terminal" order="12" weight="0.5561614" />
-      <window_info anchor="right" id="Gradle" order="6" weight="0.32995737" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49945474" visible="true" weight="0.27878466" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3293348" />
+      <window_info anchor="right" id="Device File Explorer" order="8" sideWeight="0.50054526" side_tool="true" weight="0.32995737" />
+      <window_info anchor="bottom" id="Logcat" order="12" sideWeight="0.49840087" weight="0.6695747" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.3293348" />
+      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49840087" weight="0.55070883" />
+      <window_info anchor="right" id="Gradle" order="6" sideWeight="0.49945474" weight="0.32995737" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49945474" visible="true" weight="0.28091684" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Palette&#9;" order="7" />
-      <window_info anchor="right" id="Theme Preview" order="8" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
+      <window_info anchor="right" id="Theme Preview" order="7" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3293348" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
     </layout-to-restore>
   </component>
@@ -3111,570 +3111,536 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="6" />
+      <option name="time" value="7" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/exam_detail_item_type_b_header_layout.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="552">
-          <caret line="102" column="40" selection-start-line="102" selection-start-column="29" selection-end-line="102" selection-end-column="40" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_exam_details.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/network/ExamReportInterface.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+        <state relative-caret-position="507">
+          <caret line="330" column="48" lean-forward="true" selection-start-line="330" selection-start-column="48" selection-end-line="330" selection-end-column="48" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/compare_child_item_layout.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/ServiceOrderActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="761">
-          <caret line="152" column="53" lean-forward="true" selection-start-line="152" selection-start-column="53" selection-end-line="152" selection-end-column="53" />
+        <state relative-caret-position="76">
+          <caret line="28" column="13" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/title_bar_type_two_layout.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/CompareContentBaseAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="62" selection-start-line="62" selection-end-line="62" />
+        <state relative-caret-position="114">
+          <caret line="6" column="4" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/CompareReportRecyclerAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="589">
-          <caret line="46" column="78" selection-start-line="46" selection-start-column="53" selection-end-line="46" selection-end-column="78" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/compare_table_item_layout.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="647">
-          <caret line="38" column="57" selection-start-line="38" selection-start-column="57" selection-end-line="38" selection-end-column="57" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_news_list.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/ExamReportCompareActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
-          <caret line="120" column="44" selection-start-line="120" selection-start-column="28" selection-end-line="120" selection-end-column="44" />
+        <state relative-caret-position="152">
+          <caret line="8" column="4" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/NewsListActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="487">
+          <caret line="116" column="42" selection-start-line="116" selection-start-column="26" selection-end-line="116" selection-end-column="42" />
           <folding>
-            <element signature="e#5709#6665#0" expanded="true" />
-            <element signature="e#6664#6665#0" expanded="true" />
-            <element signature="e#6774#6775#0" expanded="true" />
-            <element signature="e#6857#6858#0" expanded="true" />
-            <element signature="e#7088#7089#0" expanded="true" />
-            <element signature="e#7135#7136#0" expanded="true" />
-            <element signature="e#7200#7201#0" expanded="true" />
-            <element signature="e#7254#7255#0" expanded="true" />
-            <element signature="e#7319#7320#0" expanded="true" />
-            <element signature="e#7358#7359#0" expanded="true" />
-            <element signature="e#7747#8707#0" expanded="true" />
-            <element signature="e#8706#8707#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#3896#4038#0" expanded="true" />
+            <element signature="e#4037#4038#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/network/ArticlesService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="25" column="32" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/fragments/NewsListFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1418">
+          <caret line="86" column="31" selection-start-line="86" selection-start-column="31" selection-end-line="86" selection-end-column="31" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3075#3076#0" expanded="true" />
+            <element signature="e#3116#3117#0" expanded="true" />
+            <element signature="e#5793#5794#0" expanded="true" />
+            <element signature="e#5863#5864#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/ModePaymentActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-862">
+          <caret line="65" column="42" lean-forward="true" selection-start-line="65" selection-start-column="42" selection-end-line="65" selection-end-column="42" />
+          <folding>
+            <element signature="e#1513#2400#0" expanded="true" />
+            <element signature="e#2399#2400#0" expanded="true" />
+            <element signature="e#3309#3714#0" expanded="true" />
+            <element signature="e#3713#3714#0" expanded="true" />
+            <element signature="e#3764#4717#0" expanded="true" />
+            <element signature="e#4716#4717#0" expanded="true" />
+            <element signature="e#5996#5997#0" expanded="true" />
+            <element signature="e#6056#6057#0" expanded="true" />
+            <element signature="e#6750#6930#0" expanded="true" />
+            <element signature="e#6929#6930#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/PayResultActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="42" column="55" lean-forward="true" selection-start-line="42" selection-start-column="55" selection-end-line="42" selection-end-column="55" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2429#2571#0" expanded="true" />
+            <element signature="e#2570#2571#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/HomePageActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="7" column="24" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="37" column="42" selection-start-line="37" selection-start-column="32" selection-end-line="37" selection-end-column="42" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-manifest">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_mode_payment.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="241">
+          <caret line="49" column="46" selection-start-line="49" selection-start-column="25" selection-end-line="49" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/fragments/MyExamAllFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="677">
+          <caret line="218" column="24" selection-start-line="218" selection-start-column="24" selection-end-line="218" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4183#4184#0" expanded="true" />
+            <element signature="e#4269#4270#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_exam_report_detail.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="83" column="15" selection-start-line="83" selection-start-column="15" selection-end-line="83" selection-end-column="15" />
-        </state>
-      </provider>
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/ExamReportDetailActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="658">
-          <caret line="111" column="74" selection-start-line="111" selection-start-column="49" selection-end-line="111" selection-end-column="74" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="222">
+          <caret line="96" column="76" selection-start-line="96" selection-start-column="56" selection-end-line="96" selection-end-column="76" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/ExamResultRecyclerAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="56" column="80" selection-start-line="56" selection-start-column="52" selection-end-line="56" selection-end-column="80" />
+        <state relative-caret-position="-295">
+          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
           <folding>
             <element signature="e#1969#2429#0" expanded="true" />
             <element signature="e#2428#2429#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/model/datamodel/childmodela/singleItemResult.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="13" column="32" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/image_recycler_layout.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="8" column="46" selection-start-line="8" selection-start-column="46" selection-end-line="8" selection-end-column="46" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/single_image_layout.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="12" selection-start-line="12" selection-end-line="12" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="820">
-          <caret line="52" column="47" selection-start-line="52" selection-start-column="47" selection-end-line="52" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/ExamResultUnscrambleActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="40" column="59" selection-start-line="40" selection-start-column="59" selection-end-line="40" selection-end-column="59" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/HTCMApp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-722">
-          <caret line="28" column="42" selection-start-line="28" selection-start-column="42" selection-end-line="28" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/ShowImageAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="696">
-          <caret line="39" column="35" selection-start-line="39" selection-start-column="35" selection-end-line="39" selection-end-column="35" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#327#328#0" expanded="true" />
-            <element signature="e#360#361#0" expanded="true" />
-            <element signature="e#413#414#0" expanded="true" />
-            <element signature="e#441#442#0" expanded="true" />
-            <element signature="e#374#375#0" expanded="true" />
-            <element signature="e#402#403#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/dialog_images_brower_layout.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="7" column="42" selection-start-line="7" selection-start-column="25" selection-end-line="7" selection-end-column="42" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/ShowImagesViewPager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="24" column="51" selection-start-line="24" selection-start-column="51" selection-end-line="24" selection-end-column="51" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#278#279#0" expanded="true" />
-            <element signature="e#308#309#0" expanded="true" />
+            <element signature="e#2647#2648#0" expanded="true" />
+            <element signature="e#2682#2683#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/ExamResultImageRecyclerAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="46" selection-start-line="46" selection-end-line="46" />
+        <state relative-caret-position="639">
+          <caret line="63" column="28" lean-forward="true" selection-start-line="63" selection-start-column="28" selection-end-line="63" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1438#1596#0" expanded="true" />
-            <element signature="e#1595#1596#0" expanded="true" />
-            <element signature="e#548#549#0" expanded="true" />
-            <element signature="e#572#573#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/customviews/ShowExamImageDialog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="47" column="19" selection-start-line="47" selection-start-column="19" selection-end-line="47" selection-end-column="19" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1871#2054#0" expanded="true" />
-            <element signature="e#2053#2054#0" expanded="true" />
-            <element signature="e#2898#3132#0" expanded="true" />
-            <element signature="e#3131#3132#0" expanded="true" />
+            <element signature="e#1470#1669#0" expanded="true" />
+            <element signature="e#1668#1669#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/ExamDetailTypeARecyclerAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="35" column="59" selection-start-line="35" selection-start-column="51" selection-end-line="35" selection-end-column="59" />
+        <state relative-caret-position="198">
+          <caret line="59" column="24" lean-forward="true" selection-start-line="59" selection-start-column="24" selection-end-line="59" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/ExamAdviceExpandableListAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="87" column="48" selection-start-line="87" selection-start-column="48" selection-end-line="87" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/MyExamActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1114">
+          <caret line="110" selection-start-line="110" selection-end-line="110" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/customviews/ConditionPopupWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="217">
+          <caret line="162" column="44" selection-start-line="162" selection-start-column="32" selection-end-line="162" selection-end-column="44" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2438#2439#0" expanded="true" />
+            <element signature="e#2480#2481#0" expanded="true" />
+            <element signature="e#2744#2745#0" expanded="true" />
+            <element signature="e#2794#2795#0" expanded="true" />
+            <element signature="e#2859#2860#0" expanded="true" />
+            <element signature="e#2898#2899#0" expanded="true" />
+            <element signature="e#5489#7584#0" expanded="true" />
+            <element signature="e#7583#7584#0" expanded="true" />
+            <element signature="e#7628#7875#0" expanded="true" />
+            <element signature="e#7874#7875#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/ExamOrderFormRecyclerAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-570">
+          <caret line="60" column="50" selection-start-line="60" selection-start-column="46" selection-end-line="60" selection-end-column="50" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#5979#6178#0" expanded="true" />
+            <element signature="e#6177#6178#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/fragments/ExamOrderFormFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1545">
+          <caret line="200" column="55" selection-start-line="200" selection-start-column="55" selection-end-line="200" selection-end-column="55" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3560#3561#0" expanded="true" />
+            <element signature="e#3613#3614#0" expanded="true" />
+            <element signature="e#3675#3676#0" expanded="true" />
+            <element signature="e#3740#3741#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/utils/CallBackDataAuth.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="587">
+          <caret line="80" column="49" selection-start-line="80" selection-start-column="23" selection-end-line="80" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/combo_detail_model_a_layout.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="13" column="44" selection-start-line="13" selection-start-column="29" selection-end-line="13" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/ComboDetailActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="203" column="57" selection-start-line="203" selection-start-column="57" selection-end-line="203" selection-end-column="57" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_combo_detail.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="317">
+          <caret line="25" column="55" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/affirm_appointment_model_a_layout.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="21" column="51" selection-start-line="21" selection-start-column="51" selection-end-line="21" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_affirm_appointment.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="317">
+          <caret line="26" column="65" selection-start-line="26" selection-start-column="32" selection-end-line="26" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/AffirmAppointmentActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="443">
+          <caret line="98" column="59" selection-start-line="98" selection-start-column="32" selection-end-line="98" selection-end-column="59" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4023#7159#0" expanded="true" />
+            <element signature="e#7158#7159#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_intelligent_check.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="279">
+          <caret line="89" column="20" selection-start-line="89" selection-start-column="20" selection-end-line="89" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/IntelligentCheckActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="563">
+          <caret line="84" column="90" selection-start-line="84" selection-start-column="90" selection-end-line="84" selection-end-column="90" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/ExamReportDetailActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="56" selection-start-line="56" selection-end-line="56" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/ExamDetailsActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="519">
+          <caret line="154" column="13" selection-start-line="154" selection-start-column="13" selection-end-line="154" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4035#4177#0" expanded="true" />
+            <element signature="e#4176#4177#0" expanded="true" />
+            <element signature="e#5698#6720#0" expanded="true" />
+            <element signature="e#7112#8121#0" expanded="true" />
+            <element signature="e#8120#8121#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/model/datamodel/childmodelb/UserExamDetail.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="12" column="18" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2293#2294#0" expanded="true" />
+            <element signature="e#2330#2331#0" expanded="true" />
+            <element signature="e#2391#2392#0" expanded="true" />
+            <element signature="e#2443#2444#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/GlobalConstant.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="411">
+          <caret line="23" column="90" selection-start-line="23" selection-start-column="51" selection-end-line="23" selection-end-column="90" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/network/NetService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="155" column="71" selection-start-line="155" selection-start-column="58" selection-end-line="155" selection-end-column="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/ai_assistant_list_bg_layout.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="608">
+          <caret line="32" column="54" selection-start-line="32" selection-start-column="54" selection-end-line="32" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/ai_assistant_item_layout.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="41" column="37" selection-start-line="41" selection-start-column="29" selection-end-line="41" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/ai_assistant_main_page_item_layout.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="7" column="47" selection-start-line="7" selection-start-column="25" selection-end-line="7" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/ExamOrderFormActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="428">
+          <caret line="110" column="84" selection-start-line="110" selection-start-column="75" selection-end-line="110" selection-end-column="84" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/model/datamodel/childmodela/Order.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/model/datamodel/AssistantItem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="7" column="17" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/model/datamodel/Order.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="722">
+          <caret line="50" column="18" selection-start-line="50" selection-start-column="18" selection-end-line="50" selection-end-column="18" />
+          <folding>
+            <element signature="e#996#997#0" expanded="true" />
+            <element signature="e#1029#1030#0" expanded="true" />
+            <element signature="e#1081#1082#0" expanded="true" />
+            <element signature="e#1125#1126#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/AIAssistantSubRecyclerView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="101">
+          <caret line="80" column="38" selection-start-line="80" selection-start-column="38" selection-end-line="80" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/HeaderIconActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="50" column="35" lean-forward="true" selection-start-line="50" selection-start-column="35" selection-end-line="50" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/EstimateOrderActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/ai_assistant_no_content_layout.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="11" column="54" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/AIAssistantRecyclerAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="234" column="74" selection-start-line="234" selection-start-column="74" selection-end-line="234" selection-end-column="74" />
+          <folding>
+            <element signature="e#3959#4126#0" expanded="true" />
+            <element signature="e#4125#4126#0" expanded="true" />
+            <element signature="e#11566#11725#0" expanded="true" />
+            <element signature="e#11724#11725#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/BarADActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="85" column="57" selection-start-line="85" selection-start-column="57" selection-end-line="85" selection-end-column="57" />
+          <folding>
+            <element signature="e#2816#2958#0" expanded="true" />
+            <element signature="e#2957#2958#0" expanded="true" />
+            <element signature="e#5277#5278#0" expanded="true" />
+            <element signature="e#5324#5325#0" expanded="true" />
+            <element signature="e#5389#5390#0" expanded="true" />
+            <element signature="e#5443#5444#0" expanded="true" />
+            <element signature="e#5508#5509#0" expanded="true" />
+            <element signature="e#5547#5548#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="715">
-          <caret line="90" column="57" selection-start-line="90" selection-start-column="57" selection-end-line="90" selection-end-column="57" />
+        <state relative-caret-position="570">
+          <caret line="90" column="39" selection-start-line="90" selection-start-column="31" selection-end-line="90" selection-end-column="39" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/single_text_layout.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="6" column="34" selection-start-line="6" selection-start-column="25" selection-end-line="6" selection-end-column="34" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_bar_ad.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/ai_assistant_no_content_layout.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state />
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/customviews/MyRecyclerView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="106">
-          <caret line="24" selection-start-line="24" selection-end-line="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/AIAssistantRecyclerAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="461">
-          <caret line="113" column="84" lean-forward="true" selection-start-line="113" selection-start-column="84" selection-end-line="113" selection-end-column="84" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#9582#10901#0" expanded="true" />
-            <element signature="e#10900#10901#0" expanded="true" />
-            <element signature="e#11074#11075#0" expanded="true" />
-            <element signature="e#11110#11111#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/fragments/MainPageFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="415" selection-start-line="415" selection-end-line="415" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#8570#8810#0" expanded="true" />
-            <element signature="e#8809#8810#0" expanded="true" />
-            <element signature="e#16581#16582#0" expanded="true" />
-            <element signature="e#16661#16662#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="469">
-          <caret line="84" column="48" lean-forward="true" selection-start-line="84" selection-start-column="48" selection-end-line="84" selection-end-column="48" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/HomePageActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="779">
-          <caret line="83" column="39" selection-start-line="83" selection-start-column="39" selection-end-line="83" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2388#2614#0" expanded="true" />
-            <element signature="e#2613#2614#0" expanded="true" />
-            <element signature="e#2662#2888#0" expanded="true" />
-            <element signature="e#2887#2888#0" expanded="true" />
-            <element signature="e#2934#3160#0" expanded="true" />
-            <element signature="e#3159#3160#0" expanded="true" />
-            <element signature="e#3206#3432#0" expanded="true" />
-            <element signature="e#3431#3432#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/model/datamodel/ExamItem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-          <folding>
-            <element signature="e#309#310#0" expanded="true" />
-            <element signature="e#336#337#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/model/datamodel/childmodelb/ExamItem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
-          <caret line="2" column="23" selection-start-line="2" selection-start-column="23" selection-end-line="2" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/expandable_other_item_header_layout.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state />
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/OtherSelectionExpandableListViewAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="392">
-          <caret line="75" column="13" lean-forward="true" selection-start-line="75" selection-start-column="13" selection-end-line="75" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/ExamItemExpandableListViewAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="453">
-          <caret line="70" selection-start-line="70" selection-end-line="70" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/ComboDetailActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="99" column="63" selection-start-line="99" selection-start-column="27" selection-end-line="99" selection-end-column="63" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#6567#10086#0" expanded="true" />
-            <element signature="e#10085#10086#0" expanded="true" />
-            <element signature="e#10139#10530#0" expanded="true" />
-            <element signature="e#10529#10530#0" expanded="true" />
-            <element signature="e#10598#10905#0" expanded="true" />
-            <element signature="e#10904#10905#0" expanded="true" />
-            <element signature="e#12705#12847#0" expanded="true" />
-            <element signature="e#12846#12847#0" expanded="true" />
-            <element signature="e#12895#13837#0" expanded="true" />
-            <element signature="e#13836#13837#0" expanded="true" />
-            <element signature="e#15714#15864#0" expanded="true" />
-            <element signature="e#15863#15864#0" expanded="true" />
-            <element signature="e#16068#16069#0" expanded="true" />
-            <element signature="e#16115#16116#0" expanded="true" />
-            <element signature="e#16180#16181#0" expanded="true" />
-            <element signature="e#16234#16235#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/expandable_exam_item_child_layout.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="16" column="31" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/expandable_exam_item_header_layout.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="28" column="40" selection-start-line="28" selection-start-column="40" selection-end-line="28" selection-end-column="40" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_combo_detail.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="602">
-          <caret line="69" column="55" selection-start-line="69" selection-start-column="29" selection-end-line="69" selection-end-column="55" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/combo_detail_model_b_layout.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="47" column="39" selection-start-line="47" selection-start-column="29" selection-end-line="47" selection-end-column="39" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/affirm_appointment_model_a_layout.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="704">
-          <caret line="57" column="38" selection-start-line="57" selection-start-column="38" selection-end-line="57" selection-end-column="38" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/affirm_appointment_model_b_layout.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="590">
-          <caret line="57" column="53" selection-start-line="57" selection-start-column="33" selection-end-line="57" selection-end-column="53" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_affirm_appointment.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="26" column="65" selection-start-line="26" selection-start-column="32" selection-end-line="26" selection-end-column="65" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/GlobalConstant.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="411">
-          <caret line="30" column="87" selection-start-line="30" selection-start-column="87" selection-end-line="30" selection-end-column="87" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/exam_person_item_layout.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="7" column="52" selection-start-line="7" selection-start-column="25" selection-end-line="7" selection-end-column="52" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/adapters/AffirmAppointmentExamPersonAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="71" column="65" selection-start-line="71" selection-start-column="65" selection-end-line="71" selection-end-column="65" />
-          <folding>
-            <element signature="e#2288#3138#0" expanded="true" />
-            <element signature="e#3137#3138#0" expanded="true" />
-            <element signature="e#3216#3539#0" expanded="true" />
-            <element signature="e#3538#3539#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_add_family.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="412">
-          <caret line="104" column="62" selection-start-line="97" selection-start-column="12" selection-end-line="104" selection-end-column="62" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/AffirmAppointmentActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="714">
-          <caret line="308" column="62" selection-start-line="308" selection-start-column="57" selection-end-line="308" selection-end-column="62" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#5517#8938#0" expanded="true" />
-            <element signature="e#8937#8938#0" expanded="true" />
-            <element signature="e#11509#11510#0" expanded="true" />
-            <element signature="e#11554#11555#0" expanded="true" />
-            <element signature="e#11825#11826#0" expanded="true" />
-            <element signature="e#11858#11859#0" expanded="true" />
-            <element signature="e#13404#13750#0" expanded="true" />
-            <element signature="e#13749#13750#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/fragments/AddFamilyFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="174" column="112" selection-start-line="174" selection-start-column="18" selection-end-line="174" selection-end-column="112" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#5935#6816#0" expanded="true" />
-            <element signature="e#6162#6583#0" expanded="true" />
-            <element signature="e#6582#6583#0" expanded="true" />
-            <element signature="e#6815#6816#0" expanded="true" />
-            <element signature="e#14942#15694#0" expanded="true" />
-            <element signature="e#15693#15694#0" expanded="true" />
-            <element signature="e#15772#16385#0" expanded="true" />
-            <element signature="e#16384#16385#0" expanded="true" />
-            <element signature="e#18377#19377#0" expanded="true" />
-            <element signature="e#19376#19377#0" expanded="true" />
-            <element signature="e#20234#20387#0" expanded="true" />
-            <element signature="e#20386#20387#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_families_details.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="239" column="45" selection-start-line="239" selection-start-column="29" selection-end-line="239" selection-end-column="45" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/chengsheng/cala/htcm/views/activitys/FamiliesDetailsActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="273" column="49" selection-start-line="273" selection-start-column="49" selection-end-line="273" selection-end-column="49" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#7093#7512#0" expanded="true" />
-            <element signature="e#7511#7512#0" expanded="true" />
-            <element signature="e#9829#10236#0" expanded="true" />
-            <element signature="e#10235#10236#0" expanded="true" />
-            <element signature="e#27287#27679#0" expanded="true" />
-            <element signature="e#27678#27679#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="110">
+          <caret line="22" column="43" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="43" />
         </state>
       </provider>
     </entry>

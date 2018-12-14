@@ -31,6 +31,7 @@ import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
 import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
 import com.chengsheng.cala.htcm.utils.FuncUtils;
+import com.chengsheng.cala.htcm.views.activitys.BarADActivity;
 import com.chengsheng.cala.htcm.views.activitys.BarCodeActivity;
 import com.chengsheng.cala.htcm.views.activitys.ExamDetailsActivity;
 import com.chengsheng.cala.htcm.views.activitys.UserCardActivity;
@@ -103,6 +104,8 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
                     removeData(i);
                 }
             });
+
+            viewHolder.itemBigNotes.setText("您预约了"+data.getCustomer().getReservation_or_registration().getDate()+"的体检");
 
             viewHolder.aiAssistantItem.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -192,13 +195,14 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
 
             viewHolder.userNameAIAssistant.setText(data.getCustomer().getName());
             viewHolder.userHeaderIconAIAssistant.setImageURI(data.getCustomer().getAvatar());
-            viewHolder.examNum.setText("体检号：" + data.getOrder().getId());
+
 
             if (data.getOrder().getExam_status().equals(GlobalConstant.RESERVATION)) {
                 viewHolder.userBitmapMark.setImageResource(R.mipmap.erweima);
-
+                viewHolder.examNum.setText("预约号：" + data.getOrder().getId());
             } else {
                 viewHolder.userBitmapMark.setImageResource(R.mipmap.tianxingma);
+                viewHolder.examNum.setText("体检号：" + data.getOrder().getId());
             }
 
             viewHolder.userBitmapMark.setOnClickListener(new View.OnClickListener() {
@@ -224,6 +228,15 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
             });
         } else if(datas.isEmpty() && type == -1){
             viewHolder.textMark.setText(error);
+        }else if(datas.isEmpty() && type == 0){
+            viewHolder.aiAssistantGroupDetail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context,BarADActivity.class);
+                    intent.putExtra("NUM",1);
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 
@@ -244,6 +257,7 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
 
     public class AssistantViewHolder extends RecyclerView.ViewHolder {
         RelativeLayout aiAssistantItem;
+        RelativeLayout aiAssistantGroupDetail;
         SimpleDraweeView userHeaderIconAIAssistant;
         TextView userNameAIAssistant;
         TextView examNum;
@@ -276,6 +290,8 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
             showWaitNum = itemView.findViewById(R.id.show_wait_num);
 
             textMark = itemView.findViewById(R.id.text_mark);
+
+            aiAssistantGroupDetail = itemView.findViewById(R.id.ai_assistant_group_detail);
         }
     }
 

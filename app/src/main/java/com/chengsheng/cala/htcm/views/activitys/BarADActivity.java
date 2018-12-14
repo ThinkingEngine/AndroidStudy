@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.chengsheng.cala.htcm.BaseActivity;
 import com.chengsheng.cala.htcm.R;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -28,7 +29,7 @@ public class BarADActivity extends BaseActivity {
     private ImageView back;
     private TextView title;
     private ImageView childTitle;
-//    private SimpleDraweeView ad;
+    private ImageView ad;
     private ListView listView;
     private Dialog dialog;
     private View dialogView;
@@ -57,8 +58,8 @@ public class BarADActivity extends BaseActivity {
         back = findViewById(R.id.title_header_bar_ad).findViewById(R.id.back_login);
         title = findViewById(R.id.title_header_bar_ad).findViewById(R.id.menu_bar_title);
         childTitle = findViewById(R.id.title_header_bar_ad).findViewById(R.id.search_button);
-//        ad = findViewById(R.id.bar_ad);
-        listView = findViewById(R.id.bar_ad_listview);
+        ad = findViewById(R.id.ad_bar_image);
+//        listView = findViewById(R.id.bar_ad_listview);
 
         childTitle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +83,8 @@ public class BarADActivity extends BaseActivity {
 
         childTitle.setImageResource(R.mipmap.fenxiang);
         title.setText(ad_name[adNum]);
-        listView.setAdapter(new BARBaseAdapter(ad_address[adNum]));
+        Glide.with(this).load(ad_address[adNum]).into(ad);
+//        listView.setAdapter(new BARBaseAdapter(ad_address[adNum]));
 
     }
 

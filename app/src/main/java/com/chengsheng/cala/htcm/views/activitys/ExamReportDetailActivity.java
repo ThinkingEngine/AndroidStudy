@@ -1,10 +1,7 @@
 package com.chengsheng.cala.htcm.views.activitys;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +16,8 @@ import com.chengsheng.cala.htcm.views.adapters.ExamAdviceExpandableListAdapter;
 import com.chengsheng.cala.htcm.views.adapters.ExamResultRecyclerAdapter;
 import com.chengsheng.cala.htcm.views.customviews.MyExpandableListView;
 import com.chengsheng.cala.htcm.views.customviews.MyRecyclerView;
+import com.zyao89.view.zloading.ZLoadingDialog;
+import com.zyao89.view.zloading.Z_TYPE;
 
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -36,54 +35,31 @@ public class ExamReportDetailActivity extends BaseActivity {
     private MyRecyclerView examResultList;
 
     private Retrofit retrofit;
+    private HTCMApp app;
+    private ZLoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        HTCMApp app = HTCMApp.create(getApplicationContext());
+        app = HTCMApp.create(getApplicationContext());
+        loadingDialog = new ZLoadingDialog(this);
+        loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
+        loadingDialog.setDialogBackgroundColor(getResources().getColor(R.color.colorText));
+        loadingDialog.setLoadingColor(getResources().getColor(R.color.colorPrimary));
+        loadingDialog.setHintText("加载中....");
+        loadingDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
+
         setContentView(R.layout.activity_exam_report_detail);
+
         Bundle bundle = getIntent().getExtras();
         String titleName  = bundle.getString(GlobalConstant.EXAM_REPORT_NAME);
         String orderID = bundle.getString(GlobalConstant.EXAM_REPORT_ID);
 
-        String url = "api/physical-exam-order/exam-result/"+orderID;
-        if(retrofit == null){
-            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
-        }
-        NetService service = retrofit.create(NetService.class);
-        service.getExamReportDetial(url,app.getTokenType()+" "+app.getAccessToken())
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableObserver<ExamReportDetial>() {
-                    @Override
-                    public void onNext(ExamReportDetial examReportDetial) {
-                        Log.e("TAG","请求成功:"+examReportDetial.toString());
-                        setViews(examReportDetial);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("TAG","请求失败:"+e.toString());
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-
         initViews();
+        getExamReportDetial(orderID);
 
         examReportDetailName.setText(titleName);
 
-
-//        abnormalTips.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(ExamReportDetailActivity.this,AbnormalUnscrambleActivity.class);
-//                startActivity(intent);
-//            }
-//        });
     }
 
     private void initViews(){
@@ -95,10 +71,10 @@ public class ExamReportDetailActivity extends BaseActivity {
         examAdvicesExpandable = findViewById(R.id.exam_advices_expandable);
         examResultList = findViewById(R.id.exam_result_list);
 
-        //examAdvicesExpandable.getWidth() - 10
         examAdvicesExpandable.setIndicatorBounds(examAdvicesExpandable.getWidth() - 140, 0);
         examAdvicesExpandable.setFocusable(false);
         examResultList.setNestedScrollingEnabled(false);
+
     }
 
     private void setViews(ExamReportDetial examReportDetial){
@@ -112,5 +88,37 @@ public class ExamReportDetailActivity extends BaseActivity {
         ExamResultRecyclerAdapter adapter1 = new ExamResultRecyclerAdapter(this,examReportDetial.getExam_item_result());
         examResultList.setLayoutManager(new LinearLayoutManager(this));
         examResultList.setAdapter(adapter1);
+        examAdvicesExpandable.expandGroup(0);
+    }
+
+    private void getExamReportDetial(String orderId){
+
+        if(retrofit == null){
+            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
+        }
+
+        loadingDialog.show();
+        NetService service = retrofit.create(NetService.class);
+        service.getExamReportDetial(GlobalConstant.EXAM_RESULT+orderId,app.getTokenType()+" "+app.getAccessToken())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableObserver<ExamReportDetial>() {
+                    @Override
+                    public void onNext(ExamReportDetial examReportDetial) {
+                        setViews(examReportDetial);
+                        loadingDialog.cancel();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.cancel();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        loadingDialog.cancel();
+                    }
+                });
+
     }
 }

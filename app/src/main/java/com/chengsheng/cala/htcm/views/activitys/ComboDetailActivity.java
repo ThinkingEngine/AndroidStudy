@@ -35,6 +35,7 @@ import com.chengsheng.cala.htcm.network.NetService;
 import com.chengsheng.cala.htcm.views.adapters.ExamItemExpandableListViewAdapter;
 import com.chengsheng.cala.htcm.views.customviews.MyExpandableListView;
 import com.chengsheng.cala.htcm.views.customviews.TextViewBorder;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagFlowLayout;
 import com.zyao89.view.zloading.ZLoadingDialog;
@@ -61,6 +62,7 @@ public class ComboDetailActivity extends BaseActivity {
     private ImageView comboHotMark;
     private TagFlowLayout comboMarks;
     private TextView groupName, groupMark, groupTel, groupAddress;
+    private SimpleDraweeView mainPageImage;
     //    private GridView keyIllnessScreeningItem;
     private TextView comboBriefText;
     private TextView userNeedNote;
@@ -79,163 +81,36 @@ public class ComboDetailActivity extends BaseActivity {
             R.mipmap.fuzhilianjie};
 
     private boolean isCollect = false;
+    private Retrofit retrofit;
+    private HTCMApp app;
     private ZLoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        final HTCMApp app = HTCMApp.create(this);
+        app = HTCMApp.create(getApplicationContext());
         loadingDialog = new ZLoadingDialog(this);
         loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
         loadingDialog.setDialogBackgroundColor(getResources().getColor(R.color.colorText));
         loadingDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
         loadingDialog.setLoadingColor(getResources().getColor(R.color.colorPrimary));
+
+        id = getIntent().getStringExtra("COMBO_ID");
+
         setContentView(R.layout.activity_combo_detail);
 
         initViews();
+        checkCollectStatus();
+        getComboDetail();
 
-
-        id = getIntent().getStringExtra("COMBO_ID");
-        String comboID = "/" + id;
-        String comboUrl = "api/physical-exam-item/exam-packages" + comboID;
-        String comboUrlIsCollect = "api/physical-exam-item/collector/exam-packages" + comboID;
-        final String cancelCollectUrl = "api/physical-exam-item/collector/exam-packages" + comboID;
-
-        final MyRetrofit myRetrofit = MyRetrofit.createInstance();
-        Retrofit collectRetrofit = myRetrofit.createURL(GlobalConstant.API_BASE_URL);
-        Retrofit retrofit = myRetrofit.createURL(GlobalConstant.API_BASE_URL);
-        NetService service = retrofit.create(NetService.class);
-        NetService service1 = collectRetrofit.create(NetService.class);
-        service1.checkIsCollect(comboUrlIsCollect, app.getTokenType() + " " + app.getAccessToken())
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableObserver<ResponseBody>() {
-                    @Override
-                    public void onNext(ResponseBody responseBody) {
-                        try {
-                            String str = responseBody.string();
-                            if (str.contains("true")) {
-                                collect.setSelected(true);
-                                isCollect = true;
-                            } else {
-                                collect.setSelected(false);
-                                isCollect = false;
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-
-
-        loadingDialog.setHintText("加载中....");
-        loadingDialog.show();
-        examItemComboExpandable.setFocusable(false);
-        service.getCombonDetail(comboUrl, app.getTokenType() + " " + app.getAccessToken())
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableObserver<AppointmentDetail>() {
-                    @Override
-                    public void onNext(AppointmentDetail appointmentDetail) {
-                        setViews(appointmentDetail);
-                        ExamItemExpandableListViewAdapter adapter = new ExamItemExpandableListViewAdapter(ComboDetailActivity.this, appointmentDetail.getExam_items());
-                        examItemComboExpandable.setAdapter(adapter);
-                        examItemComboExpandable.setIndicatorBounds(examItemComboExpandable.getWidth() - 140, examItemComboExpandable.getWidth() - 10);
-                        Log.e("TEST", appointmentDetail.toString());
-                        loadingDialog.cancel();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("TEST", "ComboDetail onError!" + e);
-                        loadingDialog.cancel();
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
         //收藏按钮
         collect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (isCollect) {
-                    //取消收藏
-                    isCollect = false;
-                    collect.setSelected(false);
-
-                    loadingDialog.setHintText("加载中.....");
-                    loadingDialog.show();
-                    Retrofit cancelCollect = myRetrofit.createURL(GlobalConstant.API_BASE_URL);
-                    NetService cancelCollectService = cancelCollect.create(NetService.class);
-                    cancelCollectService.cancelCollect(cancelCollectUrl, app.getTokenType() + " " + app.getAccessToken())
-                            .subscribeOn(Schedulers.newThread())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new DisposableObserver<ResponseBody>() {
-                                @Override
-                                public void onNext(ResponseBody o) {
-                                    loadingDialog.cancel();
-                                    Toast.makeText(ComboDetailActivity.this, "取消收藏成功", Toast.LENGTH_SHORT).show();
-                                }
-
-                                @Override
-                                public void onError(Throwable e) {
-                                    loadingDialog.cancel();
-                                    Toast.makeText(ComboDetailActivity.this, "取消收藏失败", Toast.LENGTH_SHORT).show();
-                                    isCollect = true;
-                                    collect.setSelected(true);
-                                }
-
-                                @Override
-                                public void onComplete() {
-
-                                }
-                            });
-
-                } else {
-                    //收藏
-                    isCollect = true;
-                    collect.setSelected(true);
-                    Retrofit collectRetrofit = myRetrofit.createURL(GlobalConstant.API_BASE_URL);
-                    NetService serviceCollect = collectRetrofit.create(NetService.class);
-
-                    loadingDialog.setHintText("正在收藏");
-                    loadingDialog.show();
-                    serviceCollect.collectCombo(cancelCollectUrl, app.getTokenType() + " " + app.getAccessToken())
-                            .subscribeOn(Schedulers.newThread())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new DisposableObserver<ResponseBody>() {
-                                @Override
-                                public void onNext(ResponseBody o) {
-                                    loadingDialog.cancel();
-                                    Toast.makeText(ComboDetailActivity.this, "收藏成功", Toast.LENGTH_SHORT).show();
-                                }
-
-                                @Override
-                                public void onError(Throwable e) {
-                                    loadingDialog.cancel();
-                                    Toast.makeText(ComboDetailActivity.this, "收藏失败:" + "原因" + e, Toast.LENGTH_SHORT).show();
-                                    isCollect = false;
-                                    collect.setSelected(false);
-                                }
-
-                                @Override
-                                public void onComplete() {
-
-                                }
-                            });
+                if(isCollect){
+                    cancelCollect();
+                }else{
+                    collectCombo();
                 }
             }
         });
@@ -276,6 +151,7 @@ public class ComboDetailActivity extends BaseActivity {
         examItemComboExpandable = findViewById(R.id.exam_item_combo_expandable);
         comboNameDetail = findViewById(R.id.model_a).findViewById(R.id.combo_name_detail);//套餐名称
         comboPrice = findViewById(R.id.model_a).findViewById(R.id.combo_price);//套餐价格
+        mainPageImage = findViewById(R.id.model_a).findViewById(R.id.main_page_image);
         comboHasNum = findViewById(R.id.combo_has_num).findViewById(R.id.combo_has_num);//套餐实际人数
         comboHotMark = findViewById(R.id.model_a).findViewById(R.id.combo_hot_mark);//套餐是否为热点
         comboMarks = findViewById(R.id.model_a).findViewById(R.id.combo_marks);
@@ -325,6 +201,7 @@ public class ComboDetailActivity extends BaseActivity {
         Organization organization = datas.getOrganization();
 
         comboNameDetail.setText(datas.getName());
+        mainPageImage.setImageURI(datas.getBanner_photo());
         if (datas.isIs_hot()) {
             comboHotMark.setVisibility(View.VISIBLE);
         } else {
@@ -335,7 +212,7 @@ public class ComboDetailActivity extends BaseActivity {
 
         userNeedNote.setText(datas.getExam_notice());
         comboBriefText.setText(datas.getIntro());
-        examItemComboNum.setText("("+datas.getExam_items().size()+")");
+        examItemComboNum.setText("(" + datas.getExam_items().size() + ")");
 
         groupName.setText(organization.getName());
         if (organization.getQualification().equals("")) {
@@ -383,6 +260,155 @@ public class ComboDetailActivity extends BaseActivity {
         ShareAdapter adapter = new ShareAdapter();
         gridView.setAdapter(adapter);
 
+
+    }
+
+    //获取套餐详情.
+    private void getComboDetail() {
+        if (retrofit == null) {
+            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
+        }
+
+        NetService service = retrofit.create(NetService.class);
+        loadingDialog.setHintText("加载中....");
+        loadingDialog.show();
+        examItemComboExpandable.setFocusable(false);
+        service.getCombonDetail(GlobalConstant.EXAM_PACKAGES + id, app.getTokenType() + " " + app.getAccessToken())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableObserver<AppointmentDetail>() {
+                    @Override
+                    public void onNext(AppointmentDetail appointmentDetail) {
+                        setViews(appointmentDetail);
+                        ExamItemExpandableListViewAdapter adapter = new ExamItemExpandableListViewAdapter(ComboDetailActivity.this, appointmentDetail.getExam_items());
+                        examItemComboExpandable.setAdapter(adapter);
+                        examItemComboExpandable.setIndicatorBounds(examItemComboExpandable.getWidth() - 140, examItemComboExpandable.getWidth() - 10);
+                        Log.e("TEST", appointmentDetail.toString());
+                        loadingDialog.cancel();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("TEST", "ComboDetail onError!" + e);
+                        loadingDialog.cancel();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    //收藏套餐
+    private void collectCombo() {
+        if (retrofit == null) {
+            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
+        }
+
+        loadingDialog.setHintText("加载中.....");
+        loadingDialog.show();
+        NetService service = retrofit.create(NetService.class);
+        service.collectCombo(GlobalConstant.COLLECT_EXAM_PACKAGES + id, app.getTokenType() + " " + app.getAccessToken())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableObserver<ResponseBody>() {
+                    @Override
+                    public void onNext(ResponseBody o) {
+                        loadingDialog.cancel();
+                        Toast.makeText(ComboDetailActivity.this, "收藏成功", Toast.LENGTH_SHORT).show();
+                        isCollect = true;
+                        collect.setSelected(isCollect);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.cancel();
+
+                        Toast.makeText(ComboDetailActivity.this, "收藏失败", Toast.LENGTH_SHORT).show();
+
+//                        collect.setSelected(true);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+    //取消套餐收藏
+    private void cancelCollect(){
+        if(retrofit == null){
+            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
+        }
+        loadingDialog.setHintText("加载中.....");
+        loadingDialog.show();
+        NetService service = retrofit.create(NetService.class);
+        service.cancelCollect(GlobalConstant.COLLECT_EXAM_PACKAGES + id, app.getTokenType() + " " + app.getAccessToken())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableObserver<ResponseBody>() {
+                    @Override
+                    public void onNext(ResponseBody o) {
+                        loadingDialog.cancel();
+                        Toast.makeText(ComboDetailActivity.this, "取消收藏成功", Toast.LENGTH_SHORT).show();
+                        isCollect = false;
+                        collect.setSelected(isCollect);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.cancel();
+
+                        Toast.makeText(ComboDetailActivity.this, "取消收藏失败", Toast.LENGTH_SHORT).show();
+
+//                        collect.setSelected(true);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+    }
+
+    //检查套餐收藏状态.
+    private void checkCollectStatus() {
+        if (retrofit == null) {
+            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
+        }
+        NetService service = retrofit.create(NetService.class);
+        service.checkIsCollect(GlobalConstant.COLLECT_EXAM_PACKAGES + id, app.getTokenType() + " " + app.getAccessToken())
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableObserver<ResponseBody>() {
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        try {
+                            String str = responseBody.string();
+                            if (str.contains("true")) {
+                                collect.setSelected(true);
+                                isCollect = true;
+                            } else {
+                                collect.setSelected(false);
+                                isCollect = false;
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
 
     }
 

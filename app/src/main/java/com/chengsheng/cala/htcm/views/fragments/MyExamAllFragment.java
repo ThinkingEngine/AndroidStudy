@@ -35,7 +35,7 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
 
-public class MyExamAllFragment extends Fragment implements UpdateStateInterface,UpdateConditionInterface {
+public class MyExamAllFragment extends Fragment implements UpdateStateInterface, UpdateConditionInterface {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -48,12 +48,13 @@ public class MyExamAllFragment extends Fragment implements UpdateStateInterface,
     private Retrofit retrofit;
 
     private int currentPage = 1;
+    private int totlaPage = 0;
     private List<ExamItems> dataCollect;
     private MyExamRecyclerAdapter adapter;
 
     private XRecyclerView all;
 
-    private String currentMode = "all";
+    private String currentMode = "";
     private String customerIds = "";
 
     private ZLoadingDialog loadingDialog;
@@ -97,54 +98,29 @@ public class MyExamAllFragment extends Fragment implements UpdateStateInterface,
         all = rootViews.findViewById(R.id.my_exam_all_state);
 
         if (mParam1.equals("全部")) {
-            updateData(true);
+            currentMode = "valid";
         } else if (mParam1.equals("待体检")) {
             currentMode = "reservation";
-            getDataByMode("reservation");
+
         } else if (mParam1.equals("体检中")) {
             currentMode = "checking";
-            getDataByMode("checking");
         } else {
-            currentMode = "cancel";
-            getDataByMode("cancel");
+            currentMode = "checked";
         }
 
+        updateData(true, currentMode, "", false);
         all.setLoadingMoreEnabled(true);
+
         all.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
-                updateData(false);
+//                updateData(false);
+                updateData(false, currentMode, "", false);
             }
 
             @Override
             public void onLoadMore() {
-                NetService service = retrofit.create(NetService.class);
-                currentPage++;
-                if (currentMode.equals("all")) {
-                    service.getExamListMore(mParam2, String.valueOf(currentPage))
-                            .subscribeOn(Schedulers.newThread())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new DisposableObserver<ExamItemsList>() {
-                                @Override
-                                public void onNext(ExamItemsList examItemsList) {
-                                    dataCollect.addAll(examItemsList.getItems());
-                                    adapter.notifyDataSetChanged();
-                                    all.loadMoreComplete();
-                                }
-
-                                @Override
-                                public void onError(Throwable e) {
-                                    all.loadMoreComplete();
-                                }
-
-                                @Override
-                                public void onComplete() {
-                                    all.loadMoreComplete();
-                                }
-                            });
-                } else {
-                    getDataByModeMore(currentMode);
-                }
+                updateData(false, currentMode, "", true);
             }
         });
 
@@ -176,26 +152,26 @@ public class MyExamAllFragment extends Fragment implements UpdateStateInterface,
 
     @Override
     public void updateServiceMessage(boolean status) {
-        if (status) {
-            updateData(true);
-        }
+//        if (status) {
+//            updateData(true);
+//        }
     }
 
     @Override
     public void selectCondition(List<Map<String, String>> datas, boolean update) {
-        if(update){
+        if (update) {
             StringBuffer sb = new StringBuffer();
-            for(Map<String,String> data:datas){
-                if(datas.get(datas.size()-1) == data){
+            for (Map<String, String> data : datas) {
+                if (datas.get(datas.size() - 1) == data) {
                     sb.append(data.get("ID"));
-                }else{
-                    sb.append(data.get("ID")+",");
+                } else {
+                    sb.append(data.get("ID") + ",");
                 }
-                Log.e("TAG","获取数据为:"+data.get("DATA"));
+                Log.e("TAG", "获取数据为:" + data.get("DATA"));
             }
             customerIds = sb.toString();
-            updateData(true);
-            Log.e("TAG","获取数据测试:"+sb.toString());
+//            updateData(true);
+            Log.e("TAG", "获取数据测试:" + sb.toString());
         }
     }
 
@@ -203,17 +179,22 @@ public class MyExamAllFragment extends Fragment implements UpdateStateInterface,
         void onFragmentInteraction(Uri uri);
     }
 
-    private void updateData(final boolean loading) {
+    private void updateData(final boolean loading, String mode, String customerIds, final boolean addPage) {
         if (retrofit == null) {
             retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
+        }
+
+        if (addPage) {
+           currentPage++;
+        }else{
+            currentPage = 1;
         }
         if (loading) {
             loadingDialog.show();
         }
-        all.refreshComplete();
+
         NetService service = retrofit.create(NetService.class);
-        Log.e("TAG","customerIds数据测试:"+customerIds);
-        service.getExamListFilter(mParam2,customerIds)
+        service.getExamListModeMode(mParam2, mode, String.valueOf(currentPage), customerIds)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableObserver<ExamItemsList>() {
@@ -221,10 +202,21 @@ public class MyExamAllFragment extends Fragment implements UpdateStateInterface,
                     public void onNext(ExamItemsList examItemsList) {
                         if (loading) {
                             loadingDialog.cancel();
+                        } else {
+                            all.refreshComplete();
                         }
-                        all.refreshComplete();
-                        Log.e("TAG","查询测试:"+examItemsList.toString());
-                        dataCollect = examItemsList.getItems();
+                        if(addPage){
+                            if(!examItemsList.getItems().isEmpty()){
+                                dataCollect.addAll(dataCollect.size(),examItemsList.getItems());
+                            }else{
+                                Toast.makeText(getContext(),"已无内容",Toast.LENGTH_SHORT).show();
+                                currentPage--;
+                            }
+
+                        }else{
+                            dataCollect = examItemsList.getItems();
+                        }
+
                         adapter = new MyExamRecyclerAdapter(getContext(), examItemsList.getItems());
                         adapter.notifyDataSetChanged();
                         all.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -236,79 +228,22 @@ public class MyExamAllFragment extends Fragment implements UpdateStateInterface,
                     public void onError(Throwable e) {
                         if (loading) {
                             loadingDialog.cancel();
+                        } else {
+                            all.refreshComplete();
                         }
-                        all.refreshComplete();
+
                     }
 
                     @Override
                     public void onComplete() {
                         if (loading) {
                             loadingDialog.cancel();
+                        } else {
+                            all.refreshComplete();
                         }
-                        all.refreshComplete();
                     }
                 });
     }
 
-    private void getDataByMode(String mode) {
-        if (retrofit == null) {
-            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
-        }
-        loadingDialog.show();
-        NetService service = retrofit.create(NetService.class);
-        service.getExamListMode(mParam2, mode,customerIds)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableObserver<ExamItemsList>() {
-                    @Override
-                    public void onNext(ExamItemsList examItemsList) {
-                        loadingDialog.cancel();
-                        dataCollect = examItemsList.getItems();
-                        adapter = new MyExamRecyclerAdapter(getContext(), examItemsList.getItems());
-                        adapter.notifyDataSetChanged();
-                        all.setLayoutManager(new LinearLayoutManager(getContext()));
-                        all.setAdapter(adapter);
-                    }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        loadingDialog.cancel();
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        loadingDialog.cancel();
-                    }
-                });
-    }
-
-    private void getDataByModeMore(String mode) {
-        NetService service = retrofit.create(NetService.class);
-        currentPage++;
-        if (currentMode.equals("all")) {
-            service.getExamListModeMode(mParam2, mode, String.valueOf(currentPage),customerIds)
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new DisposableObserver<ExamItemsList>() {
-                        @Override
-                        public void onNext(ExamItemsList examItemsList) {
-                            dataCollect.addAll(examItemsList.getItems());
-                            adapter.notifyDataSetChanged();
-                            all.loadMoreComplete();
-
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            all.loadMoreComplete();
-                        }
-
-                        @Override
-                        public void onComplete() {
-                            all.loadMoreComplete();
-                        }
-                    });
-        }
-
-    }
 }

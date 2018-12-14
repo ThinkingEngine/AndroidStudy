@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chengsheng.cala.htcm.R;
@@ -62,7 +63,7 @@ public class MineItemBaseAdapter extends BaseAdapter {
             holder.title = convertView.findViewById(R.id.mine_list_item_text);
             holder.input = convertView.findViewById(R.id.input_mine_item_icon);
             holder.cellphone = convertView.findViewById(R.id.service_cellphone_num);
-            holder.bottom = convertView.findViewById(R.id.mine_item_bottom_cut_off);
+            holder.mineItemBg = convertView.findViewById(R.id.mine_item_bg);
 
             convertView.setTag(holder);
         }else{
@@ -76,14 +77,14 @@ public class MineItemBaseAdapter extends BaseAdapter {
         }
 
         if(data.get("TYPE").equals("TEL")){
-            holder.cellphone.setText("028-05056666");
+            holder.cellphone.setText("400-028-3020");
             holder.input.setVisibility(View.INVISIBLE);
         }else{
             holder.cellphone.setVisibility(View.INVISIBLE);
         }
 
         if(position == dataList.size()-1){
-            holder.bottom.setVisibility(View.INVISIBLE);
+            holder.mineItemBg.setBackgroundColor(context.getResources().getColor(R.color.colorWhite));
         }
 
         holder.cellphone.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +94,7 @@ public class MineItemBaseAdapter extends BaseAdapter {
             }
         });
 
-        holder.input.setOnClickListener(new View.OnClickListener() {
+        holder.mineItemBg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(data.get("TITLE").equals("设置")){
@@ -144,6 +145,6 @@ public class MineItemBaseAdapter extends BaseAdapter {
         public TextView title;
         public ImageView input;
         public TextView cellphone;
-        public LinearLayout bottom;
+        public RelativeLayout mineItemBg;
     }
 }

@@ -136,7 +136,7 @@ public class FMRecyclerAdapter extends RecyclerView.Adapter<FMRecyclerAdapter.FM
     public class FMRViewHolder extends RecyclerView.ViewHolder{
         SimpleDraweeView peopleIcon;
         TextView peopleName;
-        Button peopleMark;
+        TextView peopleMark;
         Button immediatelyCertification;
         ImageView qcCode;
         TextView peopleID;

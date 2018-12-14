@@ -62,7 +62,12 @@ public class AIAssistantSubRecyclerView extends RecyclerView.Adapter<AIAssistant
     public void onBindViewHolder(@NonNull AIAssistantSubViewHolder viewHolder, final int i) {
         if (!datas.isEmpty()) {
             final AssistantItem data = datas.get(i);
+
             String stats = data.getOrder().getExam_status();
+
+            viewHolder.itemBigNotes.setText("您预约了"+data.getCustomer().getReservation_or_registration().getDate()+"的体检");
+            viewHolder.aiAssistantItemDate.setText(data.getOrder().getUpdated_at());
+
             if (data.getRecommend_exam_item().getExam_item_id() == 0) {
                 viewHolder.userNotifition.setVisibility(View.VISIBLE);
             } else {
@@ -137,13 +142,15 @@ public class AIAssistantSubRecyclerView extends RecyclerView.Adapter<AIAssistant
             viewHolder.userNameAiAssistant.setText(data.getCustomer().getName());
             viewHolder.aiAssistantItemDate.setText(data.getCustomer().getReservation_or_registration().getDate());
             viewHolder.userHeaderIconAiAssistant.setImageURI(data.getCustomer().getAvatar());
-            viewHolder.examNum.setText("体检号：" + data.getOrder().getId());
+
+
 
             if (data.getOrder().getExam_status().equals(GlobalConstant.RESERVATION)) {
                 viewHolder.userBitmapMark.setImageResource(R.mipmap.erweima);
-
+                viewHolder.examNum.setText("预约号：" + data.getOrder().getId());
             } else {
                 viewHolder.userBitmapMark.setImageResource(R.mipmap.tianxingma);
+                viewHolder.examNum.setText("体检号：" + data.getOrder().getId());
             }
 
             viewHolder.userBitmapMark.setOnClickListener(new View.OnClickListener() {

@@ -10,7 +10,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:text="2018-04-07 11:58"
         android:textColor="@color/colorThrText"
         android:textSize="12sp" />
 

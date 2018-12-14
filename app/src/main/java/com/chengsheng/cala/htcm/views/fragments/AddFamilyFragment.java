@@ -169,8 +169,15 @@ public class AddFamilyFragment extends Fragment {
                 DatePickerDialog timePickerDialog = new DatePickerDialog(getContext(), R.style.Theme_AppCompat_DayNight_Dialog_Alert, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        String current = FuncUtils.getCurrentTimeDay();
+                        String selectDate = year + "-" + (month + 1) + "-" + dayOfMonth;
+                        if(FuncUtils.isDate2Bigger(current,selectDate)){
+                            Toast.makeText(getContext(),"出生日期选择有误！请重新选择",Toast.LENGTH_SHORT).show();
+                            inputFamiliesAge.setText("");
+                        }else{
+                            inputFamiliesAge.setText(selectDate);
+                        }
 
-                        inputFamiliesAge.setText(year + "-" + (month + 1) + "-" + dayOfMonth);
                     }
                 },calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
                 timePickerDialog.show();

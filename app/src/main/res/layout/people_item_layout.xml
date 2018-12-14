@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPageBackground">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="14dp"
-        android:layout_marginRight="14dp"
         android:layout_marginTop="20dp"
+        android:layout_marginRight="14dp"
         android:background="@drawable/people_item_bg">
 
 
@@ -18,77 +18,78 @@
             android:id="@+id/people_icon"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_marginLeft="24dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginLeft="24dp"
             fresco:actualImageScaleType="fitCenter"
-            fresco:roundAsCircle="true"
-            fresco:backgroundImage="@mipmap/morentouxiang_wode"/>
+            fresco:backgroundImage="@mipmap/morentouxiang_wode"
+            fresco:roundAsCircle="true" />
 
         <TextView
             android:id="@+id/people_name_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="李凯旋"
-            android:textSize="20sp"
-            android:textColor="@color/colorBlackText"
-            android:layout_toRightOf="@id/people_icon"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="10dp"/>
+            android:layout_toRightOf="@id/people_icon"
+            android:textColor="@color/colorBlackText"
+            android:textSize="20sp" />
 
-        <Button
+        <TextView
             android:id="@+id/people_mark"
-            android:layout_width="36dp"
-            android:layout_height="16dp"
-            android:background="@drawable/orange_button_bg"
-            android:text="丈夫"
-            android:textColor="@color/colorWhite"
-            android:textSize="10sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="26dp"
             android:layout_toRightOf="@id/people_name_text"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="26dp"/>
+            android:background="@drawable/orange_button_bg"
+            android:gravity="center"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:textColor="@color/colorWhite"
+            android:textSize="10sp" />
 
         <TextView
             android:id="@+id/people_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginLeft="10dp"
             android:layout_below="@id/people_name_text"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="2dp"
             android:layout_toRightOf="@id/people_icon"
+            android:text="51162300066"
             android:textColor="@color/colorSecText"
-            android:textSize="16sp"
-            android:text="51162300066"/>
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/people_qr_code_mark"
             android:layout_width="28dp"
             android:layout_height="28dp"
-            android:src="@mipmap/erweima"
+            android:layout_alignParentRight="true"
             android:layout_marginTop="30dp"
             android:layout_marginRight="20dp"
-            android:layout_alignParentRight="true"/>
+            android:src="@mipmap/erweima" />
+
         <Button
             android:id="@+id/immediately_certification_button"
             android:layout_width="72dp"
             android:layout_height="28dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="14dp"
             android:background="@drawable/code_button_bg"
             android:text="@string/immediately_certification"
             android:textColor="@color/colorPrimary"
-            android:textSize="12sp"
-            android:layout_marginTop="30dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="14dp"/>
-
+            android:textSize="12sp" />
 
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/people_has_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/people_icon"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_below="@id/people_icon"
             android:layout_marginBottom="10dp"></android.support.v7.widget.RecyclerView>
 
     </RelativeLayout>

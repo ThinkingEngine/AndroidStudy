@@ -283,9 +283,9 @@ public class AddFamilyFragment extends Fragment {
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Bundle data) {
+    public void onButtonPressed(Bundle data,boolean isAdd) {
         if (mListener != null) {
-            mListener.onAddFamilyFragmentInteraction(data);
+            mListener.onAddFamilyFragmentInteraction(data,isAdd);
         }
     }
 
@@ -309,7 +309,7 @@ public class AddFamilyFragment extends Fragment {
 
     public interface OnAddFamilyFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onAddFamilyFragmentInteraction(Bundle bundle);
+        void onAddFamilyFragmentInteraction(Bundle bundle,boolean isAdd);
     }
 
 
@@ -532,9 +532,12 @@ public class AddFamilyFragment extends Fragment {
                     Log.e("UP", "添加家庭成员成功:" + responseBody.string());
                     Toast.makeText(getContext(), "添加家庭成员成功!", Toast.LENGTH_SHORT).show();
                     CallBackDataAuth.doAuthStateCallBack(true);
-                    Intent intent = new Intent(getContext(), HomePageActivity.class);
-                    getContext().startActivity(intent);
-                    getActivity().finish();
+//                    Intent intent = new Intent(getContext(), HomePageActivity.class);
+//                    getContext().startActivity(intent);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("STATE","manage");
+                    onButtonPressed(bundle,true);
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -553,6 +556,7 @@ public class AddFamilyFragment extends Fragment {
             }
         });
     }
+
 
     class TagAdapter extends com.zhy.view.flowlayout.TagAdapter<String> {
 

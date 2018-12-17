@@ -36,15 +36,14 @@ public class BarADActivity extends BaseActivity {
     private TranslateAnimation ta;
 
     private String[] ad_address = {"http://api.peis-mobile.zz-tech.com.cn:85/storage/banner/5159f338-5349-40f0-beaf-fabb4cce2281.png",
-                                   "http://api.peis-mobile.zz-tech.com.cn:85/storage/banner/afae2499-839e-4abc-b914-fc84c2d16140.png",
-                                   "http://api.peis-mobile.zz-tech.com.cn:85/storage/banner/5c9a5875-3612-44f3-9b69-575221748b97.png"};
-    private String[] ad_name = {"机构详情","查看报告","守护爸妈健康"};
+            "http://api.peis-mobile.zz-tech.com.cn:85/storage/banner/afae2499-839e-4abc-b914-fc84c2d16140.png",
+            "http://api.peis-mobile.zz-tech.com.cn:85/storage/banner/5c9a5875-3612-44f3-9b69-575221748b97.png"};
+    private String[] ad_name = {"机构详情", "查看报告", "守护爸妈健康"};
     private int[] images = {R.mipmap.pengyouquan,
             R.mipmap.weixinhaoyou,
             R.mipmap.qqhaoyou,
             R.mipmap.qqkongjian,
             R.mipmap.fuzhilianjie};
-
 
     private List<String> shareList;
 
@@ -53,7 +52,7 @@ public class BarADActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bar_ad);
 
-        int adNum = getIntent().getIntExtra("NUM",1);
+        int adNum = getIntent().getIntExtra("NUM", 1);
 
         back = findViewById(R.id.title_header_bar_ad).findViewById(R.id.back_login);
         title = findViewById(R.id.title_header_bar_ad).findViewById(R.id.menu_bar_title);
@@ -127,11 +126,11 @@ public class BarADActivity extends BaseActivity {
     }
 
 
-    class BARBaseAdapter extends BaseAdapter{
+    class BARBaseAdapter extends BaseAdapter {
 
         private String uri;
 
-        public BARBaseAdapter(String uri){
+        public BARBaseAdapter(String uri) {
             this.uri = uri;
         }
 
@@ -153,14 +152,14 @@ public class BarADActivity extends BaseActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            View view = LayoutInflater.from(BarADActivity.this).inflate(R.layout.bar_image_layout,null);
+            View view = LayoutInflater.from(BarADActivity.this).inflate(R.layout.bar_image_layout, null);
             SimpleDraweeView ad = view.findViewById(R.id.bar_ad);
             ad.setImageURI(uri);
             return view;
         }
     }
 
-     class ShareAdapter extends BaseAdapter {
+    class ShareAdapter extends BaseAdapter {
 
 
         @Override

@@ -36,6 +36,12 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
+
+/**
+ * Author:
+ * CreateDate:
+ * Description: 我的模块
+ */
 public class MineFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -109,7 +115,7 @@ public class MineFragment extends Fragment {
         messageIconContainerMine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(),ServiceMessageActivity.class);
+                Intent intent = new Intent(getContext(), ServiceMessageActivity.class);
                 getContext().startActivity(intent);
             }
         });
@@ -124,7 +130,7 @@ public class MineFragment extends Fragment {
         serviceOrderText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(),ServiceOrderActivity.class);
+                Intent intent = new Intent(getContext(), ServiceOrderActivity.class);
                 getContext().startActivity(intent);
             }
         });
@@ -161,13 +167,13 @@ public class MineFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    private void updateInfo(){
-        if(retrofit == null){
+    private void updateInfo() {
+        if (retrofit == null) {
             retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.TEST_URL);
         }
 
         AccountService service = retrofit.create(AccountService.class);
-        service.getUserInfo(app.getTokenType()+" "+app.getAccessToken())
+        service.getUserInfo(app.getTokenType() + " " + app.getAccessToken())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableObserver<UserInfo>() {
@@ -178,7 +184,7 @@ public class MineFragment extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("TAG","用户信息请求失败"+e.toString());
+                        Log.e("TAG", "用户信息请求失败" + e.toString());
                     }
 
                     @Override
@@ -188,7 +194,7 @@ public class MineFragment extends Fragment {
                 });
     }
 
-    void setViews(final UserInfo userInfo){
+    void setViews(final UserInfo userInfo) {
         userIcon.setImageURI(userInfo.getAvatar_url());
         userNameText.setText(userInfo.getNickname());
         userCellphoneNum.setText(userInfo.getPhone_number());
@@ -197,7 +203,7 @@ public class MineFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ExamOrderFormActivity.class);
-                intent.putExtra("CUSTOMER_ID",String.valueOf(userInfo.getId()));
+                intent.putExtra("CUSTOMER_ID", String.valueOf(userInfo.getId()));
                 getContext().startActivity(intent);
             }
         });
@@ -207,7 +213,7 @@ public class MineFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), AccountSettingActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("USER_INFO",userInfo);
+                bundle.putSerializable("USER_INFO", userInfo);
                 intent.putExtras(bundle);
                 getContext().startActivity(intent);
             }

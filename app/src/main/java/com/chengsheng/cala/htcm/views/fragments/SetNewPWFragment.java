@@ -104,9 +104,9 @@ public class SetNewPWFragment extends Fragment {
                     Toast.makeText(getContext(), "新密码不能为空", Toast.LENGTH_SHORT).show();
                 } else if(okNewPassWord.getText().toString().equals("")){
                     Toast.makeText(getContext(), "确认密码不能为空", Toast.LENGTH_SHORT).show();
-                }else if (!newPassWord.getText().toString().equals("") &&
-                        !okNewPassWord.getText().toString().equals("") &&
-                        newPassWord.getText().toString().equals(okNewPassWord.getText().toString())) {
+                }else if ((!newPassWord.getText().toString().equals("") &&
+                        !okNewPassWord.getText().toString().equals("") )&&
+                        !newPassWord.getText().toString().equals(okNewPassWord.getText().toString())) {
                     Toast.makeText(getContext(), "两次输入的密码不一致，请重新确认!", Toast.LENGTH_SHORT).show();
                 } else {
                     updateNewWD();

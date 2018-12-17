@@ -46,6 +46,8 @@ public class NewsListFragment extends Fragment {
     private Retrofit retrofit;
     private ZLoadingDialog loadingDialog;
 
+    private boolean isFirstIn = true;
+
     public NewsListFragment() {
     }
 
@@ -80,7 +82,9 @@ public class NewsListFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_news_list, container, false);
 
         newsList = rootView.findViewById(R.id.news_list);
-        getNews(true);
+        if(isFirstIn){
+            getNews(true);
+        }
         newsList.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
@@ -112,6 +116,16 @@ public class NewsListFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+    }
+
+
+    @Override
+    public void onResume() {
+        if(!isFirstIn){
+            getNews(false);
+        }
+        isFirstIn = false;
+        super.onResume();
     }
 
     @Override

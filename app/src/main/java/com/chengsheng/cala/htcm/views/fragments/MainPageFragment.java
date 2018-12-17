@@ -397,7 +397,7 @@ public class MainPageFragment extends Fragment implements UpdateAIAssisont {
             retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
         }
         NetService service = retrofit.create(NetService.class);
-        service.getAIAssistants(app.getTokenType() + " " + app.getAccessToken())
+        service.getAIAssistants(app.getTokenType() + " " + app.getAccessToken(),"1")
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableObserver<AssistantList>() {

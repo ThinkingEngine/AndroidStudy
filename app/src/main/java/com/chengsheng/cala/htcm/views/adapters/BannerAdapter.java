@@ -1,6 +1,5 @@
 package com.chengsheng.cala.htcm.views.adapters;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -41,7 +40,7 @@ public class BannerAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         position = position % data.size();
         ViewGroup parent = (ViewGroup) data.get(position).getParent();
-        if(parent != null){
+        if (parent != null) {
             parent.removeAllViews();
         }
 //        container.addView(data.get(position));

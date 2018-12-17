@@ -35,6 +35,11 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
+/**
+ * Author:
+ * CreateDate:
+ * Description: 健康模块
+ */
 public class HealthFragment extends Fragment implements AuthStateCallBack {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";

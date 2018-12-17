@@ -16,14 +16,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/title_header_bar_ad">
 
-
     <ImageView
         android:id="@+id/ad_bar_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     </ScrollView>
-
-
-
 
 </RelativeLayout>

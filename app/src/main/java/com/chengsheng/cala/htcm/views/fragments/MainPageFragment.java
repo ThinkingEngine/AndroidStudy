@@ -52,6 +52,11 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
+/**
+ * Author:
+ * CreateDate:
+ * Description: APP首页
+ */
 public class MainPageFragment extends Fragment implements UpdateAIAssisont {
 
     private static final String ARG_PARAM1 = "param1";
@@ -88,7 +93,6 @@ public class MainPageFragment extends Fragment implements UpdateAIAssisont {
 
     }
 
-
     public static MainPageFragment newInstance(String param1, String param2) {
         MainPageFragment fragment = new MainPageFragment();
         Bundle args = new Bundle();
@@ -96,7 +100,6 @@ public class MainPageFragment extends Fragment implements UpdateAIAssisont {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-
     }
 
     @Override
@@ -151,6 +154,7 @@ public class MainPageFragment extends Fragment implements UpdateAIAssisont {
         for (int i = 0; i < barImages.length; i++) {
             ImageView imageView = new ImageView(getContext());
             final int finalI = i;
+            //查看详情
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -203,7 +207,6 @@ public class MainPageFragment extends Fragment implements UpdateAIAssisont {
             }
         });
 
-
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -227,6 +230,7 @@ public class MainPageFragment extends Fragment implements UpdateAIAssisont {
                 startActivity(intent);
             }
         });
+
         //跳转到 “我的体检”
         myExamMark.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -235,6 +239,7 @@ public class MainPageFragment extends Fragment implements UpdateAIAssisont {
                 startActivity(intent);
             }
         });
+
         //跳转到“体检报告”
         examEeportMark.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -315,7 +320,6 @@ public class MainPageFragment extends Fragment implements UpdateAIAssisont {
 
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 

@@ -11,6 +11,11 @@ import android.view.ViewGroup;
 import com.chengsheng.cala.htcm.R;
 
 
+/**
+ * Author:
+ * CreateDate:
+ * Description: 发现模块
+ */
 public class FindFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

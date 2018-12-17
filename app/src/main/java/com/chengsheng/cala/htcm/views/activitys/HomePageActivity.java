@@ -1,10 +1,10 @@
 package com.chengsheng.cala.htcm.views.activitys;
 
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,11 +22,16 @@ import com.chengsheng.cala.htcm.views.fragments.MineFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomePageActivity extends BaseActivity implements MainPageFragment.OnFragmentInteractionListener,
+/**
+ * Author:
+ * CreateDate:
+ * Description: APP首页
+ */
+public class HomePageActivity extends BaseActivity implements
+        MainPageFragment.OnFragmentInteractionListener,
         HealthFragment.OnFragmentInteractionListener,
         FindFragment.OnFragmentInteractionListener,
         MineFragment.OnFragmentInteractionListener {
-
 
     private LinearLayout mainPageButton, healthPageButton, findPageButton, minePageButton;
     private ImageView mainPageImage, healthPageImage, findPageImage, minePageImage;
@@ -43,10 +48,10 @@ public class HomePageActivity extends BaseActivity implements MainPageFragment.O
         setContentView(R.layout.activity_home_page);
 
         initView();
-        initFragemnts();
+        initFragment();
 
         final ViewPager mainPager = findViewById(R.id.main_view_pager);
-        mainPager.addOnPageChangeListener(new ViewPagerOnPagerChangedLisenter());
+        mainPager.addOnPageChangeListener(new ViewPagerOnPagerChangedListener());
         FragmentManager fm = getSupportFragmentManager();
 
         if (!dataFragments.isEmpty()) {
@@ -87,7 +92,6 @@ public class HomePageActivity extends BaseActivity implements MainPageFragment.O
                 mainPager.setCurrentItem(3);
             }
         });
-
     }
 
     @Override
@@ -127,26 +131,26 @@ public class HomePageActivity extends BaseActivity implements MainPageFragment.O
     }
 
     private void initView() {
-        mainPageButton = findViewById(R.id.include2).findViewById(R.id.main_page_button);
-        healthPageButton = findViewById(R.id.include2).findViewById(R.id.health_page_button);
-        findPageButton = findViewById(R.id.include2).findViewById(R.id.find_page_button);
-        minePageButton = findViewById(R.id.include2).findViewById(R.id.mine_page_button);
+        mainPageButton = findViewById(R.id.main_page_button);
+        healthPageButton = findViewById(R.id.health_page_button);
+        findPageButton = findViewById(R.id.find_page_button);
+        minePageButton = findViewById(R.id.mine_page_button);
 
-        mainPageImage = findViewById(R.id.include2).findViewById(R.id.main_page_image);
-        healthPageImage = findViewById(R.id.include2).findViewById(R.id.health_page_image);
-        findPageImage = findViewById(R.id.include2).findViewById(R.id.find_page_image);
-        minePageImage = findViewById(R.id.include2).findViewById(R.id.mine_page_image);
+        mainPageImage = findViewById(R.id.main_page_image);
+        healthPageImage = findViewById(R.id.health_page_image);
+        findPageImage = findViewById(R.id.find_page_image);
+        minePageImage = findViewById(R.id.mine_page_image);
 
-        mianPageText = findViewById(R.id.include2).findViewById(R.id.main_page_textview);
-        healthPageText = findViewById(R.id.include2).findViewById(R.id.health_text);
-        findPageText = findViewById(R.id.include2).findViewById(R.id.find_page_text);
-        minePageText = findViewById(R.id.include2).findViewById(R.id.mine_page_text);
+        mianPageText = findViewById(R.id.main_page_textview);
+        healthPageText = findViewById(R.id.health_text);
+        findPageText = findViewById(R.id.find_page_text);
+        minePageText = findViewById(R.id.mine_page_text);
     }
 
-    private void initFragemnts() {
+    private void initFragment() {
         dataFragments = new ArrayList<>();
         Fragment mainPage = MainPageFragment.newInstance("", "");
-        Fragment healthPage = HealthFragment.newInstance(app.getTokenType(),app.getAccessToken());
+        Fragment healthPage = HealthFragment.newInstance(app.getTokenType(), app.getAccessToken());
         Fragment findPage = FindFragment.newInstance("", "");
         Fragment minePage = MineFragment.newInstance("", "");
         dataFragments.add(mainPage);
@@ -156,7 +160,7 @@ public class HomePageActivity extends BaseActivity implements MainPageFragment.O
     }
 
 
-    class ViewPagerOnPagerChangedLisenter implements ViewPager.OnPageChangeListener {
+    class ViewPagerOnPagerChangedListener implements ViewPager.OnPageChangeListener {
 
         @Override
         public void onPageScrolled(int i, float v, int i1) {

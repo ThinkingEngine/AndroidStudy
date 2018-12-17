@@ -1,25 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <declare-styleable name="titleBar">
+        <!--是否显示返回按钮-->
+        <attr name="isShowReturn" format="boolean" />
+        <!--页面标题-->
+        <attr name="title" format="string" />
+        <!--右边可操作按钮图标-->
+        <attr name="rightImageView" format="reference" />
+
+    </declare-styleable>
+
     <declare-styleable name="RatingBar">
         <!--未选中-->
-        <attr name="starEmptyRes" format="reference"/>
+        <attr name="starEmptyRes" format="reference" />
         <!--选中半个-->
-        <attr name="starHalfRes" format="reference"/>
+        <attr name="starHalfRes" format="reference" />
         <!--选中全部-->
-        <attr name="starSelectedRes" format="reference"/>
+        <attr name="starSelectedRes" format="reference" />
         <!--默认选中的数量 -->
         <attr name="selectedNumber" format="float" />
         <!--星星的总数-->
-        <attr name="startTotalNumber" format="integer"/>
+        <attr name="startTotalNumber" format="integer" />
         <!--星星的间距-->
-        <attr name="starDistance" format="dimension"/>
+        <attr name="starDistance" format="dimension" />
         <!--星星的宽度-->
-        <attr name="starWidth" format="dimension"/>
+        <attr name="starWidth" format="dimension" />
         <!--星星的高度-->
-        <attr name="starHeight" format="dimension"/>
+        <attr name="starHeight" format="dimension" />
         <!--是不是只画整个星星，不画半个-->
-        <attr name="starIsFull" format="boolean"/>
+        <attr name="starIsFull" format="boolean" />
     </declare-styleable>
 
 

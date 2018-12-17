@@ -79,13 +79,13 @@ public class AIAssistantActivity extends BaseActivity implements UpdateStateInte
             loadingDialog.show();
         }
         NetService service = retrofit.create(NetService.class);
-        service.getAIAssistants(app.getTokenType()+" "+app.getAccessToken())
+        service.getAIAssistants(app.getTokenType()+" "+app.getAccessToken(),"0")
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableObserver<AssistantList>() {
                     @Override
                     public void onNext(AssistantList assistantList) {
-                        Log.e("TAG","AIAssistan:"+assistantList.toString());
+                        Log.e("TAG","AIAssistant_onNext:"+assistantList.toString());
                         AIAssistantSubRecyclerView adapter = new AIAssistantSubRecyclerView(AIAssistantActivity.this,assistantList.getItems());
                         aiAssistantList.setLayoutManager(new LinearLayoutManager(AIAssistantActivity.this));
                         aiAssistantList.setAdapter(adapter);
@@ -97,6 +97,7 @@ public class AIAssistantActivity extends BaseActivity implements UpdateStateInte
 
                     @Override
                     public void onError(Throwable e) {
+                        Log.e("TAG","AIAssistant_onError:"+e.toString());
                         List<AssistantItem> noData = new ArrayList<>();
                         AIAssistantSubRecyclerView adapter = new AIAssistantSubRecyclerView(AIAssistantActivity.this,noData);
                         aiAssistantList.setLayoutManager(new LinearLayoutManager(AIAssistantActivity.this));

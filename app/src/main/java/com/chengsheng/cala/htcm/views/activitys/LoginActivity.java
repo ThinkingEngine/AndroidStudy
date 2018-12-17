@@ -36,8 +36,6 @@ import com.zyao89.view.zloading.Z_TYPE;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.ResponseBody;
-import retrofit2.HttpException;
 import retrofit2.Retrofit;
 
 public class LoginActivity extends BaseActivity {

@@ -82,12 +82,11 @@ public class AddFamilyFragment extends Fragment {
 
 
     private String[] relations = new String[]{"本人", "父亲", "母亲", "儿子", "女儿", "妻子", "丈夫", "其他"};
-    private int currentMark = -1;
     private String phoneHasCode = "";
     private Uri headerImageUri;
     private boolean isSelectHeader = false;
     private String sex;
-    private String familiesTag = "";//家人关系标签
+    private String familiesTag = "本人";//家人关系标签
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";

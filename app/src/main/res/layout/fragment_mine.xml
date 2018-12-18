@@ -4,34 +4,61 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".module.fragments.MineFragment"
-    tools:ignore="NamespaceTypo">
-
+    tools:context=".module.fragments.MineFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/colorPageBackground"
         android:orientation="vertical">
 
+        <!--用户信息-->
         <RelativeLayout
+            android:id="@+id/layout_update_user_info"
             android:layout_width="match_parent"
-            android:layout_height="147dp"
-            android:layout_alignParentTop="true"
+            android:layout_height="170dp"
             android:background="@mipmap/gerenbg">
-
 
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/user_icon"
-                android:layout_width="65dp"
-                android:layout_height="65dp"
+                android:layout_width="76dp"
+                android:layout_height="76dp"
                 android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
                 android:layout_marginStart="51dp"
-                android:layout_marginTop="43dp"
-                android:padding="5dp"
-                fresco:actualImageScaleType="centerInside"
+                fresco:actualImageScaleType="centerCrop"
                 fresco:backgroundImage="@mipmap/morentouxiang_wode"
                 fresco:roundAsCircle="true" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="12dp"
+                android:layout_toEndOf="@id/user_icon"
+                android:orientation="vertical">
+
+                <!--昵称-->
+                <TextView
+                    android:id="@+id/user_name_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="16sp"
+                    tools:text="1999000000" />
+
+                <!--手机号-->
+                <TextView
+                    android:id="@+id/user_cellphone_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="13sp"
+                    tools:text="1999000000" />
+
+
+            </LinearLayout>
 
             <FrameLayout
                 android:id="@+id/message_icon_container_mine"
@@ -67,106 +94,119 @@
                 android:src="@mipmap/saoyisao"
                 android:visibility="invisible" />
 
-            <TextView
-                android:id="@+id/user_name_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="18dp"
-                android:layout_marginTop="45dp"
-                android:layout_toRightOf="@id/user_icon"
-                android:textColor="@color/colorWhite"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/user_cellphone_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/user_name_text"
-                android:layout_marginLeft="18dp"
-                android:layout_marginTop="6dp"
-                android:layout_toRightOf="@id/user_icon"
-                android:textColor="@color/colorWhite"
-                android:textSize="16sp" />
-
             <ImageView
-                android:id="@+id/input_personal_info"
                 android:layout_width="40dp"
                 android:layout_height="48dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="68dp"
-                android:layout_marginRight="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
                 android:src="@mipmap/gerenjinru" />
 
         </RelativeLayout>
 
-        <RelativeLayout
+        <!--订单-->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="@color/colorWhite">
-
-            <ImageView
-                android:id="@+id/medical_exam_order_icon"
-                android:layout_width="24dp"
-                android:layout_height="22dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="60dp"
-                android:src="@mipmap/tijiandingdan" />
-
-            <TextView
-                android:id="@+id/medical_exam_order_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="12dp"
-                android:layout_toRightOf="@id/medical_exam_order_icon"
-                android:text="@string/medical_exam_order"
-                android:textColor="@color/colorText"
-                android:textSize="16sp" />
+            android:background="@color/colorWhite"
+            android:gravity="center_vertical">
 
             <LinearLayout
-                android:id="@+id/cut_off_mine"
-                android:layout_width="1dp"
-                android:layout_height="23dp"
-                android:layout_centerInParent="true"
-                android:background="@color/colorCutoff"
-                android:orientation="vertical"></LinearLayout>
-
-            <ImageView
-                android:id="@+id/service_order"
-                android:layout_width="24dp"
-                android:layout_height="22dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="30dp"
-                android:layout_toRightOf="@id/cut_off_mine"
-                android:src="@mipmap/fuwudingdan" />
-
-            <TextView
-                android:id="@+id/service_order_text"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="12dp"
-                android:layout_toRightOf="@id/service_order"
-                android:text="@string/serivce_order"
-                android:textColor="@color/colorText"
-                android:textSize="16sp" />
-        </RelativeLayout>
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-        <ListView
-            android:id="@+id/mine_group_a"
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:layout_marginTop="10dp"
-            android:divider="@null"></ListView>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/tijiandingdan" />
 
-        <ListView
-            android:id="@+id/mine_group_b"
-            android:layout_width="match_parent"
-            android:layout_height="135dp"
-            android:layout_marginTop="10dp"
-            android:divider="@null"></ListView>
+                <TextView
+                    android:id="@+id/medical_exam_order_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="6dp"
+                    android:drawablePadding="4dp"
+                    android:text="@string/medical_exam_order"
+                    android:textColor="@color/colorText"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/fuwudingdan" />
+
+                <TextView
+                    android:id="@+id/service_order_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="6dp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/serivce_order"
+                    android:textColor="@color/colorText"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/stv_family_manager"
+            style="@style/userCenterSuperTextStyle"
+            android:layout_marginTop="16dp"
+            fresco:sBottomDividerLineMarginLeft="35dp"
+            fresco:sLeftIconRes="@mipmap/jiarengaunli"
+            fresco:sLeftTextString="家人管理"
+            fresco:sRightIconRes="@mipmap/liebiaojinru" />
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/stv_collection"
+            style="@style/userCenterSuperTextStyle"
+            fresco:sBottomDividerLineMarginLeft="35dp"
+            fresco:sLeftIconRes="@mipmap/shoucang"
+            fresco:sLeftTextString="我的收藏"
+            fresco:sRightIconRes="@mipmap/liebiaojinru" />
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/stv_device"
+            style="@style/userCenterSuperTextStyle"
+            fresco:sDividerLineType="none"
+            fresco:sLeftIconRes="@mipmap/wodeshebei"
+            fresco:sLeftTextString="我的设备"
+            fresco:sRightIconRes="@mipmap/liebiaojinru" />
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/stv_setting"
+            style="@style/userCenterSuperTextStyle"
+            android:layout_marginTop="16dp"
+            fresco:sBottomDividerLineMarginLeft="35dp"
+            fresco:sLeftIconRes="@mipmap/shezhi"
+            fresco:sLeftTextString="设置"
+            fresco:sRightIconRes="@mipmap/liebiaojinru" />
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/stv_contact"
+            style="@style/userCenterSuperTextStyle"
+            fresco:sDividerLineType="none"
+            fresco:sLeftIconRes="@mipmap/lianxikefu"
+            fresco:sLeftTextString="联系客服"
+            fresco:sRightIconRes="@mipmap/liebiaojinru" />
+
     </LinearLayout>
 
 </ScrollView>

@@ -43,9 +43,14 @@ public class IntelligentCheckActivity extends BaseActivity {
     private HTCMApp app;
     private ZLoadingDialog loadingDialog;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public int getLayoutId() {
+        return R.layout.activity_intelligent_check;
+    }
+
+    @Override
+    public void initView() {
         app = HTCMApp.create(getApplicationContext());
         String orderID = getIntent().getStringExtra("EXAM_ID");
         loadingDialog = new ZLoadingDialog(this);
@@ -55,21 +60,9 @@ public class IntelligentCheckActivity extends BaseActivity {
         loadingDialog.setHintText("加载中");
         loadingDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
 
-        setContentView(R.layout.activity_intelligent_check);
 
         initViews();
         getIntelligentCheckInfo(orderID);
-
-    }
-
-    @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initView() {
-
     }
 
     @Override

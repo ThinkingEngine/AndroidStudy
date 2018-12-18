@@ -26,10 +26,12 @@ public class MyCollectionActivity extends BaseActivity implements CollectionFrag
     private String[] marks = {"体检套餐","医生","特色服务","文章资讯","常见疾病"};
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_collection);
+    public int getLayoutId() {
+        return R.layout.activity_my_collection;
+    }
 
+    @Override
+    public void initView() {
         titleText =  findViewById(R.id.title_header_my_collection).findViewById(R.id.menu_bar_title);
         tabHeader =  findViewById(R.id.collection_header);
         collectionBody = findViewById(R.id.collection_body);
@@ -41,16 +43,6 @@ public class MyCollectionActivity extends BaseActivity implements CollectionFrag
         for(int i = 0;i < marks.length;i++){
             tabHeader.getTabAt(i).setText(marks[i]);
         }
-    }
-
-    @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initView() {
-
     }
 
     @Override

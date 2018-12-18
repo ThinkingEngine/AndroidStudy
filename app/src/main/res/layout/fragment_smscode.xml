@@ -19,6 +19,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="22dp"
         android:background="@drawable/has_bottom_line_no_off_bg"
+        android:maxLines="11"
+        android:inputType="phone"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:hint="请输入你的手机号码"

@@ -49,10 +49,14 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
     private HTCMApp app;
     private ZLoadingDialog loadingDialog;
 
-    @SuppressLint("CutPasteId")
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public int getLayoutId() {
+        return R.layout.activity_service_message;
+    }
+
+    @Override
+    public void initView() {
         app = HTCMApp.create(getApplicationContext());
         CallBackDataAuth.setUpdateStateInterface(this);
         CallBackDataAuth.setCheckServiceInterface(this);
@@ -63,7 +67,6 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
         loadingDialog.setLoadingColor(getResources().getColor(R.color.colorPrimary));
         loadingDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
 
-        setContentView(R.layout.activity_service_message);
 
         ImageView back = findViewById(R.id.title_header_service_messages).findViewById(R.id.back_login);
         TextView title = findViewById(R.id.title_header_service_messages).findViewById(R.id.menu_bar_title);
@@ -98,16 +101,6 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
                 finish();
             }
         });
-    }
-
-    @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initView() {
-
     }
 
     @Override

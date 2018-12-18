@@ -21,8 +21,17 @@ public class FeedbackActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_feedback);
 
+
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_feedback;
+    }
+
+    @Override
+    public void initView() {
         titleText = findViewById(R.id.title_header_feedback).findViewById(R.id.menu_bar_title);
         final TextView inputTextNum = findViewById(R.id.input_text_num);
         final EditText textArea = findViewById(R.id.text_area);
@@ -75,16 +84,6 @@ public class FeedbackActivity extends BaseActivity {
         });
 
         titleText.setText("意见反馈");
-    }
-
-    @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initView() {
-
     }
 
     @Override

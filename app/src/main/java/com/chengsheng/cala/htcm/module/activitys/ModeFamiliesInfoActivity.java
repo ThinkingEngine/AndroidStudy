@@ -13,11 +13,14 @@ public class ModeFamiliesInfoActivity extends BaseActivity implements ModeFamili
 
     private ModeFamiliesFragment fragment;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mode_families_info);
 
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_mode_families_info;
+    }
+
+    @Override
+    public void initView() {
         Bundle bundle = getIntent().getExtras();
         FamiliesDetailInfo info = (FamiliesDetailInfo) bundle.getSerializable("FAMILIES_INFO");
         String modeParam = getIntent().getStringExtra("MODE");
@@ -28,18 +31,6 @@ public class ModeFamiliesInfoActivity extends BaseActivity implements ModeFamili
 
         ft.add(R.id.mode_fragment_container,fragment);
         ft.commit();
-
-
-    }
-
-    @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initView() {
-
     }
 
     @Override

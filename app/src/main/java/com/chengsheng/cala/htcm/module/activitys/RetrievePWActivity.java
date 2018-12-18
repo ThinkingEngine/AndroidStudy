@@ -24,11 +24,14 @@ public class RetrievePWActivity extends BaseActivity implements SetNewPWFragment
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_retrieve_pw);
 
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_retrieve_pw;
+    }
+
+    @Override
+    public void initView() {
         smsCodeFragment = SMSCodeFragment.newInstance("", "");
         setNewPWFragment = SetNewPWFragment.newInstance("", "");
 
@@ -39,17 +42,6 @@ public class RetrievePWActivity extends BaseActivity implements SetNewPWFragment
             fragmentTransaction.add(R.id.retrieve_container, smsCodeFragment);
             fragmentTransaction.commit();
         }
-
-    }
-
-    @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initView() {
-
     }
 
     @Override

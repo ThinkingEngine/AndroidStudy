@@ -94,7 +94,7 @@ public class FamilyListFragment extends Fragment implements AuthStateCallBack {
             getFamiliesList = myRetrofit.createURL(GlobalConstant.API_BASE_URL);
         }
 
-        loadingDialog.setHintText("加载中...");
+        loadingDialog.setHintText("加载中");
         loadingDialog.show();
         NetService service = getFamiliesList.create(NetService.class);
         service.getFamiliesList(toeknType + " " + AccessToken)
@@ -103,9 +103,10 @@ public class FamilyListFragment extends Fragment implements AuthStateCallBack {
                 .subscribe(new DisposableObserver<FamiliesList>() {
                     @Override
                     public void onNext(FamiliesList datas) {
+                        loadingDialog.cancel();
+                        loadingDialog.dismiss();
                         Log.e("FAMILIES", "家人列表信息 请求成功:" + datas.toString());
                         setViews(datas);
-                        loadingDialog.cancel();
                     }
 
                     @Override
@@ -116,7 +117,7 @@ public class FamilyListFragment extends Fragment implements AuthStateCallBack {
 
                     @Override
                     public void onComplete() {
-
+                        loadingDialog.cancel();
                     }
                 });
 
@@ -158,9 +159,9 @@ public class FamilyListFragment extends Fragment implements AuthStateCallBack {
 
     @Override
     public void authResult(boolean result) {
-        if (result) {
-            updateData();
-        }
+//        if (result) {
+//            updateData();
+//        }
     }
 
     public interface OnFamilyListInteractionListener {

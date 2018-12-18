@@ -34,21 +34,24 @@ public class SearchActivity extends BaseActivity {
     private String[] marks = new String[]{"青少年", "老年", "华美丽人", "中年", "加班族", "熬夜族", "优雅绅士", "婴幼儿"};
     private List<String> searchRecordData = new ArrayList<>();
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
 
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_search;
+    }
+
+    @Override
+    public void initView() {
         searchMarks = findViewById(R.id.search_marks);
         backText = findViewById(R.id.back_text);
         searchRecord = findViewById(R.id.search_record);
         globalSearchBox = findViewById(R.id.global_search_box);
         clearSearchBox = findViewById(R.id.clear_search_box);
 
-        String record = FuncUtils.getString("SEARCH_RECORD","");
-        if(!record.equals("")){
+        String record = FuncUtils.getString("SEARCH_RECORD", "");
+        if (!record.equals("")) {
             String[] strs = record.split(",");
-            for(String d:strs){
+            for (String d : strs) {
                 searchRecordData.add(d);
             }
         }
@@ -74,14 +77,14 @@ public class SearchActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!s.toString().equals("")){
+                if (!s.toString().equals("")) {
                     searchRecordData.add(s.toString());
                 }
             }
         });
 
         final List<String> datas = new ArrayList<>();
-        for(String mark:marks){
+        for (String mark : marks) {
             datas.add(mark);
         }
         TagAdapter adapter = new TagAdapter(datas);
@@ -93,7 +96,7 @@ public class SearchActivity extends BaseActivity {
         searchMarks.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
             @Override
             public boolean onTagClick(View view, int position, FlowLayout parent) {
-                Toast.makeText(SearchActivity.this," "+datas.get(position),Toast.LENGTH_SHORT).show();
+                Toast.makeText(SearchActivity.this, " " + datas.get(position), Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
@@ -108,45 +111,20 @@ public class SearchActivity extends BaseActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        StringBuffer sb = new StringBuffer();
-        for(String str:searchRecordData){
-            if(str.equals(searchRecordData.size())){
-                sb.append(str);
-            }else{
-                sb.append(str+",");
-            }
-
-        }
-        FuncUtils.putString("SEARCH_RECORD",sb.toString());
-    }
-
-    @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initView() {
-
-    }
-
-    @Override
     public void getData() {
 
     }
 
-    class RecyclerAdapter extends RecyclerView.Adapter<MyViewHolder>{
+    class RecyclerAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
         @NonNull
         @Override
         public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
             MyViewHolder viewHolder;
-            if(searchRecordData.isEmpty()){
-                viewHolder = new MyViewHolder(LayoutInflater.from(SearchActivity.this).inflate(R.layout.single_text_layout,null));
-            }else{
-                viewHolder = new MyViewHolder(LayoutInflater.from(SearchActivity.this).inflate(R.layout.search_record_item_layout,null));
+            if (searchRecordData.isEmpty()) {
+                viewHolder = new MyViewHolder(LayoutInflater.from(SearchActivity.this).inflate(R.layout.single_text_layout, null));
+            } else {
+                viewHolder = new MyViewHolder(LayoutInflater.from(SearchActivity.this).inflate(R.layout.search_record_item_layout, null));
             }
 
             return viewHolder;
@@ -155,9 +133,9 @@ public class SearchActivity extends BaseActivity {
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder viewHolder, int i) {
 
-            if(searchRecordData.isEmpty()){
+            if (searchRecordData.isEmpty()) {
                 viewHolder.textMark.setText("你还没有搜索记录的哟");
-            }else{
+            } else {
                 viewHolder.searchText.setText(searchRecordData.get(i));
             }
         }
@@ -166,13 +144,14 @@ public class SearchActivity extends BaseActivity {
         public int getItemCount() {
             return searchRecordData.size();
         }
+
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder{
+    class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView searchText;
-        ImageView deleteSearchRecord;
 
+        ImageView deleteSearchRecord;
         TextView textMark;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -183,27 +162,32 @@ public class SearchActivity extends BaseActivity {
 
             textMark = itemView.findViewById(R.id.text_mark);
         }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        StringBuffer sb = new StringBuffer();
+        for (String str : searchRecordData) {
+            if (str.equals(searchRecordData.size())) {
+                sb.append(str);
+            } else {
+                sb.append(str + ",");
+            }
+
+        }
+        FuncUtils.putString("SEARCH_RECORD", sb.toString());
     }
 
     class TagAdapter extends com.zhy.view.flowlayout.TagAdapter<String> {
+
 
         public TagAdapter(List<String> datas) {
             super(datas);
         }
 
 //        @Override
-//        public void onSelected(int position, View view) {
-//            TextView textView = view.findViewById(R.id.select_families_mark);
-//            textView.setSelected(true);
-//            textView.setTextColor(SearchActivity.this.getResources().getColor(R.color.colorWhite));
-//        }
-//
-//        @Override
-//        public void unSelected(int position, View view) {
-//            TextView textView = view.findViewById(R.id.select_families_mark);
-//            textView.setSelected(false);
-//            textView.setTextColor(SearchActivity.this.getResources().getColor(R.color.colorThrText));
-//        }
 
         @Override
         public View getView(FlowLayout parent, int position, String s) {
@@ -212,5 +196,17 @@ public class SearchActivity extends BaseActivity {
             textView.setText(s);
             return rootView;
         }
+        //        }
     }
+    //        public void onSelected(int position, View view) {
+    //            TextView textView = view.findViewById(R.id.select_families_mark);
+    //            textView.setSelected(true);
+    //            textView.setTextColor(SearchActivity.this.getResources().getColor(R.color.colorWhite));
+    //        }
+    //
+    //        @Override
+    //        public void unSelected(int position, View view) {
+    //            TextView textView = view.findViewById(R.id.select_families_mark);
+    //            textView.setSelected(false);
+    //            textView.setTextColor(SearchActivity.this.getResources().getColor(R.color.colorThrText));
 }

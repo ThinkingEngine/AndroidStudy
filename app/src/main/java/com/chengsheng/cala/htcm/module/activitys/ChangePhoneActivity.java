@@ -17,11 +17,6 @@ public class ChangePhoneActivity extends BaseActivity {
     private TextView phone;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public int getLayoutId() {
         return R.layout.activity_change_phone;
     }

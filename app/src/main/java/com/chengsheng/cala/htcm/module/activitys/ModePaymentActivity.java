@@ -71,26 +71,18 @@ public class ModePaymentActivity extends BaseActivity {
         }
     };
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        app = HTCMApp.create(getApplicationContext());
-        setContentView(R.layout.activity_mode_payment);
-
-        initViews();
-        getAliSign();
-
-
-    }
 
     @Override
     public int getLayoutId() {
-        return 0;
+        return R.layout.activity_mode_payment;
     }
 
     @Override
     public void initView() {
+        app = HTCMApp.create(getApplicationContext());
 
+        initViews();
+        getAliSign();
     }
 
     @Override

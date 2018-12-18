@@ -55,10 +55,14 @@ public class ExamReportActivity extends BaseActivity implements ExamReprotListFr
     private String authorization;
     private ZLoadingDialog loadingDialog;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_exam_report;
+    }
+
+    @Override
+    public void initView() {
         app = HTCMApp.create(getApplicationContext());
         authorization = app.getTokenType() + " " + app.getAccessToken();
         loadingDialog = new ZLoadingDialog(this);
@@ -68,22 +72,10 @@ public class ExamReportActivity extends BaseActivity implements ExamReprotListFr
         loadingDialog.setLoadingColor(getResources().getColor(R.color.colorPrimary));
         loadingDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
 
-        setContentView(R.layout.activity_exam_report);
 
         initViews();
 
         updateFamiliesList();
-
-    }
-
-    @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initView() {
-
     }
 
     @Override

@@ -38,9 +38,14 @@ public class ExamReportDetailActivity extends BaseActivity {
     private HTCMApp app;
     private ZLoadingDialog loadingDialog;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public int getLayoutId() {
+        return R.layout.activity_exam_report_detail;
+    }
+
+    @Override
+    public void initView() {
         app = HTCMApp.create(getApplicationContext());
         loadingDialog = new ZLoadingDialog(this);
         loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
@@ -49,7 +54,6 @@ public class ExamReportDetailActivity extends BaseActivity {
         loadingDialog.setHintText("加载中....");
         loadingDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
 
-        setContentView(R.layout.activity_exam_report_detail);
 
         Bundle bundle = getIntent().getExtras();
         String titleName  = bundle.getString(GlobalConstant.EXAM_REPORT_NAME);
@@ -59,17 +63,6 @@ public class ExamReportDetailActivity extends BaseActivity {
         getExamReportDetial(orderID);
 
         examReportDetailName.setText(titleName);
-
-    }
-
-    @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initView() {
-
     }
 
     @Override

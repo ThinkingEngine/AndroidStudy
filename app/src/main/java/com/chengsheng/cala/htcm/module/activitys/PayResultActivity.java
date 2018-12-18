@@ -19,15 +19,17 @@ public class PayResultActivity extends BaseActivity {
     private ImageView back, payResultMark;
     private Button lookOrderForm;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pay_result);
 
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_pay_result;
+    }
+
+    @Override
+    public void initView() {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         int payResult = bundle.getInt(GlobalConstant.PAY_MARK);
-        Log.e("TAG", "结果：" + payResult);
 
         Toast.makeText(this, "支付结果" + payResult, Toast.LENGTH_SHORT).show();
 
@@ -62,17 +64,6 @@ public class PayResultActivity extends BaseActivity {
                 finish();
             }
         });
-
-    }
-
-    @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initView() {
-
     }
 
     @Override

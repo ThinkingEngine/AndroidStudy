@@ -50,8 +50,12 @@ public class ExamDetailsActivity extends BaseActivity {
     private ZLoadingDialog loadingDialog;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public int getLayoutId() {
+        return R.layout.activity_exam_details;
+    }
+
+    @Override
+    public void initView() {
         app = HTCMApp.create(getApplicationContext());
         loadingDialog = new ZLoadingDialog(this);
         loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
@@ -62,23 +66,10 @@ public class ExamDetailsActivity extends BaseActivity {
 
         String orderID = getIntent().getStringExtra("ORDER_ID");
 
-        setContentView(R.layout.activity_exam_details);
 
         initViews();
 
         getUserExamDetail(orderID);
-
-
-    }
-
-    @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initView() {
-
     }
 
     @Override

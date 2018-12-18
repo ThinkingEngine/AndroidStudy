@@ -22,18 +22,19 @@ public class UserCardActivity extends BaseActivity {
     private ImageView userQrCard;
     private TextView userIdCard;
 
-    private String filePath;
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_card);
+    public int getLayoutId() {
+        return R.layout.activity_user_card;
+    }
 
+    @Override
+    public void initView() {
         Bundle bundle = getIntent().getExtras();
         FamiliesListItem data = (FamiliesListItem) bundle.getSerializable("FAMILIES_INFO");
 
         Bitmap bitmap = QRCodeUtil.createQRImage(data.getHealth_card_no(),FuncUtils.dip2px(220),FuncUtils.dip2px(220));
-        Log.e("QRC","bitmap是否为空:"+ String.valueOf(bitmap == null));
         initViews();
 
         userNameCard.setText(data.getFullname());
@@ -47,17 +48,6 @@ public class UserCardActivity extends BaseActivity {
                 finish();
             }
         });
-
-
-    }
-
-    @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initView() {
 
     }
 

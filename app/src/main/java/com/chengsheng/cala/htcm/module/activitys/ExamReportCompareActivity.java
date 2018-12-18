@@ -53,11 +53,15 @@ public class ExamReportCompareActivity extends BaseActivity {
 
     private CompareReportRecyclerAdapter adapter;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public int getLayoutId() {
+        return R.layout.activity_exam_report_compare;
+    }
+
+    @Override
+    public void initView() {
         app = HTCMApp.create(getApplicationContext());
-        setContentView(R.layout.activity_exam_report_compare);
         String firstID = getIntent().getStringExtra("FIRST_ID");
         String firstDate = getIntent().getStringExtra("FIRST_TIME");
         String secondID = getIntent().getStringExtra("SECOND_ID");
@@ -69,16 +73,6 @@ public class ExamReportCompareActivity extends BaseActivity {
         getCompareReport(firstID,secondID);
 
         setPopupWindow();
-    }
-
-    @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initView() {
-
     }
 
     @Override

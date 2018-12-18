@@ -35,11 +35,15 @@ public class HeaderIconActivity extends BaseActivity {
 
     private Uri headerImageUri;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_header_icon);
 
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_header_icon;
+    }
+
+    @Override
+    public void initView() {
         String uri = getIntent().getStringExtra("USER_INFO");
 
         title = findViewById(R.id.title_header_header_icon).findViewById(R.id.menu_bar_title);
@@ -63,18 +67,6 @@ public class HeaderIconActivity extends BaseActivity {
             }
         });
         header.setImageURI(uri);
-
-
-    }
-
-    @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initView() {
-
     }
 
     @Override

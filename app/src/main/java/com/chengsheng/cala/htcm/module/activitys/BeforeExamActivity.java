@@ -1,6 +1,5 @@
 package com.chengsheng.cala.htcm.module.activitys;
 
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.View;
@@ -44,8 +43,12 @@ public class BeforeExamActivity extends BaseActivity {
     private ZLoadingDialog loadingDialog;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public int getLayoutId() {
+        return R.layout.activity_before_exam;
+    }
+
+    @Override
+    public void initView() {
         String examID = getIntent().getStringExtra("EXAM_ID");
         app = HTCMApp.create(getApplicationContext());
         loadingDialog = new ZLoadingDialog(this);
@@ -55,23 +58,9 @@ public class BeforeExamActivity extends BaseActivity {
         loadingDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
         loadingDialog.setHintText("加载中....");
 
-        setContentView(R.layout.activity_before_exam);
-
         initViews();
 
         getExamBeforeNotice(examID);
-
-
-    }
-
-    @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initView() {
-
     }
 
     @Override

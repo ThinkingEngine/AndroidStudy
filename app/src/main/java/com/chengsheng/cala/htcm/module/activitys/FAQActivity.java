@@ -2,6 +2,12 @@ package com.chengsheng.cala.htcm.module.activitys;
 
 import android.widget.TextView;
 
+/**
+ * Author: 蔡浪
+ * CreateDate: 2018/12/17 8:50 PM
+ * Description:常见问题 父页面
+ */
+
 import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.R;
 

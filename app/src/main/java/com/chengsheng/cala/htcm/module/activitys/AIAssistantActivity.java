@@ -42,8 +42,12 @@ public class AIAssistantActivity extends BaseActivity implements UpdateStateInte
     private ZLoadingDialog loadingDialog;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public int getLayoutId() {
+        return R.layout.activity_aiassistant;
+    }
+
+    @Override
+    public void initView() {
         app = HTCMApp.create(getApplicationContext());
         CallBackDataAuth.setUpdateStateInterface(this);
         loadingDialog = new ZLoadingDialog(this);
@@ -52,7 +56,6 @@ public class AIAssistantActivity extends BaseActivity implements UpdateStateInte
         loadingDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
         loadingDialog.setDialogBackgroundColor(getResources().getColor(R.color.colorText));
         loadingDialog.setHintText("加载中....");
-        setContentView(R.layout.activity_aiassistant);
 
         title = findViewById(R.id.title_header_ai_assistant).findViewById(R.id.menu_bar_title);
         subhead = findViewById(R.id.title_header_ai_assistant).findViewById(R.id.message_mark_text);
@@ -68,16 +71,6 @@ public class AIAssistantActivity extends BaseActivity implements UpdateStateInte
             }
         });
         title.setText("智能助理");
-    }
-
-    @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initView() {
-
     }
 
     @Override

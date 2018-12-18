@@ -42,11 +42,14 @@ public class NewsListActivity extends BaseActivity implements NewsListFragment.O
     private Retrofit retrofit;
     private ZLoadingDialog loadingDialog;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news_list);
 
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_news_list;
+    }
+
+    @Override
+    public void initView() {
         loadingDialog = new ZLoadingDialog(this);
         loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
         loadingDialog.setHintText("加载列表..");
@@ -87,16 +90,6 @@ public class NewsListActivity extends BaseActivity implements NewsListFragment.O
                         loadingDialog.cancel();
                     }
                 });
-    }
-
-    @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initView() {
-
     }
 
     @Override

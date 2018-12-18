@@ -91,10 +91,14 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
 
     private String unbundleFamilies = "api/family/account-family-members/";
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_families_details;
+    }
+
+    @Override
+    public void initView() {
         app = HTCMApp.create(getApplicationContext());
         familiesID = getIntent().getStringExtra("FAMILIES_ID");
         CallBackDataAuth.setUpdateStateInterface(this);
@@ -104,8 +108,6 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
         loadingDialog.setLoadingColor(getResources().getColor(R.color.colorPrimary));
         loadingDialog.setHintText("更新中....");
         loadingDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
-
-        setContentView(R.layout.activity_families_details);
 
         //获取家人详细信息。
         getFamiliesInfo();
@@ -129,17 +131,6 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
                 finish();
             }
         });
-
-    }
-
-    @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initView() {
-
     }
 
     @Override

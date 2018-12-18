@@ -13,11 +13,14 @@ public class SecuritySettingsActivity extends BaseActivity {
     private TextView securitySettings;
     private ImageView intoSettingGesturesUnlock;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_security_settings);
 
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_security_settings;
+    }
+
+    @Override
+    public void initView() {
         securitySettings = (TextView) findViewById(R.id.title_header_security_settings).findViewById(R.id.menu_bar_title);
         intoSettingGesturesUnlock = (ImageView) findViewById(R.id.into_setting_gestures_unlock);
 
@@ -30,16 +33,6 @@ public class SecuritySettingsActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
-    }
-
-    @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initView() {
-
     }
 
     @Override

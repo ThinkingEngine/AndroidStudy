@@ -62,13 +62,41 @@ public class ExamAppointmentActivity extends BaseActivity implements HeaderScrol
     private String currentFilter = GlobalConstant.COMBO_TYPE_A;
     private boolean value = true;
 
-
-    @SuppressLint("CutPasteId")
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void stopSlide(boolean isStop) {
+        if (isStop) {
+            imageView.setVisibility(View.VISIBLE);
+            textView.setVisibility(View.INVISIBLE);
+        } else {
+            imageView.setVisibility(View.INVISIBLE);
+            textView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onDestroy() {
+//        window.dismiss();
+        super.onDestroy();
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_exam_appointment;
+    }
+
+    @Override
+    public void initView() {
         CallBackDataAuth.setUpdateStateInterface(this);
-        setContentView(R.layout.activity_exam_appointment);
 
         loadDialog = new ZLoadingDialog(this);
         loadDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
@@ -112,7 +140,7 @@ public class ExamAppointmentActivity extends BaseActivity implements HeaderScrol
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ExamAppointmentActivity.this,SearchActivity.class);
+                Intent intent = new Intent(ExamAppointmentActivity.this, SearchActivity.class);
                 startActivity(intent);
             }
         });
@@ -200,53 +228,6 @@ public class ExamAppointmentActivity extends BaseActivity implements HeaderScrol
             }
         });
 
-        //测试数据
-//        List<Map<String, Object>> listadata = new ArrayList<>();
-//        final String[] d = new String[]{"100元以内", "100元-200元", "100元-200元", "100元-200元", "1000元-2000元", "10000元-200000元"};
-//        final boolean[] select = {false,false,false,false,false,false};
-//        for (int i = 0; i < d.length; i++) {
-//            Map<String, Object> map = new HashMap<>();
-//            map.put("text", d[i]);
-//            listadata.add(map);
-//        }
-//        String[] from = {"text"};
-//        int[] to = {R.id.price_text};
-//
-//        View popupView = LayoutInflater.from(this).inflate(R.layout.condition_selection_combo_bg_layout, null);
-//        window = new PopupWindow(popupView, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT, true);
-//
-//        TextView isok = popupView.findViewById(R.id.complete_price_select);
-//        GridView gridView = popupView.findViewById(R.id.price_selecter);
-//        SimpleAdapter simpleAdapter = new SimpleAdapter(this, listadata, R.layout.price_bg_layout, from, to);
-//        gridView.setAdapter(simpleAdapter);
-//        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                TextView price = view.findViewById(R.id.price_text);
-//                if(select[position]){
-//                    select[position] = false;
-//                    price.setTextColor(getResources().getColor(R.color.colorSecText));
-//                    price.setSelected(false);
-//                }else{
-//                    select[position] = true;
-//                    price.setSelected(true);
-//                    price.setTextColor(getResources().getColor(R.color.colorPrimary));
-//                }
-//            }
-//        });
-//
-//        window.setBackgroundDrawable(new ColorDrawable(Color.BLACK));
-//        window.setOutsideTouchable(true);
-//        window.setTouchable(true);
-
-
-//        isok.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(ExamAppointmentActivity.this, "nih", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
         final CustomComboDialog dialog = new CustomComboDialog(ExamAppointmentActivity.this);
 
         //定制套餐
@@ -259,43 +240,6 @@ public class ExamAppointmentActivity extends BaseActivity implements HeaderScrol
         });
         headerScrollView.setCallback(this);
 
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void stopSlide(boolean isStop) {
-        if (isStop) {
-            imageView.setVisibility(View.VISIBLE);
-            textView.setVisibility(View.INVISIBLE);
-        } else {
-            imageView.setVisibility(View.INVISIBLE);
-            textView.setVisibility(View.VISIBLE);
-        }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onDestroy() {
-//        window.dismiss();
-        super.onDestroy();
-    }
-
-    @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initView() {
 
     }
 

@@ -56,25 +56,6 @@ public class ExamOrderFormActivity extends BaseActivity implements ExamOrderForm
     private String id;
     private boolean isGetFamilies = false;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        app = HTCMApp.create(getApplicationContext());
-        EventBus.getDefault().register(this);
-        CallBackDataAuth.setUpdateConditionInterface(this);
-
-        setContentView(R.layout.activity_exam_order_form);
-
-        id = getIntent().getStringExtra("CUSTOMER_ID");
-
-        getFamilies();
-        initViews();
-        initDatas();
-
-        for (int i = 0; i < marks.length; i++) {
-            orderFormSelectHeader.getTabAt(i).setText(marks[i]);
-        }
-    }
 
     private void initViews() {
         title = findViewById(R.id.title_header_exam_order_form).findViewById(R.id.menu_bar_title);
@@ -84,10 +65,6 @@ public class ExamOrderFormActivity extends BaseActivity implements ExamOrderForm
         orderFormFragment = findViewById(R.id.order_form_fragment);
         title.setText("体检订单");
         iconButton.setImageResource(R.mipmap.tijian_xuanren);
-
-
-
-
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -167,12 +144,25 @@ public class ExamOrderFormActivity extends BaseActivity implements ExamOrderForm
 
     @Override
     public int getLayoutId() {
-        return 0;
+        return R.layout.activity_exam_order_form;
     }
 
     @Override
     public void initView() {
+        app = HTCMApp.create(getApplicationContext());
+        EventBus.getDefault().register(this);
+        CallBackDataAuth.setUpdateConditionInterface(this);
 
+
+        id = getIntent().getStringExtra("CUSTOMER_ID");
+
+        getFamilies();
+        initViews();
+        initDatas();
+
+        for (int i = 0; i < marks.length; i++) {
+            orderFormSelectHeader.getTabAt(i).setText(marks[i]);
+        }
     }
 
     @Override

@@ -86,8 +86,12 @@ public class ComboDetailActivity extends BaseActivity {
     private ZLoadingDialog loadingDialog;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public int getLayoutId() {
+        return R.layout.activity_combo_detail;
+    }
+
+    @Override
+    public void initView() {
         app = HTCMApp.create(getApplicationContext());
         loadingDialog = new ZLoadingDialog(this);
         loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
@@ -97,7 +101,6 @@ public class ComboDetailActivity extends BaseActivity {
 
         id = getIntent().getStringExtra("COMBO_ID");
 
-        setContentView(R.layout.activity_combo_detail);
 
         initViews();
         checkCollectStatus();
@@ -107,9 +110,9 @@ public class ComboDetailActivity extends BaseActivity {
         collect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isCollect){
+                if (isCollect) {
                     cancelCollect();
-                }else{
+                } else {
                     collectCombo();
                 }
             }
@@ -139,17 +142,6 @@ public class ComboDetailActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
-
-    }
-
-    @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initView() {
-
     }
 
     @Override
@@ -351,9 +343,10 @@ public class ComboDetailActivity extends BaseActivity {
                     }
                 });
     }
+
     //取消套餐收藏
-    private void cancelCollect(){
-        if(retrofit == null){
+    private void cancelCollect() {
+        if (retrofit == null) {
             retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
         }
         loadingDialog.setHintText("加载中.....");

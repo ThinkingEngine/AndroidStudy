@@ -30,10 +30,12 @@ public class ExamResultUnscrambleActivity extends BaseActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_exam_result_unscramble);
+    public int getLayoutId() {
+        return R.layout.activity_exam_result_unscramble;
+    }
 
+    @Override
+    public void initView() {
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         HTCMApp.EXACT_SCREEN_WIDTH = metrics.widthPixels;
@@ -58,17 +60,6 @@ public class ExamResultUnscrambleActivity extends BaseActivity {
         ExamDetailTypeARecyclerAdapter adapter = new ExamDetailTypeARecyclerAdapter(this,result.getSingle_item_result(),result.getType());
         examDetailTypeA.setLayoutManager(new LinearLayoutManager(this));
         examDetailTypeA.setAdapter(adapter);
-
-    }
-
-    @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initView() {
-
     }
 
     @Override

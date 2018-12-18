@@ -42,10 +42,12 @@ public class ServiceOrderActivity extends BaseActivity implements ServiceOrderFr
     private String[] conditions = {"全部","特色服务","医疗美容"};
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_service_order);
+    public int getLayoutId() {
+        return R.layout.activity_service_order;
+    }
 
+    @Override
+    public void initView() {
         initViews();
         initDatas();
         setPopupWindow();
@@ -85,16 +87,6 @@ public class ServiceOrderActivity extends BaseActivity implements ServiceOrderFr
                 arrowUpDownServiceOrder.setSelected(true);
             }
         });
-    }
-
-    @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initView() {
-
     }
 
     @Override

@@ -25,28 +25,33 @@ public class FamilyManageActivity extends BaseActivity implements FamilyListFrag
     private FamilyListFragment familyListFragment;
     private AddFamilyFragment addFamilyFragment;
 
+    private FragmentManager fm;
+
     private String stats = "manage";
 
-
+    private HTCMApp app;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_family_manage);
+    public int getLayoutId() {
+        return R.layout.activity_family_manage;
+    }
+
+    @Override
+    public void initView() {
+        app = HTCMApp.create(this);
 
         initViews();
 
-        HTCMApp app = HTCMApp.create(this);
         familyListFragment = FamilyListFragment.newInstance(app.getTokenType(), app.getAccessToken());
         addFamilyFragment = AddFamilyFragment.newInstance(app.getTokenType(), app.getAccessToken());
 
-        final FragmentManager fm = getSupportFragmentManager();
+        fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
 
-        boolean addMark = getIntent().getBooleanExtra("ADD_MARK",false);
-        if(addMark){
+        boolean addMark = getIntent().getBooleanExtra("ADD_MARK", false);
+        if (addMark) {
             ft.add(R.id.family_manage_container, addFamilyFragment);
-        }else{
+        } else {
             ft.add(R.id.family_manage_container, familyListFragment);
         }
         ft.commit();
@@ -86,17 +91,6 @@ public class FamilyManageActivity extends BaseActivity implements FamilyListFrag
                 }
             }
         });
-
-    }
-
-    @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initView() {
-
     }
 
     @Override
@@ -116,7 +110,19 @@ public class FamilyManageActivity extends BaseActivity implements FamilyListFrag
     }
 
     @Override
-    public void onAddFamilyFragmentInteraction(Bundle bundle) {
+    public void onAddFamilyFragmentInteraction(Bundle bundle, boolean isAdd) {
+        if (isAdd) {
+            String str = bundle.getString("STATE");
+            if (str.equals("manage")) {
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.add(R.id.family_manage_container, familyListFragment);
+                ft.commit();
+                stats = "manage";
+                titleHeader.setText("家人管理");
+                addFamily.setVisibility(View.VISIBLE);
+            }
+        }
+
 
     }
 

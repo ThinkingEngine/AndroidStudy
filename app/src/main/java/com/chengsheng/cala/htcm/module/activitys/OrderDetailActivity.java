@@ -45,10 +45,13 @@ public class OrderDetailActivity extends BaseActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public int getLayoutId() {
+        return R.layout.activity_order_detail;
+    }
+
+    @Override
+    public void initView() {
         app = HTCMApp.create(getApplicationContext());
-        setContentView(R.layout.activity_order_detail);
 
         initViews();
 
@@ -79,17 +82,6 @@ public class OrderDetailActivity extends BaseActivity {
 
                     }
                 });
-
-
-    }
-
-    @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initView() {
 
     }
 

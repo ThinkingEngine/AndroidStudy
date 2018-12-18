@@ -51,12 +51,14 @@ public class MyExamActivity extends BaseActivity implements TabLayout.OnTabSelec
     private Retrofit retrofit;
     private NetService service;
 
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_my_exam;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         app = HTCMApp.create(getApplicationContext());
-        setContentView(R.layout.activity_my_exam);
 
         //初始化Activity数据.
         token = app.getTokenType() + " " + app.getAccessToken();
@@ -131,17 +133,6 @@ public class MyExamActivity extends BaseActivity implements TabLayout.OnTabSelec
                 window.showAsDropDown(searchButton);
             }
         });
-
-    }
-
-    @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initView() {
-
     }
 
     @Override

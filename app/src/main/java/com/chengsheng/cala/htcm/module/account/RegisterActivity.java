@@ -49,9 +49,43 @@ public class RegisterActivity extends BaseActivity {
     private Retrofit retrofit;
     private ZLoadingDialog loadingDialog;
 
+
+    private void initViews() {
+
+        back = findViewById(R.id.include).findViewById(R.id.back_login);
+        login = findViewById(R.id.include).findViewById(R.id.into_login);
+        getCodeUser = findViewById(R.id.get_code_user);
+        getUserNum = findViewById(R.id.get_user_num);
+        passwordInput = findViewById(R.id.password_input);
+        isOkPasswd = findViewById(R.id.is_ok_passwd);
+        deleteInput = findViewById(R.id.clear_number);
+        getCodeButton = findViewById(R.id.get_code_button);
+        comingRegisterButton = findViewById(R.id.coming_register_button);
+        userProtocol = findViewById(R.id.user_protocol);
+        serviceNum = findViewById(R.id.service_num);
+
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onDestroy() {
+        super.onDestroy();
+
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_register;
+    }
+
+    @Override
+    public void initView() {
         loadingDialog = new ZLoadingDialog(this);
         loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
         loadingDialog.setDialogBackgroundColor(getResources().getColor(R.color.colorText));
@@ -59,7 +93,6 @@ public class RegisterActivity extends BaseActivity {
         loadingDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
         loadingDialog.setHintText("加载中...");
 
-        setContentView(R.layout.activity_register);
 
 //        myRetrofit = MyRetrofit.createInstance();
 //        final Retrofit retrofitURL = myRetrofit.createURL(GlobalConstant.TEST_URL);
@@ -139,46 +172,6 @@ public class RegisterActivity extends BaseActivity {
                 }
             }
         });
-
-    }
-
-    private void initViews() {
-
-        back = findViewById(R.id.include).findViewById(R.id.back_login);
-        login = findViewById(R.id.include).findViewById(R.id.into_login);
-        getCodeUser = findViewById(R.id.get_code_user);
-        getUserNum = findViewById(R.id.get_user_num);
-        passwordInput = findViewById(R.id.password_input);
-        isOkPasswd = findViewById(R.id.is_ok_passwd);
-        deleteInput = findViewById(R.id.clear_number);
-        getCodeButton = findViewById(R.id.get_code_button);
-        comingRegisterButton = findViewById(R.id.coming_register_button);
-        userProtocol = findViewById(R.id.user_protocol);
-        serviceNum = findViewById(R.id.service_num);
-
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-    }
-
-    @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initView() {
-
     }
 
     @Override

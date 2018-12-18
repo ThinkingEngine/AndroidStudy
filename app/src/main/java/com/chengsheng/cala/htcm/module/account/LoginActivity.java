@@ -59,10 +59,12 @@ public class LoginActivity extends BaseActivity {
     private HTCMApp app;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+    public int getLayoutId() {
+        return R.layout.activity_login;
+    }
 
+    @Override
+    public void initView() {
         registerTV = findViewById(R.id.register_button);
         loginTV = findViewById(R.id.login_button);
         retrieveTV = findViewById(R.id.retrieve_pw_button);
@@ -246,17 +248,6 @@ public class LoginActivity extends BaseActivity {
                 alertDialog.show();
             }
         });
-
-    }
-
-    @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initView() {
-
     }
 
     @Override

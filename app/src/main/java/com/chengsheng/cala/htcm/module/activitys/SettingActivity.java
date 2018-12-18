@@ -23,10 +23,14 @@ public class SettingActivity extends BaseActivity {
 
     private HTCMApp app;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting);
+    public int getLayoutId() {
+        return R.layout.activity_setting;
+    }
+
+    @Override
+    public void initView() {
         app = HTCMApp.create(getApplicationContext());
         initViews();
 
@@ -78,16 +82,6 @@ public class SettingActivity extends BaseActivity {
                 showDialog();
             }
         });
-    }
-
-    @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initView() {
-
     }
 
     @Override

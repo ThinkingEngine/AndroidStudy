@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -14,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.R;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -21,7 +21,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlusImageActivity extends AppCompatActivity implements View.OnClickListener,ViewPager.OnPageChangeListener{
+public class PlusImageActivity extends BaseActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
 
     private ViewPager viewPager; //展示图片的ViewPager
     private TextView positionTv; //图片的位置，第几张图片
@@ -33,14 +33,24 @@ public class PlusImageActivity extends AppCompatActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_plus_image);
 
-        imgList = getIntent().getStringArrayListExtra(GlobalConstant.IMG_LIST);
-        mPosition = getIntent().getIntExtra(GlobalConstant.POSITION, 0);
-        initView();
+
     }
 
-    private void initView() {
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_plus_image;
+    }
+
+    @Override
+    public void initView() {
+        imgList = getIntent().getStringArrayListExtra(GlobalConstant.IMG_LIST);
+        mPosition = getIntent().getIntExtra(GlobalConstant.POSITION, 0);
+        initViews();
+    }
+
+
+    private void initViews() {
         viewPager = findViewById(R.id.viewPager);
         positionTv = findViewById(R.id.position_tv);
         findViewById(R.id.back_iv).setOnClickListener(this);
@@ -51,6 +61,11 @@ public class PlusImageActivity extends AppCompatActivity implements View.OnClick
         viewPager.setAdapter(mAdapter);
         positionTv.setText(mPosition + 1 + "/" + imgList.size());
         viewPager.setCurrentItem(mPosition);
+    }
+
+    @Override
+    public void getData() {
+
     }
 
     //删除图片
@@ -154,11 +169,11 @@ public class PlusImageActivity extends AppCompatActivity implements View.OnClick
         //instantiateItem()：将当前view添加到ViewGroup中，并返回当前View
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-             View  itemView = LayoutInflater.from(PlusImageActivity.this).inflate(R.layout.view_pager_img_layout,null);
+            View itemView = LayoutInflater.from(PlusImageActivity.this).inflate(R.layout.view_pager_img_layout, null);
 //            View itemView = getItemView(R.layout.view_pager_img_layout);
             SimpleDraweeView imageView = itemView.findViewById(R.id.img_iv);
 //            Glide.with(PlusImageActivity.this).load(imgList.get(position)).into(imageView);
-            Log.e("TAG","图片地址:"+imgList.get(position));
+            Log.e("TAG", "图片地址:" + imgList.get(position));
             imageView.setImageURI(imgList.get(position));
             container.addView(itemView);
             return itemView;

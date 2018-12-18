@@ -38,11 +38,15 @@ public class NewsDetailActivity extends BaseActivity {
     private Retrofit retrofit;
     private HTCMApp app;
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public int getLayoutId() {
+        return R.layout.activity_news_detail;
+    }
+
+    @Override
+    public void initView() {
         app = HTCMApp.create(getApplicationContext());
-        setContentView(R.layout.activity_news_detail);
 
         if (retrofit == null) {
             retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
@@ -88,27 +92,16 @@ public class NewsDetailActivity extends BaseActivity {
         collectNews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("TAG","点击标签1");
-                if(collectNews.isSelected()){
+                Log.e("TAG", "点击标签1");
+                if (collectNews.isSelected()) {
                     collectCancelArticle(recommendedItem);
-                    Log.e("TAG","点击标签2");
-                }else{
+                    Log.e("TAG", "点击标签2");
+                } else {
                     collectArticle(recommendedItem);
-                    Log.e("TAG","点击标签3");
+                    Log.e("TAG", "点击标签3");
                 }
             }
         });
-
-    }
-
-    @Override
-    public int getLayoutId() {
-        return 0;
-    }
-
-    @Override
-    public void initView() {
-
     }
 
     @Override

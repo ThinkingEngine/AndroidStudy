@@ -19,12 +19,14 @@ import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.module.account.LoginActivity;
 import com.chengsheng.cala.htcm.protocol.FamiliesList;
 import com.chengsheng.cala.htcm.protocol.FamiliesListItem;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
 import com.chengsheng.cala.htcm.adapter.MainViewPagerAdapter;
 import com.chengsheng.cala.htcm.module.fragments.ExamReprotListFragment;
+import com.chengsheng.cala.htcm.utils.UserUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zyao89.view.zloading.ZLoadingDialog;
 import com.zyao89.view.zloading.Z_TYPE;
@@ -71,11 +73,9 @@ public class ExamReportActivity extends BaseActivity implements ExamReprotListFr
         loadingDialog.setDialogBackgroundColor(getResources().getColor(R.color.colorText));
         loadingDialog.setLoadingColor(getResources().getColor(R.color.colorPrimary));
         loadingDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
-
-
         initViews();
-
         updateFamiliesList();
+
     }
 
     @Override
@@ -117,7 +117,7 @@ public class ExamReportActivity extends BaseActivity implements ExamReprotListFr
         if (datas.size() < 4) {
             examReportHeader.setTabMode(TabLayout.MODE_FIXED);
             examReportHeader.setTabGravity(TabLayout.GRAVITY_CENTER);
-        }else{
+        } else {
             examReportHeader.setTabMode(TabLayout.MODE_SCROLLABLE);
             examReportHeader.setTabGravity(TabLayout.GRAVITY_FILL);
         }
@@ -212,9 +212,9 @@ public class ExamReportActivity extends BaseActivity implements ExamReprotListFr
         });
     }
 
-    private void updateFamiliesList(){
+    private void updateFamiliesList() {
 
-        if(retrofit == null){
+        if (retrofit == null) {
             retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
         }
 
@@ -227,10 +227,10 @@ public class ExamReportActivity extends BaseActivity implements ExamReprotListFr
                     @Override
                     public void onNext(FamiliesList familiesList) {
                         loadingDialog.cancel();
-                        if(!familiesList.getItems().isEmpty()){
+                        if (!familiesList.getItems().isEmpty()) {
                             noFamiliesContent.setVisibility(View.INVISIBLE);
                             initValue(familiesList.getItems());
-                        }else{
+                        } else {
                             noFamiliesContent.setVisibility(View.VISIBLE);
                         }
 
@@ -240,7 +240,7 @@ public class ExamReportActivity extends BaseActivity implements ExamReprotListFr
                     public void onError(Throwable e) {
                         loadingDialog.cancel();
                         noFamiliesContent.setVisibility(View.VISIBLE);
-                        Toast.makeText(ExamReportActivity.this,"当前没有有报告的家人!",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ExamReportActivity.this, "当前没有有报告的家人!", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

@@ -137,9 +137,10 @@ public class ComboDetailActivity extends BaseActivity {
         immediateAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ComboDetailActivity.this, AffirmAppointmentActivity.class);
-                intent.putExtra("COMBO_ID", id);
-                startActivity(intent);
+//                Intent intent = new Intent(ComboDetailActivity.this, AffirmAppointmentActivity.class);
+//                intent.putExtra("COMBO_ID", id);
+//                startActivity(intent);
+                startActivityWithLoginStatus(new AffirmAppointmentActivity());
             }
         });
     }

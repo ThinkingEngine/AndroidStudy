@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
 import com.chengsheng.cala.htcm.network.NetworkStateCallback;
 import com.chengsheng.cala.htcm.protocol.LoginData;
+import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
 import com.chengsheng.cala.htcm.utils.UserUtil;
 import com.zyao89.view.zloading.ZLoadingDialog;
 import com.zyao89.view.zloading.Z_TYPE;
@@ -42,11 +44,11 @@ public class LoginActivity extends BaseActivity {
     private EditText cellphoneEdittext, passwordEdittext;
     private Button deleteInput, previewIcon;
     private TextView loginTelService;
+    private ImageView outLoginPage;
 
     private boolean tempLogin = true;
     private boolean passVisible = false;
 
-    private ConnectivityManager.NetworkCallback networkCallback;
     private ConnectivityManager connectivityManager;
 
     private String userNameInput;
@@ -67,7 +69,7 @@ public class LoginActivity extends BaseActivity {
         deleteInput = findViewById(R.id.delete_input);
         previewIcon = findViewById(R.id.preview_icon);
         loginTelService = findViewById(R.id.login_tel_service);
-
+        outLoginPage = findViewById(R.id.out_login_page);
         deleteInput.setVisibility(View.INVISIBLE);
 
         final ZLoadingDialog dialog = new ZLoadingDialog(this);
@@ -161,6 +163,13 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
+        outLoginPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         //登录按钮。
         loginTV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,6 +190,7 @@ public class LoginActivity extends BaseActivity {
                                     @Override
                                     public void onNext(LoginData data) {
                                         showShortToast("登录成功");
+                                        CallBackDataAuth.doUpdateStateInterface(true);
                                         UserUtil.setAccessToken(data.getAccess_token());
                                         UserUtil.setTokenType(data.getToken_type());
                                         UserUtil.setMobile(userNameInput);
@@ -199,7 +209,6 @@ public class LoginActivity extends BaseActivity {
                                         builder.setPositiveButton("确认", null);
                                         alertDialog = builder.create();
                                         alertDialog.show();
-
                                     }
 
                                     @Override

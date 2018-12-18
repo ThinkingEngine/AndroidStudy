@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,8 +37,10 @@ import com.chengsheng.cala.htcm.protocol.AssistantItem;
 import com.chengsheng.cala.htcm.protocol.AssistantList;
 import com.chengsheng.cala.htcm.protocol.articleModel.RecommendedNews;
 import com.chengsheng.cala.htcm.protocol.childmodela.NureadMessage;
+import com.chengsheng.cala.htcm.utils.ActivityUtil;
 import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
 import com.chengsheng.cala.htcm.utils.UpdateAIAssisont;
+import com.chengsheng.cala.htcm.utils.UpdateStateInterface;
 import com.chengsheng.cala.htcm.utils.UserUtil;
 import com.chengsheng.cala.htcm.widget.FooterAdapter;
 import com.chengsheng.cala.htcm.widget.MyRecyclerView;
@@ -45,6 +48,7 @@ import com.chengsheng.cala.htcm.widget.MyRecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.LogManager;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DefaultObserver;
@@ -57,7 +61,7 @@ import retrofit2.Retrofit;
  * CreateDate:
  * Description: APP首页
  */
-public class MainPageFragment extends Fragment implements UpdateAIAssisont {
+public class MainPageFragment extends Fragment implements UpdateAIAssisont,UpdateStateInterface {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -112,6 +116,7 @@ public class MainPageFragment extends Fragment implements UpdateAIAssisont {
 
         app = HTCMApp.create(getContext());
         CallBackDataAuth.setUpdateAIAssisont(this);
+        CallBackDataAuth.setUpdateStateInterface(this);
     }
 
     @Override
@@ -224,9 +229,7 @@ public class MainPageFragment extends Fragment implements UpdateAIAssisont {
         aiAssistant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), AIAssistantActivity.class);
-//                Intent intent = new Intent(getContext(), TestActivity.class);
-                startActivity(intent);
+                ActivityUtil.Companion.startActivityWithLoginStatus(getContext(),new AIAssistantActivity());
             }
         });
 
@@ -234,8 +237,8 @@ public class MainPageFragment extends Fragment implements UpdateAIAssisont {
         myExamMark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), MyExamActivity.class);
-                startActivity(intent);
+
+                ActivityUtil.Companion.startActivityWithLoginStatus(getContext(),new MyExamActivity());
             }
         });
 
@@ -243,8 +246,8 @@ public class MainPageFragment extends Fragment implements UpdateAIAssisont {
         examEeportMark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), ExamReportActivity.class);
-                startActivity(intent);
+
+                ActivityUtil.Companion.startActivityWithLoginStatus(getContext(),new ExamReportActivity());
             }
         });
 
@@ -252,9 +255,14 @@ public class MainPageFragment extends Fragment implements UpdateAIAssisont {
         refreshPage.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                updateServiceSMS();
-                updateNews();
-                updateAIAssistant();
+                if(UserUtil.isLogin()){
+                    updateServiceSMS();
+                    updateNews();
+                    updateAIAssistant();
+                }else{
+                    updateNews();
+                }
+
             }
         });
 
@@ -278,8 +286,7 @@ public class MainPageFragment extends Fragment implements UpdateAIAssisont {
         newMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), ServiceMessageActivity.class);
-                startActivity(intent);
+                ActivityUtil.Companion.startActivityWithLoginStatus(getContext(), new ServiceMessageActivity());
             }
         });
 
@@ -313,6 +320,16 @@ public class MainPageFragment extends Fragment implements UpdateAIAssisont {
     @Override
     public void updateResult(boolean status) {
         if (status) {
+            updateServiceSMS();
+            updateAIAssistant();
+        }
+    }
+
+    @Override
+    public void updateServiceMessage(boolean status) {
+        Log.e("TAG","status"+status);
+        if(status){
+            updateServiceSMS();
             updateAIAssistant();
         }
     }
@@ -333,6 +350,7 @@ public class MainPageFragment extends Fragment implements UpdateAIAssisont {
                 .subscribe(new DisposableObserver<RecommendedNews>() {
                     @Override
                     public void onNext(RecommendedNews recommendedNews) {
+                        refreshPage.setRefreshing(false);
                         FooterAdapter footAdapter = new FooterAdapter(recommendedNews.getItems(), getContext());
                         newsRecyclerView.setAdapter(footAdapter);
 //                            if (recommendedNews.getItems().size() == 4 && recommendedNews.getMeta().getPagination().getTotal_pages() > 1) {
@@ -352,12 +370,12 @@ public class MainPageFragment extends Fragment implements UpdateAIAssisont {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        refreshPage.setRefreshing(false);
                     }
 
                     @Override
                     public void onComplete() {
-
+                        refreshPage.setRefreshing(false);
                     }
                 });
 
@@ -400,6 +418,10 @@ public class MainPageFragment extends Fragment implements UpdateAIAssisont {
 
     private void updateAIAssistant() {
         if (!UserUtil.isLogin()) {
+            List<AssistantItem> temp = new ArrayList<>();
+            AIAssistantRecyclerAdapter appointment = new AIAssistantRecyclerAdapter(getContext(),temp,-2,"");
+            appointmentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            appointmentRecyclerView.setAdapter(appointment);
             return;
         }
 

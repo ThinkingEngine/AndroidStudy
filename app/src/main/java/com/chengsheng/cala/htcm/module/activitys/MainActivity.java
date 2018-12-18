@@ -13,10 +13,13 @@ import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.adapter.MainViewPagerAdapter;
 import com.chengsheng.cala.htcm.base.BaseActivity;
+import com.chengsheng.cala.htcm.module.account.LoginActivity;
+import com.chengsheng.cala.htcm.module.account.RegisterActivity;
 import com.chengsheng.cala.htcm.module.fragments.FindFragment;
 import com.chengsheng.cala.htcm.module.fragments.HealthFragment;
 import com.chengsheng.cala.htcm.module.fragments.MainPageFragment;
 import com.chengsheng.cala.htcm.module.fragments.MineFragment;
+import com.chengsheng.cala.htcm.utils.UserUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,8 +128,13 @@ public class MainActivity extends BaseActivity implements
         healthPageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateButtonSelected(false, true, false, false);
-                mainPager.setCurrentItem(1);
+                if(UserUtil.isLogin()){
+                    updateButtonSelected(false, true, false, false);
+                    mainPager.setCurrentItem(1);
+                }else{
+                    startActivity(new LoginActivity());
+                }
+
             }
         });
 
@@ -143,6 +151,7 @@ public class MainActivity extends BaseActivity implements
             public void onClick(View v) {
                 updateButtonSelected(false, false, false, true);
                 mainPager.setCurrentItem(3);
+
             }
         });
     }

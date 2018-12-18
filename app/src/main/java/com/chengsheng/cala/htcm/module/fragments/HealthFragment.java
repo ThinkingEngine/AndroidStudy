@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.protocol.FamiliesList;
@@ -25,6 +26,7 @@ import com.chengsheng.cala.htcm.utils.AuthStateCallBack;
 import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
 import com.chengsheng.cala.htcm.module.activitys.FamilyManageActivity;
 import com.chengsheng.cala.htcm.adapter.FMRecyclerAdapter;
+import com.chengsheng.cala.htcm.utils.UpdateStateInterface;
 import com.zyao89.view.zloading.ZLoadingDialog;
 import com.zyao89.view.zloading.Z_TYPE;
 
@@ -39,7 +41,7 @@ import retrofit2.Retrofit;
  * CreateDate:
  * Description: 健康模块
  */
-public class HealthFragment extends Fragment implements AuthStateCallBack {
+public class HealthFragment extends Fragment implements UpdateStateInterface {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -48,9 +50,9 @@ public class HealthFragment extends Fragment implements AuthStateCallBack {
 
     private RecyclerView peopleRecycler;
 
-    private MyRetrofit myRetrofit;
     private Retrofit getFamiliesList;
     private FMRecyclerAdapter fmRecyclerAdapter;
+    private HTCMApp app;
 
     private OnFragmentInteractionListener mListener;
 
@@ -82,7 +84,8 @@ public class HealthFragment extends Fragment implements AuthStateCallBack {
         loadingDialog.setHintTextColor(getContext().getResources().getColor(R.color.colorPrimary));
         loadingDialog.setDialogBackgroundColor(getContext().getResources().getColor(R.color.colorText));
         loadingDialog.setLoadingColor(getContext().getResources().getColor(R.color.colorPrimary));
-        CallBackDataAuth.setAuthStateCallBack(this);
+        CallBackDataAuth.setUpdateStateInterface(this);
+        app = HTCMApp.create(getContext());
     }
 
     @Override
@@ -99,41 +102,13 @@ public class HealthFragment extends Fragment implements AuthStateCallBack {
         imageView.setVisibility(View.INVISIBLE);
         childTitle.setText("家人管理");
 
-        peopleRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        loadingDialog.setHintText("加载中.....");
-        loadingDialog.show();
-        myRetrofit = MyRetrofit.createInstance();
-        getFamiliesList = myRetrofit.createURL(GlobalConstant.API_BASE_URL);
-        NetService service = getFamiliesList.create(NetService.class);
-        service.getFamiliesList(mParam1 + " " + mParam2)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableObserver<FamiliesList>() {
-                    @Override
-                    public void onNext(FamiliesList datas) {
-                        Log.e("FAMILIES", datas.toString());
-                        setViews(datas);
-                        loadingDialog.cancel();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("FAMILIES", e.toString());
-                        loadingDialog.cancel();
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
+        updateData();
 
         childTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), FamilyManageActivity.class);
-                intent.putExtra("ADD_MARK",false);
+                intent.putExtra("ADD_MARK", false);
                 startActivity(intent);
             }
         });
@@ -144,7 +119,6 @@ public class HealthFragment extends Fragment implements AuthStateCallBack {
             @Override
             public void onRefresh() {
                 updateData();
-//                fmRecyclerAdapter.notifyDataSetChanged();
                 freahPeopleRecycler.setRefreshing(false);
             }
         });
@@ -176,8 +150,8 @@ public class HealthFragment extends Fragment implements AuthStateCallBack {
     }
 
     @Override
-    public void authResult(boolean isAuth) {
-        if(isAuth){
+    public void updateServiceMessage(boolean status) {
+        if (status) {
             updateData();
         }
     }
@@ -190,6 +164,7 @@ public class HealthFragment extends Fragment implements AuthStateCallBack {
 
     private void setViews(FamiliesList datas) {
         fmRecyclerAdapter = new FMRecyclerAdapter(getContext(), datas.getItems());
+        peopleRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         peopleRecycler.setAdapter(fmRecyclerAdapter);
     }
 
@@ -197,11 +172,10 @@ public class HealthFragment extends Fragment implements AuthStateCallBack {
         if (getFamiliesList == null) {
             getFamiliesList = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
         }
-
         loadingDialog.setHintText("加载中....");
         loadingDialog.show();
         NetService service = getFamiliesList.create(NetService.class);
-        service.getFamiliesList(mParam1 + " " + mParam2)
+        service.getFamiliesList(app.getTokenType() + " " + app.getAccessToken())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableObserver<FamiliesList>() {

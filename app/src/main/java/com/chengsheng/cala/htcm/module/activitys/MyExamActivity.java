@@ -15,11 +15,13 @@ import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.module.account.LoginActivity;
 import com.chengsheng.cala.htcm.protocol.FamiliesList;
 import com.chengsheng.cala.htcm.protocol.FamiliesListItem;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
 import com.chengsheng.cala.htcm.adapter.MyExamPagerViewAdapter;
+import com.chengsheng.cala.htcm.utils.UserUtil;
 import com.chengsheng.cala.htcm.widget.ConditionPopupWindow;
 import com.chengsheng.cala.htcm.module.fragments.MyExamAllFragment;
 
@@ -35,7 +37,7 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
 public class MyExamActivity extends BaseActivity implements TabLayout.OnTabSelectedListener,
-                                                             MyExamAllFragment.OnFragmentInteractionListener {
+        MyExamAllFragment.OnFragmentInteractionListener {
     private TextView menuBarTitle;
     private ImageView searchButton;
     private TabLayout myExamTabLayout;
@@ -47,7 +49,6 @@ public class MyExamActivity extends BaseActivity implements TabLayout.OnTabSelec
     private HTCMApp app;
     private String token;
 
-    private MyRetrofit myRetrofit;
     private Retrofit retrofit;
     private NetService service;
 
@@ -60,37 +61,33 @@ public class MyExamActivity extends BaseActivity implements TabLayout.OnTabSelec
     public void initView() {
         app = HTCMApp.create(getApplicationContext());
 
+
         //初始化Activity数据.
         token = app.getTokenType() + " " + app.getAccessToken();
-        if (myRetrofit == null) {
-            myRetrofit = MyRetrofit.createInstance();
-        }
         if (retrofit == null) {
-            retrofit = myRetrofit.createURL(GlobalConstant.API_BASE_URL);
-        }
-        if (service == null) {
-            service = retrofit.create(NetService.class);
-        }
-        if (familiesList == null) {
-            service.getFamiliesList(token)
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new DisposableObserver<FamiliesList>() {
-                        @Override
-                        public void onNext(FamiliesList list) {
-                            familiesList = list;
-                        }
+            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
+        } else {
+            if (familiesList == null) {
+                service.getFamiliesList(token)
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new DisposableObserver<FamiliesList>() {
+                            @Override
+                            public void onNext(FamiliesList list) {
+                                familiesList = list;
+                            }
 
-                        @Override
-                        public void onError(Throwable e) {
-                            Log.e("TAG", "请求家人列表失败! " + e.toString());
-                        }
+                            @Override
+                            public void onError(Throwable e) {
+                                Log.e("TAG", "请求家人列表失败! " + e.toString());
+                            }
 
-                        @Override
-                        public void onComplete() {
+                            @Override
+                            public void onComplete() {
 
-                        }
-                    });
+                            }
+                        });
+            }
         }
 
 
@@ -120,13 +117,13 @@ public class MyExamActivity extends BaseActivity implements TabLayout.OnTabSelec
                     Map<String, String> header = new HashMap<>();
                     header.put("SELECT", "false");
                     header.put("DATA", "");
-                    header.put("ID","");
-                    listDatas.add(0,header);
+                    header.put("ID", "");
+                    listDatas.add(0, header);
                     for (FamiliesListItem item : familiesList.getItems()) {
                         Map<String, String> map = new HashMap<>();
                         map.put("SELECT", "false");
                         map.put("DATA", item.getFullname());
-                        map.put("ID",String.valueOf(item.getId()));
+                        map.put("ID", String.valueOf(item.getId()));
                         listDatas.add(map);
                     }
                 }

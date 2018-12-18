@@ -3,17 +3,16 @@ package com.chengsheng.cala.htcm.module.activitys;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.chengsheng.cala.htcm.base.BaseActivity;
-import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
-import com.chengsheng.cala.htcm.utils.AppManager;
+import com.chengsheng.cala.htcm.base.BaseActivity;
+import com.chengsheng.cala.htcm.constant.GlobalConstant;
+import com.chengsheng.cala.htcm.manager.ActivityManager;
 
 public class SettingActivity extends BaseActivity {
 
@@ -112,7 +111,7 @@ public class SettingActivity extends BaseActivity {
                 app.setUserRegister(GlobalConstant.USER_STATE_UNREGISTER);
                 app.setAccessToken("");
                 app.setTokenType("");
-                AppManager.getAppManager().AppExit(SettingActivity.this);
+                ActivityManager.getAppManager().AppExit(SettingActivity.this);
             }
         });
         alertDialog = builder.create();

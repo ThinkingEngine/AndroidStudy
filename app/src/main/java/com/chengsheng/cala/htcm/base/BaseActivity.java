@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.chengsheng.cala.htcm.utils.AppManager;
+import com.chengsheng.cala.htcm.manager.ActivityManager;
 
 /**
  * Author: 任和
@@ -20,7 +20,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getLayoutId());
         //默认竖屏显示
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        AppManager.getAppManager().addActivity(this);
+        ActivityManager.getAppManager().addActivity(this);
         initView();
         getData();
     }
@@ -28,7 +28,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        AppManager.getAppManager().finishActivity(this);
+        ActivityManager.getAppManager().finishActivity(this);
     }
 
     /**

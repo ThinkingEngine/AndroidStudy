@@ -1,24 +1,21 @@
-package com.chengsheng.cala.htcm.utils;
+package com.chengsheng.cala.htcm.manager;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.content.Context;
 
 import java.util.Stack;
 
-public class AppManager {
+public class ActivityManager {
 
     private static Stack<Activity> activityStack;
-    private static AppManager instance;
+    private static ActivityManager instance;
 
-    private AppManager() {
+    private ActivityManager() {
     }
 
-
-
-    public static AppManager getAppManager() {
+    public static ActivityManager getAppManager() {
         if (instance == null) {
-            instance = new AppManager();
+            instance = new ActivityManager();
         }
         return instance;
     }
@@ -70,7 +67,7 @@ public class AppManager {
     public void AppExit(Context context){
         try{
             finishAllActivity();
-            ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+            android.app.ActivityManager activityManager = (android.app.ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
             activityManager.restartPackage(context.getPackageName());
             System.exit(0);
         }catch (Exception e){

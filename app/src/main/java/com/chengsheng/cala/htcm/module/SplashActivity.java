@@ -2,7 +2,6 @@ package com.chengsheng.cala.htcm.module;
 
 import android.content.Intent;
 import android.os.Handler;
-import android.view.Window;
 
 import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
@@ -25,8 +24,6 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     public void initView() {
-
-
 
         new Handler().postDelayed(new Runnable() {
             @Override

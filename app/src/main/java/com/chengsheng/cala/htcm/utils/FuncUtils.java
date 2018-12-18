@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import static com.chengsheng.cala.htcm.HTCMApplication.myContext;
+import static com.chengsheng.cala.htcm.HTCMApplication.appContext;
 
 public class FuncUtils {
 
@@ -28,47 +28,47 @@ public class FuncUtils {
 
 
     public static SharedPreferences putString(String key, String value) {
-        myContext.getSharedPreferences("config", Context.MODE_PRIVATE)
+        appContext.getSharedPreferences("config", Context.MODE_PRIVATE)
                 .edit()
                 .putString(key, value)
                 .commit();
 
-        return myContext.getSharedPreferences("config", myContext.MODE_PRIVATE);
+        return appContext.getSharedPreferences("config", appContext.MODE_PRIVATE);
     }
 
     public static SharedPreferences putBoolean(String key, boolean value) {
-        myContext.getSharedPreferences("config", myContext.MODE_PRIVATE)
+        appContext.getSharedPreferences("config", appContext.MODE_PRIVATE)
                 .edit()
                 .putBoolean(key, value)
                 .commit();
 
-        return myContext.getSharedPreferences("config", myContext.MODE_PRIVATE);
+        return appContext.getSharedPreferences("config", appContext.MODE_PRIVATE);
     }
 
     public static String getString(String key, String defaultVal) {
-        String result = myContext.getSharedPreferences("config", myContext.MODE_PRIVATE)
+        String result = appContext.getSharedPreferences("config", appContext.MODE_PRIVATE)
                 .getString(key.trim(), defaultVal.trim());
         return result;
     }
 
     public static boolean getBoolean(String key, boolean defaultValue) {
-        return myContext.getSharedPreferences("config", myContext.MODE_PRIVATE).getBoolean(key, defaultValue);
+        return appContext.getSharedPreferences("config", appContext.MODE_PRIVATE).getBoolean(key, defaultValue);
     }
 
     public static SharedPreferences clear() {
-        SharedPreferences sp = myContext.getSharedPreferences("config", myContext.MODE_PRIVATE);
+        SharedPreferences sp = appContext.getSharedPreferences("config", appContext.MODE_PRIVATE);
         sp.edit().clear().commit();
 
-        return myContext.getSharedPreferences("config", myContext.MODE_PRIVATE);
+        return appContext.getSharedPreferences("config", appContext.MODE_PRIVATE);
     }
 
     public static int px2dip(int px) {
-        final float scale = myContext.getResources().getDisplayMetrics().density;
+        final float scale = appContext.getResources().getDisplayMetrics().density;
         return (int) (px / scale + 0.5f);
     }
 
     public static int dip2px(int dp) {
-        final float density = myContext.getResources().getDisplayMetrics().density;
+        final float density = appContext.getResources().getDisplayMetrics().density;
 
         return (int) (dp * density + 0.5);
     }

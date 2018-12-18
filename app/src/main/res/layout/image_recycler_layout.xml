@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     
-    <com.chengsheng.cala.htcm.views.customviews.MyRecyclerView
+    <com.chengsheng.cala.htcm.widget.MyRecyclerView
         android:id="@+id/image_type_exam_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

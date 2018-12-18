@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.activitys.FamilyManageActivity">
+    tools:context=".module.activitys.FamilyManageActivity">
 
     <RelativeLayout
         android:id="@+id/families_item"

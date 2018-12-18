@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.activitys.ServiceOrderActivity">
+    tools:context=".module.activitys.ServiceOrderActivity">
 
     <include
         android:id="@+id/title_header_service_oder"

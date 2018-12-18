@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPageBackground"
     android:orientation="vertical"
-    tools:context="com.chengsheng.cala.htcm.views.activitys.SearchActivity">
+    tools:context="com.chengsheng.cala.htcm.module.activitys.SearchActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

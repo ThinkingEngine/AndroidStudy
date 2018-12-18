@@ -1,27 +1,27 @@
 package com.chengsheng.cala.htcm.network;
 
 
-import com.chengsheng.cala.htcm.model.datamodel.AppointmentDetail;
-import com.chengsheng.cala.htcm.model.datamodel.AssistantList;
-import com.chengsheng.cala.htcm.model.datamodel.ExamApponitments;
-import com.chengsheng.cala.htcm.model.datamodel.ExamItemsList;
-import com.chengsheng.cala.htcm.model.datamodel.ExamReportList;
-import com.chengsheng.cala.htcm.model.datamodel.FamiliesDetailInfo;
-import com.chengsheng.cala.htcm.model.datamodel.FamiliesList;
-import com.chengsheng.cala.htcm.model.datamodel.LoginData;
-import com.chengsheng.cala.htcm.model.datamodel.Message;
-import com.chengsheng.cala.htcm.model.datamodel.OrderID;
-import com.chengsheng.cala.htcm.model.datamodel.SMSVerificationResult;
-import com.chengsheng.cala.htcm.model.datamodel.URLResult;
-import com.chengsheng.cala.htcm.model.datamodel.ZhiFuBaoSign;
-import com.chengsheng.cala.htcm.model.datamodel.childmodela.ExamReportDetial;
-import com.chengsheng.cala.htcm.model.datamodel.childmodela.MessageList;
-import com.chengsheng.cala.htcm.model.datamodel.childmodela.NureadMessage;
-import com.chengsheng.cala.htcm.model.datamodel.childmodelb.BeforeExam;
-import com.chengsheng.cala.htcm.model.datamodel.childmodelb.ExamOrder;
-import com.chengsheng.cala.htcm.model.datamodel.childmodelb.ExamOrderDetail;
-import com.chengsheng.cala.htcm.model.datamodel.childmodelb.IntelligentCheck;
-import com.chengsheng.cala.htcm.model.datamodel.childmodelb.UserExamDetail;
+import com.chengsheng.cala.htcm.protocol.AppointmentDetail;
+import com.chengsheng.cala.htcm.protocol.AssistantList;
+import com.chengsheng.cala.htcm.protocol.ExamApponitments;
+import com.chengsheng.cala.htcm.protocol.ExamItemsList;
+import com.chengsheng.cala.htcm.protocol.ExamReportList;
+import com.chengsheng.cala.htcm.protocol.FamiliesDetailInfo;
+import com.chengsheng.cala.htcm.protocol.FamiliesList;
+import com.chengsheng.cala.htcm.protocol.LoginData;
+import com.chengsheng.cala.htcm.protocol.Message;
+import com.chengsheng.cala.htcm.protocol.OrderID;
+import com.chengsheng.cala.htcm.protocol.SMSVerificationResult;
+import com.chengsheng.cala.htcm.protocol.URLResult;
+import com.chengsheng.cala.htcm.protocol.ZhiFuBaoSign;
+import com.chengsheng.cala.htcm.protocol.childmodela.ExamReportDetial;
+import com.chengsheng.cala.htcm.protocol.childmodela.MessageList;
+import com.chengsheng.cala.htcm.protocol.childmodela.NureadMessage;
+import com.chengsheng.cala.htcm.protocol.childmodelb.BeforeExam;
+import com.chengsheng.cala.htcm.protocol.childmodelb.ExamOrder;
+import com.chengsheng.cala.htcm.protocol.childmodelb.ExamOrderDetail;
+import com.chengsheng.cala.htcm.protocol.childmodelb.IntelligentCheck;
+import com.chengsheng.cala.htcm.protocol.childmodelb.UserExamDetail;
 
 
 import java.util.List;

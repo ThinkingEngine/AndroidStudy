@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPageBackground"
     android:orientation="vertical"
-    tools:context=".views.activitys.CommonUseActivity">
+    tools:context=".module.activitys.CommonUseActivity">
 
     <include
         android:id="@+id/title_header_common_use"

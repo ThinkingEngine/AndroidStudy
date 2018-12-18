@@ -42,7 +42,7 @@
             android:layout_marginTop="20dp"
             android:background="@color/colorCutoff" />
 
-        <com.chengsheng.cala.htcm.views.customviews.MyExpandableListView
+        <com.chengsheng.cala.htcm.widget.MyExpandableListView
             android:id="@+id/other_item_expandable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
             android:layout_marginTop="6dp"
             android:layout_marginBottom="6dp">
 
-        </com.chengsheng.cala.htcm.views.customviews.MyExpandableListView>
+        </com.chengsheng.cala.htcm.widget.MyExpandableListView>
     </RelativeLayout>
 
 </FrameLayout>

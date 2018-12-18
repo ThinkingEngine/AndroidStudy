@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPageBackground"
-    tools:context=".views.activitys.OrderDetailActivity">
+    tools:context=".module.activitys.OrderDetailActivity">
 
     <include
         android:id="@+id/title_header_order_detail"
@@ -245,13 +245,13 @@
                     android:textSize="14sp" />
             </RelativeLayout>
 
-            <com.chengsheng.cala.htcm.views.customviews.MyExpandableListView
+            <com.chengsheng.cala.htcm.widget.MyExpandableListView
                 android:id="@+id/order_item_expandable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp">
 
-            </com.chengsheng.cala.htcm.views.customviews.MyExpandableListView>
+            </com.chengsheng.cala.htcm.widget.MyExpandableListView>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="43dp"

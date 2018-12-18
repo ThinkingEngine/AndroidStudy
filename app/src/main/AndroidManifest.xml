@@ -7,11 +7,10 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".MyApplication"
+        android:name=".HTCMApplication"
         android:allowBackup="true"
         android:icon="@mipmap/htcm_icon"
         android:label="@string/app_name"
@@ -19,52 +18,50 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:replace="android:theme">
-        <activity
-            android:name=".LaunchActivity"
-            android:theme="@style/AppTheme">
+        <activity android:name=".module.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".views.activitys.RegisterActivity" />
+        <activity android:name=".module.account.RegisterActivity" />
         <activity
-            android:name=".views.activitys.LoginActivity"
+            android:name=".module.account.LoginActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".views.activitys.RetrievePWActivity" />
+        <activity android:name=".module.activitys.RetrievePWActivity" />
         <activity
-            android:name=".views.activitys.HomePageActivity"
+            android:name=".module.activitys.MainActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".views.activitys.SettingActivity" />
-        <activity android:name=".views.activitys.FAQActivity" />
-        <activity android:name=".views.activitys.MyDevicesActivity" />
-        <activity android:name=".views.activitys.AccountSettingActivity" />
-        <activity android:name=".views.activitys.MessageActivity" />
-        <activity android:name=".views.activitys.SecuritySettingsActivity" />
-        <activity android:name=".views.activitys.CommonUseActivity" />
-        <activity android:name=".views.activitys.FeedbackActivity" />
-        <activity android:name=".views.activitys.AboutActivity" />
-        <activity android:name=".views.activitys.GesturesUnlockActivity" />
-        <activity android:name=".views.activitys.UserCardActivity" />
-        <activity android:name=".views.activitys.FamilyManageActivity" />
-        <activity android:name=".views.activitys.FamiliesDetailsActivity" />
-        <activity android:name=".views.activitys.ExamAppointmentActivity" />
-        <activity android:name=".views.activitys.AIAssistantActivity" />
-        <activity android:name=".views.activitys.MyExamActivity" />
-        <activity android:name=".views.activitys.ExamDetailsActivity" />
-        <activity android:name=".views.activitys.ComboDetailActivity" />
-        <activity android:name=".views.activitys.AffirmAppointmentActivity" />
-        <activity android:name=".views.activitys.ModePaymentActivity" />
-        <activity android:name=".views.activitys.PayResultActivity" />
-        <activity android:name=".views.activitys.AddExamPersonActivity" />
-        <activity android:name=".views.activitys.ExamReportActivity" />
-        <activity android:name=".views.activitys.ExamReportDetailActivity" />
-        <activity android:name=".views.activitys.ExamResultUnscrambleActivity" />
-        <activity android:name=".views.activitys.BeforeExamActivity" />
-        <activity android:name=".views.activitys.ExamOrderFormActivity" />
-        <activity android:name=".views.activitys.OrderDetailActivity" />
-        <activity android:name=".views.activitys.ExamReportCompareActivity" />
+        <activity android:name=".module.activitys.SettingActivity" />
+        <activity android:name=".module.activitys.FAQActivity" />
+        <activity android:name=".module.activitys.MyDevicesActivity" />
+        <activity android:name=".module.activitys.AccountSettingActivity" />
+        <activity android:name=".module.activitys.MessageActivity" />
+        <activity android:name=".module.activitys.SecuritySettingsActivity" />
+        <activity android:name=".module.activitys.CommonUseActivity" />
+        <activity android:name=".module.activitys.FeedbackActivity" />
+        <activity android:name=".module.activitys.AboutActivity" />
+        <activity android:name=".module.activitys.GesturesUnlockActivity" />
+        <activity android:name=".module.activitys.UserCardActivity" />
+        <activity android:name=".module.activitys.FamilyManageActivity" />
+        <activity android:name=".module.activitys.FamiliesDetailsActivity" />
+        <activity android:name=".module.activitys.ExamAppointmentActivity" />
+        <activity android:name=".module.activitys.AIAssistantActivity" />
+        <activity android:name=".module.activitys.MyExamActivity" />
+        <activity android:name=".module.activitys.ExamDetailsActivity" />
+        <activity android:name=".module.activitys.ComboDetailActivity" />
+        <activity android:name=".module.activitys.AffirmAppointmentActivity" />
+        <activity android:name=".module.activitys.ModePaymentActivity" />
+        <activity android:name=".module.activitys.PayResultActivity" />
+        <activity android:name=".module.activitys.AddExamPersonActivity" />
+        <activity android:name=".module.activitys.ExamReportActivity" />
+        <activity android:name=".module.activitys.ExamReportDetailActivity" />
+        <activity android:name=".module.activitys.ExamResultUnscrambleActivity" />
+        <activity android:name=".module.activitys.BeforeExamActivity" />
+        <activity android:name=".module.activitys.ExamOrderFormActivity" />
+        <activity android:name=".module.activitys.OrderDetailActivity" />
+        <activity android:name=".module.activitys.ExamReportCompareActivity" />
 
         <receiver android:name=".model.broadcasts.NeworkChangeReceiver">
             <intent-filter>
@@ -82,27 +79,28 @@
                 android:resource="@xml/paths" />
         </provider>
 
-        <activity android:name=".views.activitys.ModeFamiliesInfoActivity" />
-        <activity android:name=".views.activitys.BarCodeActivity" />
-        <activity android:name=".views.activitys.IntelligentCheckActivity" />
-        <activity android:name=".views.activitys.ServiceOrderActivity" />
-        <activity android:name=".views.activitys.AbnormalUnscrambleActivity" />
-        <activity android:name=".views.activitys.NewsListActivity" />
-        <activity android:name=".views.activitys.ServiceMessageActivity" />
-        <activity android:name=".views.activitys.NewsDetailActivity" />
-        <activity android:name=".views.activitys.EstimateOrderActivity" />
-        <activity android:name=".views.activitys.PlusImageActivity" />
-        <activity android:name=".views.activitys.HeaderIconActivity" />
-        <activity android:name=".views.activitys.ChangePhoneActivity" />
-        <activity android:name=".views.activitys.MyCollectionActivity" />
-        <activity android:name=".views.activitys.BarADActivity" />
+        <activity android:name=".module.activitys.ModeFamiliesInfoActivity" />
+        <activity android:name=".module.activitys.BarCodeActivity" />
+        <activity android:name=".module.activitys.IntelligentCheckActivity" />
+        <activity android:name=".module.activitys.ServiceOrderActivity" />
+        <activity android:name=".module.activitys.AbnormalUnscrambleActivity" />
+        <activity android:name=".module.activitys.NewsListActivity" />
+        <activity android:name=".module.activitys.ServiceMessageActivity" />
+        <activity android:name=".module.activitys.NewsDetailActivity" />
+        <activity android:name=".module.activitys.EstimateOrderActivity" />
+        <activity android:name=".module.activitys.PlusImageActivity" />
+        <activity android:name=".module.activitys.HeaderIconActivity" />
+        <activity android:name=".module.activitys.ChangePhoneActivity" />
+        <activity android:name=".module.activitys.MyCollectionActivity" />
+        <activity android:name=".module.activitys.BarADActivity" />
+        <activity android:name=".module.activitys.SearchActivity" />
+        <activity android:name=".module.TestActivity" />
 
         <service
             android:name=".model.services.ServiceSMSService"
             android:enabled="true"
             android:exported="false" />
 
-        <activity android:name=".views.activitys.SearchActivity"></activity>
     </application>
 
 </manifest>

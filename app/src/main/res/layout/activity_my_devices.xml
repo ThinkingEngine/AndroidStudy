@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPageBackground"
-    tools:context=".views.activitys.MyDevicesActivity">
+    tools:context=".module.activitys.MyDevicesActivity">
 
     <include
         android:id="@+id/title_header_my_devices"

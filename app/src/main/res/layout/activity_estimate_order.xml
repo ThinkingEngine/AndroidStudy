@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.activitys.EstimateOrderActivity">
+    tools:context=".module.activitys.EstimateOrderActivity">
 
     <include
         android:id="@+id/title_header_estimate_order"
@@ -36,7 +36,7 @@
                     android:textColor="@color/colorText"
                     android:textSize="14sp" />
 
-                <com.chengsheng.cala.htcm.views.customviews.RatingBar
+                <com.chengsheng.cala.htcm.widget.RatingBar
                     android:id="@+id/estimate_star_num"
                     android:layout_width="wrap_content"
                     android:layout_height="21dp"

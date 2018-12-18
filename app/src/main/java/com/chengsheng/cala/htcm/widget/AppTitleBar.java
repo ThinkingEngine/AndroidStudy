@@ -73,8 +73,11 @@ public class AppTitleBar extends FrameLayout {
         }
 
         if (ivRightAction != null) {
-            //设置右边操作按钮图标
-            ivRightAction.setImageResource(rightImgResId);
+            //设置右边操作按钮图标(-1为默认值，不显示图标)
+            if (rightImgResId != -1) {
+                ivRightAction.setVisibility(View.VISIBLE);
+                ivRightAction.setImageResource(rightImgResId);
+            }
 
             //设置右边点击事件的返回事件
             ivRightAction.setOnClickListener(new OnClickListener() {

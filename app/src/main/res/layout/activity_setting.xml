@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPageBackground"
     android:orientation="vertical"
-    tools:context=".views.activitys.SettingActivity">
+    tools:context=".module.activitys.SettingActivity">
 
     <include
         android:id="@+id/title_header_setting"

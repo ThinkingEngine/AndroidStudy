@@ -8,7 +8,6 @@ import android.net.NetworkRequest;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v7.app.AlertDialog;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -19,20 +18,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
-import com.chengsheng.cala.htcm.HTCMApp;
-import com.chengsheng.cala.htcm.R;
-import com.chengsheng.cala.htcm.module.activitys.MainActivity;
 import com.chengsheng.cala.htcm.module.activitys.RetrievePWActivity;
-import com.chengsheng.cala.htcm.protocol.LoginData;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
 import com.chengsheng.cala.htcm.network.NetworkStateCallback;
-import com.chengsheng.cala.htcm.utils.FuncUtils;
+import com.chengsheng.cala.htcm.protocol.LoginData;
+import com.chengsheng.cala.htcm.utils.UserUtil;
 import com.zyao89.view.zloading.ZLoadingDialog;
 import com.zyao89.view.zloading.Z_TYPE;
-
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
@@ -56,8 +52,6 @@ public class LoginActivity extends BaseActivity {
     private String userNameInput;
     private String passwordInput;
 
-    private HTCMApp app;
-
     @Override
     public int getLayoutId() {
         return R.layout.activity_login;
@@ -76,7 +70,6 @@ public class LoginActivity extends BaseActivity {
 
         deleteInput.setVisibility(View.INVISIBLE);
 
-        app = HTCMApp.create(getApplicationContext());
         final ZLoadingDialog dialog = new ZLoadingDialog(this);
         dialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
         dialog.setLoadingColor(getResources().getColor(R.color.colorPrimary));
@@ -179,29 +172,25 @@ public class LoginActivity extends BaseActivity {
                         Toast.makeText(LoginActivity.this, "请输入电话号码和密码！", Toast.LENGTH_SHORT).show();
                     } else {
                         dialog.show();
-                        service.login(HTCMApp.getClientId(),HTCMApp.getGrantType(), userNameInput,passwordInput, HTCMApp.getClientSecret(), HTCMApp.getScope())
+                        service.login(GlobalConstant.clientId,
+                                GlobalConstant.grantType, userNameInput, passwordInput,
+                                GlobalConstant.clientSecret, GlobalConstant.scope)
                                 .subscribeOn(Schedulers.newThread())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(new DisposableObserver<LoginData>() {
                                     @Override
                                     public void onNext(LoginData data) {
-                                        Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
-                                        app.setUserName(userNameInput);
-                                        app.setUserRegister(GlobalConstant.USER_STATE_REGISTER);
-                                        app.setAccessToken(data.getAccess_token());
-                                        app.setExpiresIn(data.getExpires_in());
-                                        app.setTokenType(data.getToken_type());
-                                        FuncUtils.putBoolean("REGISTER", true);
-                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                        showShortToast("登录成功");
+                                        UserUtil.setAccessToken(data.getAccess_token());
+                                        UserUtil.setTokenType(data.getToken_type());
+                                        UserUtil.setMobile(userNameInput);
                                         dialog.cancel();
-                                        startActivity(intent);
                                         finish();
                                     }
 
                                     @Override
                                     public void onError(Throwable e) {
-
-                                        Log.e("TAG","错误:"+e.toString());
+                                        Log.e("TAG", "错误:" + e.toString());
                                         dialog.cancel();
                                         AlertDialog alertDialog;
                                         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);

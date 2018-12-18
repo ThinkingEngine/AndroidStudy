@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +17,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
-import com.chengsheng.cala.htcm.module.TestActivity;
 import com.chengsheng.cala.htcm.adapter.AIAssistantRecyclerAdapter;
 import com.chengsheng.cala.htcm.adapter.BannerAdapter;
+import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.module.activitys.AIAssistantActivity;
 import com.chengsheng.cala.htcm.module.activitys.BarADActivity;
 import com.chengsheng.cala.htcm.module.activitys.ExamAppointmentActivity;
@@ -40,6 +38,7 @@ import com.chengsheng.cala.htcm.protocol.articleModel.RecommendedNews;
 import com.chengsheng.cala.htcm.protocol.childmodela.NureadMessage;
 import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
 import com.chengsheng.cala.htcm.utils.UpdateAIAssisont;
+import com.chengsheng.cala.htcm.utils.UserUtil;
 import com.chengsheng.cala.htcm.widget.FooterAdapter;
 import com.chengsheng.cala.htcm.widget.MyRecyclerView;
 
@@ -148,8 +147,6 @@ public class MainPageFragment extends Fragment implements UpdateAIAssisont {
         //为“智能助理”列表注入数据
         updateAIAssistant();
         updateNews();
-
-        Log.e("TAG", app.getTokenType() + " " + app.getAccessToken());
 
         final List<ImageView> data = new ArrayList<>();
         for (int i = 0; i < barImages.length; i++) {
@@ -368,11 +365,15 @@ public class MainPageFragment extends Fragment implements UpdateAIAssisont {
     }
 
     private void updateServiceSMS() {
+        if (!UserUtil.isLogin()) {
+            return;
+        }
+
         if (retrofit == null) {
             retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
         }
         NetService service = retrofit.create(NetService.class);
-        service.getUnreadMessageNum(app.getTokenType() + " " + app.getAccessToken())
+        service.getUnreadMessageNum(UserUtil.getTokenType() + " " + UserUtil.getAccessToken())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DefaultObserver<NureadMessage>() {
@@ -398,12 +399,15 @@ public class MainPageFragment extends Fragment implements UpdateAIAssisont {
     }
 
     private void updateAIAssistant() {
+        if (!UserUtil.isLogin()) {
+            return;
+        }
 
         if (retrofit == null) {
             retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
         }
         NetService service = retrofit.create(NetService.class);
-        service.getAIAssistants(app.getTokenType() + " " + app.getAccessToken(), "1")
+        service.getAIAssistants(UserUtil.getTokenType() + " " + UserUtil.getAccessToken(), "1")
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableObserver<AssistantList>() {

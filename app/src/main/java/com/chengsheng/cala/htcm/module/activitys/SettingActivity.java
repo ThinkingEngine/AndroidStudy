@@ -8,20 +8,15 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.base.BaseActivity;
-import com.chengsheng.cala.htcm.constant.GlobalConstant;
-import com.chengsheng.cala.htcm.manager.ActivityManager;
+import com.chengsheng.cala.htcm.utils.PreferenceUtil;
 
 public class SettingActivity extends BaseActivity {
 
     private TextView titleText;
     private RelativeLayout intoSecuritySetting, intoCommonUse, intoShare, intoFeedback, intoAbout;
     private Button outLineButton;
-
-    private HTCMApp app;
-
 
     @Override
     public int getLayoutId() {
@@ -30,7 +25,7 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        app = HTCMApp.create(getApplicationContext());
+
         initViews();
 
         titleText.setText("设置");
@@ -108,10 +103,7 @@ public class SettingActivity extends BaseActivity {
         builder.setPositiveButton("退出", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                app.setUserRegister(GlobalConstant.USER_STATE_UNREGISTER);
-                app.setAccessToken("");
-                app.setTokenType("");
-                ActivityManager.getAppManager().AppExit(SettingActivity.this);
+                PreferenceUtil.clear();
             }
         });
         alertDialog = builder.create();

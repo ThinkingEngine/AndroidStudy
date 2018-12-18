@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,14 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
-import com.chengsheng.cala.htcm.HTCMApp;
-import com.chengsheng.cala.htcm.R;
-import com.chengsheng.cala.htcm.protocol.SMSVerificationResult;
-import com.chengsheng.cala.htcm.protocol.childmodela.RegisterError;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
+import com.chengsheng.cala.htcm.protocol.SMSVerificationResult;
+import com.chengsheng.cala.htcm.protocol.childmodela.RegisterError;
 import com.chengsheng.cala.htcm.utils.FuncUtils;
 import com.google.gson.Gson;
 import com.zyao89.view.zloading.ZLoadingDialog;
@@ -218,7 +216,8 @@ public class RegisterActivity extends BaseActivity {
 
         loadingDialog.show();
         NetService service = retrofit.create(NetService.class);
-        service.commitRegistrInfo(getUserNum.getText().toString(), passwordInput.getText().toString().trim(), verificationCodeId, getCodeUser.getText().toString(), HTCMApp.getClientId())
+        service.commitRegistrInfo(getUserNum.getText().toString(), passwordInput.getText().toString().trim(), verificationCodeId, getCodeUser.getText().toString(),
+                GlobalConstant.clientId)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableObserver<ResponseBody>() {

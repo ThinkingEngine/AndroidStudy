@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
@@ -18,12 +17,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
-import com.chengsheng.cala.htcm.protocol.TextMessage;
+import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
+import com.chengsheng.cala.htcm.protocol.TextMessage;
 import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
 import com.google.gson.Gson;
 
@@ -45,20 +44,19 @@ public class ImmediatelyDialogView extends Dialog {
     private int id;
 
 
-
-    public ImmediatelyDialogView(Context context,int ID) {
+    public ImmediatelyDialogView(Context context, int ID) {
         super(context);
         this.context = context;
         this.id = ID;
     }
 
-    public ImmediatelyDialogView(Context context, int ID,int themeResId) {
+    public ImmediatelyDialogView(Context context, int ID, int themeResId) {
         super(context, themeResId);
         this.context = context;
         this.id = ID;
     }
 
-    protected ImmediatelyDialogView(Context context, int ID,boolean cancelable, DialogInterface.OnCancelListener cancelListener) {
+    protected ImmediatelyDialogView(Context context, int ID, boolean cancelable, DialogInterface.OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
         this.id = ID;
     }
@@ -98,51 +96,51 @@ public class ImmediatelyDialogView extends Dialog {
         certification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(inputBoxCertification.getText().toString().equals("")){
+                if (inputBoxCertification.getText().toString().equals("")) {
                     inputBoxCertification.setText("");
-                    Toast.makeText(context,"请输入验证码！",Toast.LENGTH_SHORT).show();
-                }else{
+                    Toast.makeText(context, "请输入验证码！", Toast.LENGTH_SHORT).show();
+                } else {
                     String code = inputBoxCertification.getText().toString();
                     HTCMApp app = HTCMApp.create(context);
                     MyRetrofit myRetrofit = MyRetrofit.createInstance();
                     Retrofit retrofit = myRetrofit.createURL(GlobalConstant.API_BASE_URL);
                     NetService service = retrofit.create(NetService.class);
-                    RequestBody codeBody = RequestBody.create(MediaType.parse("multipart/form-data"),code);
+                    RequestBody codeBody = RequestBody.create(MediaType.parse("multipart/form-data"), code);
                     Map<String, RequestBody> mapa = new HashMap<>();
-                    mapa.put("auth_code",codeBody);
-                    service.authenticationFamilies(app.getTokenType()+" "+app.getAccessToken(),String.valueOf(id),mapa)
+                    mapa.put("auth_code", codeBody);
+                    service.authenticationFamilies(app.getTokenType() + " " + app.getAccessToken(), String.valueOf(id), mapa)
                             .subscribeOn(Schedulers.newThread())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new DisposableObserver<ResponseBody>() {
-                        @Override
-                        public void onNext(ResponseBody responseBody) {
-                            Log.e("AUTH","验证成功"+responseBody.toString());
-                            Toast.makeText(context,"验证成功:"+responseBody.toString(),Toast.LENGTH_SHORT).show();
-                            CallBackDataAuth.doAuthStateCallBack(true);
-                            dismiss();
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            if(e instanceof HttpException){
-                                ResponseBody body = ((HttpException)e).response().errorBody();
-                                try {
-                                    String info = body.string();
-                                    Gson gson = new Gson();
-                                    TextMessage message = gson.fromJson(info,TextMessage.class);
-                                    Toast.makeText(context,"验证失败:"+message.toString(),Toast.LENGTH_SHORT).show();
-                                } catch (IOException e1) {
-                                    e1.printStackTrace();
+                                @Override
+                                public void onNext(ResponseBody responseBody) {
+                                    Log.e("AUTH", "验证成功" + responseBody.toString());
+                                    Toast.makeText(context, "验证成功:" + responseBody.toString(), Toast.LENGTH_SHORT).show();
+                                    CallBackDataAuth.doAuthStateCallBack(true);
+                                    dismiss();
                                 }
-                            }
 
-                        }
+                                @Override
+                                public void onError(Throwable e) {
+                                    if (e instanceof HttpException) {
+                                        ResponseBody body = ((HttpException) e).response().errorBody();
+                                        try {
+                                            String info = body.string();
+                                            Gson gson = new Gson();
+                                            TextMessage message = gson.fromJson(info, TextMessage.class);
+                                            Toast.makeText(context, "验证失败:" + message.toString(), Toast.LENGTH_SHORT).show();
+                                        } catch (IOException e1) {
+                                            e1.printStackTrace();
+                                        }
+                                    }
 
-                        @Override
-                        public void onComplete() {
+                                }
 
-                        }
-                    });
+                                @Override
+                                public void onComplete() {
+
+                                }
+                            });
                 }
 
             }

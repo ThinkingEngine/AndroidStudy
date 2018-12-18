@@ -1,16 +1,25 @@
 package com.chengsheng.cala.htcm.constant;
 
+/**
+ * Author: 蔡浪
+ * CreateDate: 2018/12/18 1:41 PM
+ * Description: 全局静态常量
+ */
 public class GlobalConstant {
 
-    //全局静态量。
+    public static final String clientId = "12aef523-379e-4f0b-894d-1834dc0a80c8";
+    public static final String grantType = "password";
+    public static final String clientSecret = "x9w2f1m4iUXD21GYU5SSzrLgj55VuFOFpJQC+SLcNgUA3RUKhBNdzlRtQFx4+rLb";
+    public static final String scope = "accountInfo";
 
     public static final int NETWORK_NONE = -1;
     public static final int NETWORK_MOBILE = 0;
     public static final int NETWORK_WIFI = 1;
 
+    public static final String ACCESS_TOKEN = "accessToken";
+    public static final String TOKEN_TYPE = "tokenType";
+    public static final String MOBILE = "mobile";
 
-    public static final int APP_STATE_USER_MODE = 1;
-    public static final int APP_STATE_TOURIST_MODE = 0;
     public static final int USER_STATE_REGISTER = 1;
     public static final int USER_STATE_UNREGISTER = 0;
 

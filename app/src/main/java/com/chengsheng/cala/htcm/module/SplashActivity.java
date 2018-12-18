@@ -1,13 +1,9 @@
 package com.chengsheng.cala.htcm.module;
 
-import android.content.Intent;
 import android.os.Handler;
 
-import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.base.BaseActivity;
-import com.chengsheng.cala.htcm.constant.GlobalConstant;
-import com.chengsheng.cala.htcm.module.account.LoginActivity;
 import com.chengsheng.cala.htcm.module.activitys.MainActivity;
 
 /**
@@ -36,17 +32,8 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void start() {
-        HTCMApp app = HTCMApp.create(getApplicationContext());
-
-        if (app.getRegisterState() == GlobalConstant.USER_STATE_UNREGISTER) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-            finish();
-        } else {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
+        startActivity(new MainActivity());
+        finish();
     }
 
     @Override

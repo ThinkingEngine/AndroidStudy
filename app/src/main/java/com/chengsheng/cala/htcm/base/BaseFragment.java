@@ -1,5 +1,6 @@
 package com.chengsheng.cala.htcm.base;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,12 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.chengsheng.cala.htcm.utils.ToastUtil;
+
 /**
  * Author: 任和
  * CreateDate: 2018/12/18 9:36 AM
  * Description: Fragment父类
  */
 public abstract class BaseFragment extends Fragment {
+
+    protected Context context = getContext();
 
     @Nullable
     @Override
@@ -26,6 +31,12 @@ public abstract class BaseFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initView(view);
         getData();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = context;
     }
 
     /**
@@ -42,6 +53,24 @@ public abstract class BaseFragment extends Fragment {
      * 获取数据
      */
     public abstract void getData();
+
+    /**
+     * Toast短提示
+     */
+    public void showShortToast(String content) {
+        if (content != null) {
+            ToastUtil.showShortToast(context, content);
+        }
+    }
+
+    /**
+     * Toast长提示
+     */
+    public void showLongToast(String content) {
+        if (content != null) {
+            ToastUtil.showLongToast(context, content);
+        }
+    }
 }
 
 

@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.chengsheng.cala.htcm.manager.ActivityManager;
+import com.chengsheng.cala.htcm.utils.ToastUtil;
 
 /**
  * Author: 任和
@@ -45,4 +46,18 @@ public abstract class BaseActivity extends AppCompatActivity {
      * 获取数据
      */
     public abstract void getData();
+
+    /**
+     * Toast短提示
+     */
+    public void showShortToast(String content) {
+        ToastUtil.showShortToast(this, content);
+    }
+
+    /**
+     * Toast长提示
+     */
+    public void showLongToast(String content) {
+        ToastUtil.showLongToast(this, content);
+    }
 }

@@ -9,10 +9,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.adapter.MainViewPagerAdapter;
+import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.module.fragments.FindFragment;
 import com.chengsheng.cala.htcm.module.fragments.HealthFragment;
 import com.chengsheng.cala.htcm.module.fragments.MainPageFragment;

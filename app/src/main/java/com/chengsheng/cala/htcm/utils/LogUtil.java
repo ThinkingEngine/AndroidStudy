@@ -3,7 +3,6 @@ package com.chengsheng.cala.htcm.utils;
 import com.chengsheng.cala.htcm.BuildConfig;
 import com.orhanobut.logger.Logger;
 
-
 /**
  * Author: 任和
  * CreateDate: 2018/12/18 10:30 AM

@@ -24,12 +24,14 @@ import android.widget.Toast;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.module.account.LoginActivity;
 import com.chengsheng.cala.htcm.module.activitys.ExamReportDetailActivity;
 import com.chengsheng.cala.htcm.module.activitys.ModePaymentActivity;
 import com.chengsheng.cala.htcm.protocol.AssistantItem;
 import com.chengsheng.cala.htcm.protocol.FamiliesListItem;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
+import com.chengsheng.cala.htcm.utils.ActivityUtil;
 import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
 import com.chengsheng.cala.htcm.utils.FuncUtils;
 import com.chengsheng.cala.htcm.module.activitys.BarADActivity;
@@ -61,7 +63,6 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
     private HTCMApp app;
     private ZLoadingDialog loadingDialog;
 
-    private boolean mark = false;
 
     public AIAssistantRecyclerAdapter(Context context, List<AssistantItem> datas, int type, String error) {
         this.context = context;
@@ -87,7 +88,7 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
             holder = new AssistantViewHolder(LayoutInflater.from(context).inflate(R.layout.ai_assistant_no_content_layout, null));
         } else if (datas.isEmpty() && type == -1) {
             holder = new AssistantViewHolder(LayoutInflater.from(context).inflate(R.layout.single_text_layout, null));
-        } else {
+        } else{
             holder = new AssistantViewHolder(LayoutInflater.from(context).inflate(R.layout.ai_assistant_item_layout, null));
         }
         return holder;
@@ -217,6 +218,20 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
 
         } else if (datas.isEmpty() && type == -1) {
 
+        }else if(datas.isEmpty() && type == -2){
+            viewHolder.examNum.setText("未登录");
+            viewHolder.itemBigNotes.setText("新手指引");
+            viewHolder.unscrambleMark.setText("立即登录");
+            viewHolder.userBitmapMark.setVisibility(View.INVISIBLE);
+            viewHolder.deleteExamItem.setVisibility(View.INVISIBLE);
+
+            viewHolder.aiAssistantItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ActivityUtil.Companion.startActivity(context,new LoginActivity());
+                }
+            });
+
         } else if (datas.isEmpty() && type == 0) {
             viewHolder.aiAssistantGroupDetail.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -236,7 +251,7 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
 
     @Override
     public int getItemCount() {
-        if (datas.size() == 0) {
+        if (type <= 0) {
             return 1;
         } else {
             return datas.size();

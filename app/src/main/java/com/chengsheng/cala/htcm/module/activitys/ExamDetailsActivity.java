@@ -3,6 +3,7 @@ package com.chengsheng.cala.htcm.module.activitys;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -44,6 +45,7 @@ public class ExamDetailsActivity extends BaseActivity {
     private TextView userNeedNote;
     private TextView examItemNum;
     private TextView examStateText;
+    private SwipeRefreshLayout refreshExamDetail;
 
     private Retrofit retrofit;
     private HTCMApp app;
@@ -67,7 +69,7 @@ public class ExamDetailsActivity extends BaseActivity {
         String orderID = getIntent().getStringExtra("ORDER_ID");
 
 
-        initViews();
+        initViews(orderID);
 
         getUserExamDetail(orderID);
     }
@@ -78,7 +80,7 @@ public class ExamDetailsActivity extends BaseActivity {
     }
 
     @SuppressLint("CutPasteId")
-    private void initViews() {
+    private void initViews(final String orderId) {
         backButton = findViewById(R.id.title_header_exam_details).findViewById(R.id.back_login);
         menuBarTitle = findViewById(R.id.title_header_exam_details).findViewById(R.id.menu_bar_title);
         examItemExpandable = findViewById(R.id.exam_item_expandable);
@@ -95,6 +97,7 @@ public class ExamDetailsActivity extends BaseActivity {
         userNeedNote = findViewById(R.id.user_need_note);
         examItemNum = findViewById(R.id.exam_item_num);
         examStateText = findViewById(R.id.exam_state_text);
+        refreshExamDetail = findViewById(R.id.refresh_exam_detail);
 
         menuBarTitle.setText("详情");
         reportWaitNumBox.setVisibility(View.INVISIBLE);
@@ -106,6 +109,14 @@ public class ExamDetailsActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        refreshExamDetail.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getUserExamDetail(orderId);
+                refreshExamDetail.setRefreshing(false);
             }
         });
     }

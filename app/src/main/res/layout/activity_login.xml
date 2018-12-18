@@ -21,13 +21,13 @@
             android:src="@mipmap/denglulogo" />
 
         <ImageView
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:id="@+id/out_login_page"
+            android:layout_width="49dp"
+            android:layout_height="49dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="17dp"
-            android:layout_marginTop="14dp"
-            android:padding="8dp"
+
+            android:padding="14dp"
             android:src="@mipmap/dengluguanbi" />
 
         <TextView

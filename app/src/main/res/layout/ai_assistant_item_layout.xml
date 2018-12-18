@@ -33,7 +33,6 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="14dp"
             android:layout_toRightOf="@id/user_header_icon_ai_assistant"
-            android:text="周子萱"
             android:textColor="@color/colorText"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -46,7 +45,6 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="2dp"
             android:layout_toRightOf="@id/user_header_icon_ai_assistant"
-            android:text="体检号：201803300"
             android:textColor="@color/colorThrText"
             android:textSize="12sp" />
 

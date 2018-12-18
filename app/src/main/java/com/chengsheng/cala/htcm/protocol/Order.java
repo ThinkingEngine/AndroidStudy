@@ -6,6 +6,7 @@ public class Order {
     private String exam_status;
     private String updated_at;
     private boolean is_closed_recommend;
+    private boolean can_autonomous;
 
     public int getId() {
         return id;
@@ -45,6 +46,14 @@ public class Order {
 
     public void setUpdated_at(String updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public boolean isCan_autonomous() {
+        return can_autonomous;
+    }
+
+    public void setCan_autonomous(boolean can_autonomous) {
+        this.can_autonomous = can_autonomous;
     }
 
     @Override

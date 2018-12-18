@@ -94,18 +94,11 @@
             android:layout_below="@id/ai_assistant_item_line"
             android:layout_marginLeft="14dp"
             android:layout_marginTop="20dp"
-            android:text="您预约了2018年6月25日的复查"
+            android:textStyle="bold"
             android:textColor="@color/colorText"
             android:textSize="16sp" />
 
-        <ImageView
-            android:id="@+id/item_big_notes_mark"
-            android:layout_width="39dp"
-            android:layout_height="18dp"
-            android:layout_below="@id/ai_assistant_item_line"
-            android:layout_marginTop="22dp"
-            android:layout_toRightOf="@id/item_big_notes"
-            android:src="@mipmap/tuijian" />
+
 
         <TextView
             android:id="@+id/item_sec_notes"
@@ -127,53 +120,18 @@
             android:gravity="center"
             android:layout_marginTop="13dp"
             android:layout_marginRight="14dp"/>
-        <TextView
-            android:id="@+id/day_num"
-            android:layout_width="54dp"
-            android:layout_height="54dp"
-            android:layout_below="@id/ai_assistant_item_line"
-            android:layout_alignParentRight="true"
-            android:visibility="invisible"
-            android:gravity="center"
-            android:layout_marginTop="13dp"
-            android:layout_marginRight="14dp"
-            android:background="@drawable/white_annulus_bg" />
+
         <Button
             android:id="@+id/unscramble_mark"
-            android:layout_width="56dp"
+            android:layout_width="wrap_content"
             android:layout_height="28dp"
             android:background="@drawable/login_button_bg"
-            android:text="解读"
             android:textColor="@color/colorWhite"
             android:textSize="14sp"
-            android:visibility="invisible"
             android:layout_below="@id/ai_assistant_item_line"
             android:layout_alignParentRight="true"
             android:layout_marginRight="14dp"
             android:layout_marginTop="26dp"/>
 
-        <LinearLayout
-            android:id="@+id/user_notifition"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginRight="14dp"
-            android:layout_marginBottom="14dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:src="@mipmap/jingao" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="请带好随身物品"
-                android:textColor="#ff6262"
-                android:textSize="10dp" />
-        </LinearLayout>
     </RelativeLayout>
 </FrameLayout>

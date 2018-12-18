@@ -56,13 +56,12 @@ public class ExamReportDetailActivity extends BaseActivity {
 
 
         Bundle bundle = getIntent().getExtras();
-        String titleName  = bundle.getString(GlobalConstant.EXAM_REPORT_NAME);
+//        String titleName  = bundle.getString(GlobalConstant.EXAM_REPORT_NAME);
         String orderID = bundle.getString(GlobalConstant.EXAM_REPORT_ID);
 
         initViews();
         getExamReportDetial(orderID);
 
-        examReportDetailName.setText(titleName);
     }
 
     @Override
@@ -97,6 +96,7 @@ public class ExamReportDetailActivity extends BaseActivity {
         examResultList.setLayoutManager(new LinearLayoutManager(this));
         examResultList.setAdapter(adapter1);
         examAdvicesExpandable.expandGroup(0);
+        examReportDetailName.setText(examReportDetial.getExam_report().getName());
     }
 
     private void getExamReportDetial(String orderId){

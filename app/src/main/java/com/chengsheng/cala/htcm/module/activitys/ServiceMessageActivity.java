@@ -1,7 +1,5 @@
 package com.chengsheng.cala.htcm.module.activitys;
 
-import android.annotation.SuppressLint;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.View;
@@ -34,7 +32,7 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 
-public class ServiceMessageActivity extends BaseActivity implements UpdateStateInterface,CheckServiceInterface {
+public class ServiceMessageActivity extends BaseActivity implements UpdateStateInterface, CheckServiceInterface {
 
     private Retrofit retrofit;
     private int currentPage = 1;
@@ -76,19 +74,19 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
         childTitle.setText("全部已读");
         childTitle.setTextColor(getResources().getColor(R.color.colorThrText));
         childTitle.setSelected(false);
-        getMessageList(currentPage,true);
+        getMessageList(currentPage, true);
 
         serviceMessageList.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
-                getMessageList(1,false);
+                getMessageList(1, false);
             }
 
             @Override
             public void onLoadMore() {
                 currentPage++;
                 addMode = true;
-                getMessageList(currentPage,false);
+                getMessageList(currentPage, false);
                 serviceMessageList.loadMoreComplete();
             }
         });
@@ -114,7 +112,7 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
             retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
         }
 
-        if(loading){
+        if (loading) {
             loadingDialog.show();
         }
         NetService service = retrofit.create(NetService.class);
@@ -141,19 +139,19 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
                             serviceMessageList.setAdapter(new ServiceMessageRecyclerViewAdapter(ServiceMessageActivity.this, dataCollect));
                         }
 
-                        if(loading){
+                        if (loading) {
                             loadingDialog.cancel();
                         }
                         childTitle.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if(childTitle.isSelected()){
+                                if (childTitle.isSelected()) {
                                     childTitle.setText("全部已读");
                                     childTitle.setTextColor(getResources().getColor(R.color.colorThrText));
                                     childTitle.setSelected(false);
                                     List<String> check = new ArrayList<>();
-                                    for(MessageItem item:dataCollect){
-                                        if(!item.isIs_read()){
+                                    for (MessageItem item : dataCollect) {
+                                        if (!item.isIs_read()) {
                                             check.add(String.valueOf(item.getId()));
                                         }
                                     }
@@ -170,7 +168,7 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
 
                     @Override
                     public void onError(Throwable e) {
-                        if(loading){
+                        if (loading) {
                             loadingDialog.cancel();
                         }
                         serviceMessageList.loadMoreComplete();
@@ -179,7 +177,7 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
 
                     @Override
                     public void onComplete() {
-                        if(loading){
+                        if (loading) {
                             loadingDialog.cancel();
                         }
                         serviceMessageList.loadMoreComplete();
@@ -189,25 +187,25 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
                 });
     }
 
-    private void postCheckSMS(List<String> checks){
-        if(retrofit == null){
+    private void postCheckSMS(List<String> checks) {
+        if (retrofit == null) {
             retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
         }
 
         NetService service = retrofit.create(NetService.class);
-        service.markMessageReaded(app.getTokenType()+" "+app.getAccessToken(),checks)
+        service.markMessageReaded(app.getTokenType() + " " + app.getAccessToken(), checks)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableObserver<ResponseBody>() {
                     @Override
                     public void onNext(ResponseBody responseBody) {
-                        Log.e("TAG","Service check success!");
-                        getMessageList(1,false);
+                        Log.e("TAG", "Service check success!");
+                        getMessageList(1, false);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("TAG","Service check fal!");
+                        Log.e("TAG", "Service check fal!");
                     }
 
                     @Override
@@ -219,17 +217,17 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
 
     @Override
     public void updateServiceMessage(boolean status) {
-        if(status){
-            getMessageList(1,true);
+        if (status) {
+            getMessageList(1, true);
         }
     }
 
     @Override
     public void clickSMS(List<String> clicks) {
-        if(!clicks.isEmpty()){
+        if (!clicks.isEmpty()) {
             postCheckSMS(clicks);
-        }else{
-            Log.e("TAG","service data abnormal!");
+        } else {
+            Log.e("TAG", "service data abnormal!");
         }
 
     }

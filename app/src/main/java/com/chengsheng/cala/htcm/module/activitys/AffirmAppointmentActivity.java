@@ -78,41 +78,6 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
     private String comboUrl;
 
 
-    private void initViews(final String comboId) {
-        title = findViewById(R.id.title_header_affirm_appointment).findViewById(R.id.menu_bar_title);
-        back = findViewById(R.id.title_header_affirm_appointment).findViewById(R.id.back_login);
-        test = findViewById(R.id.affirm_appointment_model_a).findViewById(R.id.appointment_name);
-        appointmentIcon = findViewById(R.id.affirm_appointment_model_a).findViewById(R.id.appointment_icon);
-        groupName = findViewById(R.id.affirm_appointment_model_a).findViewById(R.id.group_name);
-        appointmentTotalPrice = findViewById(R.id.affirm_appointment_model_a).findViewById(R.id.appointment_total_price);
-        examPersonRecycler = findViewById(R.id.affirm_appointment_model_b).findViewById(R.id.exam_person_recycler);
-        selectAppointmentDate = findViewById(R.id.affirm_appointment_model_c).findViewById(R.id.select_appointment_date);
-        appointmentDateText = findViewById(R.id.affirm_appointment_model_c).findViewById(R.id.appointment_date_text);
-        keyIllnessScreeningCoatiner = findViewById(R.id.affirm_appointment_model_b).findViewById(R.id.key_illness_screening_coatiner);
-        examTotalPrice = findViewById(R.id.exam_total_price);
-        immediatePay = findViewById(R.id.immediate_pay);
-
-        selectAppointmentDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getDate(appointmentDateText);
-            }
-        });
-
-        keyIllnessScreeningCoatiner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AffirmAppointmentActivity.this, AddExamPersonActivity.class);
-                intent.putExtra("COMBO_ID", comboId);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        title.setText("确认预约");
-
-    }
-
     private void setView(AppointmentDetail detail) {
         test.setText(detail.getName());
         appointmentIcon.setImageURI(detail.getBanner_photo());
@@ -148,16 +113,48 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
         loadingDialog.setDialogBackgroundColor(getResources().getColor(R.color.colorText));
 
         CallBackDataAuth.setExamDateInterface(this);
-        String comboID = getIntent().getStringExtra("COMBO_ID");
+        final String comboID = getIntent().getStringExtra("COMBO_ID");
         app = HTCMApp.create(getApplicationContext());
+
+
         if (uploadBody == null) {
             uploadBody = new AppointmentBody();
         }
         uploadBody.setCustomer_id(-1);
         uploadBody.setReserve_date("");
 
-        //初始化Activity的视图。
-        initViews(comboID);
+        title = findViewById(R.id.title_header_affirm_appointment).findViewById(R.id.menu_bar_title);
+        back = findViewById(R.id.title_header_affirm_appointment).findViewById(R.id.back_login);
+        test = findViewById(R.id.affirm_appointment_model_a).findViewById(R.id.appointment_name);
+        appointmentIcon = findViewById(R.id.affirm_appointment_model_a).findViewById(R.id.appointment_icon);
+        groupName = findViewById(R.id.affirm_appointment_model_a).findViewById(R.id.group_name);
+        appointmentTotalPrice = findViewById(R.id.affirm_appointment_model_a).findViewById(R.id.appointment_total_price);
+        examPersonRecycler = findViewById(R.id.affirm_appointment_model_b).findViewById(R.id.exam_person_recycler);
+        selectAppointmentDate = findViewById(R.id.affirm_appointment_model_c).findViewById(R.id.select_appointment_date);
+        appointmentDateText = findViewById(R.id.affirm_appointment_model_c).findViewById(R.id.appointment_date_text);
+        keyIllnessScreeningCoatiner = findViewById(R.id.affirm_appointment_model_b).findViewById(R.id.key_illness_screening_coatiner);
+        examTotalPrice = findViewById(R.id.exam_total_price);
+        immediatePay = findViewById(R.id.immediate_pay);
+
+        title.setText("确认预约");
+
+        selectAppointmentDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDate(appointmentDateText);
+            }
+        });
+
+        keyIllnessScreeningCoatiner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AffirmAppointmentActivity.this, AddExamPersonActivity.class);
+                intent.putExtra("COMBO_ID", comboID);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         //获取套餐详情
         getComboDetail(comboID);
         //获取选择的家人list。
@@ -193,6 +190,8 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
                                 public void onNext(OrderID orderID) {
                                     app.setOrderID(orderID.getOrder_id());
                                     Intent intent = new Intent(AffirmAppointmentActivity.this, ModePaymentActivity.class);
+                                    intent.putExtra("ORDER_ID",String.valueOf(orderID.getOrder_id()));
+                                    intent.putExtra("ORDER_VAL",FuncUtils.getString("COMBO_CAL",""));
                                     startActivity(intent);
                                     loadingDialog.cancel();
                                 }

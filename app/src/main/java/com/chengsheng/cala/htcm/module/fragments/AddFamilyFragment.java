@@ -63,6 +63,11 @@ import retrofit2.Retrofit;
 
 import static android.app.Activity.RESULT_OK;
 
+/**
+ * Author: 蔡浪
+ * CreateDate: 2018/12/17 8:50 PM
+ * Description:添加家人页面
+ */
 
 public class AddFamilyFragment extends Fragment {
 
@@ -81,7 +86,7 @@ public class AddFamilyFragment extends Fragment {
     private Button addFamiliesMarksButton;
 
 
-    private String[] relations = new String[]{"本人", "父亲", "母亲", "儿子", "女儿", "妻子", "丈夫", "其他"};
+    private String[] relations = new String[]{"本人", "父亲", "母亲", "儿子", "女儿", "妻子", "丈夫", "其他"};//默认家人关系标签
     private String phoneHasCode = "";
     private Uri headerImageUri;
     private boolean isSelectHeader = false;
@@ -346,6 +351,7 @@ public class AddFamilyFragment extends Fragment {
         }
         final TagAdapter tagAdapter = new TagAdapter(data);
         familiesRelationSelecter.setAdapter(tagAdapter);
+        tagAdapter.onSelected(0,tagAdapter.getView(familiesRelationSelecter,0,data.get(0)));
         familiesRelationSelecter.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
             @Override
             public boolean onTagClick(View view, int position, FlowLayout parent) {
@@ -372,9 +378,28 @@ public class AddFamilyFragment extends Fragment {
                 }else{
                     String newMark = newFamiliesMarkInput.getText().toString();
                     data.add(0,newMark);
+                    tagAdapter.setSelected(0,newMark);
                     tagAdapter.notifyDataChanged();
                     familiesRelationSelecter.setAdapter(tagAdapter);
                     newFamiliesMarkInput.setText("");
+                }
+            }
+        });
+
+        //当失去焦点的时候，体检输入的标签
+        newFamiliesMarkInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    if(!newFamiliesMarkInput.getText().toString().equals("")){
+                        String newMark = newFamiliesMarkInput.getText().toString();
+                        data.add(0,newMark);
+                        tagAdapter.setSelected(0,newMark);
+                        tagAdapter.notifyDataChanged();
+                        familiesRelationSelecter.setAdapter(tagAdapter);
+                        familiesTag = newFamiliesMarkInput.getText().toString();
+                        newFamiliesMarkInput.setText("");
+                    }
                 }
             }
         });
@@ -585,6 +610,7 @@ public class AddFamilyFragment extends Fragment {
             textView.setText(s);
             return rootView;
         }
+
     }
 
 

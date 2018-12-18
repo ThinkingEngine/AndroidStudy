@@ -24,6 +24,8 @@ import android.widget.Toast;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.module.activitys.ExamReportDetailActivity;
+import com.chengsheng.cala.htcm.module.activitys.ModePaymentActivity;
 import com.chengsheng.cala.htcm.protocol.AssistantItem;
 import com.chengsheng.cala.htcm.protocol.FamiliesListItem;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
@@ -61,7 +63,7 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
 
     private boolean mark = false;
 
-    public AIAssistantRecyclerAdapter(Context context, List<AssistantItem> datas,int type,String error) {
+    public AIAssistantRecyclerAdapter(Context context, List<AssistantItem> datas, int type, String error) {
         this.context = context;
         this.datas = datas;
         this.error = error;
@@ -83,9 +85,9 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
         AssistantViewHolder holder;
         if (datas.isEmpty() && type == 0) {
             holder = new AssistantViewHolder(LayoutInflater.from(context).inflate(R.layout.ai_assistant_no_content_layout, null));
-        } else if(datas.isEmpty() && type == -1){
+        } else if (datas.isEmpty() && type == -1) {
             holder = new AssistantViewHolder(LayoutInflater.from(context).inflate(R.layout.single_text_layout, null));
-        }else{
+        } else {
             holder = new AssistantViewHolder(LayoutInflater.from(context).inflate(R.layout.ai_assistant_item_layout, null));
         }
         return holder;
@@ -93,116 +95,36 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
 
     @Override
     public void onBindViewHolder(@NonNull AssistantViewHolder viewHolder, final int i) {
+
         if (!datas.isEmpty()) {
             final AssistantItem data = datas.get(i);
             String stats = data.getOrder().getExam_status();
 
+
+            viewHolder.userNameAIAssistant.setText(data.getCustomer().getName());
+            viewHolder.itemBigNotes.setText("您预约了" + data.getCustomer().getReservation_or_registration().getDate() + "的体检");
+            viewHolder.userHeaderIconAIAssistant.setImageURI(data.getCustomer().getAvatar());
+
+            //删除首页智能助理卡片
             viewHolder.deleteExamItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     removeData(i);
                 }
             });
-
-            viewHolder.itemBigNotes.setText("您预约了"+data.getCustomer().getReservation_or_registration().getDate()+"的体检");
-
+            //跳转到详情页面
             viewHolder.aiAssistantItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    Bundle bundle = new Bundle();
                     Intent intent = new Intent(context, ExamDetailsActivity.class);
                     FamiliesListItem familiesListItem = new FamiliesListItem();
                     familiesListItem.setFullname(data.getCustomer().getName());
                     familiesListItem.setAvatar_path(data.getCustomer().getAvatar());
                     familiesListItem.setHealth_card_no(data.getCustomer().getReservation_or_registration().getId());
-//                    bundle.putSerializable("FAMILIES_INFO", familiesListItem);
-//                    intent.putExtras(bundle);
                     intent.putExtra("ORDER_ID", String.valueOf(data.getOrder().getId()));
                     context.startActivity(intent);
                 }
             });
-
-            if (data.getRecommend_exam_item().getExam_item_id() == 0) {
-                viewHolder.userNotifition.setVisibility(View.VISIBLE);
-            } else {
-                viewHolder.userNotifition.setVisibility(View.INVISIBLE);
-            }
-
-            //预约
-            if (stats.equals(GlobalConstant.RESERVATION)) {
-                viewHolder.dayNum.setVisibility(View.VISIBLE);
-                viewHolder.showWaitNum.setVisibility(View.INVISIBLE);
-                String day = "";
-                String dayNumber = "";
-                try {
-                    dayNumber = String.valueOf(FuncUtils.dayNum(data.getCustomer().getReservation_or_registration().getDate()));
-                    day = "距检查日" + "\n" + dayNumber + "天";
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
-                if (!day.equals("")) {
-                    SpannableString sp = new SpannableString(day);
-                    sp.setSpan(new AbsoluteSizeSpan(10, true), 0, 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    sp.setSpan(new AbsoluteSizeSpan(14, true), 5, 5 + dayNumber.length() + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    sp.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.colorPrimary)), 5, 5 + dayNumber.length() + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    sp.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 5, 5 + dayNumber.length() + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                    viewHolder.dayNum.setText(sp);
-
-                    viewHolder.dayNum.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(context, ExamDetailsActivity.class);
-                            intent.putExtra("ORDER_ID", String.valueOf(data.getOrder().getId()));
-                            context.startActivity(intent);
-                        }
-                    });
-                }
-
-                viewHolder.unscrambleMark.setVisibility(View.INVISIBLE);
-                viewHolder.userNotifition.setVisibility(View.INVISIBLE);
-            } else if (stats.equals(GlobalConstant.CHECKING)) {
-                viewHolder.showWaitNum.setVisibility(View.VISIBLE);
-                String tempNum = String.valueOf(data.getRecommend_exam_item().getWait_person());
-                String waitNum = "当前排队" + "\n" + tempNum + "人";
-                SpannableString sp = new SpannableString(waitNum);
-                sp.setSpan(new AbsoluteSizeSpan(12, true), 0, 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                sp.setSpan(new AbsoluteSizeSpan(20, true), 5, 5 + tempNum.length() + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                sp.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.colorPrimary)), 5, 5 + tempNum.length() + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                sp.setSpan(new StyleSpan(Typeface.BOLD), 5, 5 + tempNum.length() + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-                viewHolder.showWaitNum.setText(sp);
-                viewHolder.showWaitNum.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(context, ExamDetailsActivity.class);
-                        intent.putExtra("ORDER_ID", String.valueOf(data.getOrder().getId()));
-                        context.startActivity(intent);
-                    }
-                });
-
-                viewHolder.dayNum.setVisibility(View.INVISIBLE);
-                viewHolder.unscrambleMark.setVisibility(View.INVISIBLE);
-                viewHolder.userNotifition.setVisibility(View.INVISIBLE);
-            } else if (stats.equals(GlobalConstant.CHECKED)) {
-                viewHolder.showWaitNum.setVisibility(View.INVISIBLE);
-                if (data.getReport().isIssued()) {
-                    viewHolder.unscrambleMark.setVisibility(View.VISIBLE);
-                    viewHolder.dayNum.setVisibility(View.INVISIBLE);
-                }
-            }
-
-            viewHolder.userNameAIAssistant.setText(data.getCustomer().getName());
-            viewHolder.userHeaderIconAIAssistant.setImageURI(data.getCustomer().getAvatar());
-
-
-            if (data.getOrder().getExam_status().equals(GlobalConstant.RESERVATION)) {
-                viewHolder.userBitmapMark.setImageResource(R.mipmap.erweima);
-                viewHolder.examNum.setText("预约号：" + data.getOrder().getId());
-            } else {
-                viewHolder.userBitmapMark.setImageResource(R.mipmap.tianxingma);
-                viewHolder.examNum.setText("体检号：" + data.getOrder().getId());
-            }
 
             viewHolder.userBitmapMark.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -225,14 +147,82 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
                     }
                 }
             });
-        } else if(datas.isEmpty() && type == -1){
-            viewHolder.textMark.setText(error);
-        }else if(datas.isEmpty() && type == 0){
+
+            //预约
+            if (stats.equals(GlobalConstant.RESERVATION)) {
+
+                viewHolder.userBitmapMark.setImageResource(R.mipmap.erweima);
+                viewHolder.examNum.setText("预约号：" + data.getOrder().getId());
+
+                Float money = Float.valueOf(data.getOrder().getDiscount_receivable());
+                if (money > 0) {
+                    viewHolder.unscrambleMark.setVisibility(View.VISIBLE);
+                    viewHolder.unscrambleMark.setText("立即支付");
+                    viewHolder.itemSecNotes.setText("待支付金额：" + money + "元");
+
+                    viewHolder.unscrambleMark.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(context, ModePaymentActivity.class);
+                            intent.putExtra("ORDER_ID", String.valueOf(data.getOrder().getId()));
+                            intent.putExtra("ORDER_VAL", data.getOrder().getDiscount_receivable());
+                            context.startActivity(intent);
+                        }
+                    });
+                } else {
+                    viewHolder.unscrambleMark.setVisibility(View.INVISIBLE);
+                    viewHolder.itemSecNotes.setText("请前往中心登记台完成登记");
+                }
+
+            } else if (stats.equals(GlobalConstant.CHECKING)) {//正在检查
+                viewHolder.userBitmapMark.setImageResource(R.mipmap.tianxingma);
+                viewHolder.examNum.setText("体检号：" + data.getOrder().getId());
+
+                if (data.getOrder().isCan_autonomous()) {
+                    viewHolder.unscrambleMark.setVisibility(View.VISIBLE);
+                    viewHolder.unscrambleMark.setText("自主登记");
+                    viewHolder.itemSecNotes.setText("您可前往中心登记台或自主完成登记");
+                } else {
+                    viewHolder.unscrambleMark.setVisibility(View.INVISIBLE);
+                    viewHolder.itemSecNotes.setText("项目检查完成后，请前往中心登记台确认");
+                }
+
+
+            } else if (stats.equals(GlobalConstant.CHECKED)) {//已检查
+
+                viewHolder.userBitmapMark.setImageResource(R.mipmap.tianxingma);
+                viewHolder.examNum.setText("体检号：" + data.getOrder().getId());
+                viewHolder.itemSecNotes.setText("体检日期：" + data.getCustomer().getReservation_or_registration().getDate());
+
+                if (data.getReport().isIssued()) {
+                    viewHolder.unscrambleMark.setVisibility(View.VISIBLE);
+
+                    viewHolder.unscrambleMark.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(context, ExamReportDetailActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString(GlobalConstant.EXAM_REPORT_ID, String.valueOf(data.getOrder().getId()));
+                            intent.putExtras(bundle);
+                            context.startActivity(intent);
+                        }
+                    });
+                } else {
+                    viewHolder.unscrambleMark.setVisibility(View.INVISIBLE);
+                }
+            } else {
+                viewHolder.userBitmapMark.setImageResource(R.mipmap.tianxingma);
+                viewHolder.examNum.setText("体检号：" + data.getOrder().getId());
+            }
+
+        } else if (datas.isEmpty() && type == -1) {
+
+        } else if (datas.isEmpty() && type == 0) {
             viewHolder.aiAssistantGroupDetail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context,BarADActivity.class);
-                    intent.putExtra("NUM",1);
+                    Intent intent = new Intent(context, BarADActivity.class);
+                    intent.putExtra("NUM", 1);
                     context.startActivity(intent);
                 }
             });
@@ -264,12 +254,8 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
         ImageView deleteExamItem;
         TextView itemBigNotes;
         TextView itemSecNotes;
-        TextView dayNum;
-        LinearLayout userNotifition;
         Button unscrambleMark;
-        TextView showWaitNum;
 
-        TextView textMark;
 
         public AssistantViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -282,13 +268,7 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
             deleteExamItem = itemView.findViewById(R.id.delete_exam_item);
             itemBigNotes = itemView.findViewById(R.id.item_big_notes);
             itemSecNotes = itemView.findViewById(R.id.item_sec_notes);
-            dayNum = itemView.findViewById(R.id.day_num);
-            userNotifition = itemView.findViewById(R.id.user_notifition);
-            dayNum = itemView.findViewById(R.id.day_num);
             unscrambleMark = itemView.findViewById(R.id.unscramble_mark);
-            showWaitNum = itemView.findViewById(R.id.show_wait_num);
-
-            textMark = itemView.findViewById(R.id.text_mark);
 
             aiAssistantGroupDetail = itemView.findViewById(R.id.ai_assistant_group_detail);
         }
@@ -316,7 +296,6 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
                             datas.remove(i);
                             notifyItemRemoved(i);
                             notifyDataSetChanged();
-
                         }
 
                         loadingDialog.cancel();

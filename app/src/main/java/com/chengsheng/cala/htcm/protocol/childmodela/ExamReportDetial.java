@@ -1,10 +1,13 @@
 package com.chengsheng.cala.htcm.protocol.childmodela;
 
+import com.chengsheng.cala.htcm.protocol.ExamReportModel.ExamReport;
+
 import java.util.List;
 
 public class ExamReportDetial {
     private Order order;
     private Customer customer;
+    private ExamReport exam_report;
     private int order_type;
     private int exception_count;
     private String doctor_sign;
@@ -65,6 +68,14 @@ public class ExamReportDetial {
 
     public void setExam_item_result(List<examItemResult> exam_item_result) {
         this.exam_item_result = exam_item_result;
+    }
+
+    public ExamReport getExam_report() {
+        return exam_report;
+    }
+
+    public void setExam_report(ExamReport exam_report) {
+        this.exam_report = exam_report;
     }
 
     @Override

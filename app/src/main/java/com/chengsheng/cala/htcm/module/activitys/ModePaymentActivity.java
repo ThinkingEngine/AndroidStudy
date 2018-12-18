@@ -80,17 +80,9 @@ public class ModePaymentActivity extends BaseActivity {
     @Override
     public void initView() {
         app = HTCMApp.create(getApplicationContext());
+        String orderID = getIntent().getStringExtra("ORDER_ID");
+        String orderVal = getIntent().getStringExtra("ORDER_VAL");
 
-        initViews();
-        getAliSign();
-    }
-
-    @Override
-    public void getData() {
-
-    }
-
-    private void initViews() {
         title = findViewById(R.id.title_header_mode_payment).findViewById(R.id.menu_bar_title);
         back = findViewById(R.id.title_header_mode_payment).findViewById(R.id.back_login);
         totalPayText = findViewById(R.id.total_pay_text);
@@ -99,6 +91,7 @@ public class ModePaymentActivity extends BaseActivity {
         immediatePayButton = findViewById(R.id.immediate_pay_button);
 
         title.setText("支付方式");
+        totalPayText.setText("¥"+orderVal);
 
         payModeZhifubaoBox.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,26 +129,28 @@ public class ModePaymentActivity extends BaseActivity {
                 }
             }
         });
+
+        getAliSign(orderID);
     }
 
-    private void setViews(ZhiFuBaoSign data) {
-        totalPayText.setText("¥" + data.getAmount());
+    @Override
+    public void getData() {
+
     }
 
-    private void getAliSign() {
+
+    private void getAliSign(String orderId) {
         if (retrofit == null) {
             retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
         }
         NetService service = retrofit.create(NetService.class);
-        service.getAliSign(GlobalConstant.ALI_SIGN + app.getOrderID(), app.getTokenType() + " " + app.getAccessToken())
+        service.getAliSign(GlobalConstant.ALI_SIGN + orderId, app.getTokenType() + " " + app.getAccessToken())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableObserver<ZhiFuBaoSign>() {
                     @Override
                     public void onNext(ZhiFuBaoSign zhiFuBaoSign) {
-                        Log.e("TAG", "获取支付宝签名成功:" + zhiFuBaoSign.toString());
                         FuncUtils.putString("PAY_SIGN", zhiFuBaoSign.getAli_sign());
-                        setViews(zhiFuBaoSign);
                     }
 
                     @Override

@@ -51,6 +51,7 @@ public class MainActivity extends BaseActivity implements
     }
 
     private void updateButtonSelected(boolean a, boolean b, boolean c, boolean d) {
+
         mainPageImage.setSelected(a);
         mainPageImage.setEnabled(a);
         healthPageImage.setSelected(b);

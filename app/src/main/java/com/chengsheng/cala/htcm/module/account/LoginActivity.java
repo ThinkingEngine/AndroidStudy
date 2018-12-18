@@ -76,6 +76,7 @@ public class LoginActivity extends BaseActivity {
 
         deleteInput.setVisibility(View.INVISIBLE);
 
+
         app = HTCMApp.create(getApplicationContext());
         final ZLoadingDialog dialog = new ZLoadingDialog(this);
         dialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);

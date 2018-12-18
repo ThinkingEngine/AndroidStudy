@@ -334,6 +334,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/corner_white_mark"
                     android:hint="请输入与家人的其他关系"
+                    android:maxLines="32"
                     android:paddingStart="8dp"
                     android:paddingTop="4dp"
                     android:paddingBottom="4dp"

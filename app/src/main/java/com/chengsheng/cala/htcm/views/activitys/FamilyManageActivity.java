@@ -32,7 +32,6 @@ public class FamilyManageActivity extends BaseActivity implements FamilyListFrag
     private HTCMApp app;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,10 +46,10 @@ public class FamilyManageActivity extends BaseActivity implements FamilyListFrag
         fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
 
-        boolean addMark = getIntent().getBooleanExtra("ADD_MARK",false);
-        if(addMark){
+        boolean addMark = getIntent().getBooleanExtra("ADD_MARK", false);
+        if (addMark) {
             ft.add(R.id.family_manage_container, addFamilyFragment);
-        }else{
+        } else {
             ft.add(R.id.family_manage_container, familyListFragment);
         }
         ft.commit();
@@ -105,13 +104,10 @@ public class FamilyManageActivity extends BaseActivity implements FamilyListFrag
     }
 
     @Override
-    public void onAddFamilyFragmentInteraction(Bundle bundle,boolean isAdd) {
-        Log.e("TAG","Add families dot a");
-        if(isAdd){
-            Log.e("TAG","Add families dot b");
+    public void onAddFamilyFragmentInteraction(Bundle bundle, boolean isAdd) {
+        if (isAdd) {
             String str = bundle.getString("STATE");
-            Log.e("TAG","Add families dot c:"+str);
-            if(str.equals("manage")){
+            if (str.equals("manage")) {
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.add(R.id.family_manage_container, familyListFragment);
                 ft.commit();

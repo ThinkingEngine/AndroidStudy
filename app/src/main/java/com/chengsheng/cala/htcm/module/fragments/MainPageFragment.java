@@ -24,6 +24,7 @@ import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.module.TestActivity;
 import com.chengsheng.cala.htcm.adapter.AIAssistantRecyclerAdapter;
 import com.chengsheng.cala.htcm.adapter.BannerAdapter;
+import com.chengsheng.cala.htcm.module.activitys.AIAssistantActivity;
 import com.chengsheng.cala.htcm.module.activitys.BarADActivity;
 import com.chengsheng.cala.htcm.module.activitys.ExamAppointmentActivity;
 import com.chengsheng.cala.htcm.module.activitys.ExamReportActivity;
@@ -226,8 +227,8 @@ public class MainPageFragment extends Fragment implements UpdateAIAssisont {
         aiAssistant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(getContext(), AIAssistantActivity.class);
-                Intent intent = new Intent(getContext(), TestActivity.class);
+                Intent intent = new Intent(getContext(), AIAssistantActivity.class);
+//                Intent intent = new Intent(getContext(), TestActivity.class);
                 startActivity(intent);
             }
         });

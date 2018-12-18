@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPageBackground"
-    tools:context=".views.activitys.UserCardActivity">
+    tools:context=".module.activitys.UserCardActivity">
 
     <ImageView
         android:id="@+id/close_user_card_button"

@@ -7,7 +7,7 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/colorPageBackground"
-    tools:context=".views.activitys.AccountSettingActivity">
+    tools:context=".module.activitys.AccountSettingActivity">
 
     <include
         android:id="@+id/title_header_account_setting"

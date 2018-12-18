@@ -1,7 +1,7 @@
 package com.chengsheng.cala.htcm.network;
 
 
-import com.chengsheng.cala.htcm.model.datamodel.ExamReportModel.CompareModel;
+import com.chengsheng.cala.htcm.protocol.ExamReportModel.CompareModel;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;

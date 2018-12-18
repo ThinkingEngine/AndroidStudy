@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPageBackground"
     android:orientation="vertical"
-    tools:context=".views.activitys.MessageActivity">
+    tools:context=".module.activitys.MessageActivity">
 
     <include
         android:id="@+id/message_title_header"

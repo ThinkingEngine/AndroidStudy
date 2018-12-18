@@ -1,6 +1,6 @@
 package com.chengsheng.cala.htcm.utils;
 
-import com.chengsheng.cala.htcm.model.datamodel.ExamReportModel.CompareItem;
+import com.chengsheng.cala.htcm.protocol.ExamReportModel.CompareItem;
 
 import java.util.List;
 

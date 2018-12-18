@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".views.fragments.MainPageFragment">
+    tools:context=".module.fragments.MainPageFragment">
 
     <include
         android:id="@+id/title_header_main_page"
@@ -150,7 +150,7 @@
 
                 </RelativeLayout>
 
-                <com.chengsheng.cala.htcm.views.customviews.MyRecyclerView
+                <com.chengsheng.cala.htcm.widget.MyRecyclerView
                     android:id="@+id/appointment_recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -190,7 +190,7 @@
 
                 </RelativeLayout>
 
-                <com.chengsheng.cala.htcm.views.customviews.MyRecyclerView
+                <com.chengsheng.cala.htcm.widget.MyRecyclerView
                     android:id="@+id/recommend_news_recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>

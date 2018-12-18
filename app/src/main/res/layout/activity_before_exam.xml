@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.activitys.BeforeExamActivity">
+    tools:context=".module.activitys.BeforeExamActivity">
 
     <include
         android:id="@+id/title_header_before_exam"
@@ -129,7 +129,7 @@
                     android:textSize="14sp" />
             </RelativeLayout>
 
-            <com.chengsheng.cala.htcm.views.customviews.MyRecyclerView
+            <com.chengsheng.cala.htcm.widget.MyRecyclerView
                 android:id="@+id/before_exam_items"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

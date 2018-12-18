@@ -4,9 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.chengsheng.cala.htcm.GlobalConstant;
-
-import de.hdodenhof.circleimageview.CircleImageView;
+import com.chengsheng.cala.htcm.constant.GlobalConstant;
 
 public class NetWorkUtils {
 

@@ -1,8 +1,8 @@
 package com.chengsheng.cala.htcm.network;
 
-import com.chengsheng.cala.htcm.model.datamodel.articleModel.ArticleCollect;
-import com.chengsheng.cala.htcm.model.datamodel.articleModel.NewsTitles;
-import com.chengsheng.cala.htcm.model.datamodel.articleModel.RecommendedNews;
+import com.chengsheng.cala.htcm.protocol.articleModel.ArticleCollect;
+import com.chengsheng.cala.htcm.protocol.articleModel.NewsTitles;
+import com.chengsheng.cala.htcm.protocol.articleModel.RecommendedNews;
 
 
 import io.reactivex.Observable;

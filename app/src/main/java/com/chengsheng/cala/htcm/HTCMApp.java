@@ -3,9 +3,10 @@ package com.chengsheng.cala.htcm;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.chengsheng.cala.htcm.model.datamodel.AppointmentDetail;
-import com.chengsheng.cala.htcm.model.datamodel.ExamReportItem;
-import com.chengsheng.cala.htcm.model.datamodel.FamiliesDetailInfo;
+import com.chengsheng.cala.htcm.constant.GlobalConstant;
+import com.chengsheng.cala.htcm.protocol.AppointmentDetail;
+import com.chengsheng.cala.htcm.protocol.ExamReportItem;
+import com.chengsheng.cala.htcm.protocol.FamiliesDetailInfo;
 import com.chengsheng.cala.htcm.utils.FuncUtils;
 
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
 package com.chengsheng.cala.htcm.network;
 
-import com.chengsheng.cala.htcm.model.datamodel.SMSVerificationResult;
-import com.chengsheng.cala.htcm.model.datamodel.childmodela.UserInfo;
+import com.chengsheng.cala.htcm.protocol.SMSVerificationResult;
+import com.chengsheng.cala.htcm.protocol.childmodela.UserInfo;
 
 import java.util.Map;
 

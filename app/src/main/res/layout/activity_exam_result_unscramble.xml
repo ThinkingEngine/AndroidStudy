@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPageBackground"
-    tools:context=".views.activitys.ExamResultUnscrambleActivity">
+    tools:context=".module.activitys.ExamResultUnscrambleActivity">
 
     <include
         android:id="@+id/title_header_exam_result_unscramble"
@@ -107,7 +107,7 @@
                     android:text="分检医生" />
             </RelativeLayout>
 
-            <com.chengsheng.cala.htcm.views.customviews.MyRecyclerView
+            <com.chengsheng.cala.htcm.widget.MyRecyclerView
                 android:id="@+id/exam_detail_type_a"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

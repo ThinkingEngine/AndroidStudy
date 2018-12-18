@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.activitys.ComboDetailActivity">
+    tools:context=".module.activitys.ComboDetailActivity">
     <include
         android:id="@+id/title_header_combo_detail"
         android:layout_width="match_parent"
@@ -66,7 +66,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="6dp"/>
         </RelativeLayout>
-        <com.chengsheng.cala.htcm.views.customviews.MyExpandableListView
+        <com.chengsheng.cala.htcm.widget.MyExpandableListView
             android:id="@+id/exam_item_combo_expandable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

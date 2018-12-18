@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class DataFlow {
 
-    public static final List<Map<String,String>> minePageItemModelA(int dataItem,int[] res,String[] textItem,String[] type){
+    public static List<Map<String,String>> minePageItemModelA(int dataItem, int[] res, String[] textItem, String[] type){
         List<Map<String,String>> datas = new ArrayList<>();
         for(int i = 0; i < dataItem;i++){
             Map<String,String> data = new HashMap<>();

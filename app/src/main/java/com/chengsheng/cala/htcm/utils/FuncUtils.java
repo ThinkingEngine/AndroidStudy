@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import static com.chengsheng.cala.htcm.MyApplication.myContext;
+import static com.chengsheng.cala.htcm.HTCMApplication.myContext;
 
 public class FuncUtils {
 

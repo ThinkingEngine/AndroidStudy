@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPageBackground"
-    tools:context=".views.activitys.ModePaymentActivity">
+    tools:context=".module.activitys.ModePaymentActivity">
 
     <include
         android:id="@+id/title_header_mode_payment"

@@ -3,7 +3,7 @@ package com.chengsheng.cala.htcm.module.activitys;
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.widget.AppTitleBar;
-//import com.chengsheng.cala.htcm.widget.OnViewClickListener;
+import com.chengsheng.cala.htcm.widget.OnViewClickListener;
 
 
 /**
@@ -26,9 +26,12 @@ public class RegisterDetailActivity extends BaseActivity {
     public void initView() {
 
         appTitleBar = findViewById(R.id.register_detail_title);
-
-
-
+        appTitleBar.setFinishClickListener(new OnViewClickListener() {
+            @Override
+            public void onClick() {
+                finish();
+            }
+        });
     }
 
     @Override

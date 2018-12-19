@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPageBackground"
     tools:context="com.chengsheng.cala.htcm.module.activitys.RegisterDetailActivity">
 
     <com.chengsheng.cala.htcm.widget.AppTitleBar
@@ -11,6 +12,119 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        app:title="登记详情"/>
+        app:title="登记详情" />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/register_detail_title">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/exam_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="11dp"
+                    android:background="@color/colorWhite"
+                    android:gravity="center_vertical"
+                    android:paddingStart="14dp"
+                    android:text="待体检"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/has_bottom_line_off_bg"
+                    android:drawableLeft="@mipmap/dabiaoti_shuxian"
+                    android:drawablePadding="4dp"
+                    android:paddingStart="14dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:text="登记须知"
+                    android:textColor="@color/colorText"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:paddingStart="14dp"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
+                    android:text="1.自助登记前请确认以上信息，准确无误；\n\n2.您也可前往登记台完成登记。 "
+                    android:textColor="@color/colorSecText"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/has_bottom_line_off_bg"
+                    android:drawableLeft="@mipmap/dabiaoti_shuxian"
+                    android:drawablePadding="4dp"
+                    android:paddingStart="14dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:text="体检信息"
+                    android:textColor="@color/colorText"
+                    android:textSize="16sp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/has_bottom_line_item_bg">
+
+                    <LinearLayout
+                        android:id="@+id/exam_box"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="体检人："
+                            android:textSize="14sp"
+                            android:textColor="@color/colorThrText" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorText"
+                            android:textSize="14sp"
+                            android:text="周子萱"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/exam_num_box"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_below="@id/exam_box">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="体检人："
+                            android:textSize="14sp"
+                            android:textColor="@color/colorThrText" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorText"
+                            android:textSize="14sp"
+                            android:text="周子萱"/>
+                    </LinearLayout>
+                </RelativeLayout>
+
+
+            </LinearLayout>
+        </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </RelativeLayout>

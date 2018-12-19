@@ -68,7 +68,6 @@ public class ExamDetailsActivity extends BaseActivity {
 
         String orderID = getIntent().getStringExtra("ORDER_ID");
 
-
         initViews(orderID);
 
         getUserExamDetail(orderID);

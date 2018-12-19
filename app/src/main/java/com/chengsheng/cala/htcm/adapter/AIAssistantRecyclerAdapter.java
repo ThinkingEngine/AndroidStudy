@@ -27,6 +27,7 @@ import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.module.account.LoginActivity;
 import com.chengsheng.cala.htcm.module.activitys.ExamReportDetailActivity;
 import com.chengsheng.cala.htcm.module.activitys.ModePaymentActivity;
+import com.chengsheng.cala.htcm.module.activitys.RegisterDetailActivity;
 import com.chengsheng.cala.htcm.protocol.AssistantItem;
 import com.chengsheng.cala.htcm.protocol.FamiliesListItem;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
@@ -183,6 +184,16 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
                     viewHolder.unscrambleMark.setVisibility(View.VISIBLE);
                     viewHolder.unscrambleMark.setText("自主登记");
                     viewHolder.itemSecNotes.setText("您可前往中心登记台或自主完成登记");
+
+                    viewHolder.unscrambleMark.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Bundle bundle = new Bundle();
+                            bundle.putString("ORDER_ID",String.valueOf(data.getOrder().getId()));
+                            ActivityUtil.Companion.startActivity(context,new RegisterDetailActivity(),bundle);
+                        }
+                    });
+
                 } else {
                     viewHolder.unscrambleMark.setVisibility(View.INVISIBLE);
                     viewHolder.itemSecNotes.setText("项目检查完成后，请前往中心登记台确认");
@@ -224,6 +235,13 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
             viewHolder.unscrambleMark.setText("立即登录");
             viewHolder.userBitmapMark.setVisibility(View.INVISIBLE);
             viewHolder.deleteExamItem.setVisibility(View.INVISIBLE);
+
+            viewHolder.unscrambleMark.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ActivityUtil.Companion.startActivity(context,new LoginActivity());
+                }
+            });
 
             viewHolder.aiAssistantItem.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -1,5 +1,6 @@
 package com.chengsheng.cala.htcm.module.activitys;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
@@ -12,7 +13,9 @@ import com.chengsheng.cala.htcm.adapter.ExamItemExpandableListViewAdapter;
 import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.data.repository.ExamOrderRepository;
+import com.chengsheng.cala.htcm.protocol.FamiliesListItem;
 import com.chengsheng.cala.htcm.protocol.childmodelb.UserExamDetail;
+import com.chengsheng.cala.htcm.utils.ActivityUtil;
 import com.chengsheng.cala.htcm.utils.UserUtil;
 import com.chengsheng.cala.htcm.widget.AppTitleBar;
 import com.chengsheng.cala.htcm.widget.MyExpandableListView;
@@ -100,7 +103,7 @@ public class RegisterDetailActivity extends BaseActivity {
     /*
      * 根据网络请求，刷新页面
      * **/
-    private void setViews(UserExamDetail data) {
+    private void setViews(final UserExamDetail data) {
 
         String stats = data.getExam_status();
         //待体检
@@ -151,6 +154,18 @@ public class RegisterDetailActivity extends BaseActivity {
             @Override
             public void onRefresh() {
                 updateData(true);
+            }
+        });
+
+        registerDetailCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FamiliesListItem familiesListItem = new FamiliesListItem();
+                familiesListItem.setHealth_card_no(data.getCustomer().getReservation_or_registration().getId());
+                familiesListItem.setAvatar_path(data.getCustomer().getAvatar());
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("FAMILIES_INFO",familiesListItem);
+                ActivityUtil.Companion.startActivity(RegisterDetailActivity.this,new UserCardActivity(),bundle);
             }
         });
 

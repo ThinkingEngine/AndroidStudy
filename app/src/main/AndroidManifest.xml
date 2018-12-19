@@ -102,6 +102,7 @@
             android:enabled="true"
             android:exported="false" />
 
+        <activity android:name=".module.activitys.RegisterDetailActivity"></activity>
     </application>
 
 </manifest>

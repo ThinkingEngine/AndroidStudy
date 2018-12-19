@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RadioGroup
+        android:id="@+id/radioGroupMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <RadioButton
+            android:id="@+id/rbHome"
+            style="@style/main_bottom_tab"
+            android:checked="true"
+            android:drawableTop="@drawable/selector_tab_home"
+            android:text="首页" />
+
+        <RadioButton
+            android:id="@+id/rbHealth"
+            style="@style/main_bottom_tab"
+            android:drawableTop="@drawable/selector_tab_mining"
+            android:text="健康" />
+
+        <RadioButton
+            android:id="@+id/rbFind"
+            style="@style/main_bottom_tab"
+            android:drawableTop="@drawable/selector_tab_trade"
+            android:text="发现" />
+
+        <RadioButton
+            android:id="@+id/rbMine"
+            style="@style/main_bottom_tab"
+            android:drawableTop="@drawable/selector_tab_group"
+            android:text="我的" />
+
+    </RadioGroup>
+
+    <View
+        android:id="@+id/main_divide"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/colorGayLine"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/radioGroupMain" />
+
+    <FrameLayout
+        android:id="@+id/layout_main_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="51dp"
+        app:layout_constraintBottom_toTopOf="@id/main_divide"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </FrameLayout>
+
+</android.support.constraint.ConstraintLayout>

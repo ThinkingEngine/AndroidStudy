@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/fragment_find">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp">
+
+        <TextView
+            android:id="@+id/tvOrganizationDetail"
+            style="@style/findItemStyle"
+            android:drawableTop="@mipmap/faxianz1"
+            android:text="机构详情" />
+
+        <TextView
+            android:id="@+id/tvDepartment"
+            style="@style/findItemStyle"
+            android:drawableTop="@mipmap/faxianz2"
+            android:text="部门科室" />
+
+        <TextView
+            android:id="@+id/tvExpert"
+            style="@style/findItemStyle"
+            android:drawableTop="@mipmap/faxianz3"
+            android:text="专家队伍" />
+
+        <TextView
+            android:id="@+id/tvTool"
+            style="@style/findItemStyle"
+            android:drawableTop="@mipmap/faxianz4"
+            android:text="健康工具" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp">
+
+        <TextView
+            android:id="@+id/tvService"
+            style="@style/findItemStyle"
+            android:drawableTop="@mipmap/faxianz5"
+            android:text="特色服务" />
+
+        <TextView
+            android:id="@+id/tvMedical"
+            style="@style/findItemStyle"
+            android:drawableTop="@mipmap/faxianz6"
+            android:text="医疗美容" />
+
+        <TextView
+            style="@style/findItemStyle"
+            android:drawableTop="@mipmap/faxianz3"
+            android:text="专家队伍"
+
+            android:visibility="invisible" />
+
+        <TextView
+            style="@style/findItemStyle"
+            android:drawableTop="@mipmap/faxianz4"
+            android:text="健康工具"
+            android:visibility="invisible" />
+
+    </LinearLayout>
+</merge>

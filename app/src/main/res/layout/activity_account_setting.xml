@@ -1,52 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:background="@color/colorPageBackground"
+    android:orientation="vertical"
     tools:context=".module.activitys.AccountSettingActivity">
 
     <include
         android:id="@+id/title_header_account_setting"
-        layout="@layout/title_bar_type_two_layout"/>
+        layout="@layout/title_bar_type_two_layout" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@drawable/has_bottom_line_off_bg"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:background="@drawable/has_bottom_line_off_bg">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/header_icon"
-            android:textSize="16sp"
-            android:textColor="@color/colorText"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="14dp"/>
+            android:layout_marginLeft="14dp"
+            android:text="@string/header_icon"
+            android:textColor="@color/colorText"
+            android:textSize="16sp" />
+
         <ImageView
             android:id="@+id/into_header_mod"
             android:layout_width="6dp"
             android:layout_height="12dp"
-            android:src="@mipmap/liebiaojinru"
-            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"/>
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/liebiaojinru" />
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/user_header_icon"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@mipmap/touxiang"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/into_header_mod"
             android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/into_header_mod"
+            android:src="@mipmap/touxiang"
             fresco:actualImageScaleType="centerInside"
-            fresco:roundAsCircle="true"
-            fresco:backgroundImage="@mipmap/morentouxiang_wode"/>
+            fresco:backgroundImage="@mipmap/morentouxiang_wode"
+            fresco:roundAsCircle="true" />
 
     </RelativeLayout>
 
@@ -58,31 +58,34 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/cellphone_number"
-            android:textSize="16sp"
-            android:textColor="@color/colorText"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="14dp"/>
+            android:layout_marginLeft="14dp"
+            android:text="@string/cellphone_number"
+            android:textColor="@color/colorText"
+            android:textSize="16sp" />
+
         <ImageView
             android:id="@+id/into_cellphone_mod"
             android:layout_width="6dp"
             android:layout_height="12dp"
-            android:src="@mipmap/liebiaojinru"
-            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"/>
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/liebiaojinru" />
+
         <TextView
             android:id="@+id/need_mod_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="187****8345"
-            android:textSize="14sp"
-            android:textColor="@color/colorThrText"
             android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
             android:layout_toLeftOf="@id/into_cellphone_mod"
-            android:layout_marginRight="10dp"/>
+            android:text="187****8345"
+            android:textColor="@color/colorThrText"
+            android:textSize="14sp" />
 
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -91,60 +94,65 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/nickname"
-            android:textSize="16sp"
-            android:textColor="@color/colorText"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="14dp"/>
+            android:layout_marginLeft="14dp"
+            android:text="@string/nickname"
+            android:textColor="@color/colorText"
+            android:textSize="16sp" />
+
         <ImageView
             android:id="@+id/into_nickname_mod"
             android:layout_width="6dp"
             android:layout_height="12dp"
-            android:src="@mipmap/liebiaojinru"
-            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"/>
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/liebiaojinru" />
+
         <TextView
             android:id="@+id/need_mod_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="周子萱"
-            android:textSize="14sp"
-            android:textColor="@color/colorThrText"
             android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
             android:layout_toLeftOf="@id/into_nickname_mod"
-            android:layout_marginRight="10dp"/>
+            android:text="周子萱"
+            android:textColor="@color/colorThrText"
+            android:textSize="14sp" />
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@drawable/has_bottom_line_off_bg">
+        android:background="@color/white">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/login_password"
-            android:textSize="16sp"
-            android:textColor="@color/colorText"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="14dp"/>
+            android:layout_marginLeft="14dp"
+            android:text="@string/login_password"
+            android:textColor="@color/colorText"
+            android:textSize="16sp" />
+
         <ImageView
             android:id="@+id/into_login_password_mod"
             android:layout_width="6dp"
             android:layout_height="12dp"
-            android:src="@mipmap/liebiaojinru"
-            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"/>
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/liebiaojinru" />
+
         <TextView
             android:id="@+id/need_mod_login_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="修改"
-            android:textSize="14sp"
-            android:textColor="@color/colorThrText"
             android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
             android:layout_toLeftOf="@id/into_login_password_mod"
-            android:layout_marginRight="10dp"/>
+            android:text="修改"
+            android:textColor="@color/colorThrText"
+            android:textSize="14sp" />
     </RelativeLayout>
 </LinearLayout>

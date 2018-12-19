@@ -15,26 +15,26 @@
 
         <RadioButton
             android:id="@+id/rbHome"
-            style="@style/main_bottom_tab"
+            style="@style/mainRadioGroupStyle"
             android:checked="true"
             android:drawableTop="@drawable/selector_tab_home"
             android:text="首页" />
 
         <RadioButton
             android:id="@+id/rbHealth"
-            style="@style/main_bottom_tab"
+            style="@style/mainRadioGroupStyle"
             android:drawableTop="@drawable/selector_tab_mining"
             android:text="健康" />
 
         <RadioButton
             android:id="@+id/rbFind"
-            style="@style/main_bottom_tab"
+            style="@style/mainRadioGroupStyle"
             android:drawableTop="@drawable/selector_tab_trade"
             android:text="发现" />
 
         <RadioButton
             android:id="@+id/rbMine"
-            style="@style/main_bottom_tab"
+            style="@style/mainRadioGroupStyle"
             android:drawableTop="@drawable/selector_tab_group"
             android:text="我的" />
 

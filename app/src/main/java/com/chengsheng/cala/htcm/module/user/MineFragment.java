@@ -25,7 +25,6 @@ import com.chengsheng.cala.htcm.module.activitys.ServiceMessageActivity;
 import com.chengsheng.cala.htcm.module.activitys.ServiceOrderActivity;
 import com.chengsheng.cala.htcm.module.activitys.SettingActivity;
 import com.chengsheng.cala.htcm.protocol.childmodela.UserInfo;
-import com.chengsheng.cala.htcm.utils.ActivityUtil;
 import com.chengsheng.cala.htcm.utils.UserUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -94,7 +93,7 @@ public class MineFragment extends BaseFragment {
                 } else {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("USER_INFO", userInfo);
-                    ActivityUtil.Companion.startActivity(context, new AccountSettingActivity(), bundle);
+                    startActivity(new AccountSettingActivity(), bundle);
                 }
             }
         });
@@ -103,7 +102,7 @@ public class MineFragment extends BaseFragment {
         stv_family_manager.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ActivityUtil.Companion.startActivityWithLoginStatus(context, new FamilyManageActivity());
+                startActivityWithLoginStatus(new FamilyManageActivity());
             }
         });
 
@@ -111,7 +110,7 @@ public class MineFragment extends BaseFragment {
         stv_collection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ActivityUtil.Companion.startActivityWithLoginStatus(context, new MyCollectionActivity());
+                startActivityWithLoginStatus(new MyCollectionActivity());
             }
         });
 
@@ -119,7 +118,7 @@ public class MineFragment extends BaseFragment {
         stv_device.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ActivityUtil.Companion.startActivityWithLoginStatus(context, new MyDevicesActivity());
+                startActivityWithLoginStatus(new MyDevicesActivity());
             }
         });
 
@@ -127,7 +126,7 @@ public class MineFragment extends BaseFragment {
         stv_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ActivityUtil.Companion.startActivityWithLoginStatus(context, new SettingActivity());
+                startActivity(new SettingActivity());
             }
         });
 
@@ -139,13 +138,25 @@ public class MineFragment extends BaseFragment {
             }
         });
 
-        getUserInfo();
-
         //查看消息
         messageIconContainerMine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityUtil.Companion.startActivityWithLoginStatus(context, new ServiceMessageActivity());
+                startActivityWithLoginStatus(new ServiceMessageActivity());
+            }
+        });
+
+        //体检订单
+        medicalExamOrderText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (UserUtil.isLogin()) {
+                    Intent intent = new Intent(getContext(), ExamOrderFormActivity.class);
+                    intent.putExtra("CUSTOMER_ID", String.valueOf(userInfo.getId()));
+                    context.startActivity(intent);
+                } else {
+                    startActivity(new LoginActivity());
+                }
             }
         });
 
@@ -153,8 +164,7 @@ public class MineFragment extends BaseFragment {
         serviceOrderText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), ServiceOrderActivity.class);
-                context.startActivity(intent);
+                startActivityWithLoginStatus(new ServiceOrderActivity());
             }
         });
 
@@ -201,15 +211,6 @@ public class MineFragment extends BaseFragment {
         userNameText.setText(userInfo.getNickname());
         String phoneNumber = userInfo.getPhone_number().replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
         userCellphoneNum.setText(phoneNumber);
-
-        medicalExamOrderText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), ExamOrderFormActivity.class);
-                intent.putExtra("CUSTOMER_ID", String.valueOf(userInfo.getId()));
-                getContext().startActivity(intent);
-            }
-        });
     }
 
     /**
@@ -250,6 +251,7 @@ public class MineFragment extends BaseFragment {
             stv_device.setVisibility(View.GONE);
             userNameText.setText("");
             userCellphoneNum.setText("");
+            userIcon.setImageResource(R.mipmap.morentouxiang_wode);
         }
     }
 }

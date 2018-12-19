@@ -14,7 +14,7 @@ import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.module.fragments.AddFamilyFragment;
 import com.chengsheng.cala.htcm.module.fragments.FamilyListFragment;
-import com.chengsheng.cala.htcm.module.home.NewMainActivity;
+import com.chengsheng.cala.htcm.module.home.MainActivity;
 
 public class FamilyManageActivity extends BaseActivity implements FamilyListFragment.OnFamilyListInteractionListener,
         AddFamilyFragment.OnAddFamilyFragmentInteractionListener {
@@ -87,7 +87,7 @@ public class FamilyManageActivity extends BaseActivity implements FamilyListFrag
                     addFamily.setVisibility(View.VISIBLE);
 
                 } else if (stats.equals("manage")) {
-                    Intent intent = new Intent(FamilyManageActivity.this, NewMainActivity.class);
+                    Intent intent = new Intent(FamilyManageActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
             }

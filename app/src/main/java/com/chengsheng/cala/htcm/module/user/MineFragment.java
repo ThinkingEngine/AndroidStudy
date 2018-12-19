@@ -5,11 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -18,7 +15,9 @@ import android.widget.TextView;
 import com.allen.library.SuperTextView;
 import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.base.BaseFragment;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
+import com.chengsheng.cala.htcm.data.repository.UserRepository;
 import com.chengsheng.cala.htcm.module.account.LoginActivity;
 import com.chengsheng.cala.htcm.module.activitys.AccountSettingActivity;
 import com.chengsheng.cala.htcm.module.activitys.ExamOrderFormActivity;
@@ -36,6 +35,7 @@ import com.chengsheng.cala.htcm.utils.UserUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DefaultObserver;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
@@ -45,7 +45,7 @@ import retrofit2.Retrofit;
  * CreateDate:
  * Description: 我的模块
  */
-public class MineFragment extends Fragment {
+public class MineFragment extends BaseFragment {
 
     private TextView medicalExamOrderText;
     private TextView userNameText;
@@ -79,19 +79,16 @@ public class MineFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            String mParam1 = getArguments().getString("p1");
-            String mParam2 = getArguments().getString("p2");
-        }
-
-        app = HTCMApp.create(getContext());
+        app = HTCMApp.create(context);
     }
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public int getLayoutId() {
+        return R.layout.fragment_mine;
+    }
 
-        View rootView = inflater.inflate(R.layout.fragment_mine, container, false);
-
+    @Override
+    public void initView(View rootView) {
         medicalExamOrderText = rootView.findViewById(R.id.medical_exam_order_text);//体检订单文本
         TextView serviceOrderText = rootView.findViewById(R.id.service_order_text);
         userNameText = rootView.findViewById(R.id.user_name_text);
@@ -175,9 +172,32 @@ public class MineFragment extends Fragment {
             }
         });
 
-        return rootView;
     }
 
+    @Override
+    public void getData() {
+        UserRepository.Companion.getDefault().getUserInfo()
+                .subscribe(new DefaultObserver<Object>() {
+                    @Override
+                    public void onNext(Object o) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    /**
+     * 联系客服
+     */
     private void contactService() {
         AlertDialog alertDialog;
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());

@@ -15,6 +15,9 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "P1", "\"wer5c19e73ab34cac2afbdc457b939nh\"")
+        buildConfigField("boolean", "isDev", "true")
+        buildConfigField("boolean", "isLive", "false")
     }
 
     signingConfigs {

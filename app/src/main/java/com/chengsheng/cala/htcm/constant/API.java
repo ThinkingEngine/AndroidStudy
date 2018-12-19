@@ -16,4 +16,7 @@ public class API {
     /* 获取客户体检订单详情 */
     public static final String USER_EXAM_DETAIL = SERVICE_BASE_URL + "api/physical-exam-order/customer-exams/";
 
+    /* 自助登记*/
+    public static final String USER_REGISTER = SERVICE_BASE_URL + "api/physical-exam-order/orders/registration/";
+
 }

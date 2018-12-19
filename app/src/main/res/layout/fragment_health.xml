@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPageBackground"
     android:orientation="vertical"
-    tools:context=".module.fragments.HealthFragment">
+    tools:context=".module.health.HealthFragment">
 
     <include
         android:id="@+id/title_header_health"

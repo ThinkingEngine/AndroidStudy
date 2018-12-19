@@ -5,10 +5,10 @@ import android.support.v4.app.FragmentTransaction
 import android.view.KeyEvent
 import com.chengsheng.cala.htcm.R
 import com.chengsheng.cala.htcm.base.BaseActivity
-import com.chengsheng.cala.htcm.module.fragments.FindFragment
-import com.chengsheng.cala.htcm.module.fragments.HealthFragment
-import com.chengsheng.cala.htcm.module.fragments.MainPageFragment
-import com.chengsheng.cala.htcm.module.fragments.MineFragment
+import com.chengsheng.cala.htcm.module.find.FindFragment
+import com.chengsheng.cala.htcm.module.health.HealthFragment
+import com.chengsheng.cala.htcm.module.fragments.HomeFragment
+import com.chengsheng.cala.htcm.module.user.MineFragment
 import kotlinx.android.synthetic.main.activity_new_main.*
 
 /**
@@ -31,7 +31,7 @@ class NewMainActivity : BaseActivity() {
     }
 
     override fun initView() {
-        homeFragment = MainPageFragment.newInstance()
+        homeFragment = HomeFragment.newInstance()
         healthFragment = HealthFragment.newInstance()
         findFragment = FindFragment.newInstance()
         mineFragment = MineFragment.newInstance("", "")

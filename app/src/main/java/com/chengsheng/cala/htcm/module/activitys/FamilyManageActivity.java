@@ -1,19 +1,20 @@
 package com.chengsheng.cala.htcm.module.activitys;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.module.fragments.AddFamilyFragment;
 import com.chengsheng.cala.htcm.module.fragments.FamilyListFragment;
+import com.chengsheng.cala.htcm.module.home.NewMainActivity;
 
 public class FamilyManageActivity extends BaseActivity implements FamilyListFragment.OnFamilyListInteractionListener,
         AddFamilyFragment.OnAddFamilyFragmentInteractionListener {
@@ -86,7 +87,7 @@ public class FamilyManageActivity extends BaseActivity implements FamilyListFrag
                     addFamily.setVisibility(View.VISIBLE);
 
                 } else if (stats.equals("manage")) {
-                    Intent intent = new Intent(FamilyManageActivity.this, MainActivity.class);
+                    Intent intent = new Intent(FamilyManageActivity.this, NewMainActivity.class);
                     startActivity(intent);
                 }
             }

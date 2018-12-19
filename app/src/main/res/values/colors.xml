@@ -23,4 +23,6 @@
     <color name="colorGreen">#93DC21</color>
     <color name="colorBule">#5FC8FF</color>
     <color name="colorGray">#F7F7F7</color>
+
+    <color name="colorF0F0F0">#F0F0F0</color>
 </resources>

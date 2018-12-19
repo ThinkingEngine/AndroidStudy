@@ -4,7 +4,7 @@ import android.os.Handler;
 
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.base.BaseActivity;
-import com.chengsheng.cala.htcm.module.home.NewMainActivity;
+import com.chengsheng.cala.htcm.module.home.MainActivity;
 
 /**
  * Author: 任和
@@ -31,7 +31,7 @@ public class SplashActivity extends BaseActivity {
 
     private void start() {
 //        startActivity(new MainActivity());
-        startActivity(new NewMainActivity());
+        startActivity(new MainActivity());
         finish();
     }
 

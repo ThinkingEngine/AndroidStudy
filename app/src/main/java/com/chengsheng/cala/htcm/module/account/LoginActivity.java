@@ -54,6 +54,15 @@ public class LoginActivity extends BaseActivity {
     private String userNameInput;
     private String passwordInput;
 
+    /**
+     * 跳转到登录页面
+     */
+    public static void start(Context context) {
+        Intent intent = new Intent(context, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        context.startActivity(intent);
+    }
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_login;

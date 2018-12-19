@@ -2,6 +2,7 @@ package com.chengsheng.cala.htcm.data.repository
 
 import com.chengsheng.cala.htcm.data.retrofit.RetrofitHelper
 import com.chengsheng.cala.htcm.data.transformProto
+import com.chengsheng.cala.htcm.protocol.childmodela.UserInfo
 import io.reactivex.Observable
 
 /**
@@ -31,7 +32,7 @@ class UserRepository private constructor() {
     /**
      * 获取用户信息
      */
-    fun getUserInfo(): Observable<Any>? {
+    fun getUserInfo(): Observable<UserInfo>? {
         return transformProto(RetrofitHelper.getInstance().userApi.getUserInfo())
     }
 

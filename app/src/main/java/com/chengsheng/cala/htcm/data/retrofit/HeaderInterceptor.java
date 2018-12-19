@@ -20,9 +20,8 @@ public class HeaderInterceptor implements Interceptor {
         String accessToken = request.header("Authorization");
 
         if (Boolean.valueOf(accessToken)) {
-            String token = UserUtil.getAccessToken();
             newBuilder.removeHeader("Authorization");
-            newBuilder.addHeader("Authorization", "Bearer " + token);
+            newBuilder.addHeader(UserUtil.getTokenType(), UserUtil.getAccessToken());
         }
 
         Request newRequest = newBuilder.build();

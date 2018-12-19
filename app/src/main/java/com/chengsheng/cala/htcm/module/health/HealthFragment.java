@@ -1,4 +1,4 @@
-package com.chengsheng.cala.htcm.module.fragments;
+package com.chengsheng.cala.htcm.module.health;
 
 import android.content.Intent;
 import android.graphics.Color;

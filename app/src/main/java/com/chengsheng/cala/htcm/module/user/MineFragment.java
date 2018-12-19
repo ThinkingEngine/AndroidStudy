@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -13,10 +12,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.allen.library.SuperTextView;
-import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.base.BaseFragment;
-import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.data.repository.UserRepository;
 import com.chengsheng.cala.htcm.module.account.LoginActivity;
 import com.chengsheng.cala.htcm.module.activitys.AccountSettingActivity;
@@ -27,18 +24,12 @@ import com.chengsheng.cala.htcm.module.activitys.MyDevicesActivity;
 import com.chengsheng.cala.htcm.module.activitys.ServiceMessageActivity;
 import com.chengsheng.cala.htcm.module.activitys.ServiceOrderActivity;
 import com.chengsheng.cala.htcm.module.activitys.SettingActivity;
-import com.chengsheng.cala.htcm.network.AccountService;
-import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.protocol.childmodela.UserInfo;
 import com.chengsheng.cala.htcm.utils.ActivityUtil;
 import com.chengsheng.cala.htcm.utils.UserUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DefaultObserver;
-import io.reactivex.observers.DisposableObserver;
-import io.reactivex.schedulers.Schedulers;
-import retrofit2.Retrofit;
 
 /**
  * Author: 蔡浪
@@ -57,11 +48,8 @@ public class MineFragment extends BaseFragment {
     private SuperTextView stv_family_manager;
     private SuperTextView stv_collection;
     private SuperTextView stv_device;
-    private SuperTextView stv_setting;
-    private SuperTextView stv_contact;
 
-    private Retrofit retrofit;
-    private HTCMApp app;
+    private UserInfo userInfo;
 
     public static MineFragment newInstance(String param1, String param2) {
         MineFragment fragment = new MineFragment();
@@ -74,12 +62,6 @@ public class MineFragment extends BaseFragment {
 
     public MineFragment() {
 
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        app = HTCMApp.create(context);
     }
 
     @Override
@@ -98,9 +80,9 @@ public class MineFragment extends BaseFragment {
         currentHasMessageMine = rootView.findViewById(R.id.current_has_message_mine);
         layoutUpdateUserInfo = rootView.findViewById(R.id.layout_update_user_info);
         stv_family_manager = rootView.findViewById(R.id.stv_family_manager);
-        stv_contact = rootView.findViewById(R.id.stv_contact);
+        SuperTextView stv_contact = rootView.findViewById(R.id.stv_contact);
         stv_device = rootView.findViewById(R.id.stv_device);
-        stv_setting = rootView.findViewById(R.id.stv_setting);
+        SuperTextView stv_setting = rootView.findViewById(R.id.stv_setting);
         stv_collection = rootView.findViewById(R.id.stv_collection);
 
         //修改用户信息
@@ -108,7 +90,11 @@ public class MineFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 if (!UserUtil.isLogin()) {
-                    ActivityUtil.Companion.startActivity(getContext(), new LoginActivity());
+                    LoginActivity.start(context);
+                } else {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("USER_INFO", userInfo);
+                    ActivityUtil.Companion.startActivity(context, new AccountSettingActivity(), bundle);
                 }
             }
         });
@@ -117,7 +103,7 @@ public class MineFragment extends BaseFragment {
         stv_family_manager.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ActivityUtil.Companion.startActivityWithLoginStatus(getContext(), new FamilyManageActivity());
+                ActivityUtil.Companion.startActivityWithLoginStatus(context, new FamilyManageActivity());
             }
         });
 
@@ -125,7 +111,7 @@ public class MineFragment extends BaseFragment {
         stv_collection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ActivityUtil.Companion.startActivityWithLoginStatus(getContext(), new MyCollectionActivity());
+                ActivityUtil.Companion.startActivityWithLoginStatus(context, new MyCollectionActivity());
             }
         });
 
@@ -133,7 +119,7 @@ public class MineFragment extends BaseFragment {
         stv_device.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ActivityUtil.Companion.startActivityWithLoginStatus(getContext(), new MyDevicesActivity());
+                ActivityUtil.Companion.startActivityWithLoginStatus(context, new MyDevicesActivity());
             }
         });
 
@@ -141,7 +127,7 @@ public class MineFragment extends BaseFragment {
         stv_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ActivityUtil.Companion.startActivityWithLoginStatus(getContext(), new SettingActivity());
+                ActivityUtil.Companion.startActivityWithLoginStatus(context, new SettingActivity());
             }
         });
 
@@ -153,13 +139,13 @@ public class MineFragment extends BaseFragment {
             }
         });
 
-        updateUserInfo();
+        getUserInfo();
 
         //查看消息
         messageIconContainerMine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityUtil.Companion.startActivityWithLoginStatus(getContext(), new ServiceMessageActivity());
+                ActivityUtil.Companion.startActivityWithLoginStatus(context, new ServiceMessageActivity());
             }
         });
 
@@ -168,7 +154,7 @@ public class MineFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ServiceOrderActivity.class);
-                getContext().startActivity(intent);
+                context.startActivity(intent);
             }
         });
 
@@ -176,16 +162,28 @@ public class MineFragment extends BaseFragment {
 
     @Override
     public void getData() {
-        UserRepository.Companion.getDefault().getUserInfo()
-                .subscribe(new DefaultObserver<Object>() {
-                    @Override
-                    public void onNext(Object o) {
 
+    }
+
+    /**
+     * 获取用户信息
+     */
+    private void getUserInfo() {
+        if (!UserUtil.isLogin()) {
+            return;
+        }
+
+        UserRepository.Companion.getDefault().getUserInfo()
+                .subscribe(new DefaultObserver<UserInfo>() {
+                    @Override
+                    public void onNext(UserInfo user) {
+                        userInfo = user;
+                        setUserInfo(user);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        showError(e);
                     }
 
                     @Override
@@ -193,6 +191,25 @@ public class MineFragment extends BaseFragment {
 
                     }
                 });
+    }
+
+    /**
+     * 设置用户信息
+     */
+    void setUserInfo(final UserInfo userInfo) {
+        userIcon.setImageURI(userInfo.getAvatar_url());
+        userNameText.setText(userInfo.getNickname());
+        String phoneNumber = userInfo.getPhone_number().replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
+        userCellphoneNum.setText(phoneNumber);
+
+        medicalExamOrderText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ExamOrderFormActivity.class);
+                intent.putExtra("CUSTOMER_ID", String.valueOf(userInfo.getId()));
+                getContext().startActivity(intent);
+            }
+        });
     }
 
     /**
@@ -219,66 +236,6 @@ public class MineFragment extends BaseFragment {
         alertDialog.show();
     }
 
-    private void updateUserInfo() {
-        if (!UserUtil.isLogin()) {
-            return;
-        }
-
-        if (retrofit == null) {
-            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.TEST_URL);
-        }
-
-        AccountService service = retrofit.create(AccountService.class);
-        service.getUserInfo(app.getTokenType() + " " + app.getAccessToken())
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableObserver<UserInfo>() {
-                    @Override
-                    public void onNext(final UserInfo userInfo) {
-                        setViews(userInfo);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("TAG", "用户信息请求失败" + e.toString());
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-    }
-
-    void setViews(final UserInfo userInfo) {
-        userIcon.setImageURI(userInfo.getAvatar_url());
-        userNameText.setText(userInfo.getNickname());
-        String phoneNumber = userInfo.getPhone_number().replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
-        userCellphoneNum.setText(phoneNumber);
-
-        medicalExamOrderText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), ExamOrderFormActivity.class);
-                intent.putExtra("CUSTOMER_ID", String.valueOf(userInfo.getId()));
-                getContext().startActivity(intent);
-            }
-        });
-
-        //修改用户信息
-        layoutUpdateUserInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (UserUtil.isLogin()) {
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("USER_INFO", userInfo);
-                    ActivityUtil.Companion.startActivity(getContext(),
-                            new AccountSettingActivity(), bundle);
-                }
-            }
-        });
-    }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -286,7 +243,7 @@ public class MineFragment extends BaseFragment {
             stv_family_manager.setVisibility(View.VISIBLE);
             stv_collection.setVisibility(View.VISIBLE);
             stv_device.setVisibility(View.VISIBLE);
-            updateUserInfo();
+            getUserInfo();
         } else {
             stv_family_manager.setVisibility(View.GONE);
             stv_collection.setVisibility(View.GONE);

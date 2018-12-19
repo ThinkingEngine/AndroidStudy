@@ -1,8 +1,9 @@
 package com.chengsheng.cala.htcm.data.service
 
 import com.chengsheng.cala.htcm.constant.API
-import com.chengsheng.cala.htcm.protocol.BaseEntity
+import com.chengsheng.cala.htcm.protocol.childmodela.UserInfo
 import io.reactivex.Observable
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers
 
@@ -15,6 +16,6 @@ interface UserService {
 
     @GET(API.USER_INFO_URL)
     @Headers("Authorization:true")
-    fun getUserInfo(): Observable<BaseEntity<Any>>
+    fun getUserInfo(): Observable<Response<UserInfo>>
 
 }

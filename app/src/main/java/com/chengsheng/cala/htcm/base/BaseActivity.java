@@ -9,6 +9,8 @@ import com.chengsheng.cala.htcm.manager.ActivityManager;
 import com.chengsheng.cala.htcm.utils.ActivityUtil;
 import com.chengsheng.cala.htcm.utils.ToastUtil;
 
+import static com.chengsheng.cala.htcm.data.ResponseExtentionKt.checkError;
+
 /**
  * Author: 任和
  * CreateDate: 2018/12/17 8:50 PM
@@ -60,6 +62,13 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     public void showLongToast(String content) {
         ToastUtil.showLongToast(this, content);
+    }
+
+    /**
+     * 显示请求接口返回的信息
+     */
+    public void showError(Throwable throwable) {
+        showShortToast(checkError(throwable, this));
     }
 
     /**

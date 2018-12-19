@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 
 import com.chengsheng.cala.htcm.utils.ToastUtil;
 
+import static com.chengsheng.cala.htcm.data.ResponseExtentionKt.checkError;
+
 /**
  * Author: 任和
  * CreateDate: 2018/12/18 9:36 AM
@@ -70,6 +72,13 @@ public abstract class BaseFragment extends Fragment {
         if (content != null) {
             ToastUtil.showLongToast(context, content);
         }
+    }
+
+    /**
+     * 显示请求接口返回的信息
+     */
+    public void showError(Throwable throwable) {
+        showShortToast(checkError(throwable, context));
     }
 }
 

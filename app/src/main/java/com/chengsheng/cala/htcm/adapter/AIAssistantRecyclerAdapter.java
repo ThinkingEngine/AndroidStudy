@@ -11,6 +11,7 @@ import android.text.Spanned;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,7 +90,7 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
             holder = new AssistantViewHolder(LayoutInflater.from(context).inflate(R.layout.ai_assistant_no_content_layout, null));
         } else if (datas.isEmpty() && type == -1) {
             holder = new AssistantViewHolder(LayoutInflater.from(context).inflate(R.layout.single_text_layout, null));
-        } else{
+        } else {
             holder = new AssistantViewHolder(LayoutInflater.from(context).inflate(R.layout.ai_assistant_item_layout, null));
         }
         return holder;
@@ -101,7 +102,7 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
         if (!datas.isEmpty()) {
             final AssistantItem data = datas.get(i);
             String stats = data.getOrder().getExam_status();
-
+            Log.e("TAG", "STATUS:" + stats);
 
             viewHolder.userNameAIAssistant.setText(data.getCustomer().getName());
             viewHolder.userHeaderIconAIAssistant.setImageURI(data.getCustomer().getAvatar());
@@ -154,6 +155,7 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
 
                 viewHolder.userBitmapMark.setImageResource(R.mipmap.erweima);
                 viewHolder.examNum.setText("预约号：" + data.getCustomer().getReservation_or_registration().getId());
+                viewHolder.itemBigNotes.setText("预约了" + data.getCustomer().getReservation_or_registration().getDate() + "的体检");
 
                 Float money = Float.valueOf(data.getOrder().getDiscount_receivable());
                 if (money > 0) {
@@ -164,44 +166,40 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
                     viewHolder.unscrambleMark.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-//                            Intent intent = new Intent(context, ModePaymentActivity.class);
-//                            intent.putExtra("ORDER_ID", String.valueOf(data.getOrder().getId()));
-//                            intent.putExtra("ORDER_VAL", data.getOrder().getDiscount_receivable());
-//                            context.startActivity(intent);
-                            Bundle bundle = new Bundle();
-                            bundle.putString("ORDER_ID",String.valueOf(data.getOrder().getId()));
-                            ActivityUtil.Companion.startActivity(context,new RegisterDetailActivity(),bundle);
+                            Intent intent = new Intent(context, ModePaymentActivity.class);
+                            intent.putExtra("ORDER_ID", String.valueOf(data.getOrder().getId()));
+                            intent.putExtra("ORDER_VAL", data.getOrder().getDiscount_receivable());
+                            context.startActivity(intent);
+
                         }
                     });
                 } else {
-                    viewHolder.unscrambleMark.setVisibility(View.INVISIBLE);
-                    viewHolder.itemSecNotes.setText("请前往中心登记台完成登记");
+                    if (data.getOrder().isCan_autonomous()) {
+                        viewHolder.unscrambleMark.setVisibility(View.VISIBLE);
+                        viewHolder.unscrambleMark.setText("自助登记");
+                        viewHolder.itemSecNotes.setText("您可前往中心登记台或自助完成登记");
+
+                        viewHolder.unscrambleMark.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Bundle bundle = new Bundle();
+                                bundle.putString("ORDER_ID", String.valueOf(data.getOrder().getId()));
+                                ActivityUtil.Companion.startActivity(context, new RegisterDetailActivity(), bundle);
+                            }
+                        });
+                    } else {
+                        viewHolder.unscrambleMark.setVisibility(View.INVISIBLE);
+                        viewHolder.itemSecNotes.setText("请前往中心登记台完成登记");
+                    }
+
                 }
 
             } else if (stats.equals(GlobalConstant.CHECKING)) {//正在检查
                 viewHolder.userBitmapMark.setImageResource(R.mipmap.tianxingma);
-
-                if (data.getOrder().isCan_autonomous()) {
-                    viewHolder.unscrambleMark.setVisibility(View.VISIBLE);
-                    viewHolder.unscrambleMark.setText("自助登记");
-                    viewHolder.itemSecNotes.setText("您可前往中心登记台或自主完成登记");
-                    viewHolder.examNum.setText("体检号：" + data.getCustomer().getReservation_or_registration().getId());
-
-                    viewHolder.unscrambleMark.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Bundle bundle = new Bundle();
-                            bundle.putString("ORDER_ID",String.valueOf(data.getOrder().getId()));
-                            ActivityUtil.Companion.startActivity(context,new RegisterDetailActivity(),bundle);
-                        }
-                    });
-
-                } else {
-                    viewHolder.unscrambleMark.setVisibility(View.INVISIBLE);
-                    viewHolder.itemSecNotes.setText("项目检查完成后，请前往中心登记台确认");
-                    viewHolder.examNum.setText("点击查看体检进度详情");
-                }
-
+                viewHolder.examNum.setText("体检号：" + data.getCustomer().getReservation_or_registration().getId());
+                viewHolder.unscrambleMark.setVisibility(View.INVISIBLE);
+                viewHolder.itemBigNotes.setText("点击查看体检进度详情");
+                viewHolder.itemSecNotes.setText("项目检查完成后，请前往中心登记台确认");
 
             } else if (stats.equals(GlobalConstant.CHECKED)) {//已检查
 
@@ -212,7 +210,7 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
                 if (data.getReport().isIssued()) {
                     viewHolder.unscrambleMark.setVisibility(View.VISIBLE);
                     viewHolder.unscrambleMark.setText("查看报告");
-                    viewHolder.examNum.setText("体检报告已生成");
+                    viewHolder.itemBigNotes.setText("体检报告已生成");
                     viewHolder.unscrambleMark.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -224,7 +222,7 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
                         }
                     });
                 } else {
-                    viewHolder.examNum.setText("体检报告预计2-5个工作日内生成");
+                    viewHolder.itemBigNotes.setText("体检报告预计2-5个工作日内生成");
                     viewHolder.unscrambleMark.setVisibility(View.INVISIBLE);
                 }
             } else {
@@ -234,7 +232,7 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
 
         } else if (datas.isEmpty() && type == -1) {
 
-        }else if(datas.isEmpty() && type == -2){
+        } else if (datas.isEmpty() && type == -2) {
             viewHolder.examNum.setText("未登录");
             viewHolder.itemBigNotes.setText("新手指引");
             viewHolder.unscrambleMark.setText("立即登录");
@@ -244,14 +242,14 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
             viewHolder.unscrambleMark.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ActivityUtil.Companion.startActivity(context,new LoginActivity());
+                    ActivityUtil.Companion.startActivity(context, new LoginActivity());
                 }
             });
 
             viewHolder.aiAssistantItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ActivityUtil.Companion.startActivity(context,new LoginActivity());
+                    ActivityUtil.Companion.startActivity(context, new LoginActivity());
                 }
             });
 

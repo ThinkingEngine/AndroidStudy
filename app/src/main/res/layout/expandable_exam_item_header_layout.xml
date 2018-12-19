@@ -36,7 +36,6 @@
             android:id="@+id/exam_item_stats_expandable"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="invisible"
             android:textSize="14sp"
             android:textColor="@color/colorSecText"
             android:layout_toLeftOf="@id/arrow_mark"

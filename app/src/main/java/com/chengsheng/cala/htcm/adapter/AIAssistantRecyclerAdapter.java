@@ -27,6 +27,7 @@ import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.module.account.LoginActivity;
 import com.chengsheng.cala.htcm.module.activitys.ExamReportDetailActivity;
 import com.chengsheng.cala.htcm.module.activitys.ModePaymentActivity;
+import com.chengsheng.cala.htcm.module.activitys.RegisterDetailActivity;
 import com.chengsheng.cala.htcm.protocol.AssistantItem;
 import com.chengsheng.cala.htcm.protocol.FamiliesListItem;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
@@ -153,7 +154,7 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
             if (stats.equals(GlobalConstant.RESERVATION)) {
 
                 viewHolder.userBitmapMark.setImageResource(R.mipmap.erweima);
-                viewHolder.examNum.setText("预约号：" + data.getOrder().getId());
+                viewHolder.examNum.setText("预约号：" + data.getCustomer().getReservation_or_registration().getId());
 
                 Float money = Float.valueOf(data.getOrder().getDiscount_receivable());
                 if (money > 0) {
@@ -177,12 +178,22 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
 
             } else if (stats.equals(GlobalConstant.CHECKING)) {//正在检查
                 viewHolder.userBitmapMark.setImageResource(R.mipmap.tianxingma);
-                viewHolder.examNum.setText("体检号：" + data.getOrder().getId());
+                viewHolder.examNum.setText("体检号：" + data.getCustomer().getReservation_or_registration().getId());
 
                 if (data.getOrder().isCan_autonomous()) {
                     viewHolder.unscrambleMark.setVisibility(View.VISIBLE);
                     viewHolder.unscrambleMark.setText("自主登记");
                     viewHolder.itemSecNotes.setText("您可前往中心登记台或自主完成登记");
+
+                    viewHolder.unscrambleMark.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Bundle bundle = new Bundle();
+                            bundle.putString("ORDER_ID",String.valueOf(data.getOrder().getId()));
+                            ActivityUtil.Companion.startActivity(context,new RegisterDetailActivity(),bundle);
+                        }
+                    });
+
                 } else {
                     viewHolder.unscrambleMark.setVisibility(View.INVISIBLE);
                     viewHolder.itemSecNotes.setText("项目检查完成后，请前往中心登记台确认");
@@ -192,12 +203,12 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
             } else if (stats.equals(GlobalConstant.CHECKED)) {//已检查
 
                 viewHolder.userBitmapMark.setImageResource(R.mipmap.tianxingma);
-                viewHolder.examNum.setText("体检号：" + data.getOrder().getId());
+                viewHolder.examNum.setText("体检号：" + data.getCustomer().getReservation_or_registration().getId());
                 viewHolder.itemSecNotes.setText("体检日期：" + data.getCustomer().getReservation_or_registration().getDate());
 
                 if (data.getReport().isIssued()) {
                     viewHolder.unscrambleMark.setVisibility(View.VISIBLE);
-
+                    viewHolder.unscrambleMark.setText("查看报告");
                     viewHolder.unscrambleMark.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -213,7 +224,7 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
                 }
             } else {
                 viewHolder.userBitmapMark.setImageResource(R.mipmap.tianxingma);
-                viewHolder.examNum.setText("体检号：" + data.getOrder().getId());
+                viewHolder.examNum.setText("体检号：" + data.getCustomer().getReservation_or_registration().getId());
             }
 
         } else if (datas.isEmpty() && type == -1) {
@@ -224,6 +235,13 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
             viewHolder.unscrambleMark.setText("立即登录");
             viewHolder.userBitmapMark.setVisibility(View.INVISIBLE);
             viewHolder.deleteExamItem.setVisibility(View.INVISIBLE);
+
+            viewHolder.unscrambleMark.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ActivityUtil.Companion.startActivity(context,new LoginActivity());
+                }
+            });
 
             viewHolder.aiAssistantItem.setOnClickListener(new View.OnClickListener() {
                 @Override

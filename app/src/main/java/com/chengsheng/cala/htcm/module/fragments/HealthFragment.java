@@ -1,6 +1,5 @@
 package com.chengsheng.cala.htcm.module.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -17,19 +16,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chengsheng.cala.htcm.HTCMApp;
-import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.R;
-import com.chengsheng.cala.htcm.protocol.FamiliesList;
+import com.chengsheng.cala.htcm.adapter.FMRecyclerAdapter;
+import com.chengsheng.cala.htcm.constant.GlobalConstant;
+import com.chengsheng.cala.htcm.module.activitys.FamilyManageActivity;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
-import com.chengsheng.cala.htcm.utils.AuthStateCallBack;
+import com.chengsheng.cala.htcm.protocol.FamiliesList;
 import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
-import com.chengsheng.cala.htcm.module.activitys.FamilyManageActivity;
-import com.chengsheng.cala.htcm.adapter.FMRecyclerAdapter;
 import com.chengsheng.cala.htcm.utils.UpdateStateInterface;
 import com.zyao89.view.zloading.ZLoadingDialog;
 import com.zyao89.view.zloading.Z_TYPE;
-
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
@@ -62,12 +59,8 @@ public class HealthFragment extends Fragment implements UpdateStateInterface {
     public HealthFragment() {
     }
 
-    public static HealthFragment newInstance(String param1, String param2) {
+    public static HealthFragment newInstance() {
         HealthFragment fragment = new HealthFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -126,29 +119,6 @@ public class HealthFragment extends Fragment implements UpdateStateInterface {
         return rootView;
     }
 
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
     @Override
     public void updateServiceMessage(boolean status) {
         if (status) {
@@ -158,7 +128,6 @@ public class HealthFragment extends Fragment implements UpdateStateInterface {
 
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 
@@ -200,5 +169,4 @@ public class HealthFragment extends Fragment implements UpdateStateInterface {
                 });
 
     }
-
 }

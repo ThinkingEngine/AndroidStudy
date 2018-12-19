@@ -95,6 +95,7 @@
         <activity android:name=".module.activitys.BarADActivity" />
         <activity android:name=".module.activitys.SearchActivity" />
         <activity android:name=".module.TestActivity" />
+        <activity android:name=".module.home.NewMainActivity" />
 
         <service
             android:name=".model.services.ServiceSMSService"

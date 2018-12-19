@@ -1,6 +1,5 @@
 package com.chengsheng.cala.htcm.module.activitys;
 
-import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -14,7 +13,6 @@ import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.adapter.MainViewPagerAdapter;
 import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.module.account.LoginActivity;
-import com.chengsheng.cala.htcm.module.account.RegisterActivity;
 import com.chengsheng.cala.htcm.module.fragments.FindFragment;
 import com.chengsheng.cala.htcm.module.fragments.HealthFragment;
 import com.chengsheng.cala.htcm.module.fragments.MainPageFragment;
@@ -29,11 +27,7 @@ import java.util.List;
  * CreateDate:
  * Description: APP首页
  */
-public class MainActivity extends BaseActivity implements
-        MainPageFragment.OnFragmentInteractionListener,
-        HealthFragment.OnFragmentInteractionListener,
-        FindFragment.OnFragmentInteractionListener,
-        MineFragment.OnFragmentInteractionListener {
+public class MainActivity extends BaseActivity {
 
     private LinearLayout mainPageButton, healthPageButton, findPageButton, minePageButton;
     private ImageView mainPageImage, healthPageImage, findPageImage, minePageImage;
@@ -46,11 +40,6 @@ public class MainActivity extends BaseActivity implements
     @Override
     public int getLayoutId() {
         return R.layout.activity_home_page;
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
     }
 
     private void updateButtonSelected(boolean a, boolean b, boolean c, boolean d) {
@@ -114,6 +103,7 @@ public class MainActivity extends BaseActivity implements
             MainViewPagerAdapter mva = new MainViewPagerAdapter(fm, dataFragments);
             mainPager.setAdapter(mva);
         }
+
         mainPager.setCurrentItem(0);
         updateButtonSelected(true, false, false, false);
 
@@ -128,10 +118,10 @@ public class MainActivity extends BaseActivity implements
         healthPageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(UserUtil.isLogin()){
+                if (UserUtil.isLogin()) {
                     updateButtonSelected(false, true, false, false);
                     mainPager.setCurrentItem(1);
-                }else{
+                } else {
                     startActivity(new LoginActivity());
                 }
 
@@ -163,9 +153,9 @@ public class MainActivity extends BaseActivity implements
 
     private void initFragment() {
         dataFragments = new ArrayList<>();
-        Fragment mainPage = MainPageFragment.newInstance("", "");
-        Fragment healthPage = HealthFragment.newInstance(app.getTokenType(), app.getAccessToken());
-        Fragment findPage = FindFragment.newInstance("", "");
+        Fragment mainPage = MainPageFragment.newInstance();
+        Fragment healthPage = HealthFragment.newInstance();
+        Fragment findPage = FindFragment.newInstance();
         Fragment minePage = MineFragment.newInstance("", "");
         dataFragments.add(mainPage);
         dataFragments.add(healthPage);

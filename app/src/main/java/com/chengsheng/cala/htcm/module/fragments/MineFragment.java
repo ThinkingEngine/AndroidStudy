@@ -1,7 +1,6 @@
 package com.chengsheng.cala.htcm.module.fragments;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -47,10 +46,6 @@ import retrofit2.Retrofit;
  * Description: 我的模块
  */
 public class MineFragment extends Fragment {
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private OnFragmentInteractionListener mListener;
 
     private TextView medicalExamOrderText;
     private TextView userNameText;
@@ -71,8 +66,8 @@ public class MineFragment extends Fragment {
     public static MineFragment newInstance(String param1, String param2) {
         MineFragment fragment = new MineFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString("p1", param1);
+        args.putString("p2", param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -85,8 +80,8 @@ public class MineFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            String mParam1 = getArguments().getString(ARG_PARAM1);
-            String mParam2 = getArguments().getString(ARG_PARAM2);
+            String mParam1 = getArguments().getString("p1");
+            String mParam2 = getArguments().getString("p2");
         }
 
         app = HTCMApp.create(getContext());
@@ -254,10 +249,12 @@ public class MineFragment extends Fragment {
         layoutUpdateUserInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("USER_INFO", userInfo);
-                ActivityUtil.Companion.startActivity(getContext(),
-                        new AccountSettingActivity(), bundle);
+                if (UserUtil.isLogin()) {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("USER_INFO", userInfo);
+                    ActivityUtil.Companion.startActivity(getContext(),
+                            new AccountSettingActivity(), bundle);
+                }
             }
         });
     }
@@ -269,37 +266,13 @@ public class MineFragment extends Fragment {
             stv_family_manager.setVisibility(View.VISIBLE);
             stv_collection.setVisibility(View.VISIBLE);
             stv_device.setVisibility(View.VISIBLE);
+            updateUserInfo();
         } else {
             stv_family_manager.setVisibility(View.GONE);
             stv_collection.setVisibility(View.GONE);
             stv_device.setVisibility(View.GONE);
+            userNameText.setText("");
+            userCellphoneNum.setText("");
         }
-    }
-
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
     }
 }

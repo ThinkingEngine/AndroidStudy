@@ -1,8 +1,6 @@
 package com.chengsheng.cala.htcm.module.fragments;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -48,7 +46,6 @@ import com.chengsheng.cala.htcm.widget.MyRecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.LogManager;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DefaultObserver;
@@ -61,18 +58,9 @@ import retrofit2.Retrofit;
  * CreateDate:
  * Description: APP首页
  */
-public class MainPageFragment extends Fragment implements UpdateAIAssisont,UpdateStateInterface {
-
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
+public class MainPageFragment extends Fragment implements UpdateAIAssisont, UpdateStateInterface {
 
     private Retrofit retrofit;
-
-    private OnFragmentInteractionListener mListener;
-
 
     Handler mHandler = new Handler();
 
@@ -97,22 +85,14 @@ public class MainPageFragment extends Fragment implements UpdateAIAssisont,Updat
 
     }
 
-    public static MainPageFragment newInstance(String param1, String param2) {
+    public static MainPageFragment newInstance() {
         MainPageFragment fragment = new MainPageFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
 
         app = HTCMApp.create(getContext());
         CallBackDataAuth.setUpdateAIAssisont(this);
@@ -229,7 +209,7 @@ public class MainPageFragment extends Fragment implements UpdateAIAssisont,Updat
         aiAssistant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityUtil.Companion.startActivityWithLoginStatus(getContext(),new AIAssistantActivity());
+                ActivityUtil.Companion.startActivityWithLoginStatus(getContext(), new AIAssistantActivity());
             }
         });
 
@@ -238,7 +218,7 @@ public class MainPageFragment extends Fragment implements UpdateAIAssisont,Updat
             @Override
             public void onClick(View v) {
 
-                ActivityUtil.Companion.startActivityWithLoginStatus(getContext(),new MyExamActivity());
+                ActivityUtil.Companion.startActivityWithLoginStatus(getContext(), new MyExamActivity());
             }
         });
 
@@ -247,7 +227,7 @@ public class MainPageFragment extends Fragment implements UpdateAIAssisont,Updat
             @Override
             public void onClick(View v) {
 
-                ActivityUtil.Companion.startActivityWithLoginStatus(getContext(),new ExamReportActivity());
+                ActivityUtil.Companion.startActivityWithLoginStatus(getContext(), new ExamReportActivity());
             }
         });
 
@@ -255,11 +235,11 @@ public class MainPageFragment extends Fragment implements UpdateAIAssisont,Updat
         refreshPage.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if(UserUtil.isLogin()){
+                if (UserUtil.isLogin()) {
                     updateServiceSMS();
                     updateNews();
                     updateAIAssistant();
-                }else{
+                } else {
                     updateNews();
                 }
 
@@ -293,30 +273,6 @@ public class MainPageFragment extends Fragment implements UpdateAIAssisont,Updat
         return rootView;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
     @Override
     public void updateResult(boolean status) {
         if (status) {
@@ -327,16 +283,11 @@ public class MainPageFragment extends Fragment implements UpdateAIAssisont,Updat
 
     @Override
     public void updateServiceMessage(boolean status) {
-        Log.e("TAG","status"+status);
-        if(status){
+        Log.e("TAG", "status" + status);
+        if (status) {
             updateServiceSMS();
             updateAIAssistant();
         }
-    }
-
-
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
     }
 
     private void updateNews() {
@@ -419,7 +370,7 @@ public class MainPageFragment extends Fragment implements UpdateAIAssisont,Updat
     private void updateAIAssistant() {
         if (!UserUtil.isLogin()) {
             List<AssistantItem> temp = new ArrayList<>();
-            AIAssistantRecyclerAdapter appointment = new AIAssistantRecyclerAdapter(getContext(),temp,-2,"");
+            AIAssistantRecyclerAdapter appointment = new AIAssistantRecyclerAdapter(getContext(), temp, -2, "");
             appointmentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             appointmentRecyclerView.setAdapter(appointment);
             return;
@@ -467,6 +418,5 @@ public class MainPageFragment extends Fragment implements UpdateAIAssisont,Updat
                     }
                 });
     }
-
 
 }

@@ -118,9 +118,9 @@
                         android:layout_marginTop="6dp">
 
                         <TextView
+                            android:id="@+id/number_mark"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="预约号："
                             android:textColor="@color/colorThrText"
                             android:textSize="14sp" />
 
@@ -226,6 +226,7 @@
                         android:layout_below="@id/exam_phone_box"
                         android:orientation="horizontal"
                         android:layout_marginStart="14dp"
+                        android:layout_marginEnd="14dp"
                         android:layout_marginTop="6dp">
 
                         <TextView
@@ -248,6 +249,7 @@
                         android:layout_below="@id/exam_phone_box"
                         android:orientation="horizontal"
                         android:layout_marginStart="14dp"
+                        android:layout_marginEnd="14dp"
                         android:layout_marginTop="6dp">
 
                         <TextView
@@ -271,6 +273,7 @@
                         android:layout_below="@id/exam_phone_box"
                         android:orientation="horizontal"
                         android:layout_marginStart="14dp"
+                        android:layout_marginEnd="14dp"
                         android:layout_marginTop="6dp"
                         android:layout_marginBottom="6dp">
 
@@ -330,7 +333,8 @@
                 <com.chengsheng.cala.htcm.widget.MyExpandableListView
                     android:id="@+id/exam_item_list"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:divider="@null"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"

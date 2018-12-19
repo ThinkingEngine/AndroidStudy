@@ -4,6 +4,7 @@ import com.chengsheng.cala.htcm.data.retrofit.RetrofitHelper
 import com.chengsheng.cala.htcm.data.transformProto
 import com.chengsheng.cala.htcm.protocol.childmodelb.UserExamDetail
 import io.reactivex.Observable
+import okhttp3.ResponseBody
 
 /**
  * Author: 任和
@@ -34,6 +35,12 @@ class ExamOrderRepository private constructor() {
      */
     fun getUserExamDetail(orderId: String): Observable<UserExamDetail>? {
         return transformProto(RetrofitHelper.getInstance().orderService.getUserExamDetail(orderId))
+    }
+    /**
+     * 自助登记
+     */
+    fun registration(orderId: String):Observable<ResponseBody>?{
+        return transformProto(RetrofitHelper.getInstance().orderService.registration(orderId))
     }
 
 }

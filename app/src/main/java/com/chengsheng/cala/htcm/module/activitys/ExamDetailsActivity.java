@@ -46,6 +46,7 @@ public class ExamDetailsActivity extends BaseActivity {
     private TextView examItemNum;
     private TextView examStateText;
     private SwipeRefreshLayout refreshExamDetail;
+    private LinearLayout rButtonBox;
 
     private Retrofit retrofit;
     private HTCMApp app;
@@ -97,6 +98,7 @@ public class ExamDetailsActivity extends BaseActivity {
         examItemNum = findViewById(R.id.exam_item_num);
         examStateText = findViewById(R.id.exam_state_text);
         refreshExamDetail = findViewById(R.id.refresh_exam_detail);
+        rButtonBox = findViewById(R.id.r_button_box);
 
         menuBarTitle.setText("详情");
         reportWaitNumBox.setVisibility(View.INVISIBLE);

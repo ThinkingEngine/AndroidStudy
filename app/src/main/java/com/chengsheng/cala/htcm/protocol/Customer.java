@@ -6,6 +6,8 @@ public class Customer {
     private String name;
     private String mobile;
     private String avatar;
+    private String sex;
+    private String age;
     private ReservationOrRegistration reservation_or_registration;
 
     public int getId() {
@@ -38,6 +40,22 @@ public class Customer {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
     }
 
     public ReservationOrRegistration getReservation_or_registration() {

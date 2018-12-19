@@ -104,7 +104,6 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
 
 
             viewHolder.userNameAIAssistant.setText(data.getCustomer().getName());
-            viewHolder.itemBigNotes.setText("您预约了" + data.getCustomer().getReservation_or_registration().getDate() + "的体检");
             viewHolder.userHeaderIconAIAssistant.setImageURI(data.getCustomer().getAvatar());
 
             //删除首页智能助理卡片
@@ -165,10 +164,13 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
                     viewHolder.unscrambleMark.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent = new Intent(context, ModePaymentActivity.class);
-                            intent.putExtra("ORDER_ID", String.valueOf(data.getOrder().getId()));
-                            intent.putExtra("ORDER_VAL", data.getOrder().getDiscount_receivable());
-                            context.startActivity(intent);
+//                            Intent intent = new Intent(context, ModePaymentActivity.class);
+//                            intent.putExtra("ORDER_ID", String.valueOf(data.getOrder().getId()));
+//                            intent.putExtra("ORDER_VAL", data.getOrder().getDiscount_receivable());
+//                            context.startActivity(intent);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("ORDER_ID",String.valueOf(data.getOrder().getId()));
+                            ActivityUtil.Companion.startActivity(context,new RegisterDetailActivity(),bundle);
                         }
                     });
                 } else {
@@ -178,12 +180,12 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
 
             } else if (stats.equals(GlobalConstant.CHECKING)) {//正在检查
                 viewHolder.userBitmapMark.setImageResource(R.mipmap.tianxingma);
-                viewHolder.examNum.setText("体检号：" + data.getCustomer().getReservation_or_registration().getId());
 
                 if (data.getOrder().isCan_autonomous()) {
                     viewHolder.unscrambleMark.setVisibility(View.VISIBLE);
-                    viewHolder.unscrambleMark.setText("自主登记");
+                    viewHolder.unscrambleMark.setText("自助登记");
                     viewHolder.itemSecNotes.setText("您可前往中心登记台或自主完成登记");
+                    viewHolder.examNum.setText("体检号：" + data.getCustomer().getReservation_or_registration().getId());
 
                     viewHolder.unscrambleMark.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -197,6 +199,7 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
                 } else {
                     viewHolder.unscrambleMark.setVisibility(View.INVISIBLE);
                     viewHolder.itemSecNotes.setText("项目检查完成后，请前往中心登记台确认");
+                    viewHolder.examNum.setText("点击查看体检进度详情");
                 }
 
 
@@ -209,6 +212,7 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
                 if (data.getReport().isIssued()) {
                     viewHolder.unscrambleMark.setVisibility(View.VISIBLE);
                     viewHolder.unscrambleMark.setText("查看报告");
+                    viewHolder.examNum.setText("体检报告已生成");
                     viewHolder.unscrambleMark.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -220,6 +224,7 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
                         }
                     });
                 } else {
+                    viewHolder.examNum.setText("体检报告预计2-5个工作日内生成");
                     viewHolder.unscrambleMark.setVisibility(View.INVISIBLE);
                 }
             } else {

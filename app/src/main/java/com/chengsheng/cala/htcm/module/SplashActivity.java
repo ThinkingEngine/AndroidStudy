@@ -4,7 +4,6 @@ import android.os.Handler;
 
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.base.BaseActivity;
-import com.chengsheng.cala.htcm.module.activitys.MainActivity;
 import com.chengsheng.cala.htcm.module.home.NewMainActivity;
 
 /**

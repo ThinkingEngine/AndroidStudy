@@ -58,7 +58,7 @@ import retrofit2.Retrofit;
  * CreateDate:
  * Description: APP首页
  */
-public class MainPageFragment extends Fragment implements UpdateAIAssisont, UpdateStateInterface {
+public class HomeFragment extends Fragment implements UpdateAIAssisont, UpdateStateInterface {
 
     private Retrofit retrofit;
 
@@ -81,12 +81,12 @@ public class MainPageFragment extends Fragment implements UpdateAIAssisont, Upda
 
     private int[] barImages = {R.mipmap.bannera, R.mipmap.bannerb, R.mipmap.bannerc};//bar图片数据
 
-    public MainPageFragment() {
+    public HomeFragment() {
 
     }
 
-    public static MainPageFragment newInstance() {
-        MainPageFragment fragment = new MainPageFragment();
+    public static HomeFragment newInstance() {
+        HomeFragment fragment = new HomeFragment();
         return fragment;
     }
 

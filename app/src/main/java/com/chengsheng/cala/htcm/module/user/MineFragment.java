@@ -1,4 +1,4 @@
-package com.chengsheng.cala.htcm.module.fragments;
+package com.chengsheng.cala.htcm.module.user;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;

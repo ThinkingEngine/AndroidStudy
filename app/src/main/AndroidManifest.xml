@@ -30,9 +30,6 @@
             android:name=".module.account.LoginActivity"
             android:launchMode="singleTask" />
         <activity android:name=".module.activitys.RetrievePWActivity" />
-        <activity
-            android:name=".module.activitys.MainActivity"
-            android:launchMode="singleTask" />
         <activity android:name=".module.activitys.SettingActivity" />
         <activity android:name=".module.activitys.FAQActivity" />
         <activity android:name=".module.activitys.MyDevicesActivity" />

@@ -1,8 +1,5 @@
 package com.chengsheng.cala.htcm.data.retrofit.convert;
 
-import com.chengsheng.cala.htcm.data.retrofit.exception.BusinessException;
-import com.chengsheng.cala.htcm.data.retrofit.exception.InvalidLoginException;
-import com.chengsheng.cala.htcm.protocol.BaseEntity;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
@@ -33,31 +30,31 @@ final class CustomGsonResponseBodyConverter<T> implements Converter<ResponseBody
     public T convert(ResponseBody value) throws IOException {
 
         String response = value.string();
-        BaseEntity baseEntity = gson.fromJson(response, BaseEntity.class);
-
-        String errorMsg;
-
-        if (String.valueOf(baseEntity.getCode()).startsWith("4")) {
-            //token过期
-            value.close();
-            if (baseEntity.getMessage() == null || baseEntity.getMessage().isEmpty()) {
-                errorMsg = "登录已失效";
-            } else {
-                errorMsg = baseEntity.getMessage();
-            }
-
-            throw new InvalidLoginException(errorMsg);
-
-        } else if (!String.valueOf(baseEntity.getCode()).startsWith("2")) {
-            value.close();
-            if (baseEntity.getMessage() == null || baseEntity.getMessage().isEmpty()) {
-                errorMsg = "系统异常";
-            } else {
-                errorMsg = baseEntity.getMessage();
-            }
-
-            throw new BusinessException(baseEntity.getCode(), errorMsg);
-        }
+//        BaseEntity baseEntity = gson.fromJson(response, BaseEntity.class);
+//
+//        String errorMsg;
+//
+//        if (String.valueOf(baseEntity.getCode()).startsWith("4")) {
+//            //token过期
+//            value.close();
+//            if (baseEntity.getMessage() == null || baseEntity.getMessage().isEmpty()) {
+//                errorMsg = "登录已失效";
+//            } else {
+//                errorMsg = baseEntity.getMessage();
+//            }
+//
+//            throw new InvalidLoginException(errorMsg);
+//
+//        } else if (!String.valueOf(baseEntity.getCode()).startsWith("2")) {
+//            value.close();
+//            if (baseEntity.getMessage() == null || baseEntity.getMessage().isEmpty()) {
+//                errorMsg = "系统异常";
+//            } else {
+//                errorMsg = baseEntity.getMessage();
+//            }
+//
+//            throw new BusinessException(baseEntity.getCode(), errorMsg);
+//        }
 
         MediaType contentType = value.contentType();
         Charset charset = contentType != null ? contentType.charset(UTF_8) : UTF_8;

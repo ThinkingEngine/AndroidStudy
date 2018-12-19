@@ -79,6 +79,13 @@ public class ExamItemExpandableListViewAdapter extends BaseExpandableListAdapter
 //        groupViewHolder.examItemStatsExpandable.setVisibility(View.INVISIBLE);
         groupViewHolder.examItemNameExpandable.setText(datas.get(groupPosition).getName());
 
+        if(datas.get(groupPosition).getExam_status() == 0){
+            groupViewHolder.examItemStatsExpandable.setText("未检");
+        }else if(datas.get(groupPosition).getExam_status() == 1){
+            groupViewHolder.examItemStatsExpandable.setText("已检");
+        }
+
+
         return convertView;
     }
 

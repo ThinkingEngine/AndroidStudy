@@ -151,6 +151,13 @@ public class ExamDetailsActivity extends BaseActivity {
 
         }
 
+        if(userExamDetail.isCan_autonomous()){
+            rButtonBox.setVisibility(View.VISIBLE);
+        }else{
+            rButtonBox.setVisibility(View.INVISIBLE);
+        }
+
+
         checkExamRepot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

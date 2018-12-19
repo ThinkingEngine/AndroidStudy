@@ -18,8 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:replace="android:theme">
-        <activity
-            android:name=".module.SplashActivity">
+        <activity android:name=".module.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -102,6 +101,7 @@
             android:enabled="true"
             android:exported="false" />
 
+        <activity android:name=".module.activitys.RegisterDetailActivity"></activity>
     </application>
 
 </manifest>

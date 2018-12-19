@@ -15,6 +15,7 @@
         app:title="登记详情" />
 
     <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_register_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/register_detail_title">
@@ -25,7 +26,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
@@ -87,42 +88,318 @@
                         android:id="@+id/exam_box"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginTop="6dp">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="体检人："
-                            android:textSize="14sp"
-                            android:textColor="@color/colorThrText" />
+                            android:textColor="@color/colorThrText"
+                            android:textSize="14sp" />
+
                         <TextView
+                            android:id="@+id/exam_user_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="周子萱"
                             android:textColor="@color/colorText"
-                            android:textSize="14sp"
-                            android:text="周子萱"/>
+                            android:textSize="14sp" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:id="@+id/exam_num_box"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@id/exam_box"
                         android:orientation="horizontal"
-                        android:layout_below="@id/exam_box">
+                        android:layout_marginStart="14dp"
+                        android:layout_marginTop="6dp">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="体检人："
-                            android:textSize="14sp"
-                            android:textColor="@color/colorThrText" />
+                            android:text="预约号："
+                            android:textColor="@color/colorThrText"
+                            android:textSize="14sp" />
+
                         <TextView
+                            android:id="@+id/exam_appointment_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="周子萱"
+                            android:textColor="@color/colorText"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/exam_phone_box"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/exam_num_box"
+                        android:orientation="horizontal"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginTop="6dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="手机号："
+                            android:textColor="@color/colorThrText"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/exam_order_phone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="周子萱"
+                            android:textColor="@color/colorText"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/exam_sex_box"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/exam_phone_box"
+                        android:orientation="horizontal"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginTop="6dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="性别："
+                            android:textColor="@color/colorThrText"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/exam_order_sex"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="周子萱"
+                            android:textColor="@color/colorText"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/exam_age_box"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/exam_sex_box"
+                        android:orientation="horizontal"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginBottom="6dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="年龄："
+                            android:textColor="@color/colorThrText"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/exam_order_age"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="周子萱"
+                            android:textColor="@color/colorText"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                    
+                    <ImageView
+                        android:id="@+id/register_detail_code"
+                        android:layout_width="66dp"
+                        android:layout_height="66dp"
+                        android:layout_alignParentRight="true"
+                        android:src="@mipmap/erweima"
+                        android:padding="20dp"/>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/colorWhite">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/exam_phone_box"
+                        android:orientation="horizontal"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginTop="6dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="体检日期："
+                            android:textColor="@color/colorThrText"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/exam_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/colorText"
-                            android:textSize="14sp"
-                            android:text="周子萱"/>
+                            android:textSize="14sp" />
                     </LinearLayout>
-                </RelativeLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/exam_phone_box"
+                        android:orientation="horizontal"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginTop="6dp">
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="体检机构："
+                            android:textColor="@color/colorThrText"
+                            android:textSize="14sp" />
 
+                        <TextView
+                            android:id="@+id/exam_group"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="周子萱"
+                            android:textColor="@color/colorText"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/exam_phone_box"
+                        android:orientation="horizontal"
+                        android:layout_marginStart="14dp"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginBottom="6dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="体检地址："
+                            android:textColor="@color/colorThrText"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/exam_address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="周子萱"
+                            android:textColor="@color/colorText"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/has_bottom_line_off_bg"
+                    android:drawableLeft="@mipmap/dabiaoti_shuxian"
+                    android:drawablePadding="4dp"
+                    android:paddingStart="14dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:text="体检套餐"
+                    android:textColor="@color/colorText"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/exam_combo_name_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="常卫清赠关爱父母肿瘤12项升级套餐"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorText"
+                    android:paddingStart="14dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@color/colorWhite"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/has_bottom_line_off_bg"
+                    android:drawableLeft="@mipmap/dabiaoti_shuxian"
+                    android:drawablePadding="4dp"
+                    android:paddingStart="14dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:text="体检项目"
+                    android:textColor="@color/colorText"
+                    android:textSize="16sp" />
+                <com.chengsheng.cala.htcm.widget.MyExpandableListView
+                    android:id="@+id/exam_item_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@drawable/has_bottom_line_item_bg"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="10dp"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="项目合计:"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorText"
+                        />
+                    <TextView
+                        android:id="@+id/project_total_val"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:gravity="right"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/colorWhite"
+                    android:gravity="center_vertical"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="已付金额:"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorText" />
+                    <TextView
+                        android:id="@+id/has_pay_val"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:gravity="right"/>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/login_button_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:background="@drawable/login_button_bg"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginEnd="14dp"
+                    android:text="立即登记"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorWhite"/>
             </LinearLayout>
         </ScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>

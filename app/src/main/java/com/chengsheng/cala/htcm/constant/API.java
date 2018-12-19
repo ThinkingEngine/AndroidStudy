@@ -1,6 +1,7 @@
 package com.chengsheng.cala.htcm.constant;
 
-import com.chengsheng.cala.htcm.BuildConfig;
+import static com.chengsheng.cala.htcm.constant.BaseAPI.ACCOUNT_BASE_URL;
+import static com.chengsheng.cala.htcm.constant.BaseAPI.SERVICE_BASE_URL;
 
 /**
  * Author: 任和
@@ -9,14 +10,10 @@ import com.chengsheng.cala.htcm.BuildConfig;
  */
 public class API {
 
-    private static final String DEV_BASE_URL = "http://account.zz-tech.com.cn:85/";
-    private static final String LIVE_BASE_URL = "";
-
-    /**
-     * api接口根地址
-     */
-    private static final String API_BASE_URL = BuildConfig.isDev ? DEV_BASE_URL : LIVE_BASE_URL;
-
     /* 用户信息 */
-    public static final String USER_INFO_URL = API_BASE_URL + "user/account-infos";
+    public static final String USER_INFO_URL = ACCOUNT_BASE_URL + "user/account-infos";
+
+    /* 获取客户体检订单详情 */
+    public static final String USER_EXAM_DETAIL = SERVICE_BASE_URL + "api/physical-exam-order/customer-exams/";
+
 }

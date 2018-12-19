@@ -154,7 +154,7 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
             if (stats.equals(GlobalConstant.RESERVATION)) {
 
                 viewHolder.userBitmapMark.setImageResource(R.mipmap.erweima);
-                viewHolder.examNum.setText("预约号：" + data.getOrder().getId());
+                viewHolder.examNum.setText("预约号：" + data.getCustomer().getReservation_or_registration().getId());
 
                 Float money = Float.valueOf(data.getOrder().getDiscount_receivable());
                 if (money > 0) {
@@ -178,7 +178,7 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
 
             } else if (stats.equals(GlobalConstant.CHECKING)) {//正在检查
                 viewHolder.userBitmapMark.setImageResource(R.mipmap.tianxingma);
-                viewHolder.examNum.setText("体检号：" + data.getOrder().getId());
+                viewHolder.examNum.setText("体检号：" + data.getCustomer().getReservation_or_registration().getId());
 
                 if (data.getOrder().isCan_autonomous()) {
                     viewHolder.unscrambleMark.setVisibility(View.VISIBLE);
@@ -203,12 +203,12 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
             } else if (stats.equals(GlobalConstant.CHECKED)) {//已检查
 
                 viewHolder.userBitmapMark.setImageResource(R.mipmap.tianxingma);
-                viewHolder.examNum.setText("体检号：" + data.getOrder().getId());
+                viewHolder.examNum.setText("体检号：" + data.getCustomer().getReservation_or_registration().getId());
                 viewHolder.itemSecNotes.setText("体检日期：" + data.getCustomer().getReservation_or_registration().getDate());
 
                 if (data.getReport().isIssued()) {
                     viewHolder.unscrambleMark.setVisibility(View.VISIBLE);
-
+                    viewHolder.unscrambleMark.setText("查看报告");
                     viewHolder.unscrambleMark.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -224,7 +224,7 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
                 }
             } else {
                 viewHolder.userBitmapMark.setImageResource(R.mipmap.tianxingma);
-                viewHolder.examNum.setText("体检号：" + data.getOrder().getId());
+                viewHolder.examNum.setText("体检号：" + data.getCustomer().getReservation_or_registration().getId());
             }
 
         } else if (datas.isEmpty() && type == -1) {

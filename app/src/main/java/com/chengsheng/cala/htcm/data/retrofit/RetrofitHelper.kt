@@ -2,6 +2,7 @@ package com.chengsheng.cala.htcm.data.retrofit
 
 import com.chengsheng.cala.htcm.BuildConfig
 import com.chengsheng.cala.htcm.data.retrofit.convert.CustomGsonConverterFactory
+import com.chengsheng.cala.htcm.data.service.ExamOrderService
 import com.chengsheng.cala.htcm.data.service.UserService
 import com.chengsheng.cala.htcm.utils.UserUtil
 import okhttp3.Interceptor
@@ -118,5 +119,6 @@ class RetrofitHelper private constructor() {
     }
 
     var userApi = httpsCreate(UserService::class.java)
+    var orderService = httpCreate(ExamOrderService::class.java)
 
 }

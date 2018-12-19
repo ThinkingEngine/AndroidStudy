@@ -1,9 +1,9 @@
 package com.chengsheng.cala.htcm.data.service
 
 import com.chengsheng.cala.htcm.constant.API
-import com.chengsheng.cala.htcm.protocol.BaseEntity
 import com.chengsheng.cala.htcm.protocol.childmodelb.UserExamDetail
 import io.reactivex.Observable
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
@@ -20,5 +20,5 @@ interface ExamOrderService {
      */
     @GET(API.USER_EXAM_DETAIL)
     @Headers("Authorization:true")
-    fun getUserExamDetail(@Path("orderID") orderID: String): Observable<BaseEntity<UserExamDetail>>
+    fun getUserExamDetail(@Path("orderID") orderID: String): Observable<Response<UserExamDetail>>
 }

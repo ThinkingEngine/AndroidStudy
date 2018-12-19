@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.chengsheng.cala.htcm.utils.ActivityUtil;
 import com.chengsheng.cala.htcm.utils.ToastUtil;
 
 import static com.chengsheng.cala.htcm.data.ResponseExtentionKt.checkError;
@@ -55,6 +56,48 @@ public abstract class BaseFragment extends Fragment {
      * 获取数据
      */
     public abstract void getData();
+
+    /**
+     * 跳转到指定页面
+     */
+    public void startActivity(BaseActivity activity) {
+        ActivityUtil.Companion.startActivity(context, activity);
+    }
+
+    /**
+     * 跳转到指定页面(携带参数)
+     * <p>
+     * val bundle = Bundle()
+     * bundle.putString("id", id)
+     * startActivity(bundle, TestActivity())
+     * <p>
+     * 接收参数：
+     * val id: String = intent.getStringExtra("id")
+     */
+    public void startActivity(BaseActivity activity, Bundle bundle) {
+        ActivityUtil.Companion.startActivity(context, activity, bundle);
+    }
+
+    /**
+     * 根据登录状态跳转到对应页
+     */
+    public void startActivityWithLoginStatus(BaseActivity activity) {
+        ActivityUtil.Companion.startActivityWithLoginStatus(context, activity);
+    }
+
+    /**
+     * 根据登录状态跳转到对应页(携带参数)
+     * <p>
+     * val bundle = Bundle()
+     * bundle.putString("id", id)
+     * startActivity(bundle, TestActivity())
+     * <p>
+     * 接收参数：
+     * val id: String = intent.getStringExtra("id")
+     */
+    public void startActivityWithLoginStatus(BaseActivity activity, Bundle bundle) {
+        ActivityUtil.Companion.startActivityWithLoginStatus(context, activity, bundle);
+    }
 
     /**
      * Toast短提示

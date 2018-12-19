@@ -105,5 +105,7 @@ dependencies {
     implementation 'co.lujun:androidtagview:1.1.4'
     implementation 'com.hyman:flowlayout-lib:1.1.2'
     implementation 'com.orhanobut:logger:2.1.1'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:v2.1.1'
+    implementation 'org.simple:androideventbus:1.0.5.1'
     implementation(name: 'alipaySdk-15.5.7-20181023110917', ext: 'aar')
 }

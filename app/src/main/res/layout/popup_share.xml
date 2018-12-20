@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvCancelShare"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPageBackground"
+        android:gravity="center"
+        android:padding="@dimen/dp_12"
+        android:text="取消"
+        android:textColor="@color/colorThrText"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/layoutCopy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/dp_16"
+        android:paddingTop="@dimen/dp_30"
+        android:paddingEnd="@dimen/dp_16"
+        android:paddingBottom="@dimen/dp_30"
+        app:layout_constraintBottom_toTopOf="@id/tvCancelShare">
+
+        <TextView
+            android:id="@+id/tvCopyLink"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/fuzhilianjie"
+            android:drawablePadding="@dimen/dp_8"
+            android:gravity="center"
+            android:text="复制链接"
+            android:textColor="#999999"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/dp_8"
+            android:gravity="center"
+            android:textColor="#FFEFF5FF"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/dp_8"
+            android:gravity="center"
+            android:textColor="#FFEFF5FF"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/dp_8"
+            android:gravity="center"
+            android:textColor="#FFEFF5FF"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutSocialPlatform"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/dp_16"
+        android:paddingTop="@dimen/dp_30"
+        android:paddingEnd="@dimen/dp_16"
+        app:layout_constraintBottom_toTopOf="@id/layoutCopy">
+
+        <TextView
+            android:id="@+id/tvShareWechat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/weixinhaoyou"
+            android:drawablePadding="@dimen/dp_8"
+            android:gravity="center"
+            android:text="微信好友"
+            android:textColor="#999999"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tvShareMoment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/pengyouquan"
+            android:drawablePadding="@dimen/dp_8"
+            android:gravity="center"
+            android:text="朋友圈"
+            android:textColor="#999999"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tvShareQQ"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/qqhaoyou"
+            android:drawablePadding="@dimen/dp_8"
+            android:gravity="center"
+            android:text="QQ好友"
+            android:textColor="#999999"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tvShareQzone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/qqkongjian"
+            android:drawablePadding="@dimen/dp_8"
+            android:gravity="center"
+            android:text="QQ空间"
+            android:textColor="#999999"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/dp_20"
+        app:layout_constraintBottom_toTopOf="@id/layoutSocialPlatform">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="1dp"
+            android:background="@color/colorPageBackground" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:layout_marginRight="11dp"
+            android:text="分享至"
+            android:textColor="@color/colorThrText"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="1dp"
+            android:background="@color/colorPageBackground" />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

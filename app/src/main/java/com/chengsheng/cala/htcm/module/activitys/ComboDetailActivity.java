@@ -140,7 +140,9 @@ public class ComboDetailActivity extends BaseActivity {
 //                Intent intent = new Intent(ComboDetailActivity.this, AffirmAppointmentActivity.class);
 //                intent.putExtra("COMBO_ID", id);
 //                startActivity(intent);
-                startActivityWithLoginStatus(new AffirmAppointmentActivity());
+                Bundle bundle = new Bundle();
+                bundle.putString("COMBO_ID",id);
+                startActivityWithLoginStatus(new AffirmAppointmentActivity(),bundle);
             }
         });
     }

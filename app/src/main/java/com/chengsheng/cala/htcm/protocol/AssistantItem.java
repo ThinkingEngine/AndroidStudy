@@ -1,8 +1,9 @@
 package com.chengsheng.cala.htcm.protocol;
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.chengsheng.cala.htcm.protocol.childmodela.RecommendExamItem;
 
-public class AssistantItem {
+public class AssistantItem implements MultiItemEntity {
 
     private Customer customer;
     private Order order;

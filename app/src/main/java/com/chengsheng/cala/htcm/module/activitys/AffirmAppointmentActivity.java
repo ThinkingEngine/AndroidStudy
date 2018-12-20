@@ -2,6 +2,7 @@ package com.chengsheng.cala.htcm.module.activitys;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.ArrayMap;
@@ -99,7 +100,8 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
         loadingDialog.setDialogBackgroundColor(getResources().getColor(R.color.colorText));
 
         CallBackDataAuth.setExamDateInterface(this);
-        comboID = getIntent().getStringExtra("COMBO_ID");
+        Bundle bundle = getIntent().getExtras();
+        comboID = bundle.getString("COMBO_ID");
         app = HTCMApp.create(getApplicationContext());
 
         //预约订单的上传数据体
@@ -149,7 +151,10 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
                     params.put("customer_id", String.valueOf(uploadBody.getCustomer_id()));
                     params.put("reserve_date", uploadBody.getReserve_date());
                     params.put("exam_package_id",comboID);
-                    params.put("exam_item_ids", "");
+//                    params.put("exam_item_ids", "");
+                    Log.e("TAG","customer_id:"+params.get("customer_id"));
+                    Log.e("TAG","reserve_date:"+params.get("reserve_date"));
+                    Log.e("TAG","exam_package_id:"+params.get("exam_package_id"));
                     service.putAppointment(app.getTokenType() + " " + app.getAccessToken(), params)
                             .subscribeOn(Schedulers.newThread())
                             .observeOn(AndroidSchedulers.mainThread())
@@ -188,7 +193,8 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
 
                                 @Override
                                 public void onComplete() {
-
+                                    Log.e("TAG","onComplete");
+                                    loadingDialog.cancel();
                                 }
                             });
 

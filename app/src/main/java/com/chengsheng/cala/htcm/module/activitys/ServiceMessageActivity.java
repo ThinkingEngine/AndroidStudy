@@ -47,6 +47,7 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
     private TextView childTitle;
 
     private boolean hasNoRead = false;
+    private ServiceMessageRecyclerViewAdapter adapter;
 
     private HTCMApp app;
     private ZLoadingDialog loadingDialog;
@@ -107,7 +108,7 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
                     public void onNext(MessageList messageList) {
 
                         serviceMessageList.setLayoutManager(new LinearLayoutManager(ServiceMessageActivity.this));
-                        ServiceMessageRecyclerViewAdapter adapter;
+
                         if (!addMode) {
                             dataCollect = messageList.getItems();
                             for (MessageItem messageItem : dataCollect) {
@@ -120,19 +121,20 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
                             adapter = new ServiceMessageRecyclerViewAdapter(ServiceMessageActivity.this, dataCollect);
                             serviceMessageList.setAdapter(adapter);
                             serviceMessageList.refreshComplete();
+                            currentPage = 0;
 
                         } else {
-
-                            dataCollect.addAll(messageList.getItems());
-                            if(dataCollect.isEmpty()){
+                            if(messageList.getItems().isEmpty()){
                                 showShortToast("已无更多数据了");
                                 currentPage--;
                             }else{
-                                adapter = new ServiceMessageRecyclerViewAdapter(ServiceMessageActivity.this, dataCollect);
-                                adapter.notifyDataSetChanged();
-                                serviceMessageList.loadMoreComplete();
-                            }
 
+                                for(int i = 0;i < messageList.getItems().size();i++){
+                                    dataCollect.add(messageList.getItems().get(i));
+                                }
+                                adapter.notifyDataSetChanged();
+                            }
+                            serviceMessageList.loadMoreComplete();
                         }
 
                         if (loading) {
@@ -237,6 +239,9 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
         childTitle.setTextColor(getResources().getColor(R.color.colorThrText));
         childTitle.setSelected(false);
 
+        serviceMessageList.setHasFixedSize(true);
+        serviceMessageList.setFocusable(false);
+        serviceMessageList.setFocusableInTouchMode(false);
 
         title.setText("服务通知");
 

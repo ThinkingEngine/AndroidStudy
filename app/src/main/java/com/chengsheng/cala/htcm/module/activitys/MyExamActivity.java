@@ -64,31 +64,8 @@ public class MyExamActivity extends BaseActivity implements TabLayout.OnTabSelec
 
         //初始化Activity数据.
         token = app.getTokenType() + " " + app.getAccessToken();
-        if (retrofit == null) {
-            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
-        } else {
-            if (familiesList == null) {
-                service.getFamiliesList(token)
-                        .subscribeOn(Schedulers.newThread())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new DisposableObserver<FamiliesList>() {
-                            @Override
-                            public void onNext(FamiliesList list) {
-                                familiesList = list;
-                            }
 
-                            @Override
-                            public void onError(Throwable e) {
-                                Log.e("TAG", "请求家人列表失败! " + e.toString());
-                            }
-
-                            @Override
-                            public void onComplete() {
-
-                            }
-                        });
-            }
-        }
+        getFamilies();
 
 
         initViews();
@@ -134,6 +111,38 @@ public class MyExamActivity extends BaseActivity implements TabLayout.OnTabSelec
 
     @Override
     public void getData() {
+
+    }
+
+    //获取家人列表
+    private void getFamilies() {
+
+        if (retrofit == null) {
+            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
+        }
+
+        service.getFamiliesList(token)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableObserver<FamiliesList>() {
+                    @Override
+                    public void onNext(FamiliesList list) {
+                        showShortToast("获取到家人列表");
+                        familiesList = list;
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        showShortToast("未能获取到家人列表");
+                        Log.e("TAG", "请求家人列表失败! " + e.toString());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
 
     }
 

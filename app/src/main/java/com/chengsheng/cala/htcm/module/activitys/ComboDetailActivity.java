@@ -288,7 +288,7 @@ public class ComboDetailActivity extends BaseActivity {
                     @Override
                     public void onNext(AppointmentDetail appointmentDetail) {
                         setViews(appointmentDetail);
-                        ExamItemExpandableListViewAdapter adapter = new ExamItemExpandableListViewAdapter(ComboDetailActivity.this, appointmentDetail.getExam_items());
+                        ExamItemExpandableListViewAdapter adapter = new ExamItemExpandableListViewAdapter(ComboDetailActivity.this, appointmentDetail.getExam_items(),GlobalConstant.COMBO_DETAIL_MARK);
                         examItemComboExpandable.setAdapter(adapter);
                         examItemComboExpandable.setIndicatorBounds(examItemComboExpandable.getWidth() - 140, examItemComboExpandable.getWidth() - 10);
                         Log.e("TEST", appointmentDetail.toString());

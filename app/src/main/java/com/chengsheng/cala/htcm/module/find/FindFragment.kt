@@ -14,6 +14,8 @@ import com.jakewharton.rxbinding2.view.RxView
 import kotlinx.android.synthetic.main.fragment_find.*
 import kotlinx.android.synthetic.main.merge_find_feature_service.*
 import kotlinx.android.synthetic.main.merge_find_medical_beauty.*
+import java.sql.Time
+import java.util.concurrent.TimeUnit
 
 /**
  * Author: 任和
@@ -65,9 +67,11 @@ class FindFragment : BaseRefreshFragment<RecommendProProtocol.ItemsBean.Recommen
         }
 
         //跳转到特色服务页
-        RxView.clicks(layoutFeatureService).subscribe {
-            startActivity(FeatureServiceActivity())
-        }
+        RxView.clicks(layoutFeatureService)
+//                .throttleFirst(3, TimeUnit.SECONDS)
+                .subscribe {
+                    startActivity(FeatureServiceActivity())
+                }
     }
 
     override fun getData(page: Int) {

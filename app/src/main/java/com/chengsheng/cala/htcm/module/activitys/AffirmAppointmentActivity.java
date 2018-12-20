@@ -2,7 +2,6 @@ package com.chengsheng.cala.htcm.module.activitys;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.ArrayMap;
@@ -72,31 +71,18 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
     private Retrofit retrofit;
     private NetService service;
 
+    private String comboID;
+
     private HTCMApp app;
     private ZLoadingDialog loadingDialog;
 
     private String comboUrl;
-
-
-    private void setView(AppointmentDetail detail) {
-        test.setText(detail.getName());
-        appointmentIcon.setImageURI(detail.getBanner_photo());
-        groupName.setText("体检机构：" + detail.getOrganization().getName());
-        appointmentTotalPrice.setText("¥ " + detail.getPrice());
-        examTotalPrice.setText("合计：¥"+detail.getPrice()+".00");
-        uploadBody.setExam_package_id(detail.getId());
-        uploadBody.setReserve_date(appointmentDateText.getText().toString());
-    }
 
     @Override
     public void getExamDate(int id) {
         uploadBody.setCustomer_id(id);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 
     @Override
     public int getLayoutId() {
@@ -113,31 +99,19 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
         loadingDialog.setDialogBackgroundColor(getResources().getColor(R.color.colorText));
 
         CallBackDataAuth.setExamDateInterface(this);
-        final String comboID = getIntent().getStringExtra("COMBO_ID");
+        comboID = getIntent().getStringExtra("COMBO_ID");
         app = HTCMApp.create(getApplicationContext());
 
-
+        //预约订单的上传数据体
         if (uploadBody == null) {
             uploadBody = new AppointmentBody();
         }
         uploadBody.setCustomer_id(-1);
         uploadBody.setReserve_date("");
 
-        title = findViewById(R.id.title_header_affirm_appointment).findViewById(R.id.menu_bar_title);
-        back = findViewById(R.id.title_header_affirm_appointment).findViewById(R.id.back_login);
-        test = findViewById(R.id.affirm_appointment_model_a).findViewById(R.id.appointment_name);
-        appointmentIcon = findViewById(R.id.affirm_appointment_model_a).findViewById(R.id.appointment_icon);
-        groupName = findViewById(R.id.affirm_appointment_model_a).findViewById(R.id.group_name);
-        appointmentTotalPrice = findViewById(R.id.affirm_appointment_model_a).findViewById(R.id.appointment_total_price);
-        examPersonRecycler = findViewById(R.id.affirm_appointment_model_b).findViewById(R.id.exam_person_recycler);
-        selectAppointmentDate = findViewById(R.id.affirm_appointment_model_c).findViewById(R.id.select_appointment_date);
-        appointmentDateText = findViewById(R.id.affirm_appointment_model_c).findViewById(R.id.appointment_date_text);
-        keyIllnessScreeningCoatiner = findViewById(R.id.affirm_appointment_model_b).findViewById(R.id.key_illness_screening_coatiner);
-        examTotalPrice = findViewById(R.id.exam_total_price);
-        immediatePay = findViewById(R.id.immediate_pay);
+        initViews();
 
-        title.setText("确认预约");
-
+        //选择日期
         selectAppointmentDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,17 +139,16 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
             @Override
             public void onClick(View v) {
                 if (uploadBody.getCustomer_id() == -1) {
-                    Toast.makeText(AffirmAppointmentActivity.this, "对不起，你还没有选择家人的!", Toast.LENGTH_LONG).show();
+                    showShortToast("对不起，你还没有选择家人的!");
                 } else if (uploadBody.getReserve_date().equals("") || uploadBody.getReserve_date().equals("请选择体检日期")) {
-                    Toast.makeText(AffirmAppointmentActivity.this, "对不起，你还没有选择体检日期的!", Toast.LENGTH_LONG).show();
+                    showShortToast("对不起，你还没有选择体检日期的!");
                 } else {
                     loadingDialog.setHintText("正在进行支付准备......");
                     loadingDialog.show();
-                    final Gson gson = new Gson();
                     Map<String, String> params = new ArrayMap<>();
                     params.put("customer_id", String.valueOf(uploadBody.getCustomer_id()));
                     params.put("reserve_date", uploadBody.getReserve_date());
-                    params.put("exam_package_id", FuncUtils.getString("COMBO", "0"));
+                    params.put("exam_package_id",comboID);
                     params.put("exam_item_ids", "");
                     service.putAppointment(app.getTokenType() + " " + app.getAccessToken(), params)
                             .subscribeOn(Schedulers.newThread())
@@ -201,10 +174,12 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
                                     if (e instanceof HttpException) {
                                         ResponseBody body = ((HttpException) e).response().errorBody();
                                         try {
+                                            Gson gson = new Gson();
                                             String s = body.string();
                                             TextMessage textMessage = gson.fromJson(s, TextMessage.class);
+                                            Log.e("TAG","textMessage"+textMessage);
                                             loadingDialog.cancel();
-                                            Toast.makeText(AffirmAppointmentActivity.this, "很遗憾，支付准备失败！", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(AffirmAppointmentActivity.this, "很遗憾，支付准备失败！"+s, Toast.LENGTH_SHORT).show();
                                         } catch (IOException e1) {
                                             e1.printStackTrace();
                                         }
@@ -221,6 +196,18 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
                 }
             }
         });
+
+    }
+
+    private void setView(AppointmentDetail detail) {
+
+        test.setText(detail.getName());
+        appointmentIcon.setImageURI(detail.getBanner_photo());
+        groupName.setText("体检机构：" + detail.getOrganization().getName());
+        appointmentTotalPrice.setText("¥ " + detail.getPrice());
+        examTotalPrice.setText("合计：¥"+detail.getPrice()+".00");
+        uploadBody.setExam_package_id(detail.getId());
+        uploadBody.setReserve_date(appointmentDateText.getText().toString());
 
     }
 
@@ -292,6 +279,29 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
                 });
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    private void initViews(){
+        title = findViewById(R.id.title_header_affirm_appointment).findViewById(R.id.menu_bar_title);
+        back = findViewById(R.id.title_header_affirm_appointment).findViewById(R.id.back_login);
+        test = findViewById(R.id.affirm_appointment_model_a).findViewById(R.id.appointment_name);
+        appointmentIcon = findViewById(R.id.affirm_appointment_model_a).findViewById(R.id.appointment_icon);
+        groupName = findViewById(R.id.affirm_appointment_model_a).findViewById(R.id.group_name);
+        appointmentTotalPrice = findViewById(R.id.affirm_appointment_model_a).findViewById(R.id.appointment_total_price);
+        examPersonRecycler = findViewById(R.id.affirm_appointment_model_b).findViewById(R.id.exam_person_recycler);
+        selectAppointmentDate = findViewById(R.id.affirm_appointment_model_c).findViewById(R.id.select_appointment_date);
+        appointmentDateText = findViewById(R.id.affirm_appointment_model_c).findViewById(R.id.appointment_date_text);
+        keyIllnessScreeningCoatiner = findViewById(R.id.affirm_appointment_model_b).findViewById(R.id.key_illness_screening_coatiner);
+        examTotalPrice = findViewById(R.id.exam_total_price);
+        immediatePay = findViewById(R.id.immediate_pay);
+
+        title.setText("确认预约");
+    }
+
 
     private void getDate(final TextView textView) {
         if (calendar == null) {

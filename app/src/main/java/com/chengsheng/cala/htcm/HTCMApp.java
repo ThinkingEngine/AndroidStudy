@@ -49,12 +49,13 @@ public class HTCMApp {
         return UserUtil.getAccessToken();
     }
 
-    public void addExamsID(ExamReportItem exam) {
-        exams.add(exam);
+    public void addExamsID(int index, ExamReportItem exam) {
+        exams.add(index, exam);
+//        exams.add(exam);
     }
 
-    public void delExamsID(ExamReportItem examID) {
-        exams.remove(examID);
+    public void delExamsID(int index) {
+        exams.remove(index);
     }
 
     public void clearExams() {

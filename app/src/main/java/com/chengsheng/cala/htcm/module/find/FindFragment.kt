@@ -3,10 +3,11 @@ package com.chengsheng.cala.htcm.module.find
 import android.annotation.SuppressLint
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chengsheng.cala.htcm.R
 import com.chengsheng.cala.htcm.adapter.FeatureServiceAdapter
 import com.chengsheng.cala.htcm.adapter.HealthBeautyAdapter
-import com.chengsheng.cala.htcm.base.BaseFragment
+import com.chengsheng.cala.htcm.base.BaseRefreshFragment
 import com.chengsheng.cala.htcm.data.repository.ProjectRepository
 import com.chengsheng.cala.htcm.protocol.RecommendProProtocol
 import com.jakewharton.rxbinding2.view.RxView
@@ -22,13 +23,10 @@ import java.util.concurrent.TimeUnit
  * Description: 发现
  */
 @SuppressLint("CheckResult")
-class FindFragment : BaseFragment() {
+class FindFragment : BaseRefreshFragment<RecommendProProtocol.ItemsBean.RecommendBean>() {
 
-    //特色服务Adapter
-    private var featureServiceAdapter: FeatureServiceAdapter? = null
     //医疗美容Adapter
     private var healthBeautyAdapter: HealthBeautyAdapter? = null
-
     //医疗美容
     private var healthBeautyData: ArrayList<RecommendProProtocol.ItemsBean.RecommendBean>? = null
     //特色服务
@@ -40,19 +38,16 @@ class FindFragment : BaseFragment() {
         }
     }
 
-    override fun getLayoutId(): Int {
+    override fun getLayout(): Int {
         return R.layout.fragment_find
     }
 
-    override fun initView(view: View?) {
+    override fun initViews(view: View?) {
         healthBeautyData = ArrayList()
         featureData = ArrayList()
 
         //特色服务
-        rvFeatureService?.layoutManager = LinearLayoutManager(context)
-        rvFeatureService?.isNestedScrollingEnabled = false
-        featureServiceAdapter = FeatureServiceAdapter(ArrayList())
-        rvFeatureService?.adapter = featureServiceAdapter
+        recyclerView?.isNestedScrollingEnabled = false
 
         //医疗美容
         val layoutManager = LinearLayoutManager(context)
@@ -79,7 +74,7 @@ class FindFragment : BaseFragment() {
                 }
     }
 
-    override fun getData() {
+    override fun getData(page: Int) {
         ProjectRepository.Companion.default?.getRecommendPro()
                 ?.subscribe({
 
@@ -92,8 +87,6 @@ class FindFragment : BaseFragment() {
                             featureData?.addAll(item.recommend)
                             featureData?.addAll(item.recommend)
                             featureData?.addAll(item.recommend)
-                            featureData?.addAll(item.recommend)
-                            featureData?.addAll(item.recommend)
                         }
                         if (item.id == 2) {
                             healthBeautyData?.addAll(item.recommend)
@@ -101,11 +94,16 @@ class FindFragment : BaseFragment() {
                         }
                     }
 
-                    featureServiceAdapter?.setNewData(featureData)
                     healthBeautyAdapter?.setNewData(healthBeautyData)
+
+                    fillData(featureData)
 
                 }) {
                     showError(it)
                 }
+    }
+
+    override fun getCurrentAdapter(): BaseQuickAdapter<RecommendProProtocol.ItemsBean.RecommendBean>? {
+        return FeatureServiceAdapter(ArrayList())
     }
 }

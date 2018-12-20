@@ -139,26 +139,30 @@
         android:background="@color/white"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingTop="@dimen/dp_20"
+        android:paddingTop="@dimen/dp_26"
         app:layout_constraintBottom_toTopOf="@id/layoutSocialPlatform">
 
         <ImageView
-            android:layout_width="120dp"
+            android:layout_width="0dp"
             android:layout_height="1dp"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_weight="1"
             android:background="@color/colorPageBackground" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="11dp"
-            android:layout_marginRight="11dp"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
             android:text="分享至"
             android:textColor="@color/colorThrText"
             android:textSize="14sp" />
 
         <ImageView
-            android:layout_width="120dp"
+            android:layout_width="0dp"
             android:layout_height="1dp"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:layout_weight="1"
             android:background="@color/colorPageBackground" />
     </LinearLayout>
 

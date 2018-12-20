@@ -92,6 +92,8 @@ public class ExamReportCompareActivity extends BaseActivity {
         title.setText("全部");
 
         arrow.setSelected(false);
+
+
     }
 
     private void setViews(String dataA,String dataB){

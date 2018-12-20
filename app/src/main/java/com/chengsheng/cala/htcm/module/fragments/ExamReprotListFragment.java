@@ -24,6 +24,7 @@ import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
 import com.chengsheng.cala.htcm.module.activitys.ExamReportCompareActivity;
 import com.chengsheng.cala.htcm.adapter.ExamReportRecyclerAdapter;
+import com.chengsheng.cala.htcm.utils.ActivityUtil;
 
 import java.util.List;
 
@@ -161,6 +162,10 @@ public class ExamReprotListFragment extends Fragment {
                     Toast.makeText(getContext(),"需要两个报告的ID!",Toast.LENGTH_SHORT).show();
                 }else{
                     Log.e("TAG","已选择的报告数:"+app.getExams().size());
+//                    if(app.getExams().get(0).getName()!= app.getExams().get(1).getName()){
+//                        Toast.makeText(getContext(),"需要两个报告的ID!",Toast.LENGTH_SHORT).show();
+//                    }
+
                     Intent intent = new Intent(getContext(), ExamReportCompareActivity.class);
                     intent.putExtra("FIRST_ID",String.valueOf(app.getExams().get(0).getOrderId()));
                     intent.putExtra("FIRST_TIME",app.getExams().get(0).getIssued_date());

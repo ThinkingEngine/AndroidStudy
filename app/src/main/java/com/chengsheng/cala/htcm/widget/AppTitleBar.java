@@ -2,7 +2,6 @@ package com.chengsheng.cala.htcm.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,7 +67,7 @@ public class AppTitleBar extends FrameLayout {
         }
 
         //设置页面标题
-        if (tvTitle != null && !TextUtils.isEmpty(title)) {
+        if (tvTitle != null) {
             tvTitle.setText(title);
         }
 
@@ -87,6 +86,14 @@ public class AppTitleBar extends FrameLayout {
                 }
             });
         }
+    }
+
+    /**
+     * 设置页面标题
+     */
+    public AppTitleBar setTitle(String title) {
+        tvTitle.setText(title);
+        return this;
     }
 
     /**

@@ -1,17 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="@dimen/dp_94">
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/ivProCover"
         android:layout_width="@dimen/dp_70"
-        android:layout_height="@dimen/dp_70" />
+        android:layout_height="@dimen/dp_70"
+        android:layout_centerVertical="true"
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/tvProName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/color363439" />
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_12"
+        android:layout_toEndOf="@id/ivProCover"
+        android:textColor="@color/color363439"
+        tools:text="健康管家" />
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/tvProDes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvProName"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_2"
+        android:layout_toEndOf="@id/ivProCover"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="#A19DA8"
+        android:textSize="@dimen/sp_12"
+        tools:text="有助于美容养颜,澳洲国民健康大牌Swisse健康新活力…" />
+
+    <TextView
+        android:id="@+id/tvProSaleNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_12"
+        android:layout_toEndOf="@id/ivProCover"
+        android:textColor="#999999"
+        android:textSize="10sp"
+        tools:text="1009人已享受" />
+
+    <TextView
+        android:id="@+id/tvProPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dp_12"
+        android:textColor="#FF5E5E"
+        android:textSize="12sp"
+        tools:text="¥1299.00" />
+
+    <View
+        android:id="@+id/featureDivide"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:layout_alignParentBottom="true"
+        android:background="#EBEBEB" />
+
+</RelativeLayout>

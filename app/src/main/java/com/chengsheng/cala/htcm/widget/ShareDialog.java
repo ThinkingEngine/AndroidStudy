@@ -18,7 +18,7 @@ import java.util.Objects;
 /**
  * Author: 任和
  * CreateDate: 2018/12/20 3:36 PM
- * Description: 发现
+ * Description: 分享提示框
  */
 public class ShareDialog {
 

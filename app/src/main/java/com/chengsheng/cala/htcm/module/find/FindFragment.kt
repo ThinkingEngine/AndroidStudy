@@ -9,10 +9,12 @@ import com.chengsheng.cala.htcm.adapter.FeatureServiceAdapter
 import com.chengsheng.cala.htcm.adapter.HealthBeautyAdapter
 import com.chengsheng.cala.htcm.base.BaseRefreshFragment
 import com.chengsheng.cala.htcm.data.repository.ProjectRepository
+import com.chengsheng.cala.htcm.module.LoadBigPictureActivity
 import com.chengsheng.cala.htcm.protocol.RecommendProProtocol
 import com.jakewharton.rxbinding2.view.RxView
 import kotlinx.android.synthetic.main.fragment_find.*
 import kotlinx.android.synthetic.main.merge_find_feature_service.*
+import kotlinx.android.synthetic.main.merge_find_grid_view.*
 import kotlinx.android.synthetic.main.merge_find_medical_beauty.*
 
 /**
@@ -22,6 +24,8 @@ import kotlinx.android.synthetic.main.merge_find_medical_beauty.*
  */
 @SuppressLint("CheckResult")
 class FindFragment : BaseRefreshFragment<RecommendProProtocol.ItemsBean.RecommendBean>() {
+
+    private var tempPicUrl = "http://api.peis-mobile.zz-tech.com.cn:85/storage/banner/5159f338-5349-40f0-beaf-fabb4cce2281.png"
 
     //医疗美容Adapter
     private var healthBeautyAdapter: HealthBeautyAdapter? = null
@@ -57,6 +61,11 @@ class FindFragment : BaseRefreshFragment<RecommendProProtocol.ItemsBean.Recommen
 
         swipeRefresh?.setOnRefreshListener {
             getData()
+        }
+
+        //机构详情
+        RxView.clicks(tvOrganizationDetail).subscribe {
+            LoadBigPictureActivity.start(context, "机构详情", tempPicUrl)
         }
 
         //跳转到医疗美容页

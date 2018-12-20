@@ -96,12 +96,15 @@ public class MyExamAllFragment extends Fragment implements UpdateStateInterface,
 
         View rootViews = inflater.inflate(R.layout.fragment_my_exam_all, container, false);
         all = rootViews.findViewById(R.id.my_exam_all_state);
+        all.setFocusableInTouchMode(false);
+        all.setFocusable(false);
+        all.setHasFixedSize(true);
+
 
         if (mParam1.equals("全部")) {
             currentMode = "valid";
         } else if (mParam1.equals("待体检")) {
             currentMode = "reservation";
-
         } else if (mParam1.equals("体检中")) {
             currentMode = "checking";
         } else {
@@ -200,14 +203,21 @@ public class MyExamAllFragment extends Fragment implements UpdateStateInterface,
                 .subscribe(new DisposableObserver<ExamItemsList>() {
                     @Override
                     public void onNext(ExamItemsList examItemsList) {
+
                         if (loading) {
                             loadingDialog.cancel();
                         } else {
                             all.refreshComplete();
                         }
+
+                        all.setLayoutManager(new LinearLayoutManager(getContext()));
                         if(addPage){
                             if(!examItemsList.getItems().isEmpty()){
+                                int startPoit = dataCollect.size();
+                                int itemCount = examItemsList.getItems().size();
                                 dataCollect.addAll(dataCollect.size(),examItemsList.getItems());
+                                adapter = new MyExamRecyclerAdapter(getContext(),dataCollect);
+                                adapter.notifyItemRangeChanged(startPoit,itemCount);
                             }else{
                                 Toast.makeText(getContext(),"已无内容",Toast.LENGTH_SHORT).show();
                                 currentPage--;
@@ -215,12 +225,9 @@ public class MyExamAllFragment extends Fragment implements UpdateStateInterface,
 
                         }else{
                             dataCollect = examItemsList.getItems();
+                            adapter = new MyExamRecyclerAdapter(getContext(),dataCollect);
+                            all.setAdapter(adapter);
                         }
-
-                        adapter = new MyExamRecyclerAdapter(getContext(), examItemsList.getItems());
-                        adapter.notifyDataSetChanged();
-                        all.setLayoutManager(new LinearLayoutManager(getContext()));
-                        all.setAdapter(adapter);
 
                     }
 

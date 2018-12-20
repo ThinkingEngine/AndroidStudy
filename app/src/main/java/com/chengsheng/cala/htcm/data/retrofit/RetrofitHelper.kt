@@ -122,5 +122,6 @@ class RetrofitHelper private constructor() {
     var userApi = httpsCreate(UserService::class.java)
     var orderService = httpCreate(ExamOrderService::class.java)
     var projectService = httpCreate(ProjectService::class.java)
+    var myExamService = httpCreate(com.chengsheng.cala.htcm.data.service.MyExamService::class.java)
 
 }

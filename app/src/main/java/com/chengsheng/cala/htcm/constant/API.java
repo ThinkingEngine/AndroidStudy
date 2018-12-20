@@ -22,4 +22,7 @@ public class API {
     /* 推荐服务 */
     public static final String RECOMMEND_SERVICE = SERVICE_BASE_URL + "api/support-service/categories/items/recommended";
 
+    /*我的体检列表*/
+    public static final String MY_EXAM_LIST = SERVICE_BASE_URL + "api/physical-exam-order/customer-exams";
+
 }

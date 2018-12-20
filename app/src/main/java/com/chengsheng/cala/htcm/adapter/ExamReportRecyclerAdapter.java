@@ -65,19 +65,16 @@ public class ExamReportRecyclerAdapter extends RecyclerView.Adapter<ExamReportRe
                 @Override
                 public void onClick(View v) {
                     if (!viewHolder.reportRadio.isSelected()) {
-                        if (count < 1) {
+                        if (count < 2) {
+                            count++;
                             viewHolder.reportRadio.setSelected(true);
                             exams.add(String.valueOf(data.getOrderId()));
-                            app.addExamsID(count,data);
-                            count++;
+                            app.addExamsID(data);
                         }
                     } else {
-                       if(count>0){
-                           viewHolder.reportRadio.setSelected(false);
-                           app.delExamsID(count);
-                           count--;
-                       }
-
+                        count--;
+                        viewHolder.reportRadio.setSelected(false);
+                        app.delExamsID(data);
                     }
 
                 }

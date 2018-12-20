@@ -66,7 +66,7 @@ public class ExamReportCompareActivity extends BaseActivity {
         String firstDate = getIntent().getStringExtra("FIRST_TIME");
         String secondID = getIntent().getStringExtra("SECOND_ID");
         String secondDate = getIntent().getStringExtra("SECOND_TIME");
-        app.clearExams();
+//        app.clearExams();
 
         initViews();
         setViews(firstDate,secondDate);

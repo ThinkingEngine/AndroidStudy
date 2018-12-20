@@ -128,7 +128,7 @@ public class RegisterDetailActivity extends BaseActivity {
         examComboNameDetail.setText(data.getName());
 
 
-        ExamItemExpandableListViewAdapter adapter = new ExamItemExpandableListViewAdapter(this, data.getExam_item());
+        ExamItemExpandableListViewAdapter adapter = new ExamItemExpandableListViewAdapter(this, data.getExam_item(),GlobalConstant.COMBO_DETAIL_MARK);
         examItemList.setFocusable(false);
         examItemList.setAdapter(adapter);
         examItemList.setIndicatorBounds(examItemList.getWidth() - 140, examItemList.getWidth() - 10);

@@ -79,6 +79,15 @@ public class GlobalConstant {
     public static final int REQUEST_CODE_MAIN = 10; //请求码
     public static final int RESULT_CODE_VIEW_IMG = 11; //查看大图页面的结果码
 
+    //一般常量
+    /**
+     * 多个页面的recyclerView有共同的布局，但现实的组件不一样，用数字对其进行区分。
+     * */
+    public static final int COMBO_DETAIL_MARK = 1;
+    public static final int EXAM_DETAIL_MARK = 2;
+    public static final int REGISTER_DETIAL = 3;
+
+
 
     public static final int EXACT_SCREEN_HEIGHT = 0;
     public static final int EXACT_SCREEN_WIDTH = 0;

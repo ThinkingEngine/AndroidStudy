@@ -59,6 +59,7 @@
         tools:text="¥1299.00" />
 
     <View
+        android:id="@+id/featureDivide"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_1"
         android:layout_alignParentBottom="true"

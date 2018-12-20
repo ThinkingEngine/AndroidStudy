@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <FrameLayout
@@ -30,28 +31,36 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_16">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:scrollbars="none">
 
-            <include layout="@layout/merge_find_grid_view" />
-
-            <View
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:layout_marginTop="30dp"
-                android:background="#F0F0F2" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-            <!--医疗美容-->
-            <include layout="@layout/merge_find_medical_beauty" />
+                <include layout="@layout/merge_find_grid_view" />
 
-            <!--特色服务-->
-            <include layout="@layout/merge_find_feature_service" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="30dp"
+                    android:background="#F0F0F2" />
 
-        </LinearLayout>
+                <!--医疗美容-->
+                <include layout="@layout/merge_find_medical_beauty" />
+
+                <!--特色服务-->
+                <include layout="@layout/merge_find_feature_service" />
+
+            </LinearLayout>
+
+        </ScrollView>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

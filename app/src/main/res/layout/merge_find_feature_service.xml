@@ -33,7 +33,6 @@
             android:layout_height="wrap_content"
             android:src="@mipmap/liebiaojinru" />
 
-
     </LinearLayout>
 
     <View
@@ -41,12 +40,17 @@
         android:layout_height="@dimen/dp_1"
         android:background="@color/colorF0F0F0" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvFeatureService"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="@dimen/dp_16"
-        android:layout_marginEnd="@dimen/dp_20" />
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvFeatureService"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="@dimen/dp_20" />
+
+    </RelativeLayout>
 
 </LinearLayout>

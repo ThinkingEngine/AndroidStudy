@@ -25,6 +25,7 @@ public class ExamReportRecyclerAdapter extends RecyclerView.Adapter<ExamReportRe
 
     private Context context;
     private List<ExamReportItem> datas;
+    public int count = 0;
 
 
     private List<String> exams = new ArrayList<>();
@@ -63,17 +64,24 @@ public class ExamReportRecyclerAdapter extends RecyclerView.Adapter<ExamReportRe
             viewHolder.reportRadio.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (viewHolder.reportRadio.isSelected() || app.getExams().size() < 2) {
-                        if (viewHolder.reportRadio.isSelected()) {
-                            viewHolder.reportRadio.setSelected(false);
-                            app.delExamsID(data);
-                        } else {
+                    if (!viewHolder.reportRadio.isSelected()) {
+                        if (count < 2) {
                             viewHolder.reportRadio.setSelected(true);
                             exams.add(String.valueOf(data.getOrderId()));
-                            app.addExamsID(data);
+                            app.addExamsID(count,data);
+                            count++;
                         }
-
+                    } else {
+                        if(count == 2){
+                            count = 1;
+                        }
+                        viewHolder.reportRadio.setSelected(false);
+                        app.delExamsID(count);
+                        if(count > 0){
+                            count--;
+                        }
                     }
+
                 }
             });
 

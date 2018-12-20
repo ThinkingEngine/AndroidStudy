@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.protocol.childmodelb.ExamItem;
 
 
@@ -17,10 +18,12 @@ import java.util.List;
 public class ExamItemExpandableListViewAdapter extends BaseExpandableListAdapter {
     private Context context;
     private List<ExamItem> datas;
+    private int type;
 
-    public ExamItemExpandableListViewAdapter(Context context, List<ExamItem> datas) {
+    public ExamItemExpandableListViewAdapter(Context context, List<ExamItem> datas, int type) {
         this.context = context;
         this.datas = datas;
+        this.type = type;
     }
 
     @Override
@@ -79,10 +82,15 @@ public class ExamItemExpandableListViewAdapter extends BaseExpandableListAdapter
 //        groupViewHolder.examItemStatsExpandable.setVisibility(View.INVISIBLE);
         groupViewHolder.examItemNameExpandable.setText(datas.get(groupPosition).getName());
 
-        if(datas.get(groupPosition).getExam_status() == 0){
-            groupViewHolder.examItemStatsExpandable.setText("未检");
-        }else if(datas.get(groupPosition).getExam_status() == 1){
-            groupViewHolder.examItemStatsExpandable.setText("已检");
+        if (type == GlobalConstant.COMBO_DETAIL_MARK) {
+            groupViewHolder.examItemStatsExpandable.setVisibility(View.INVISIBLE);
+        } else {
+            groupViewHolder.examItemNameExpandable.setVisibility(View.VISIBLE);
+            if (datas.get(groupPosition).getExam_status() == 0) {
+                groupViewHolder.examItemStatsExpandable.setText("未检");
+            } else if (datas.get(groupPosition).getExam_status() == 1) {
+                groupViewHolder.examItemStatsExpandable.setText("已检");
+            }
         }
 
 

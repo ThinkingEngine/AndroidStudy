@@ -209,7 +209,7 @@ public class ExamDetailsActivity extends BaseActivity {
             }
         });
 
-        ExamItemExpandableListViewAdapter adapter = new ExamItemExpandableListViewAdapter(this, userExamDetail.getExam_item());
+        ExamItemExpandableListViewAdapter adapter = new ExamItemExpandableListViewAdapter(this, userExamDetail.getExam_item(),GlobalConstant.EXAM_DETAIL_MARK);
         examItemExpandable.setAdapter(adapter);
         examItemExpandable.setIndicatorBounds(examItemExpandable.getWidth() - 140, examItemExpandable.getWidth() - 10);
 

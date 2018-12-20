@@ -126,6 +126,7 @@ public class ExamReprotListFragment extends Fragment {
                                 }
                                 app.clearExams();
                                 adapter.notifyDataSetChanged();
+                                adapter.count = 0;
                                 childButtonContainer.setVisibility(View.INVISIBLE);
                             }
                         });
@@ -156,7 +157,7 @@ public class ExamReprotListFragment extends Fragment {
                     Log.e("TAG","没有获取到要对比的报告的ID!");
                     Toast.makeText(getContext(),"没有获取到要对比的报告的ID!",Toast.LENGTH_SHORT).show();
                 }else if(app.getExams().size() < 2){
-                    Log.e("TAG","需要两个报告的ID");
+                    Log.e("TAG","需要两个报告的ID:"+app.getExams().size());
                     Toast.makeText(getContext(),"需要两个报告的ID!",Toast.LENGTH_SHORT).show();
                 }else{
                     Log.e("TAG","已选择的报告数:"+app.getExams().size());

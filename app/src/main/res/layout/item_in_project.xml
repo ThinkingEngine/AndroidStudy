@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/dp_15">
+
+    <ImageView
+        android:id="@+id/ivInProSrc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/kaizhanxiangmu" />
+
+    <TextView
+        android:id="@+id/tvProName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_6"
+        android:textColor="#333333"
+        app:layout_constraintStart_toEndOf="@id/ivInProSrc"
+        tools:text="科室测试" />
+
+    <TextView
+
+        android:id="@+id/tvProIntroduce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_6"
+        android:layout_marginTop="@dimen/dp_6"
+        android:textColor="#333333"
+        app:layout_constraintStart_toEndOf="@id/ivInProSrc"
+        app:layout_constraintTop_toBottomOf="@id/tvProName"
+        tools:text="科室测试科室测试科室测试" />
+
+</android.support.constraint.ConstraintLayout>

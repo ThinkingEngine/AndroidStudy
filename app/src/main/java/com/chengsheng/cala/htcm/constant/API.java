@@ -22,4 +22,10 @@ public class API {
     /* 推荐服务 */
     public static final String RECOMMEND_SERVICE = SERVICE_BASE_URL + "api/support-service/categories/items/recommended";
 
+    /* 科室列表 */
+    public static final String ORGANIZATION = SERVICE_BASE_URL + "api/organization/depts/enabled";
+
+    /* 科室详情 */
+    public static final String ORGANIZATION_DETAIL = SERVICE_BASE_URL + "api/organization/depts";
+
 }

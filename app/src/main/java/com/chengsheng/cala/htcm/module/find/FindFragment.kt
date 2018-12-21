@@ -8,7 +8,6 @@ import com.chengsheng.cala.htcm.R
 import com.chengsheng.cala.htcm.adapter.FeatureServiceAdapter
 import com.chengsheng.cala.htcm.adapter.HealthBeautyAdapter
 import com.chengsheng.cala.htcm.base.BaseRefreshFragment
-import com.chengsheng.cala.htcm.data.repository.ProjectRepository
 import com.chengsheng.cala.htcm.module.LoadBigPictureActivity
 import com.chengsheng.cala.htcm.protocol.RecommendProProtocol
 import com.jakewharton.rxbinding2.view.RxView
@@ -48,6 +47,8 @@ class FindFragment : BaseRefreshFragment<RecommendProProtocol.ItemsBean.Recommen
         healthBeautyData = ArrayList()
         featureData = ArrayList()
 
+        swipeRefresh?.isEnabled = false
+
         //特色服务
         recyclerView?.isNestedScrollingEnabled = false
 
@@ -59,13 +60,19 @@ class FindFragment : BaseRefreshFragment<RecommendProProtocol.ItemsBean.Recommen
         healthBeautyAdapter = HealthBeautyAdapter(ArrayList())
         rvHealthBeauty?.adapter = healthBeautyAdapter
 
-        swipeRefresh?.setOnRefreshListener {
-            getData()
-        }
-
         //机构详情
         RxView.clicks(tvOrganizationDetail).subscribe {
             LoadBigPictureActivity.start(context, "机构详情", tempPicUrl)
+        }
+
+        //部门科室
+        RxView.clicks(tvDepartment).subscribe {
+            startActivity(OrganizationActivity())
+        }
+
+        //专家队伍
+        RxView.clicks(tvExpert).subscribe {
+
         }
 
         //跳转到医疗美容页
@@ -82,32 +89,32 @@ class FindFragment : BaseRefreshFragment<RecommendProProtocol.ItemsBean.Recommen
     }
 
     override fun getData(page: Int) {
-        ProjectRepository.Companion.default?.getRecommendPro()
-                ?.subscribe({
-
-                    swipeRefresh?.isRefreshing = false
-                    healthBeautyData?.clear()
-                    featureData?.clear()
-
-                    for (item in it.items) {
-                        if (item.id == 1) {
-                            featureData?.addAll(item.recommend)
-                            featureData?.addAll(item.recommend)
-                            featureData?.addAll(item.recommend)
-                        }
-                        if (item.id == 2) {
-                            healthBeautyData?.addAll(item.recommend)
-                            healthBeautyData?.addAll(item.recommend)
-                        }
-                    }
-
-                    healthBeautyAdapter?.setNewData(healthBeautyData)
-
-                    fillData(featureData)
-
-                }) {
-                    showError(it)
-                }
+//        ProjectRepository.Companion.default?.getRecommendPro()
+//                ?.subscribe({
+//
+//                    swipeRefresh?.isRefreshing = false
+//                    healthBeautyData?.clear()
+//                    featureData?.clear()
+//
+//                    for (item in it.items) {
+//                        if (item.id == 1) {
+//                            featureData?.addAll(item.recommend)
+//                            featureData?.addAll(item.recommend)
+//                            featureData?.addAll(item.recommend)
+//                        }
+//                        if (item.id == 2) {
+//                            healthBeautyData?.addAll(item.recommend)
+//                            healthBeautyData?.addAll(item.recommend)
+//                        }
+//                    }
+//
+//                    healthBeautyAdapter?.setNewData(healthBeautyData)
+//
+//                    fillData(featureData)
+//
+//                }) {
+//                    showError(it)
+//                }
     }
 
     override fun getCurrentAdapter(): BaseQuickAdapter<RecommendProProtocol.ItemsBean.RecommendBean>? {

@@ -125,7 +125,6 @@ public class HomeFragment extends Fragment implements UpdateAIAssisont, UpdateSt
         newsRecyclerView.setNestedScrollingEnabled(false);
         currentHasMessage.setVisibility(View.INVISIBLE);
 
-
         //检测当前是否有未读信息。
         updateServiceSMS();
 

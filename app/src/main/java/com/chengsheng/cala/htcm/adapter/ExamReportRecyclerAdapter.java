@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.module.fragments.ExamReprotListFragment;
 import com.chengsheng.cala.htcm.protocol.ExamReportItem;
 import com.chengsheng.cala.htcm.module.activitys.ExamReportDetailActivity;
 
@@ -24,18 +25,29 @@ import java.util.List;
 public class ExamReportRecyclerAdapter extends RecyclerView.Adapter<ExamReportRecyclerAdapter.ExamReportViewHolder> {
 
     private Context context;
-    private List<ExamReportItem> datas;
+    private List<ExamReportItem> datas,temp;
     public int count = 0;
 
+
+    private ReportSeclectListener mListener;
 
     private List<String> exams = new ArrayList<>();
     private HTCMApp app;
 
-    public ExamReportRecyclerAdapter(Context context, List<ExamReportItem> datas) {
+    public ExamReportRecyclerAdapter(Context context, List<ExamReportItem> datas,ExamReprotListFragment listener) {
         this.context = context;
         this.datas = datas;
 
         app = HTCMApp.create(context);
+
+        if (listener instanceof ReportSeclectListener) {
+            mListener = (ReportSeclectListener) listener;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+
+        temp = new ArrayList<>();
     }
 
 
@@ -69,12 +81,12 @@ public class ExamReportRecyclerAdapter extends RecyclerView.Adapter<ExamReportRe
                             count++;
                             viewHolder.reportRadio.setSelected(true);
                             exams.add(String.valueOf(data.getOrderId()));
-                            app.addExamsID(data);
+                            setReports(data,true);
                         }
                     } else {
                         count--;
                         viewHolder.reportRadio.setSelected(false);
-                        app.delExamsID(data);
+                        setReports(data,false);
                     }
 
                 }
@@ -115,8 +127,14 @@ public class ExamReportRecyclerAdapter extends RecyclerView.Adapter<ExamReportRe
 
     }
 
-    interface ReportSeclectListener{
-        void reportSelect();
+    private void setReports(ExamReportItem reports,boolean add){
+        if(mListener != null){
+            mListener.reportSelect(reports,add);
+        }
+    }
+
+    public interface ReportSeclectListener{
+        void reportSelect(ExamReportItem reports,boolean add);
     }
 
 

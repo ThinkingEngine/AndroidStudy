@@ -49,13 +49,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="10dp"
                     android:layout_marginTop="30dp"
-                    android:background="#F0F0F2" />
+                    android:background="#F0F0F2"
+                    android:visibility="invisible" />
 
                 <!--医疗美容-->
-                <include layout="@layout/merge_find_medical_beauty" />
+                <include
+                    layout="@layout/merge_find_medical_beauty"
+                    android:visibility="invisible" />
 
                 <!--特色服务-->
-                <include layout="@layout/merge_find_feature_service" />
+                <include
+                    layout="@layout/merge_find_feature_service"
+                    android:visibility="invisible" />
 
             </LinearLayout>
 

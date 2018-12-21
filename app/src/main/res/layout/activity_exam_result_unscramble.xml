@@ -44,7 +44,6 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="8dp"
                     android:layout_toRightOf="@id/exam_item_image_mark"
-                    android:text="普通检查"
                     android:textColor="@color/colorText"
                     android:textSize="16sp" />
 
@@ -55,7 +54,6 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="14dp"
-                    android:text="异常项数"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="14sp" />
 
@@ -75,7 +73,6 @@
                     android:layout_marginLeft="14dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="40dp"
-                    android:text="小结：肺部有杂音"
                     android:textColor="@color/colorText"
                     android:textSize="14sp" />
 
@@ -93,8 +90,9 @@
                     android:layout_width="81dp"
                     android:layout_height="29dp"
                     android:layout_below="@id/doc_result_text"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_marginRight="14dp"
+                    android:layout_marginBottom="@dimen/dp_10"
                     fresco:actualImageScaleType="fitCenter"
                     fresco:backgroundImage="@mipmap/morentouxiang_wode" />
 
@@ -103,8 +101,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/doc_result_text"
                     android:layout_marginRight="4dp"
-                    android:layout_toLeftOf="@id/doc_signature_mark_b"
-                    android:text="分检医生" />
+                    android:layout_toLeftOf="@id/doc_signature_mark_b"/>
             </RelativeLayout>
 
             <com.chengsheng.cala.htcm.widget.MyRecyclerView

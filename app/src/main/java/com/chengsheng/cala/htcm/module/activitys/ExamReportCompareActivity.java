@@ -68,11 +68,13 @@ public class ExamReportCompareActivity extends BaseActivity {
     @Override
     public void initView() {
         app = HTCMApp.create(getApplicationContext());
-        String firstID = getIntent().getStringExtra("FIRST_ID");
-        String firstDate = getIntent().getStringExtra("FIRST_TIME");
-        String secondID = getIntent().getStringExtra("SECOND_ID");
-        String secondDate = getIntent().getStringExtra("SECOND_TIME");
-//        app.clearExams();
+
+        Bundle bundle = getIntent().getExtras();
+
+        String firstID = bundle.getString("FIRST_ID");
+        String firstDate = bundle.getString("FIRST_TIME");
+        String secondID = bundle.getString("SECOND_ID");
+        String secondDate = bundle.getString("SECOND_TIME");
 
         initViews();
         setViews(firstDate,secondDate);

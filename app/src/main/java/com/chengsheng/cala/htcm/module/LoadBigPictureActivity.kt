@@ -21,6 +21,10 @@ import kotlinx.android.synthetic.main.activity_load_big_picture.*
 class LoadBigPictureActivity : BaseActivity() {
 
     companion object {
+        /**
+         * @param title 页面标题
+         * @param imgUrl 图片链接
+         */
         fun start(context: Context, title: String, imgUrl: String) {
             val bundle = Bundle()
             bundle.putString("title", title)
@@ -42,6 +46,7 @@ class LoadBigPictureActivity : BaseActivity() {
         titleBar?.setTitle(title)!!
                 .setFinishClickListener {
                     finish()
+
                 }.setRightClickListener {
                     ShareDialog()
                             .build(this)
@@ -68,7 +73,6 @@ class LoadBigPictureActivity : BaseActivity() {
                                 }
                             })
                 }
-
 
         Glide.with(this)
                 .asBitmap()

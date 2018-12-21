@@ -2,8 +2,9 @@ package com.chengsheng.cala.htcm.data.retrofit
 
 import com.chengsheng.cala.htcm.BuildConfig
 import com.chengsheng.cala.htcm.data.retrofit.convert.CustomGsonConverterFactory
-import com.chengsheng.cala.htcm.data.service.ProjectService
 import com.chengsheng.cala.htcm.data.service.ExamOrderService
+import com.chengsheng.cala.htcm.data.service.OrganizationService
+import com.chengsheng.cala.htcm.data.service.ProjectService
 import com.chengsheng.cala.htcm.data.service.UserService
 import com.chengsheng.cala.htcm.utils.UserUtil
 import okhttp3.Interceptor
@@ -119,8 +120,13 @@ class RetrofitHelper private constructor() {
             }
     }
 
+    //用户账号个人信息
     var userApi = httpsCreate(UserService::class.java)
+    //订单
     var orderService = httpCreate(ExamOrderService::class.java)
+    //服务
     var projectService = httpCreate(ProjectService::class.java)
+    //机构
+    var organizationService = httpCreate(OrganizationService::class.java)
 
 }

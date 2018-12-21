@@ -137,6 +137,11 @@
         <activity android:name=".module.find.ServiceDetailActivity" />
         <!--加载大图页面-->
         <activity android:name=".module.LoadBigPictureActivity" />
+        <!--科室详情-->
+        <activity android:name=".module.find.OrganizationDetailActivity" />
+        <!--科室列表-->
+        <activity android:name=".module.find.OrganizationActivity" />
+
         <service
             android:name=".model.services.ServiceSMSService"
             android:enabled="true"

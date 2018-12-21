@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/organizationItemView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/dp_15"
+    android:layout_marginTop="@dimen/dp_15"
+    android:background="@drawable/organization_item_bg"
+    android:gravity="center"
+    android:minHeight="200dp"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_16">
+
+    <FrameLayout
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_100"
+        android:background="@mipmap/keshiliebiao_dise">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/ivOrganization"
+            android:layout_width="@dimen/dp_72"
+            android:layout_height="@dimen/dp_72"
+            android:layout_gravity="center"
+            fresco:roundAsCircle="true" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tvOrganizationName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_12"
+        android:textColor="#484848"
+        tools:text="这是部门科室一" />
+
+    <View
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_2"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="#E6E6E6" />
+
+    <TextView
+        android:id="@+id/tvOrganizationDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:ellipsize="end"
+        android:maxEms="10"
+        android:maxLines="1"
+        android:textColor="#999999"
+        tools:text="这是科室介绍这是科室介绍这是科室介绍" />
+
+</LinearLayout>

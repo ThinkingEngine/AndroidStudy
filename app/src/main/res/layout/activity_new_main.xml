@@ -20,11 +20,11 @@
             android:drawableTop="@drawable/selector_tab_home"
             android:text="首页" />
 
-        <RadioButton
-            android:id="@+id/rbHealth"
-            style="@style/mainRadioGroupStyle"
-            android:drawableTop="@drawable/selector_tab_mining"
-            android:text="健康" />
+        <!--<RadioButton-->
+        <!--android:id="@+id/rbHealth"-->
+        <!--style="@style/mainRadioGroupStyle"-->
+        <!--android:drawableTop="@drawable/selector_tab_mining"-->
+        <!--android:text="健康" />-->
 
         <RadioButton
             android:id="@+id/rbFind"

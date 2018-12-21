@@ -380,7 +380,7 @@ public class HomeFragment extends Fragment implements UpdateAIAssisont, UpdateSt
             retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
         }
         NetService service = retrofit.create(NetService.class);
-        service.getAIAssistants(UserUtil.getTokenType() + " " + UserUtil.getAccessToken(), "1")
+        service.getAIAssistants(UserUtil.getTokenType() + " " + UserUtil.getAccessToken(), "1","")
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableObserver<AssistantList>() {

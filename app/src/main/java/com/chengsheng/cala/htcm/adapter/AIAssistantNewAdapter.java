@@ -23,5 +23,6 @@ public class AIAssistantNewAdapter extends BaseQuickAdapter<AssistantItem> {
     protected void convert(BaseViewHolder baseViewHolder, AssistantItem assistantItem) {
         baseViewHolder.setText(R.id.ai_assistant_item_date,assistantItem.getCustomer().getReservation_or_registration().getDate());
         baseViewHolder.setText(R.id.user_name_ai_assistant,assistantItem.getCustomer().getName());
+//        baseViewHolder.setText(R.id)
     }
 }

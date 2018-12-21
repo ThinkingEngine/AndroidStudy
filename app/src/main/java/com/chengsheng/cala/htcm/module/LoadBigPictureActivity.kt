@@ -48,7 +48,7 @@ class LoadBigPictureActivity : BaseActivity() {
                             .showDialog()
                             .setOnShareListener(object : ShareDialog.OnShareClickListener {
                                 override fun shareToWeChat() {
-
+                                    showShortToast("shareToWeChat")
                                 }
 
                                 override fun shareToMoment() {

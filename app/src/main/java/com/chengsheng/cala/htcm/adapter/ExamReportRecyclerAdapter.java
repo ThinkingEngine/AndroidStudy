@@ -115,6 +115,10 @@ public class ExamReportRecyclerAdapter extends RecyclerView.Adapter<ExamReportRe
 
     }
 
+    interface ReportSeclectListener{
+        void reportSelect();
+    }
+
 
     public class ExamReportViewHolder extends RecyclerView.ViewHolder {
         TextView examReportDate;

@@ -51,4 +51,9 @@ public class AssistantItem implements MultiItemEntity {
                 ", recommend_exam_item=" + recommend_exam_item +
                 '}';
     }
+
+    @Override
+    public int getItemType() {
+        return 0;
+    }
 }

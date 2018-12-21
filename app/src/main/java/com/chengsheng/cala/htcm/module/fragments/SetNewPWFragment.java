@@ -171,7 +171,6 @@ public class SetNewPWFragment extends Fragment {
                             try {
                                 String str = body.string();
                                 Toast.makeText(getContext(), "修改密码失败!" + str, Toast.LENGTH_SHORT).show();
-                                Log.e("TAG", "修改密码失败:" + str);
                                 Bundle bundle = new Bundle();
                                 bundle.putString("EVENT", "click");
                                 bundle.putString("SOURCE", "back");

@@ -121,6 +121,7 @@ public class MyExamActivity extends BaseActivity implements TabLayout.OnTabSelec
             retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
         }
 
+        NetService service = retrofit.create(NetService.class);
         service.getFamiliesList(token)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -36,6 +36,12 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
+/**
+ * Author: 蔡浪
+ * CreateDate: 2018-12-21 14:06
+ * Description:体检报告 对比
+ */
+
 public class ExamReportCompareActivity extends BaseActivity {
     private ImageView back, arrow;
     private LinearLayout clickContainer;

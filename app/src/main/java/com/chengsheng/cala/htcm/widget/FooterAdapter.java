@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.manager.FrescoManager;
 import com.chengsheng.cala.htcm.protocol.articleModel.RecommendedItem;
 import com.chengsheng.cala.htcm.module.activitys.NewsDetailActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -61,7 +62,9 @@ public class FooterAdapter extends RecyclerView.Adapter<FooterAdapter.NewsViewHo
         if (!isHeaderView(position) && !isFooterView(position)) {
             if (haveHeaderView()) position--;
             final RecommendedItem data = datas.get(position);
-            holder.newsHeaderIcon.setImageURI(data.getCover_photo_path());
+
+            FrescoManager.loadRoundImage(mContext,holder.newsHeaderIcon,data.getCover_photo_path(),4f);
+//            holder.newsHeaderIcon.setImageURI(data.getCover_photo_path());
             holder.newsTitle.setText(data.getTitle());
             holder.browseNum.setText(String.valueOf(data.getCurrent_read_num()));
             List<String> tags = new ArrayList<>();
@@ -191,7 +194,6 @@ public class FooterAdapter extends RecyclerView.Adapter<FooterAdapter.NewsViewHo
 
     public class NewsViewHolder extends RecyclerView.ViewHolder {
         RelativeLayout commendNewsItem;
-        LinearLayout newsItemTopLine;
         SimpleDraweeView newsHeaderIcon;
         TextView newsTitle;
         TextView browseNum;

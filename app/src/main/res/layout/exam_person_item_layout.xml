@@ -18,7 +18,7 @@
             android:layout_height="36dp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="14dp"
+            android:layout_marginStart="14dp"
             fresco:actualImageScaleType="fitCenter"
             fresco:roundAsCircle="true"
             fresco:backgroundImage="@mipmap/morentouxiang_wode"/>
@@ -28,9 +28,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/families_header_icon_appointment"
-            android:layout_marginLeft="4dp"
-            android:text="王可可"
+            android:layout_toEndOf="@id/families_header_icon_appointment"
+            android:layout_marginStart="4dp"
             android:textSize="18sp"
             android:textColor="@color/colorText"/>
 
@@ -38,11 +37,10 @@
             android:id="@+id/families_mark_appointment"
             android:layout_width="36dp"
             android:layout_height="16dp"
-            android:layout_marginLeft="6dp"
+            android:layout_marginStart="6dp"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/appointment_families_name"
+            android:layout_toEndOf="@id/appointment_families_name"
             android:background="@drawable/orange_button_bg"
-            android:text="本人"
             android:textColor="@color/colorWhite"
             android:textSize="10sp" />
         

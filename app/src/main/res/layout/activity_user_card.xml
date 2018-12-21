@@ -24,7 +24,7 @@
         android:layout_height="88dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="88dp"
-        fresco:backgroundImage="@color/colorPrimary"
+        fresco:backgroundImage="@mipmap/morentouxiang_wode"
         fresco:roundAsCircle="true" />
 
     <TextView

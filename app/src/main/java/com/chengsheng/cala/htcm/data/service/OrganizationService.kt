@@ -5,6 +5,7 @@ import com.chengsheng.cala.htcm.protocol.OrganizationProtocol
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 /**
  * Author: 任和
@@ -29,6 +30,6 @@ interface OrganizationService {
      * 医生
      */
     @GET(API.DOCTORS)
-    fun getAllDoctor(): Observable<Response<Any>>
+    fun getAllDoctor(@Query("page") page: Int): Observable<Response<Any>>
 
 }

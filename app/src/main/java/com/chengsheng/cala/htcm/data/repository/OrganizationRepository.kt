@@ -44,10 +44,10 @@ class OrganizationRepository private constructor() {
     }
 
     /**
-     * 机构详情
+     * 所以医生列表
      */
-    fun getAllDoctor(): Observable<Any>? {
-        return transformProto(RetrofitHelper.getInstance().organizationService.getAllDoctor())
+    fun getAllDoctor(page: Int): Observable<Any>? {
+        return transformProto(RetrofitHelper.getInstance().organizationService.getAllDoctor(page))
     }
 
 }

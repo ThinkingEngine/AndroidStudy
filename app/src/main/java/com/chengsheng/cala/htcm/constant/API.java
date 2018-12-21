@@ -29,6 +29,6 @@ public class API {
     public static final String ORGANIZATION_DETAIL = SERVICE_BASE_URL + "api/organization/depts";
 
     /* 医生列表 */
-    public static final String DOCTORS = SERVICE_BASE_URL + "api/organization/doctors/enabled?filters=depts.id=;name:like=陆&sort_fields=name:asc";
+    public static final String DOCTORS = SERVICE_BASE_URL + "api/organization/doctors/enabled";
 
 }

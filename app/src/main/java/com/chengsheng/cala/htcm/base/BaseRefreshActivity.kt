@@ -24,8 +24,8 @@ abstract class BaseRefreshActivity<T> : BaseActivity(), OnLoadmoreListener {
     //page: if (currentPage * DEFAULT_LIMIT > 0) (currentPage * DEFAULT_LIMIT) else 0
 
     private val AUTO_REFRESH_DELAY_TIME: Int = 180
-    protected val DEFAULT_LIMIT: Int = 10
-    protected val FIRST_PAGE: Int = 0
+    protected val DEFAULT_LIMIT: Int = 15
+    protected val FIRST_PAGE: Int = 1
     protected var currentPage: Int = FIRST_PAGE
 
     var smartRefreshLayout: SmartRefreshLayout? = null
@@ -35,6 +35,7 @@ abstract class BaseRefreshActivity<T> : BaseActivity(), OnLoadmoreListener {
     protected var adapter: BaseQuickAdapter<T>? = null
     protected var layoutManager: RecyclerView.LayoutManager? = LinearLayoutManager(this)
 
+    abstract fun initViews()
     abstract fun getData(page: Int)
     abstract fun getCurrentAdapter(): BaseQuickAdapter<T>?
 
@@ -43,18 +44,18 @@ abstract class BaseRefreshActivity<T> : BaseActivity(), OnLoadmoreListener {
         recyclerView = findViewById(R.id.recyclerView)
         classicsHeader = findViewById(R.id.classicsHeader)
 
+        initViews()
         initRecyclerView()
         initRefresh()
     }
 
     override fun getData() {
-        getData(FIRST_PAGE)
+
     }
 
     private fun initRecyclerView() {
         recyclerView?.layoutManager = layoutManager
         recyclerView?.adapter = initAdapter()
-
         recyclerView?.let { adapter?.onAttachedToRecyclerView(it) }
     }
 

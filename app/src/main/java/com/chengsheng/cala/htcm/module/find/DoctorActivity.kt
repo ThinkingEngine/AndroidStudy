@@ -6,6 +6,8 @@ import com.chengsheng.cala.htcm.R
 import com.chengsheng.cala.htcm.adapter.DoctorAdapter
 import com.chengsheng.cala.htcm.base.BaseRefreshActivity
 import com.chengsheng.cala.htcm.data.repository.OrganizationRepository
+import com.chengsheng.cala.htcm.protocol.DoctorProtocol
+import kotlinx.android.synthetic.main.activity_doctor.*
 
 /**
  * Author: 任和
@@ -13,24 +15,30 @@ import com.chengsheng.cala.htcm.data.repository.OrganizationRepository
  * Description: 医生列表
  */
 @SuppressLint("CheckResult")
-class DoctorActivity : BaseRefreshActivity<Any>() {
+class DoctorActivity : BaseRefreshActivity<DoctorProtocol.ItemsBean>() {
 
     override fun getLayoutId(): Int {
         return R.layout.activity_doctor
     }
 
+    override fun initViews() {
+        titleBar?.setFinishClickListener {
+            finish()
+        }
+    }
+
     override fun getData(page: Int) {
-        OrganizationRepository.default?.getAllDoctor()
+        OrganizationRepository.default?.getAllDoctor(page)
                 ?.subscribe({
 
                     fillData(ArrayList())
 
                 }) {
-
+                    showError(it)
                 }
     }
 
-    override fun getCurrentAdapter(): BaseQuickAdapter<Any>? {
+    override fun getCurrentAdapter(): BaseQuickAdapter<DoctorProtocol.ItemsBean>? {
         return DoctorAdapter(ArrayList())
     }
 }

@@ -1,7 +1,6 @@
 package com.chengsheng.cala.htcm.module.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,10 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
-import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.protocol.ExamReportItem;
 import com.chengsheng.cala.htcm.protocol.ExamReportList;
@@ -24,7 +21,11 @@ import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
 import com.chengsheng.cala.htcm.module.activitys.ExamReportCompareActivity;
 import com.chengsheng.cala.htcm.adapter.ExamReportRecyclerAdapter;
+import com.chengsheng.cala.htcm.utils.ActivityUtil;
+import com.chengsheng.cala.htcm.utils.ToastUtil;
+import com.suke.widget.BuildConfig;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -32,7 +33,13 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
-public class ExamReprotListFragment extends Fragment {
+/**
+ * Author: 蔡浪
+ * CreateDate: 2018-12-21 14:14
+ * Description:体检报告列表
+ */
+
+public class ExamReprotListFragment extends Fragment implements ExamReportRecyclerAdapter.ReportSeclectListener {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -45,13 +52,11 @@ public class ExamReprotListFragment extends Fragment {
     private TextView reportCompare, cancelReportCompare, startReportCompare;
     private RecyclerView targetExamReportList;
 
+    private List<ExamReportItem> items, selectReports;
+    private ExamReportRecyclerAdapter adapter;
 
     private Retrofit retrofit;
 
-    private HTCMApp app;
-
-
-    private boolean isCompare = false;
 
     public ExamReprotListFragment() {
 
@@ -75,11 +80,13 @@ public class ExamReprotListFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+        selectReports = new ArrayList<>();
+
     }
+
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        app = HTCMApp.create(getContext());
         View rootViews = inflater.inflate(R.layout.fragment_exam_reprot_list, container, false);
         childButtonContainer = rootViews.findViewById(R.id.child_button_container);
         reportCompare = rootViews.findViewById(R.id.report_compare);
@@ -87,11 +94,13 @@ public class ExamReprotListFragment extends Fragment {
         startReportCompare = rootViews.findViewById(R.id.start_report_compare);
         targetExamReportList = rootViews.findViewById(R.id.target_exam_report_list);
 
+
         if (retrofit == null) {
             retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
         }
 
         targetExamReportList.setLayoutManager(new LinearLayoutManager(getContext()));
+
 
         NetService service = retrofit.create(NetService.class);
         service.getIssuedReport(mParam2, mParam1)
@@ -100,8 +109,8 @@ public class ExamReprotListFragment extends Fragment {
                 .subscribe(new DisposableObserver<ExamReportList>() {
                     @Override
                     public void onNext(final ExamReportList examReportList) {
-                        final List<ExamReportItem> items = examReportList.getItems();
-                        final ExamReportRecyclerAdapter adapter = new ExamReportRecyclerAdapter(getContext(), items);
+                        items = examReportList.getItems();
+                        adapter = new ExamReportRecyclerAdapter(getContext(), items, ExamReprotListFragment.this);
                         targetExamReportList.setAdapter(adapter);
                         reportCompare.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -113,7 +122,7 @@ public class ExamReprotListFragment extends Fragment {
                                     adapter.notifyDataSetChanged();
                                     childButtonContainer.setVisibility(View.VISIBLE);
                                 } else {
-                                    Toast.makeText(getContext(), "没有可对比的报告数据", Toast.LENGTH_SHORT).show();
+                                    ToastUtil.showShortToast(getContext(),"没有可对比的报告数据!");
                                 }
                             }
                         });
@@ -124,7 +133,6 @@ public class ExamReprotListFragment extends Fragment {
                                 for (int i = 0; i < items.size(); i++) {
                                     items.get(i).setSelect(false);
                                 }
-                                app.clearExams();
                                 adapter.notifyDataSetChanged();
                                 adapter.count = 0;
                                 childButtonContainer.setVisibility(View.INVISIBLE);
@@ -135,7 +143,7 @@ public class ExamReprotListFragment extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("TAG", "请求错误:" + e.toString());
+                        ToastUtil.showShortToast(getContext(),"网络请求异常！请检查网络");
                     }
 
                     @Override
@@ -150,23 +158,27 @@ public class ExamReprotListFragment extends Fragment {
         startReportCompare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(app.getExams() == null){
-                    Log.e("TAG","获取要对比的报告为空!");
-                    Toast.makeText(getContext(),"获取要对比的报告为空!",Toast.LENGTH_SHORT).show();
-                }else if(app.getExams().isEmpty()){
-                    Log.e("TAG","没有获取到要对比的报告的ID!");
-                    Toast.makeText(getContext(),"没有获取到要对比的报告的ID!",Toast.LENGTH_SHORT).show();
-                }else if(app.getExams().size() < 2){
-                    Log.e("TAG","需要两个报告的ID:"+app.getExams().size());
-                    Toast.makeText(getContext(),"需要两个报告的ID!",Toast.LENGTH_SHORT).show();
-                }else{
-                    Log.e("TAG","已选择的报告数:"+app.getExams().size());
-                    Intent intent = new Intent(getContext(), ExamReportCompareActivity.class);
-                    intent.putExtra("FIRST_ID",String.valueOf(app.getExams().get(0).getOrderId()));
-                    intent.putExtra("FIRST_TIME",app.getExams().get(0).getIssued_date());
-                    intent.putExtra("SECOND_ID",String.valueOf(app.getExams().get(1).getOrderId()));
-                    intent.putExtra("SECOND_TIME",app.getExams().get(1).getIssued_date());
-                    getContext().startActivity(intent);
+                if (selectReports.isEmpty()) {
+                    if(BuildConfig.DEBUG){
+                        Log.e("TAG", "获取要对比的报告为空!");
+                    }
+                    ToastUtil.showShortToast(getContext(),"获取要对比的报告为空!");
+                } else if (selectReports.size() < 2) {
+                    if(BuildConfig.DEBUG){
+                        Log.e("TAG", "需要两个报告的ID:" + selectReports.size());
+                    }
+                    ToastUtil.showShortToast(getContext(),"需要两个报告的ID!");
+                } else {
+                    if(BuildConfig.DEBUG){
+                        Log.e("TAG", "已选择的报告数:" + selectReports.size());
+                    }
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("FIRST_ID", String.valueOf(selectReports.get(0).getOrderId()));
+                    bundle.putString("FIRST_TIME", selectReports.get(0).getIssued_date());
+                    bundle.putString("SECOND_ID", String.valueOf(selectReports.get(1).getOrderId()));
+                    bundle.putString("SECOND_TIME", selectReports.get(1).getIssued_date());
+                    ActivityUtil.Companion.startActivity(getContext(),new ExamReportCompareActivity(),bundle);
                 }
 
             }
@@ -192,10 +204,21 @@ public class ExamReprotListFragment extends Fragment {
         }
     }
 
+
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void reportSelect(ExamReportItem reports,boolean add) {
+        if(add){
+            selectReports.add(reports);
+        }else{
+            selectReports.remove(reports);
+        }
+
     }
 
 

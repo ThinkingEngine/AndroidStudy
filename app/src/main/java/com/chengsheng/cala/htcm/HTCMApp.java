@@ -14,7 +14,6 @@ import java.util.List;
 
 public class HTCMApp {
 
-    private List<ExamReportItem> exams = new ArrayList<>();
 
     private FamiliesDetailInfo familiesDetailInfo;
     private AppointmentDetail appointmentDetail;
@@ -49,22 +48,6 @@ public class HTCMApp {
         return UserUtil.getAccessToken();
     }
 
-    public void addExamsID(int index, ExamReportItem exam) {
-        exams.add(index, exam);
-//        exams.add(exam);
-    }
-
-    public void delExamsID(int index) {
-        exams.remove(index);
-    }
-
-    public void clearExams() {
-        exams.clear();
-    }
-
-    public List<ExamReportItem> getExams() {
-        return exams;
-    }
 
     public void setOrderID(int orderid) {
         FuncUtils.putString("ORDER_ID", String.valueOf(orderid));

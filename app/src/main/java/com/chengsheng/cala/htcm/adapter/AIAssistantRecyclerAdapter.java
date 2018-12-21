@@ -2,22 +2,15 @@ package com.chengsheng.cala.htcm.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.AbsoluteSizeSpan;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,7 +28,6 @@ import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
 import com.chengsheng.cala.htcm.utils.ActivityUtil;
 import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
-import com.chengsheng.cala.htcm.utils.FuncUtils;
 import com.chengsheng.cala.htcm.module.activitys.BarADActivity;
 import com.chengsheng.cala.htcm.module.activitys.BarCodeActivity;
 import com.chengsheng.cala.htcm.module.activitys.ExamDetailsActivity;
@@ -44,7 +36,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.zyao89.view.zloading.ZLoadingDialog;
 import com.zyao89.view.zloading.Z_TYPE;
 
-import java.text.ParseException;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;

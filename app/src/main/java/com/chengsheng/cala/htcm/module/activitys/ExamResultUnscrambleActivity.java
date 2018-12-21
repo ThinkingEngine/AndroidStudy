@@ -1,6 +1,5 @@
 package com.chengsheng.cala.htcm.module.activitys;
 
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -56,7 +55,6 @@ public class ExamResultUnscrambleActivity extends BaseActivity {
 
         docSignatureMarkB.setImageURI(result.getDoctor_sign());
 
-        Log.e("TAG","result.getType():"+result.getType());
         ExamDetailTypeARecyclerAdapter adapter = new ExamDetailTypeARecyclerAdapter(this,result.getSingle_item_result(),result.getType());
         examDetailTypeA.setLayoutManager(new LinearLayoutManager(this));
         examDetailTypeA.setAdapter(adapter);
@@ -80,5 +78,14 @@ public class ExamResultUnscrambleActivity extends BaseActivity {
 
         title.setText("检查详情");
         childTitle.setVisibility(View.INVISIBLE);
+
+        examDetailTypeA.setFocusable(false);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }

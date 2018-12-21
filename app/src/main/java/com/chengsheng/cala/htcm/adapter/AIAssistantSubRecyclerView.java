@@ -32,8 +32,10 @@ import com.chengsheng.cala.htcm.utils.FuncUtils;
 import com.chengsheng.cala.htcm.module.activitys.BarCodeActivity;
 import com.chengsheng.cala.htcm.module.activitys.ExamDetailsActivity;
 import com.chengsheng.cala.htcm.module.activitys.UserCardActivity;
+import com.chengsheng.cala.htcm.utils.ToastUtil;
 import com.daimajia.swipe.SwipeLayout;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.jakewharton.rxbinding2.view.RxView;
 
 import java.text.ParseException;
 import java.util.List;
@@ -68,7 +70,7 @@ public class AIAssistantSubRecyclerView extends RecyclerView.Adapter<AIAssistant
             String stats = data.getOrder().getExam_status();
 
             viewHolder.itemBigNotes.setText("您预约了" + data.getCustomer().getReservation_or_registration().getDate() + "的体检");
-            viewHolder.aiAssistantItemDate.setText(data.getOrder().getUpdated_at());
+//            viewHolder.aiAssistantItemDate.setText(data.getOrder().getUpdated_at());
             viewHolder.aiAssistantListItem.setShowMode(SwipeLayout.ShowMode.LayDown);
             viewHolder.deleteExamItem.setBackground(context.getResources().getDrawable(R.drawable.red_dot));
             viewHolder.userNameAiAssistant.setText(data.getCustomer().getName());
@@ -97,6 +99,21 @@ public class AIAssistantSubRecyclerView extends RecyclerView.Adapter<AIAssistant
                 }
             });
 
+//            aiAssistantItem
+
+            viewHolder.aiAssistantItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ExamDetailsActivity.class);
+                    FamiliesListItem familiesListItem = new FamiliesListItem();
+                    familiesListItem.setFullname(data.getCustomer().getName());
+                    familiesListItem.setAvatar_path(data.getCustomer().getAvatar());
+                    familiesListItem.setHealth_card_no(data.getCustomer().getReservation_or_registration().getId());
+                    intent.putExtra("ORDER_ID", String.valueOf(data.getOrder().getId()));
+                    context.startActivity(intent);
+                }
+            });
+
 //            viewHolder.unscrambleMark.setVisibility(View.INVISIBLE);
 
             //预约
@@ -113,9 +130,9 @@ public class AIAssistantSubRecyclerView extends RecyclerView.Adapter<AIAssistant
                     viewHolder.unscrambleMark.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent = new Intent(context,ModePaymentActivity.class);
-                            intent.putExtra("ORDER_ID",String.valueOf(data.getOrder().getId()));
-                            intent.putExtra("ORDER_VAL",data.getOrder().getDiscount_receivable());
+                            Intent intent = new Intent(context, ModePaymentActivity.class);
+                            intent.putExtra("ORDER_ID", String.valueOf(data.getOrder().getId()));
+                            intent.putExtra("ORDER_VAL", data.getOrder().getDiscount_receivable());
                             context.startActivity(intent);
                         }
                     });
@@ -148,9 +165,9 @@ public class AIAssistantSubRecyclerView extends RecyclerView.Adapter<AIAssistant
                     viewHolder.unscrambleMark.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent = new Intent(context,ExamReportDetailActivity.class);
+                            Intent intent = new Intent(context, ExamReportDetailActivity.class);
                             Bundle bundle = new Bundle();
-                            bundle.putString(GlobalConstant.EXAM_REPORT_ID,String.valueOf(data.getOrder().getId()));
+                            bundle.putString(GlobalConstant.EXAM_REPORT_ID, String.valueOf(data.getOrder().getId()));
                             intent.putExtras(bundle);
                             context.startActivity(intent);
                         }
@@ -158,7 +175,7 @@ public class AIAssistantSubRecyclerView extends RecyclerView.Adapter<AIAssistant
                 } else {
                     viewHolder.unscrambleMark.setVisibility(View.INVISIBLE);
                 }
-            }else{
+            } else {
                 viewHolder.userBitmapMark.setImageResource(R.mipmap.tianxingma);
                 viewHolder.examNum.setText("体检号：" + data.getOrder().getId());
             }

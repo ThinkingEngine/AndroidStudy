@@ -36,6 +36,12 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
+/**
+ * Author: 蔡浪
+ * CreateDate: 2018-12-21 14:06
+ * Description:体检报告 对比
+ */
+
 public class ExamReportCompareActivity extends BaseActivity {
     private ImageView back, arrow;
     private LinearLayout clickContainer;
@@ -62,11 +68,13 @@ public class ExamReportCompareActivity extends BaseActivity {
     @Override
     public void initView() {
         app = HTCMApp.create(getApplicationContext());
-        String firstID = getIntent().getStringExtra("FIRST_ID");
-        String firstDate = getIntent().getStringExtra("FIRST_TIME");
-        String secondID = getIntent().getStringExtra("SECOND_ID");
-        String secondDate = getIntent().getStringExtra("SECOND_TIME");
-//        app.clearExams();
+
+        Bundle bundle = getIntent().getExtras();
+
+        String firstID = bundle.getString("FIRST_ID");
+        String firstDate = bundle.getString("FIRST_TIME");
+        String secondID = bundle.getString("SECOND_ID");
+        String secondDate = bundle.getString("SECOND_TIME");
 
         initViews();
         setViews(firstDate,secondDate);
@@ -92,6 +100,8 @@ public class ExamReportCompareActivity extends BaseActivity {
         title.setText("全部");
 
         arrow.setSelected(false);
+
+
     }
 
     private void setViews(String dataA,String dataB){

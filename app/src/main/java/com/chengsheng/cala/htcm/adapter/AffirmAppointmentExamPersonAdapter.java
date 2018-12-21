@@ -77,6 +77,7 @@ public class AffirmAppointmentExamPersonAdapter extends RecyclerView.Adapter<Aff
                 }
             });
 
+
         } else {
             viewHolder.addFamiliesBox.setOnClickListener(new View.OnClickListener() {
                 @Override

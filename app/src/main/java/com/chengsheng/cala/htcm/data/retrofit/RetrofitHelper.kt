@@ -126,6 +126,9 @@ class RetrofitHelper private constructor() {
     var orderService = httpCreate(ExamOrderService::class.java)
     //服务
     var projectService = httpCreate(ProjectService::class.java)
+
+    var myExamService = httpCreate(com.chengsheng.cala.htcm.data.service.MyExamService::class.java)
+
     //机构
     var organizationService = httpCreate(OrganizationService::class.java)
 

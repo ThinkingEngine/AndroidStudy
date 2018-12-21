@@ -32,6 +32,10 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 
+/**
+ * 服务通知类
+ * */
+
 public class ServiceMessageActivity extends BaseActivity implements UpdateStateInterface, CheckServiceInterface {
 
     private Retrofit retrofit;
@@ -43,6 +47,7 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
     private TextView childTitle;
 
     private boolean hasNoRead = false;
+    private ServiceMessageRecyclerViewAdapter adapter;
 
     private HTCMApp app;
     private ZLoadingDialog loadingDialog;
@@ -55,30 +60,15 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
 
     @Override
     public void initView() {
-        app = HTCMApp.create(getApplicationContext());
-        CallBackDataAuth.setUpdateStateInterface(this);
-        CallBackDataAuth.setCheckServiceInterface(this);
-        loadingDialog = new ZLoadingDialog(this);
-        loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
-        loadingDialog.setDialogBackgroundColor(getResources().getColor(R.color.colorText));
-        loadingDialog.setHintText("加载中....");
-        loadingDialog.setLoadingColor(getResources().getColor(R.color.colorPrimary));
-        loadingDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
 
+        initActivityParam();
+        initViews();
 
-        ImageView back = findViewById(R.id.title_header_service_messages).findViewById(R.id.back_login);
-        TextView title = findViewById(R.id.title_header_service_messages).findViewById(R.id.menu_bar_title);
-        childTitle = findViewById(R.id.title_header_service_messages).findViewById(R.id.message_mark_text);
-        serviceMessageList = findViewById(R.id.service_message_list);
-
-        childTitle.setText("全部已读");
-        childTitle.setTextColor(getResources().getColor(R.color.colorThrText));
-        childTitle.setSelected(false);
-        getMessageList(currentPage, true);
 
         serviceMessageList.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
+                addMode = false;//设置是否为加载下一页还是刷新最新数据，addMode = true：加载下一页 addMode = false：加载最新数据
                 getMessageList(1, false);
             }
 
@@ -87,27 +77,21 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
                 currentPage++;
                 addMode = true;
                 getMessageList(currentPage, false);
-                serviceMessageList.loadMoreComplete();
             }
         });
 
-        title.setText("服务通知");
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 
     @Override
     public void getData() {
-
+        getMessageList(currentPage, true);
     }
 
 
+    //获取服务消息列表
     private void getMessageList(int page, final boolean loading) {
+
         if (retrofit == null) {
             retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
         }
@@ -122,6 +106,9 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
                 .subscribe(new DefaultObserver<MessageList>() {
                     @Override
                     public void onNext(MessageList messageList) {
+
+                        serviceMessageList.setLayoutManager(new LinearLayoutManager(ServiceMessageActivity.this));
+
                         if (!addMode) {
                             dataCollect = messageList.getItems();
                             for (MessageItem messageItem : dataCollect) {
@@ -131,17 +118,30 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
                                     childTitle.setSelected(true);
                                 }
                             }
-                            serviceMessageList.setLayoutManager(new LinearLayoutManager(ServiceMessageActivity.this));
-                            serviceMessageList.setAdapter(new ServiceMessageRecyclerViewAdapter(ServiceMessageActivity.this, dataCollect));
+                            adapter = new ServiceMessageRecyclerViewAdapter(ServiceMessageActivity.this, dataCollect);
+                            serviceMessageList.setAdapter(adapter);
                             serviceMessageList.refreshComplete();
+                            currentPage = 0;
+
                         } else {
-                            dataCollect.addAll(messageList.getItems());
-                            serviceMessageList.setAdapter(new ServiceMessageRecyclerViewAdapter(ServiceMessageActivity.this, dataCollect));
+                            if(messageList.getItems().isEmpty()){
+                                showShortToast("已无更多数据了");
+                                currentPage--;
+                            }else{
+
+                                for(int i = 0;i < messageList.getItems().size();i++){
+                                    dataCollect.add(messageList.getItems().get(i));
+                                }
+                                adapter.notifyDataSetChanged();
+                            }
+                            serviceMessageList.loadMoreComplete();
                         }
 
                         if (loading) {
                             loadingDialog.cancel();
                         }
+
+
                         childTitle.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -155,14 +155,11 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
                                             check.add(String.valueOf(item.getId()));
                                         }
                                     }
-
                                     postCheckSMS(check);
                                 }
                             }
                         });
 
-                        serviceMessageList.loadMoreComplete();
-                        serviceMessageList.refreshComplete();
 
                     }
 
@@ -230,5 +227,41 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
             Log.e("TAG", "service data abnormal!");
         }
 
+    }
+
+    private void initViews(){
+        ImageView back = findViewById(R.id.title_header_service_messages).findViewById(R.id.back_login);
+        TextView title = findViewById(R.id.title_header_service_messages).findViewById(R.id.menu_bar_title);
+        childTitle = findViewById(R.id.title_header_service_messages).findViewById(R.id.message_mark_text);
+        serviceMessageList = findViewById(R.id.service_message_list);
+
+        childTitle.setText("全部已读");
+        childTitle.setTextColor(getResources().getColor(R.color.colorThrText));
+        childTitle.setSelected(false);
+
+        serviceMessageList.setHasFixedSize(true);
+        serviceMessageList.setFocusable(false);
+        serviceMessageList.setFocusableInTouchMode(false);
+
+        title.setText("服务通知");
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    private void initActivityParam(){
+        app = HTCMApp.create(getApplicationContext());
+        CallBackDataAuth.setUpdateStateInterface(this);
+        CallBackDataAuth.setCheckServiceInterface(this);
+        loadingDialog = new ZLoadingDialog(this);
+        loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
+        loadingDialog.setDialogBackgroundColor(getResources().getColor(R.color.colorText));
+        loadingDialog.setHintText("加载中....");
+        loadingDialog.setLoadingColor(getResources().getColor(R.color.colorPrimary));
+        loadingDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
     }
 }

@@ -1,7 +1,11 @@
 package com.chengsheng.cala.htcm.module.activitys;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,6 +35,7 @@ public class ExamReportDetailActivity extends BaseActivity {
     private TextView examReportDetailPerson;
     private TextView examReportDetailNum;
     private TextView examReportDetailDate;
+    private Button downLoadDoc;
     private MyExpandableListView examAdvicesExpandable;
     private MyRecyclerView examResultList;
 
@@ -77,6 +82,7 @@ public class ExamReportDetailActivity extends BaseActivity {
         examReportDetailDate = findViewById(R.id.exam_report_detail_date);
         examAdvicesExpandable = findViewById(R.id.exam_advices_expandable);
         examResultList = findViewById(R.id.exam_result_list);
+        downLoadDoc = findViewById(R.id.down_load_doc);
 
         examAdvicesExpandable.setIndicatorBounds(examAdvicesExpandable.getWidth() - 140, 0);
         examAdvicesExpandable.setFocusable(false);
@@ -97,6 +103,13 @@ public class ExamReportDetailActivity extends BaseActivity {
         examResultList.setAdapter(adapter1);
         examAdvicesExpandable.expandGroup(0);
         examReportDetailName.setText(examReportDetial.getExam_report().getName());
+
+        downLoadDoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                downLoadDialog();
+            }
+        });
     }
 
     private void getExamReportDetial(String orderId){
@@ -128,5 +141,21 @@ public class ExamReportDetailActivity extends BaseActivity {
                     }
                 });
 
+    }
+
+    private void downLoadDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("下载标准报告");
+        builder.setMessage("你确认要下载标准报告?");
+        builder.setNegativeButton("暂不",null);
+        builder.setPositiveButton("下载", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

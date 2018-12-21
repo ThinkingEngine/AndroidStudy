@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -37,6 +38,7 @@ import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
 import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
 import com.chengsheng.cala.htcm.utils.FuncUtils;
+import com.chengsheng.cala.htcm.utils.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -85,12 +87,12 @@ public class AddFamilyFragment extends Fragment {
     private Button addFamiliesMarksButton;
 
 
-    private String[] relations = new String[]{"本人", "父亲", "母亲", "儿子", "女儿", "妻子", "丈夫", "其他"};//默认家人关系标签
+    private String[] relations = new String[]{"本人", "父亲", "母亲", "儿子", "女儿", "妻子", "丈夫", "其他"};//默认家人关系标签组
     private String phoneHasCode = "";
     private Uri headerImageUri;
     private boolean isSelectHeader = false;
     private String sex;
-    private String familiesTag = "本人";//家人关系标签
+    private String familiesTag = "本人";//默认家人关系标签
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -99,6 +101,7 @@ public class AddFamilyFragment extends Fragment {
     private Retrofit getCodeRetrofit;
     private ZLoadingDialog loadingDialog;
     private Calendar calendar;
+    private TimeCount timer;//验证码计数器
 
     private String uuid;
 
@@ -166,7 +169,7 @@ public class AddFamilyFragment extends Fragment {
         inputFamiliesAge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(calendar == null){
+                if (calendar == null) {
                     calendar = Calendar.getInstance();
                 }
                 DatePickerDialog timePickerDialog = new DatePickerDialog(getContext(), R.style.Theme_AppCompat_DayNight_Dialog_Alert, new DatePickerDialog.OnDateSetListener() {
@@ -174,15 +177,15 @@ public class AddFamilyFragment extends Fragment {
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         String current = FuncUtils.getCurrentTimeDay();
                         String selectDate = year + "-" + (month + 1) + "-" + dayOfMonth;
-                        if(FuncUtils.isDate2Bigger(current,selectDate)){
-                            Toast.makeText(getContext(),"出生日期选择有误！请重新选择",Toast.LENGTH_SHORT).show();
+                        if (FuncUtils.isDate2Bigger(current, selectDate)) {
+                            Toast.makeText(getContext(), "出生日期选择有误！请重新选择", Toast.LENGTH_SHORT).show();
                             inputFamiliesAge.setText("");
-                        }else{
+                        } else {
                             inputFamiliesAge.setText(selectDate);
                         }
 
                     }
-                },calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
                 timePickerDialog.show();
             }
         });
@@ -207,7 +210,7 @@ public class AddFamilyFragment extends Fragment {
                 } else if (phone.equals(phoneHasCode)) {
                     Toast.makeText(getContext(), "当前号码已验证!", Toast.LENGTH_SHORT).show();
                 } else {
-                   getCodeFromNet(phone);
+                    getCodeFromNet(phone);
                 }
             }
         });
@@ -287,9 +290,9 @@ public class AddFamilyFragment extends Fragment {
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Bundle data,boolean isAdd) {
+    public void onButtonPressed(Bundle data, boolean isAdd) {
         if (mListener != null) {
-            mListener.onAddFamilyFragmentInteraction(data,isAdd);
+            mListener.onAddFamilyFragmentInteraction(data, isAdd);
         }
     }
 
@@ -313,7 +316,7 @@ public class AddFamilyFragment extends Fragment {
 
     public interface OnAddFamilyFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onAddFamilyFragmentInteraction(Bundle bundle,boolean isAdd);
+        void onAddFamilyFragmentInteraction(Bundle bundle, boolean isAdd);
     }
 
 
@@ -341,27 +344,28 @@ public class AddFamilyFragment extends Fragment {
         femaleMark.setTextColor(getContext().getResources().getColor(R.color.colorThrText));
         sex = "male";
         addFamiliesMarksBox.setVisibility(View.INVISIBLE);
-
         selectHeaderIcon.setBackground(getResources().getDrawable(R.mipmap.tianjiatouxiang));
 
+        timer = new TimeCount(60000,1000,getCode);
+
         final List<String> data = new ArrayList<>();
-        for(int i = 0;i < relations.length;i++){
+        for (int i = 0; i < relations.length; i++) {
             data.add(relations[i]);
         }
         final TagAdapter tagAdapter = new TagAdapter(data);
         familiesRelationSelecter.setAdapter(tagAdapter);
-        tagAdapter.onSelected(0,tagAdapter.getView(familiesRelationSelecter,0,data.get(0)));
+        tagAdapter.onSelected(0, tagAdapter.getView(familiesRelationSelecter, 0, data.get(0)));
         familiesRelationSelecter.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
             @Override
             public boolean onTagClick(View view, int position, FlowLayout parent) {
 //                Toast.makeText(getContext(),"选中:"+data.get(position),Toast.LENGTH_SHORT).show();
-                if(position != data.size()-1){
+                if (position != data.size() - 1) {
                     familiesTag = data.get(position);
                 }
                 TextView textView = view.findViewById(R.id.select_families_mark);
-                if(position == data.size()-1 && textView.isSelected()){
+                if (position == data.size() - 1 && textView.isSelected()) {
                     addFamiliesMarksBox.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     addFamiliesMarksBox.setVisibility(View.INVISIBLE);
                 }
                 return true;
@@ -372,12 +376,12 @@ public class AddFamilyFragment extends Fragment {
         addFamiliesMarksButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(newFamiliesMarkInput.getText().toString().equals("")){
-                    Toast.makeText(getContext(),"请输入新的标签",Toast.LENGTH_SHORT).show();
-                }else{
+                if (newFamiliesMarkInput.getText().toString().equals("")) {
+                    Toast.makeText(getContext(), "请输入新的标签", Toast.LENGTH_SHORT).show();
+                } else {
                     String newMark = newFamiliesMarkInput.getText().toString();
-                    data.add(0,newMark);
-                    tagAdapter.setSelected(0,newMark);
+                    data.add(0, newMark);
+                    tagAdapter.setSelected(0, newMark);
                     tagAdapter.notifyDataChanged();
                     familiesRelationSelecter.setAdapter(tagAdapter);
                     newFamiliesMarkInput.setText("");
@@ -389,11 +393,11 @@ public class AddFamilyFragment extends Fragment {
         newFamiliesMarkInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus){
-                    if(!newFamiliesMarkInput.getText().toString().equals("")){
+                if (!hasFocus) {
+                    if (!newFamiliesMarkInput.getText().toString().equals("")) {
                         String newMark = newFamiliesMarkInput.getText().toString();
-                        data.add(0,newMark);
-                        tagAdapter.setSelected(0,newMark);
+                        data.add(0, newMark);
+                        tagAdapter.setSelected(0, newMark);
                         tagAdapter.notifyDataChanged();
                         familiesRelationSelecter.setAdapter(tagAdapter);
                         familiesTag = newFamiliesMarkInput.getText().toString();
@@ -404,13 +408,18 @@ public class AddFamilyFragment extends Fragment {
         });
     }
 
-    private void getCodeFromNet(final String num){
 
-        if(getCodeRetrofit == null){
+    //获取验证码
+    private void getCodeFromNet(final String num) {
+
+        if (getCodeRetrofit == null) {
             getCodeRetrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
         }
+
         loadingDialog.setHintText("请求验证....");
         loadingDialog.show();
+
+
         NetService service = getCodeRetrofit.create(NetService.class);
         service.addFamiliesCodeRequest(mParam1 + " " + mParam2, num)
                 .subscribeOn(Schedulers.newThread())
@@ -418,9 +427,9 @@ public class AddFamilyFragment extends Fragment {
                 .subscribe(new DisposableObserver<Message>() {
                     @Override
                     public void onNext(Message message) {
-                        Log.e("FAMILIES", "获取验证码请求成功" + message.toString());
                         loadingDialog.cancel();
-                        Toast.makeText(getContext(), "获取验证码请求成功", Toast.LENGTH_SHORT).show();
+                        timer.start();
+                        ToastUtil.showLongToast(getContext(),"获取验证码请求成功");
                         phoneHasCode = num;
                         uuid = message.getUuid();
                     }
@@ -428,13 +437,12 @@ public class AddFamilyFragment extends Fragment {
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.cancel();
-                        Toast.makeText(getContext(), "获取验证码请求失败!", Toast.LENGTH_SHORT).show();
-//                        Log.e("FAMILIES", "获取验证码请求失败");
+                        ToastUtil.showLongToast(getContext(),"获取验证码请求失败,请检查网络环境");
                     }
 
                     @Override
                     public void onComplete() {
-
+                        loadingDialog.cancel();
                     }
                 });
 
@@ -549,36 +557,36 @@ public class AddFamilyFragment extends Fragment {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableObserver<ResponseBody>() {
-            @Override
-            public void onNext(ResponseBody responseBody) {
-                try {
-                    loadingDialog.cancel();
-                    Log.e("UP", "添加家庭成员成功:" + responseBody.string());
-                    Toast.makeText(getContext(), "添加家庭成员成功!", Toast.LENGTH_SHORT).show();
-                    CallBackDataAuth.doAuthStateCallBack(true);
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        try {
+                            loadingDialog.cancel();
+                            Log.e("UP", "添加家庭成员成功:" + responseBody.string());
+                            Toast.makeText(getContext(), "添加家庭成员成功!", Toast.LENGTH_SHORT).show();
+                            CallBackDataAuth.doAuthStateCallBack(true);
 //                    Intent intent = new Intent(getContext(), HomePageActivity.class);
 //                    getContext().startActivity(intent);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("STATE","manage");
-                    onButtonPressed(bundle,true);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("STATE", "manage");
+                            onButtonPressed(bundle, true);
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
 
-            @Override
-            public void onError(Throwable e) {
-                loadingDialog.cancel();
-                Toast.makeText(getContext(), "添加家庭成员失败!", Toast.LENGTH_SHORT);
-                Log.e("UP", "添加家庭成员失败:" + e);
-            }
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.cancel();
+                        Toast.makeText(getContext(), "添加家庭成员失败!", Toast.LENGTH_SHORT);
+                        Log.e("UP", "添加家庭成员失败:" + e);
+                    }
 
-            @Override
-            public void onComplete() {
+                    @Override
+                    public void onComplete() {
 
-            }
-        });
+                    }
+                });
     }
 
 
@@ -610,6 +618,28 @@ public class AddFamilyFragment extends Fragment {
             return rootView;
         }
 
+    }
+
+    class TimeCount extends CountDownTimer {
+
+        private Button button;
+
+        public TimeCount(long millisInFuture, long countDownInterval, Button button) {
+            super(millisInFuture, countDownInterval);
+            this.button = button;
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            button.setEnabled(false);
+            button.setText(millisUntilFinished / 1000 + "秒");
+        }
+
+        @Override
+        public void onFinish() {
+            button.setEnabled(true);
+            button.setText("获取验证码");
+        }
     }
 
 

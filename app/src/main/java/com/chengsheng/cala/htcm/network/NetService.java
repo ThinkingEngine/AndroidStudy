@@ -144,7 +144,7 @@ public interface NetService {
     Observable<ExamReportDetial> getExamReportDetial(@Url String url, @Header("Authorization") String header);
 
     @GET("api/physical-exam-order/AI")
-    Observable<AssistantList> getAIAssistants(@Header("Authorization") String header,@Query("exclude_closed")String excludeClosed);//智能助理列表.
+    Observable<AssistantList> getAIAssistants(@Header("Authorization") String header,@Query("exclude_closed")String excludeClosed,@Query("page") String page);//智能助理列表.
 
     @GET("api/message/messages/unread")
     Observable<NureadMessage> getUnreadMessageNum(@Header("Authorization") String header);

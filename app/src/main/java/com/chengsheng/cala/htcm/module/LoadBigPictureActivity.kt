@@ -9,6 +9,7 @@ import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.chengsheng.cala.htcm.R
 import com.chengsheng.cala.htcm.base.BaseActivity
+import com.chengsheng.cala.htcm.widget.ShareDialog
 import com.luck.picture.lib.tools.ScreenUtils
 import kotlinx.android.synthetic.main.activity_load_big_picture.*
 
@@ -45,6 +46,32 @@ class LoadBigPictureActivity : BaseActivity() {
         titleBar?.setTitle(title)!!
                 .setFinishClickListener {
                     finish()
+
+                }.setRightClickListener {
+                    ShareDialog()
+                            .build(this)
+                            .showDialog()
+                            .setOnShareListener(object : ShareDialog.OnShareClickListener {
+                                override fun shareToWeChat() {
+                                    showShortToast("shareToWeChat")
+                                }
+
+                                override fun shareToMoment() {
+
+                                }
+
+                                override fun shareToQQ() {
+
+                                }
+
+                                override fun shareToQZone() {
+
+                                }
+
+                                override fun copyLink() {
+
+                                }
+                            })
                 }
 
         Glide.with(this)

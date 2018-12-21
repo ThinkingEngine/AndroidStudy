@@ -34,8 +34,10 @@ import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
 import com.chengsheng.cala.htcm.adapter.ExamItemExpandableListViewAdapter;
 import com.chengsheng.cala.htcm.widget.MyExpandableListView;
+import com.chengsheng.cala.htcm.widget.ShareDialog;
 import com.chengsheng.cala.htcm.widget.TextViewBorder;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.jakewharton.rxbinding2.view.RxView;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagFlowLayout;
 import com.zyao89.view.zloading.ZLoadingDialog;
@@ -122,13 +124,32 @@ public class ComboDetailActivity extends BaseActivity {
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                shareList = new ArrayList<>();
-                shareList.add("朋友圈");
-                shareList.add("微信好友");
-                shareList.add("QQ好友");
-                shareList.add("QQ空间");
-                shareList.add("复制链接");
-                shareSelection();
+                new ShareDialog().build(ComboDetailActivity.this).showDialog().setOnShareListener(new ShareDialog.OnShareClickListener() {
+                    @Override
+                    public void shareToWeChat() {
+
+                    }
+
+                    @Override
+                    public void shareToMoment() {
+
+                    }
+
+                    @Override
+                    public void shareToQQ() {
+
+                    }
+
+                    @Override
+                    public void shareToQZone() {
+
+                    }
+
+                    @Override
+                    public void copyLink() {
+
+                    }
+                });
             }
         });
 
@@ -140,7 +161,9 @@ public class ComboDetailActivity extends BaseActivity {
 //                Intent intent = new Intent(ComboDetailActivity.this, AffirmAppointmentActivity.class);
 //                intent.putExtra("COMBO_ID", id);
 //                startActivity(intent);
-                startActivityWithLoginStatus(new AffirmAppointmentActivity());
+                Bundle bundle = new Bundle();
+                bundle.putString("COMBO_ID",id);
+                startActivityWithLoginStatus(new AffirmAppointmentActivity(),bundle);
             }
         });
     }
@@ -210,11 +233,6 @@ public class ComboDetailActivity extends BaseActivity {
 
         comboNameDetail.setText(datas.getName());
         mainPageImage.setImageURI(datas.getBanner_photo());
-        if (datas.isIs_hot()) {
-            comboHotMark.setVisibility(View.VISIBLE);
-        } else {
-            comboHotMark.setVisibility(View.INVISIBLE);
-        }
         comboHasNum.setText(String.valueOf(datas.getCurrent_sales_num()) + "人已检");
         comboPrice.setText(String.valueOf(datas.getPrice()));
 
@@ -222,54 +240,27 @@ public class ComboDetailActivity extends BaseActivity {
         comboBriefText.setText(datas.getIntro());
         examItemComboNum.setText("(" + datas.getExam_items().size() + ")");
 
-        groupName.setText(organization.getName());
+        groupName.setText(organization.getName());//机构名称
+        groupTel.setText(organization.getContact_telephone());//机构电话
+        groupAddress.setText(organization.getAddress());//机构地址
+
+        comboMarks.setAdapter(new TagAdapter(datas.getPackage_tag()));
+
+        //
+        if (datas.isIs_hot()) {
+            comboHotMark.setVisibility(View.VISIBLE);
+        } else {
+            comboHotMark.setVisibility(View.INVISIBLE);
+        }
+
         if (organization.getQualification().equals("")) {
             groupMark.setVisibility(View.INVISIBLE);
         } else {
             groupMark.setText(organization.getQualification());
         }
-        groupTel.setText(organization.getContact_telephone());
-        groupAddress.setText(organization.getAddress());
-        comboMarks.setAdapter(new TagAdapter(datas.getPackage_tag()));
-    }
-
-    private void shareSelection() {
-        if (dialog == null) {
-            dialog = new Dialog(this, R.style.dialog_bottom);
-            dialogView = LayoutInflater.from(this).inflate(R.layout.share_combo_bg_layout, null);
-            dialog.setContentView(dialogView);
-        }
-
-        Window window = dialog.getWindow();
-        window.setGravity(Gravity.BOTTOM);
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        dialog.show();
-
-
-        GridView gridView = dialogView.findViewById(R.id.share_way);
-        Button dissen = dialogView.findViewById(R.id.share_down);
-
-
-        ta = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 0,
-                Animation.RELATIVE_TO_PARENT, 0,
-                Animation.RELATIVE_TO_PARENT, 1,
-                Animation.RELATIVE_TO_PARENT, 0);
-        ta.setInterpolator(new AccelerateInterpolator());
-        ta.setDuration(200);
-
-
-        dissen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        ShareAdapter adapter = new ShareAdapter();
-        gridView.setAdapter(adapter);
-
 
     }
+
 
     //获取套餐详情.
     private void getComboDetail() {
@@ -291,7 +282,6 @@ public class ComboDetailActivity extends BaseActivity {
                         ExamItemExpandableListViewAdapter adapter = new ExamItemExpandableListViewAdapter(ComboDetailActivity.this, appointmentDetail.getExam_items(),GlobalConstant.COMBO_DETAIL_MARK);
                         examItemComboExpandable.setAdapter(adapter);
                         examItemComboExpandable.setIndicatorBounds(examItemComboExpandable.getWidth() - 140, examItemComboExpandable.getWidth() - 10);
-                        Log.e("TEST", appointmentDetail.toString());
                         loadingDialog.cancel();
                     }
 

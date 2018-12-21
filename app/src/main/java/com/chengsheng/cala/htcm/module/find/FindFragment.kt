@@ -72,7 +72,7 @@ class FindFragment : BaseRefreshFragment<RecommendProProtocol.ItemsBean.Recommen
 
         //专家队伍
         RxView.clicks(tvExpert).subscribe {
-
+            startActivity(DoctorActivity())
         }
 
         //跳转到医疗美容页

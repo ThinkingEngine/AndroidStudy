@@ -25,4 +25,10 @@ interface OrganizationService {
     @GET(API.ORGANIZATION_DETAIL)
     fun getOrganizationDetail(): Observable<Response<Any>>
 
+    /**
+     * 医生
+     */
+    @GET(API.DOCTORS)
+    fun getAllDoctor(): Observable<Response<Any>>
+
 }

@@ -43,4 +43,11 @@ class OrganizationRepository private constructor() {
         return transformProto(RetrofitHelper.getInstance().organizationService.getOrganizationDetail())
     }
 
+    /**
+     * 机构详情
+     */
+    fun getAllDoctor(): Observable<Any>? {
+        return transformProto(RetrofitHelper.getInstance().organizationService.getAllDoctor())
+    }
+
 }

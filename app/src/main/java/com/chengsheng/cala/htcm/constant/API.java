@@ -31,5 +31,7 @@ public class API {
     /* 科室详情 */
     public static final String ORGANIZATION_DETAIL = SERVICE_BASE_URL + "api/organization/depts";
 
+    /* 医生列表 */
+    public static final String DOCTORS = SERVICE_BASE_URL + "api/organization/doctors/enabled";
 
 }

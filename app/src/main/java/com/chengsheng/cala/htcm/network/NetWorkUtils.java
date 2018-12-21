@@ -8,7 +8,6 @@ import com.chengsheng.cala.htcm.constant.GlobalConstant;
 
 public class NetWorkUtils {
 
-
     public static int getNetworkState(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
@@ -24,6 +23,13 @@ public class NetWorkUtils {
         }
 
         return GlobalConstant.NETWORK_NONE;
+    }
+
+    /**
+     * 网络是否连接
+     */
+    public static boolean isNetConnected(Context context) {
+        return getNetworkState(context) != GlobalConstant.NETWORK_NONE;
     }
 
 }

@@ -43,4 +43,11 @@ class OrganizationRepository private constructor() {
         return transformProto(RetrofitHelper.getInstance().organizationService.getOrganizationDetail())
     }
 
+    /**
+     * 所以医生列表
+     */
+    fun getAllDoctor(page: Int): Observable<Any>? {
+        return transformProto(RetrofitHelper.getInstance().organizationService.getAllDoctor(page))
+    }
+
 }

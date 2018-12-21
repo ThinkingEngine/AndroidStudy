@@ -33,10 +33,14 @@ class OrganizationActivity : BaseActivity() {
     }
 
     override fun getData() {
+
+        showLoading()
+
         OrganizationRepository.default?.getOrganization()
                 ?.subscribe({
 
                     organizationAdapter?.setNewData(it.items)
+                    hideLoading()
 
                 }) {
                     showError(it)

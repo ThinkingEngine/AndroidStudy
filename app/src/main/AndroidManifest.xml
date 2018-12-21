@@ -141,6 +141,8 @@
         <activity android:name=".module.find.OrganizationDetailActivity" />
         <!--科室列表-->
         <activity android:name=".module.find.OrganizationActivity" />
+        <!--专家列表-->
+        <activity android:name=".module.find.DoctorActivity" />
 
         <service
             android:name=".model.services.ServiceSMSService"

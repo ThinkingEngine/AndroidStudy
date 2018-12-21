@@ -20,15 +20,15 @@ interface ExamOrderService {
     /**
      *  订单详情
      */
-    @GET(API.USER_EXAM_DETAIL+"{orderID}")
+    @GET(API.USER_EXAM_DETAIL + "{orderID}")
     @Headers("Authorization:true")
     fun getUserExamDetail(@Path("orderID") orderID: String): Observable<Response<UserExamDetail>>
 
     /**
      *  自助登记
      */
-    @POST(API.USER_REGISTER+"{orderID}")
+    @POST(API.USER_REGISTER + "{orderID}")
     @Headers("Authorization:true")
-    fun registration(@Path("orderID")orderID: String):Observable<Response<ResponseBody>>;
+    fun registration(@Path("orderID") orderID: String): Observable<Response<ResponseBody>>;
 
 }

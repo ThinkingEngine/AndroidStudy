@@ -99,9 +99,8 @@ public class MineFragment extends BaseFragment {
         });
 
         //会员卡
-        layoutMember.setOnClickListener(view -> {
-
-        });
+        layoutMember.setOnClickListener(view ->
+                startActivityWithLoginStatus(new MemberCardActivity()));
 
         //优惠券
         layoutCoupon.setOnClickListener(view ->

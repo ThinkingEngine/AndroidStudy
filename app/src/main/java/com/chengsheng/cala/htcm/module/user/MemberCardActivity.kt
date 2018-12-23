@@ -35,6 +35,6 @@ class MemberCardActivity : BaseRefreshActivity<Any>() {
         data = ArrayList()
         data?.add("just")
         data?.add("just")
-        return MemberCardAdapter(data!!)
+        return MemberCardAdapter(this, data!!)
     }
 }

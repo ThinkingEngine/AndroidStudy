@@ -2,6 +2,7 @@ package com.chengsheng.cala.htcm.data.repository
 
 import com.chengsheng.cala.htcm.data.retrofit.RetrofitHelper
 import com.chengsheng.cala.htcm.data.transformProto
+import com.chengsheng.cala.htcm.protocol.DoctorProtocol
 import com.chengsheng.cala.htcm.protocol.OrganizationProtocol
 import io.reactivex.Observable
 
@@ -44,9 +45,9 @@ class OrganizationRepository private constructor() {
     }
 
     /**
-     * 所以医生列表
+     * 医生列表
      */
-    fun getAllDoctor(page: Int): Observable<Any>? {
+    fun getAllDoctor(page: Int): Observable<DoctorProtocol>? {
         return transformProto(RetrofitHelper.getInstance().organizationService.getAllDoctor(page))
     }
 

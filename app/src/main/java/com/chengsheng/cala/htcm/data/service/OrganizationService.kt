@@ -1,6 +1,7 @@
 package com.chengsheng.cala.htcm.data.service
 
 import com.chengsheng.cala.htcm.constant.API
+import com.chengsheng.cala.htcm.protocol.DoctorProtocol
 import com.chengsheng.cala.htcm.protocol.OrganizationProtocol
 import io.reactivex.Observable
 import retrofit2.Response
@@ -30,6 +31,6 @@ interface OrganizationService {
      * 医生
      */
     @GET(API.DOCTORS)
-    fun getAllDoctor(@Query("page") page: Int): Observable<Response<Any>>
+    fun getAllDoctor(@Query("page") page: Int): Observable<Response<DoctorProtocol>>
 
 }

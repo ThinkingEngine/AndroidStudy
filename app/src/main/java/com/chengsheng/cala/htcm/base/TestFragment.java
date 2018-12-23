@@ -6,7 +6,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.adapter.FeatureServiceAdapter;
 import com.chengsheng.cala.htcm.data.repository.ProjectRepository;
-import com.chengsheng.cala.htcm.protocol.Amount;
 import com.chengsheng.cala.htcm.protocol.RecommendProProtocol;
 
 import org.jetbrains.annotations.Nullable;
@@ -22,15 +21,6 @@ import io.reactivex.observers.DefaultObserver;
  */
 public class TestFragment extends BaseRefreshFragment<RecommendProProtocol.ItemsBean.RecommendBean> {
 
-    @Override
-    public int getLayout() {
-        return R.layout.activity_test;
-    }
-
-    @Override
-    public void initViews(@Nullable View view) {
-
-    }
 
     @Override
     public void getData(int page) {
@@ -57,5 +47,15 @@ public class TestFragment extends BaseRefreshFragment<RecommendProProtocol.Items
     @Override
     public BaseQuickAdapter<RecommendProProtocol.ItemsBean.RecommendBean> getCurrentAdapter() {
         return new FeatureServiceAdapter(new ArrayList());
+    }
+
+    @Override
+    public void initViews(View view) {
+
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_test;
     }
 }

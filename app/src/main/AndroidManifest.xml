@@ -145,6 +145,8 @@
         <activity android:name=".module.find.DoctorActivity" />
         <!--优惠券-->
         <activity android:name=".module.user.CouponActivity" />
+        <!--会员卡-->
+        <activity android:name=".module.user.MemberCardActivity" />
 
         <service
             android:name=".model.services.ServiceSMSService"

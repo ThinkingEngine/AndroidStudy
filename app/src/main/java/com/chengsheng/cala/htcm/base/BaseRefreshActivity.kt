@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chengsheng.cala.htcm.R
 import com.chengsheng.cala.htcm.network.NetWorkUtils
@@ -72,7 +73,7 @@ abstract class BaseRefreshActivity<T> : BaseActivity(), OnLoadmoreListener {
             smartRefreshLayout?.autoRefresh(AUTO_REFRESH_DELAY_TIME)
         } else {
             //网络未连接
-            adapter?.emptyView = getEmptyView(R.mipmap.empty_no_net)
+            adapter?.emptyView = getEmptyView(R.mipmap.empty_no_net, "网络未连接")
         }
 
         smartRefreshLayout?.setOnRefreshListener {
@@ -88,23 +89,32 @@ abstract class BaseRefreshActivity<T> : BaseActivity(), OnLoadmoreListener {
     }
 
     /**
-     * 填充列表数据(空状态页面背景自定义颜色)
+     * 填充列表数据
      * @param data  列表数据
      */
     protected fun fillData(@Nullable data: List<T>?) {
-        setData(data, 0)
+        setData(data, 0, "")
     }
 
     /**
-     * 填充列表数据(空状态页面背景使用默认颜色)
+     * 填充列表数据
      * @param data  列表数据
      * @param
      */
     protected fun fillData(@Nullable data: List<T>?, emptyImage: Int) {
-        setData(data, emptyImage)
+        setData(data, emptyImage, "")
     }
 
-    private fun setData(@Nullable data: List<T>?, emptyImage: Int) {
+    /**
+     * 填充列表数据
+     * @param data  列表数据
+     * @param
+     */
+    protected fun fillData(@Nullable data: List<T>?, emptyImage: Int, emptyStr: String) {
+        setData(data, emptyImage, emptyStr)
+    }
+
+    private fun setData(@Nullable data: List<T>?, emptyImage: Int, emptyStr: String) {
         smartRefreshLayout?.finishRefresh()
         smartRefreshLayout?.finishLoadmore()
 
@@ -113,9 +123,9 @@ abstract class BaseRefreshActivity<T> : BaseActivity(), OnLoadmoreListener {
                 adapter?.data?.clear()
                 adapter?.notifyDataSetChanged()
                 if (!NetWorkUtils.isNetConnected(this)) {
-                    adapter?.emptyView = getEmptyView(R.mipmap.empty_no_net)
+                    adapter?.emptyView = getEmptyView(R.mipmap.empty_no_net, "网络未连接")
                 } else {
-                    adapter?.emptyView = getEmptyView(emptyImage)
+                    adapter?.emptyView = getEmptyView(emptyImage, emptyStr)
                 }
             } else {
                 smartRefreshLayout?.isLoadmoreFinished = true
@@ -137,12 +147,15 @@ abstract class BaseRefreshActivity<T> : BaseActivity(), OnLoadmoreListener {
 
     /**
      * 加载空页面
-     * @param emptyImage 空状态页面图片资源
+     * @param emptyImage 空状态图片资源
+     * @param emptyStr 空状态提示文字
      */
-    private fun getEmptyView(emptyImage: Int): View {
+    private fun getEmptyView(emptyImage: Int, emptyStr: String): View {
         val emptyView = LayoutInflater.from(this).inflate(R.layout.layout_list_empty, recyclerView, false)
         val ivEmptyDrawable = emptyView.findViewById<ImageView>(R.id.ivEmptyDrawable)
+        val tvEmptyStr = emptyView.findViewById<TextView>(R.id.tvEmptyStr)
         ivEmptyDrawable.setImageResource(if (emptyImage == 0) R.mipmap.empty_normal else emptyImage)
+        tvEmptyStr.text = if (emptyStr.isEmpty()) "没有数据" else emptyStr
         return emptyView
     }
 }

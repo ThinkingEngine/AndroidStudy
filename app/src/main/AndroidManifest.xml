@@ -143,6 +143,8 @@
         <activity android:name=".module.find.OrganizationActivity" />
         <!--专家列表-->
         <activity android:name=".module.find.DoctorActivity" />
+        <!--优惠券-->
+        <activity android:name=".module.user.CouponActivity" />
 
         <service
             android:name=".model.services.ServiceSMSService"

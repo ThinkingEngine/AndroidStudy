@@ -24,26 +24,7 @@ import kotlinx.android.synthetic.main.merge_find_medical_beauty.*
 @SuppressLint("CheckResult")
 class FindFragment : BaseRefreshFragment<RecommendProProtocol.ItemsBean.RecommendBean>() {
 
-    private var tempPicUrl = "http://api.peis-mobile.zz-tech.com.cn:85/storage/banner/5159f338-5349-40f0-beaf-fabb4cce2281.png"
-
-    //医疗美容Adapter
-    private var healthBeautyAdapter: HealthBeautyAdapter? = null
-    //医疗美容
-    private var healthBeautyData: ArrayList<RecommendProProtocol.ItemsBean.RecommendBean>? = null
-    //特色服务
-    private var featureData: ArrayList<RecommendProProtocol.ItemsBean.RecommendBean>? = null
-
-    companion object {
-        fun newInstance(): FindFragment {
-            return FindFragment()
-        }
-    }
-
-    override fun getLayout(): Int {
-        return R.layout.fragment_find
-    }
-
-    override fun initViews(view: View?) {
+    override fun initViews(view: View) {
         healthBeautyData = ArrayList()
         featureData = ArrayList()
 
@@ -86,6 +67,25 @@ class FindFragment : BaseRefreshFragment<RecommendProProtocol.ItemsBean.Recommen
                 .subscribe {
                     startActivity(FeatureServiceActivity())
                 }
+    }
+
+    override fun getLayoutId(): Int {
+        return R.layout.fragment_find
+    }
+
+    private var tempPicUrl = "http://api.peis-mobile.zz-tech.com.cn:85/storage/banner/5159f338-5349-40f0-beaf-fabb4cce2281.png"
+
+    //医疗美容Adapter
+    private var healthBeautyAdapter: HealthBeautyAdapter? = null
+    //医疗美容
+    private var healthBeautyData: ArrayList<RecommendProProtocol.ItemsBean.RecommendBean>? = null
+    //特色服务
+    private var featureData: ArrayList<RecommendProProtocol.ItemsBean.RecommendBean>? = null
+
+    companion object {
+        fun newInstance(): FindFragment {
+            return FindFragment()
+        }
     }
 
     override fun getData(page: Int) {

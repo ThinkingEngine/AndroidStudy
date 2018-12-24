@@ -1,7 +1,6 @@
 package com.chengsheng.cala.htcm.module.activitys;
 
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.chengsheng.cala.htcm.base.BaseActivity;
@@ -14,7 +13,7 @@ import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
 import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
 import com.chengsheng.cala.htcm.utils.UpdateStateInterface;
-import com.chengsheng.cala.htcm.adapter.AIAssistantSubRecyclerView;
+import com.chengsheng.cala.htcm.adapter.AIAssistantSubAdapter;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.zyao89.view.zloading.ZLoadingDialog;
 import com.zyao89.view.zloading.Z_TYPE;
@@ -33,7 +32,7 @@ public class AIAssistantActivity extends BaseActivity implements UpdateStateInte
     private TextView subhead;
     private XRecyclerView aiAssistantList;
 
-    private AIAssistantSubRecyclerView adapter;
+    private AIAssistantSubAdapter adapter;
     private List<AssistantItem> dataCollection;
 
     private HTCMApp app;
@@ -106,7 +105,7 @@ public class AIAssistantActivity extends BaseActivity implements UpdateStateInte
 
                         if (!addMore) {
                             dataCollection = assistantList.getItems();
-                            adapter = new AIAssistantSubRecyclerView(AIAssistantActivity.this, dataCollection);
+                            adapter = new AIAssistantSubAdapter(AIAssistantActivity.this, dataCollection);
                             aiAssistantList.setAdapter(adapter);
                         } else {
                             if (assistantList.getItems().isEmpty()) {
@@ -130,7 +129,7 @@ public class AIAssistantActivity extends BaseActivity implements UpdateStateInte
                     @Override
                     public void onError(Throwable e) {
                         List<AssistantItem> noData = new ArrayList<>();
-                        adapter = new AIAssistantSubRecyclerView(AIAssistantActivity.this, noData);
+                        adapter = new AIAssistantSubAdapter(AIAssistantActivity.this, noData);
                         aiAssistantList.setAdapter(adapter);
                         if (loading) {
                             loadingDialog.cancel();

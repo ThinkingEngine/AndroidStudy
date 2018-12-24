@@ -15,7 +15,7 @@ import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
 import com.chengsheng.cala.htcm.utils.FuncUtils;
 import com.chengsheng.cala.htcm.utils.QRCodeUtil;
-import com.chengsheng.cala.htcm.adapter.BeforeExamRecyclerViewAdapter;
+import com.chengsheng.cala.htcm.adapter.BeforeExamAdapter;
 import com.chengsheng.cala.htcm.widget.MyRecyclerView;
 import com.zyao89.view.zloading.ZLoadingDialog;
 import com.zyao89.view.zloading.Z_TYPE;
@@ -83,7 +83,7 @@ public class BeforeExamActivity extends BaseActivity {
     }
 
     private void setViews(BeforeExam beforeExam) {
-        BeforeExamRecyclerViewAdapter adapter = new BeforeExamRecyclerViewAdapter(this, beforeExam.getItems());
+        BeforeExamAdapter adapter = new BeforeExamAdapter(this, beforeExam.getItems());
         beforeExamItems.setNestedScrollingEnabled(false);
         beforeExamItems.setLayoutManager(new LinearLayoutManager(this));
         beforeExamItems.setAdapter(adapter);

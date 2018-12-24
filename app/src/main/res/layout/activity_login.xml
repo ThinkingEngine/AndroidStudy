@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite"
-    tools:context=".module.account.LoginActivity">
+    android:background="@color/colorWhite">
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
@@ -15,8 +13,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="61dp"
+            android:layout_centerInParent="true"
             android:src="@mipmap/denglulogo" />
 
         <ImageView
@@ -25,7 +22,6 @@
             android:layout_height="49dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-
             android:padding="14dp"
             android:src="@mipmap/dengluguanbi" />
 
@@ -44,9 +40,8 @@
             android:textSize="16sp" />
     </RelativeLayout>
 
-
     <EditText
-        android:id="@+id/cellphone_edittext"
+        android:id="@+id/et_login_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/relativeLayout"
@@ -54,7 +49,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="24dp"
-        android:background="@drawable/has_bottom_line_no_off_bg"
+        android:background="@null"
         android:hint="@string/cellphone_number"
         android:inputType="number"
         android:maxLength="11"
@@ -62,26 +57,31 @@
         android:textColor="@color/colorText"
         android:textSize="16sp" />
 
+    <View
+        style="@style/horizontalLineStyle"
+        android:layout_below="@id/et_login_account"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp" />
+
     <RelativeLayout
         android:id="@+id/container_f"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/cellphone_edittext"
+        android:layout_below="@id/et_login_account"
         android:layout_marginStart="24dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="24dp"
-        android:background="@drawable/has_bottom_line_no_off_bg"
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/password_edittext"
+            android:id="@+id/et_login_password"
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="64dp"
             android:layout_marginBottom="16dp"
-            android:background="@color/colorWhite"
+            android:background="@null"
             android:hint="@string/passwd"
             android:textColor="@color/colorText"
             android:textSize="16sp" />
@@ -106,14 +106,21 @@
 
     </RelativeLayout>
 
+    <View
+        style="@style/horizontalLineStyle"
+        android:layout_below="@id/container_f"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp" />
 
     <Button
         android:id="@+id/login_button"
-        android:layout_width="311dp"
-        android:layout_height="44dp"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
         android:layout_below="@id/container_f"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="@dimen/dp_30"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="@dimen/dp_30"
         android:background="@drawable/login_button_bg"
         android:text="@string/login"
         android:textColor="@color/colorWhite"
@@ -126,7 +133,7 @@
         android:layout_below="@id/login_button"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="@string/loss_passwd"
+        android:text="忘记密码?"
         android:textColor="@color/colorPrimary"
         android:textSize="16sp" />
 

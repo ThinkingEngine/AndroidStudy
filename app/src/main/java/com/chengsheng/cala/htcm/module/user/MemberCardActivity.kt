@@ -5,6 +5,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chengsheng.cala.htcm.R
 import com.chengsheng.cala.htcm.adapter.MemberCardAdapter
 import com.chengsheng.cala.htcm.base.BaseRefreshActivity
+import com.jakewharton.rxbinding2.view.RxView
 import kotlinx.android.synthetic.main.activity_member_card.*
 
 /**
@@ -24,6 +25,11 @@ class MemberCardActivity : BaseRefreshActivity<Any>() {
     override fun initViews() {
         titleBar?.setFinishClickListener {
             finish()
+        }
+
+        //添加卡
+        RxView.clicks(layoutAddCard).subscribe {
+            startActivity(AddMemCardActivity())
         }
     }
 

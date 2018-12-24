@@ -132,4 +132,7 @@ class RetrofitHelper private constructor() {
     //机构
     var organizationService = httpCreate(OrganizationService::class.java)
 
+    //套餐
+    var comboService = httpCreate()
+
 }

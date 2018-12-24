@@ -152,59 +152,53 @@ public class ConditionPopupWindow extends PopupWindow {
             }
 
 
-            selectItemBg.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (selectMark.isSelected()) {
-                        selectMark.setSelected(false);
-                        if (position == 0) {
-                            for (int i = 0; i < datas.size(); i++) {
-                                datas.get(i).put("SELECT", "false");
-                                selectedData.clear();
-                            }
-                            notifyDataSetChanged();
-                        } else if (position != 0 && position < datas.size()) {
-                            if (datas.get(0).get("SELECT").equals("true")) {
-                                datas.get(0).put("SELECT", "false");
-                                datas.get(position).put("SELECT", "false");
-                                notifyDataSetChanged();
-                            }else{
-                                datas.get(position).put("SELECT", "false");
-                                notifyDataSetChanged();
-                            }
-                            selectedData.remove(datas.get(position));
+            selectItemBg.setOnClickListener(v -> {
+                if (selectMark.isSelected()) {
+                    selectMark.setSelected(false);
+                    if (position == 0) {
+                        for (int i = 0; i < datas.size(); i++) {
+                            datas.get(i).put("SELECT", "false");
+                            selectedData.clear();
                         }
-                    } else {
-                        selectMark.setSelected(true);
-                        if (position == 0) {
+                        notifyDataSetChanged();
+                    } else if (position != 0 && position < datas.size()) {
+                        if (datas.get(0).get("SELECT").equals("true")) {
+                            datas.get(0).put("SELECT", "false");
+                            datas.get(position).put("SELECT", "false");
+                            notifyDataSetChanged();
+                        }else{
+                            datas.get(position).put("SELECT", "false");
+                            notifyDataSetChanged();
+                        }
+                        selectedData.remove(datas.get(position));
+                    }
+                } else {
+                    selectMark.setSelected(true);
+                    if (position == 0) {
+                        for (int i = 0; i < datas.size(); i++) {
+                            datas.get(i).put("SELECT", "true");
+                            selectedData.clear();
+                            selectedData.addAll(datas);
+                        }
+                        notifyDataSetChanged();
+                    } else if (position != 0 && position < datas.size()) {
+                        selectedData.add(datas.get(position));
+                        if (selectedData.size() == (datas.size() - 1)) {
                             for (int i = 0; i < datas.size(); i++) {
                                 datas.get(i).put("SELECT", "true");
-                                selectedData.clear();
-                                selectedData.addAll(datas);
                             }
                             notifyDataSetChanged();
-                        } else if (position != 0 && position < datas.size()) {
-                            selectedData.add(datas.get(position));
-                            if (selectedData.size() == (datas.size() - 1)) {
-                                for (int i = 0; i < datas.size(); i++) {
-                                    datas.get(i).put("SELECT", "true");
-                                }
-                                notifyDataSetChanged();
-                            }
                         }
                     }
-
-
                 }
+
+
             });
 
-            okButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    CallBackDataAuth.doUpdateConditionInterface(selectedData, true);
-                    selectedData.clear();
-                    dismiss();
-                }
+            okButton.setOnClickListener(v -> {
+                CallBackDataAuth.doUpdateConditionInterface(selectedData, true);
+                selectedData.clear();
+                dismiss();
             });
 
 

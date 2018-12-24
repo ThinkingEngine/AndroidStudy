@@ -1,6 +1,5 @@
 package com.chengsheng.cala.htcm.module.activitys;
 
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -56,12 +55,7 @@ public class SearchActivity extends BaseActivity {
             }
         }
 
-        clearSearchBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                globalSearchBox.setText("");
-            }
-        });
+        clearSearchBox.setOnClickListener(v -> globalSearchBox.setText(""));
 
 
         globalSearchBox.addTextChangedListener(new TextWatcher() {
@@ -93,20 +87,12 @@ public class SearchActivity extends BaseActivity {
         searchRecord.setLayoutManager(new LinearLayoutManager(this));
         searchRecord.setAdapter(new RecyclerAdapter());
 
-        searchMarks.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
-            @Override
-            public boolean onTagClick(View view, int position, FlowLayout parent) {
-                Toast.makeText(SearchActivity.this, " " + datas.get(position), Toast.LENGTH_SHORT).show();
-                return true;
-            }
+        searchMarks.setOnTagClickListener((view, position, parent) -> {
+            Toast.makeText(SearchActivity.this, " " + datas.get(position), Toast.LENGTH_SHORT).show();
+            return true;
         });
 
-        backText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        backText.setOnClickListener(v -> finish());
 
     }
 

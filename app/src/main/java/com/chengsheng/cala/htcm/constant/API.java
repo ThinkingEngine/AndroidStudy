@@ -34,4 +34,7 @@ public class API {
     /* 医生列表 */
     public static final String DOCTORS = SERVICE_BASE_URL + "api/organization/doctors/enabled";
 
+    /*套餐列表启用的*/
+    public static final String EXAM_PACKAGE = SERVICE_BASE_URL + "api/physical-exam-item/exam-packages/enable";
+
 }

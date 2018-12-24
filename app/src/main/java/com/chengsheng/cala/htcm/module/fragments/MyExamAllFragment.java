@@ -48,7 +48,6 @@ public class MyExamAllFragment extends Fragment implements UpdateStateInterface,
     private Retrofit retrofit;
 
     private int currentPage = 1;
-    private int totlaPage = 0;
     private List<ExamItems> dataCollect;
     private MyExamRecyclerAdapter adapter;
 
@@ -173,7 +172,7 @@ public class MyExamAllFragment extends Fragment implements UpdateStateInterface,
                 Log.e("TAG", "获取数据为:" + data.get("DATA"));
             }
             customerIds = sb.toString();
-//            updateData(true);
+            updateData(true,currentMode,customerIds,false);
             Log.e("TAG", "获取数据测试:" + sb.toString());
         }
     }
@@ -192,6 +191,7 @@ public class MyExamAllFragment extends Fragment implements UpdateStateInterface,
         }else{
             currentPage = 1;
         }
+
         if (loading) {
             loadingDialog.show();
         }
@@ -203,7 +203,7 @@ public class MyExamAllFragment extends Fragment implements UpdateStateInterface,
                 .subscribe(new DisposableObserver<ExamItemsList>() {
                     @Override
                     public void onNext(ExamItemsList examItemsList) {
-
+                        Log.e("TAG","请求测试："+"onNext");
                         if (loading) {
                             loadingDialog.cancel();
                         } else {
@@ -233,6 +233,7 @@ public class MyExamAllFragment extends Fragment implements UpdateStateInterface,
 
                     @Override
                     public void onError(Throwable e) {
+                        Log.e("TAG","请求测试："+"onError:"+e.toString());
                         if (loading) {
                             loadingDialog.cancel();
                         } else {

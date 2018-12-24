@@ -45,7 +45,7 @@ public class BarADActivity extends BaseActivity {
 
         childTitle.setOnClickListener(v -> {
 
-            new ShareDialog().showDialog().setOnShareListener(new ShareDialog.OnShareClickListener() {
+            new ShareDialog().build(this).showDialog().setOnShareListener(new ShareDialog.OnShareClickListener() {
                 @Override
                 public void shareToWeChat() {
 

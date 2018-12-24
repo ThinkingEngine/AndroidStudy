@@ -38,7 +38,6 @@
             android:layout_marginTop="14dp"
             android:layout_marginBottom="14dp"
             android:layout_below="@id/exam_notes_combo_coatiner"
-            android:text="注意事项.................."
             android:textSize="14sp"
             android:textColor="@color/colorSecText"/>
 

@@ -88,22 +88,19 @@ public class MyExamRecyclerAdapter extends RecyclerView.Adapter<MyExamRecyclerAd
                 viewHolder.examItemCode.setImageResource(R.mipmap.erweima);
             }
 
-            viewHolder.examItemCode.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (data.getExam_status().equals(GlobalConstant.CHECKING)) {
-                        Intent intent = new Intent(context, BarCodeActivity.class);
-                        context.startActivity(intent);
-                    } else {
-                        Intent intent = new Intent(context, UserCardActivity.class);
-                        FamiliesListItem familiesListItem = new FamiliesListItem();
-                        familiesListItem.setFullname(data.getCustomer().getName());
-                        familiesListItem.setHealth_card_no(data.getCustomer().getReservation_or_registration().getId());
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("FAMILIES_INFO", familiesListItem);
-                        intent.putExtras(bundle);
-                        context.startActivity(intent);
-                    }
+            viewHolder.examItemCode.setOnClickListener(v -> {
+                if (data.getExam_status().equals(GlobalConstant.CHECKING)) {
+                    Intent intent = new Intent(context, BarCodeActivity.class);
+                    context.startActivity(intent);
+                } else {
+                    Intent intent = new Intent(context, UserCardActivity.class);
+                    FamiliesListItem familiesListItem = new FamiliesListItem();
+                    familiesListItem.setFullname(data.getCustomer().getName());
+                    familiesListItem.setHealth_card_no(data.getCustomer().getReservation_or_registration().getId());
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("FAMILIES_INFO", familiesListItem);
+                    intent.putExtras(bundle);
+                    context.startActivity(intent);
                 }
             });
 
@@ -117,27 +114,19 @@ public class MyExamRecyclerAdapter extends RecyclerView.Adapter<MyExamRecyclerAd
             viewHolder.appointmentNum.setText(data.getCustomer().getReservation_or_registration().getId());
 
 
-            viewHolder.examInfo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (data.getExam_status().equals(GlobalConstant.RESERVATION)) {
-                        Intent intent = new Intent(context, BeforeExamActivity.class);
-                        intent.putExtra("EXAM_ID", String.valueOf(data.getId()));
-                        context.startActivity(intent);
-                    } else if (data.getExam_status().equals(GlobalConstant.CHECKING)) {
-                        Intent intent = new Intent(context, IntelligentCheckActivity.class);
-                        intent.putExtra("EXAM_ID", String.valueOf(data.getId()));
-                        context.startActivity(intent);
-                    }
+            viewHolder.examInfo.setOnClickListener(v -> {
+                if (data.getExam_status().equals(GlobalConstant.RESERVATION)) {
+                    Intent intent = new Intent(context, BeforeExamActivity.class);
+                    intent.putExtra("EXAM_ID", String.valueOf(data.getId()));
+                    context.startActivity(intent);
+                } else if (data.getExam_status().equals(GlobalConstant.CHECKING)) {
+                    Intent intent = new Intent(context, IntelligentCheckActivity.class);
+                    intent.putExtra("EXAM_ID", String.valueOf(data.getId()));
+                    context.startActivity(intent);
                 }
             });
         }else{
-            viewHolder.noContents.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    CallBackDataAuth.doUpdateStateInterface(true);
-                }
-            });
+            viewHolder.noContents.setOnClickListener(v -> CallBackDataAuth.doUpdateStateInterface(true));
         }
 
     }

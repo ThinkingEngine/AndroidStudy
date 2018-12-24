@@ -159,6 +159,8 @@
         <activity android:name=".module.user.card.FindCardPwdAStep2Activity" />
         <!--交易记录-->
         <activity android:name=".module.user.card.TradeDetailActivity" />
+        <!--充值-->
+        <activity android:name=".module.user.card.DepositActivity" />
 
         <service
             android:name=".model.services.ServiceSMSService"

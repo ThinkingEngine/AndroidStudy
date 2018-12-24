@@ -57,14 +57,14 @@ public class GesturesUnlockActivity extends BaseActivity {
     }
 
     private void initViews() {
-        titleText = (TextView) findViewById(R.id.title_header_gesture_unlock).findViewById(R.id.menu_bar_title);
-        noProtectIcon = (ImageView) findViewById(R.id.no_protect_icon);
-        startProtectIcon = (ImageView) findViewById(R.id.start_protect_icon);
-        inappProtectIcon = (ImageView) findViewById(R.id.inapp_protect_icon);
-        noProtectMark = (ImageView) findViewById(R.id.no_protect_mark);
-        startProtectMark = (ImageView) findViewById(R.id.start_protect_mark);
-        inappProtectMark = (ImageView) findViewById(R.id.inapp_protect_mark);
-        settingGesturesCodeButton = (Button) findViewById(R.id.setting_gestures_code_button);
+        titleText = findViewById(R.id.title_header_gesture_unlock).findViewById(R.id.menu_bar_title);
+        noProtectIcon = findViewById(R.id.no_protect_icon);
+        startProtectIcon = findViewById(R.id.start_protect_icon);
+        inappProtectIcon = findViewById(R.id.inapp_protect_icon);
+        noProtectMark = findViewById(R.id.no_protect_mark);
+        startProtectMark = findViewById(R.id.start_protect_mark);
+        inappProtectMark = findViewById(R.id.inapp_protect_mark);
+        settingGesturesCodeButton = findViewById(R.id.setting_gestures_code_button);
 
     }
 

@@ -9,16 +9,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.manager.FrescoManager;
-import com.chengsheng.cala.htcm.protocol.articleModel.RecommendedItem;
 import com.chengsheng.cala.htcm.module.activitys.NewsDetailActivity;
+import com.chengsheng.cala.htcm.protocol.articleModel.RecommendedItem;
 import com.facebook.drawee.view.SimpleDraweeView;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +61,7 @@ public class FooterAdapter extends RecyclerView.Adapter<FooterAdapter.NewsViewHo
             if (haveHeaderView()) position--;
             final RecommendedItem data = datas.get(position);
 
-            FrescoManager.loadRoundImage(mContext,holder.newsHeaderIcon,data.getCover_photo_path(),4f);
+            FrescoManager.loadRoundImage(mContext, holder.newsHeaderIcon, data.getCover_photo_path(), 4f);
 //            holder.newsHeaderIcon.setImageURI(data.getCover_photo_path());
             holder.newsTitle.setText(data.getTitle());
             holder.browseNum.setText(String.valueOf(data.getCurrent_read_num()));
@@ -75,9 +73,9 @@ public class FooterAdapter extends RecyclerView.Adapter<FooterAdapter.NewsViewHo
             holder.commendNewsItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(mContext,NewsDetailActivity.class);
+                    Intent intent = new Intent(mContext, NewsDetailActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("NEWS_DETAIL",data);
+                    bundle.putSerializable("NEWS_DETAIL", data);
                     intent.putExtras(bundle);
                     mContext.startActivity(intent);
                 }
@@ -181,15 +179,15 @@ public class FooterAdapter extends RecyclerView.Adapter<FooterAdapter.NewsViewHo
         return haveFooterView() && position == getItemCount() - 1;
     }
 
-    public class FooterHolder extends RecyclerView.ViewHolder {
-        TextView recyclerFooter;
-
-        public FooterHolder(@NonNull View itemView) {
-            super(itemView);
-
-            recyclerFooter = itemView.findViewById(R.id.recycler_footer);
-        }
-    }
+//    public class FooterHolder extends RecyclerView.ViewHolder {
+//        TextView recyclerFooter;
+//
+//        public FooterHolder(@NonNull View itemView) {
+//            super(itemView);
+//
+//            recyclerFooter = itemView.findViewById(R.id.recycler_footer);
+//        }
+//    }
 
 
     public class NewsViewHolder extends RecyclerView.ViewHolder {

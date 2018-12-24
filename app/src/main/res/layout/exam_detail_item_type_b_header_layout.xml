@@ -47,7 +47,6 @@
             android:background="@color/colorLineA" />
 
         <RelativeLayout
-            android:id="@+id/line14"
             android:layout_width="154dp"
             android:layout_height="4dp"
             android:layout_centerHorizontal="true"

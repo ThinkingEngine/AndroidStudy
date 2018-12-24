@@ -36,7 +36,6 @@
             android:layout_marginRight="15dp"/>
 
         <TextView
-            android:id="@+id/mark_has_gestures"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"

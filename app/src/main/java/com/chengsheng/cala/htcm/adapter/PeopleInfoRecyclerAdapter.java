@@ -59,10 +59,10 @@ public class PeopleInfoRecyclerAdapter extends RecyclerView.Adapter<PeopleInfoRe
         public MyViewHoleder(@NonNull View itemView) {
             super(itemView);
 
-            icon = (ImageView) itemView.findViewById(R.id.people_has_info_icon);
-            intoButton = (ImageView) itemView.findViewById(R.id.into_people_has_info_detail);
-            typeName = (TextView) itemView.findViewById(R.id.people_has_info_type);
-            divider = (LinearLayout) itemView.findViewById(R.id.people_has_info_divider_up);
+            icon = itemView.findViewById(R.id.people_has_info_icon);
+            intoButton = itemView.findViewById(R.id.into_people_has_info_detail);
+            typeName = itemView.findViewById(R.id.people_has_info_type);
+            divider = itemView.findViewById(R.id.people_has_info_divider_up);
         }
     }
 }

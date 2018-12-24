@@ -302,7 +302,6 @@
                     android:layout_marginRight="14dp"
                     android:textStyle="bold"/>
                 <TextView
-                    android:id="@+id/waiting_pay_money_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="待付金额:"

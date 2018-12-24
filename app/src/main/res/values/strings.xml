@@ -18,12 +18,6 @@
     <string name="sms_code">短信验证</string>
     <string name="next">下一步</string>
     <string name="is_ok">确认</string>
-    <string name="main_page">首页</string>
-    <string name="health">健康</string>
-    <string name="find">发现</string>
-    <string name="mine">我的</string>
-    <string name="medical_exam_order">体检订单</string>
-    <string name="serivce_order">服务订单</string>
     <string name="security_settings">安全设置</string>
     <string name="common_use">通用</string>
     <string name="share">分享给好友</string>

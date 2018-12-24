@@ -9,27 +9,11 @@
         <item name="android:windowBackground">@mipmap/launch_page</item>
     </style>
 
-    <style name="aert_dialog" parent="android:style/Theme.Dialog">
-        <item name="android:windowFrame">@null</item><!--边框-->
-        <item name="android:windowIsFloating">true</item><!--是否浮现在activity之上-->
-        <item name="android:windowIsTranslucent">true</item><!--半透明-->
-        <item name="android:windowNoTitle">true</item><!--无标题-->
-        <item name="android:windowBackground">@android:color/transparent</item><!--背景透明-->
-        <item name="android:backgroundDimEnabled">false</item><!--模糊-->
-    </style>
-
     <style name="normal_title_a">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/colorText</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_marginLeft">6dp</item>
-    </style>
-
-    <style name="normal_content_a">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/colorThrText</item>
-        <item name="android:layout_marginLeft">22dp</item>
-        <item name="android:layout_marginTop">8dp</item>
     </style>
 
     <style name="dialog_bottom" parent="@android:style/Theme.Dialog">

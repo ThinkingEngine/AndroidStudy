@@ -41,7 +41,7 @@ public class ExamReportRecyclerAdapter extends RecyclerView.Adapter<ExamReportRe
         app = HTCMApp.create(context);
 
         if (listener instanceof ReportSeclectListener) {
-            mListener = (ReportSeclectListener) listener;
+            mListener = listener;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");

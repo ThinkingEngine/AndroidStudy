@@ -63,7 +63,6 @@
                         android:src="@mipmap/shouye_tijianbaogao" />
 
                     <TextView
-                        android:id="@+id/exam_report_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/exam_report_mark"
@@ -83,7 +82,6 @@
                         android:src="@mipmap/shouye_yuyuetijian" />
 
                     <TextView
-                        android:id="@+id/appointment_exam_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/appointment_exam_mark"
@@ -103,7 +101,6 @@
                         android:src="@mipmap/shouye_wodetijian" />
 
                     <TextView
-                        android:id="@+id/my_exam_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/my_exam_mark"

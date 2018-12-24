@@ -11,7 +11,6 @@
         android:id="@+id/title_header_my_devices"
         layout="@layout/title_bar_type_two_layout"/>
     <Button
-        android:id="@+id/immediate_effect_button"
         android:layout_width="match_parent"
         android:layout_height="49dp"
         android:background="@drawable/title_bar_back_type_one"
@@ -28,7 +27,6 @@
         android:src="@mipmap/shebei_kong"
         android:layout_marginTop="103dp"/>
     <TextView
-        android:id="@+id/connect_device_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/null_device_icon"

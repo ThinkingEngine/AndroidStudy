@@ -31,9 +31,7 @@
             <include
                 android:id="@+id/affirm_appointment_model_b"
                 layout="@layout/affirm_appointment_model_b_layout"/>
-            <include
-                android:id="@+id/affirm_appointment_model_d"
-                layout="@layout/combo_detail_model_f_layout"/>
+            <include layout="@layout/combo_detail_model_f_layout"/>
         </LinearLayout>
 
     </ScrollView>

@@ -29,14 +29,14 @@ public class ShowImageAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        ((ViewPager) container).addView(views.get(position));
+        container.addView(views.get(position));
     }
 
 
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        ((ViewPager) container).addView(views.get(position));
+        container.addView(views.get(position));
         return views.get(position);
     }
 }

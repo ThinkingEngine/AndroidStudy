@@ -36,7 +36,7 @@ public class HeaderScrollView extends ScrollView {
     }
 
     public interface StopCall{
-        public void stopSlide(boolean isStop);
+        void stopSlide(boolean isStop);
     }
 
     private int dp2px(int dp){

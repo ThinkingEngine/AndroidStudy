@@ -33,7 +33,6 @@
             android:textSize="16sp" />
 
         <ImageView
-            android:id="@+id/into_security_setting"
             android:layout_width="6dp"
             android:layout_height="12dp"
             android:layout_alignParentRight="true"

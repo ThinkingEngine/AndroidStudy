@@ -238,7 +238,7 @@ public class ExamAppointmentActivity extends BaseActivity implements HeaderScrol
                 dialog.show();
             }
         });
-        headerScrollView.setCallback(this);
+        HeaderScrollView.setCallback(this);
 
 
     }

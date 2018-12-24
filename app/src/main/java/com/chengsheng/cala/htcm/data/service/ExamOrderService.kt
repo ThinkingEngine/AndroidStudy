@@ -29,6 +29,6 @@ interface ExamOrderService {
      */
     @POST(API.USER_REGISTER + "{orderID}")
     @Headers("Authorization:true")
-    fun registration(@Path("orderID") orderID: String): Observable<Response<ResponseBody>>;
+    fun registration(@Path("orderID") orderID: String): Observable<Response<ResponseBody>>
 
 }

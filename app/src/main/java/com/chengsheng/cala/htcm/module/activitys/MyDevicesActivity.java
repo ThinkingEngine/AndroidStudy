@@ -16,7 +16,7 @@ public class MyDevicesActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        titleText = (TextView) findViewById(R.id.title_header_my_devices).findViewById(R.id.menu_bar_title);
+        titleText = findViewById(R.id.title_header_my_devices).findViewById(R.id.menu_bar_title);
         titleText.setText("我的设备");
     }
 

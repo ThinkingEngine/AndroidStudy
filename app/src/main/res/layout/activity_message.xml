@@ -8,11 +8,8 @@
     android:orientation="vertical"
     tools:context=".module.activitys.MessageActivity">
 
-    <include
-        android:id="@+id/message_title_header"
-        layout="@layout/message_header_layout"/>
+    <include layout="@layout/message_header_layout"/>
     <FrameLayout
-        android:id="@+id/service_notification_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></FrameLayout>
 

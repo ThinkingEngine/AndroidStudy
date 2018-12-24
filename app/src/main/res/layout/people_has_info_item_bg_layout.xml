@@ -13,7 +13,6 @@
         android:layout_alignParentTop="true"></LinearLayout>
 
     <LinearLayout
-        android:id="@+id/people_has_info_divider_down"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorCutoff"

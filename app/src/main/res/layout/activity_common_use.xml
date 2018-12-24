@@ -27,7 +27,6 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="14dp"/>
        <com.suke.widget.SwitchButton
-           android:id="@+id/is_need_push_notification"
            android:layout_width="43dp"
            android:layout_height="23dp"
            android:layout_centerVertical="true"
@@ -68,7 +67,6 @@
             android:layout_marginRight="15dp"/>
 
         <TextView
-            android:id="@+id/current_cache_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="50.0M"

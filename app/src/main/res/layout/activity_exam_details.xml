@@ -321,7 +321,6 @@
                         android:src="@mipmap/dabiaoti_shuxian" />
 
                     <TextView
-                        android:id="@+id/exam_notes_mark"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"

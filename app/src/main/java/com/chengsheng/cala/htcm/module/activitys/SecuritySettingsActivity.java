@@ -21,8 +21,8 @@ public class SecuritySettingsActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        securitySettings = (TextView) findViewById(R.id.title_header_security_settings).findViewById(R.id.menu_bar_title);
-        intoSettingGesturesUnlock = (ImageView) findViewById(R.id.into_setting_gestures_unlock);
+        securitySettings = findViewById(R.id.title_header_security_settings).findViewById(R.id.menu_bar_title);
+        intoSettingGesturesUnlock = findViewById(R.id.into_setting_gestures_unlock);
 
         securitySettings.setText("安全设置");
 

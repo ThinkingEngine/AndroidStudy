@@ -16,7 +16,6 @@
             android:orientation="vertical">
 
             <RelativeLayout
-                android:id="@+id/key_illness_screening_coatiner"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:layout_below="@id/line9"

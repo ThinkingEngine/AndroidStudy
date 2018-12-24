@@ -84,7 +84,6 @@
             </FrameLayout>
 
             <ImageView
-                android:id="@+id/scan_icon"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:layout_alignParentRight="true"

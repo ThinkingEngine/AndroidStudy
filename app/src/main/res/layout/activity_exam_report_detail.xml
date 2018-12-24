@@ -12,7 +12,6 @@
         layout="@layout/title_bar_type_two_layout" />
 
     <ScrollView
-        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/title_header_exam_report_detail">
@@ -102,7 +101,6 @@
                 android:layout_marginTop="10dp"/>
 
             <RelativeLayout
-                android:id="@+id/container_a"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:layout_below="@id/line9"

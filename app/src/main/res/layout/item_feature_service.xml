@@ -49,7 +49,6 @@
         tools:text="1009人已享受" />
 
     <TextView
-        android:id="@+id/tvProPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

@@ -10,7 +10,6 @@
         android:background="@color/colorWhite">
 
         <RelativeLayout
-            android:id="@+id/others_select_item_coatiner"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_below="@id/line9"

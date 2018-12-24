@@ -22,7 +22,6 @@
             android:orientation="vertical">
 
             <RelativeLayout
-                android:id="@+id/container_g"
                 android:layout_width="match_parent"
                 android:layout_height="207dp"
                 android:layout_below="@id/title_header_intelligent_check"

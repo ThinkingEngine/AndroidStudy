@@ -147,6 +147,8 @@
         <activity android:name=".module.user.CouponActivity" />
         <!--会员卡-->
         <activity android:name=".module.user.MemberCardActivity" />
+        <!--会员卡详情-->
+        <activity android:name=".module.user.MemberCardDetailActivity" />
 
         <service
             android:name=".model.services.ServiceSMSService"

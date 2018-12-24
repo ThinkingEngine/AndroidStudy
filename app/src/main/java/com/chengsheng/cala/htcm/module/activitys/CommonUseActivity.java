@@ -16,7 +16,7 @@ public class CommonUseActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        titleText = (TextView) findViewById(R.id.title_header_common_use).findViewById(R.id.menu_bar_title);
+        titleText = findViewById(R.id.title_header_common_use).findViewById(R.id.menu_bar_title);
 
         titleText.setText("通用");
     }

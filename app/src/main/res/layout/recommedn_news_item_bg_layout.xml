@@ -22,7 +22,7 @@
             fresco:backgroundImage="@mipmap/tuijianzixun"
             fresco:failureImage="@mipmap/tuijianzixun"
             fresco:placeholderImage="@mipmap/tuijianzixun"
-            fresco:roundedCornerRadius="8dp"/>
+            fresco:roundedCornerRadius="8dp" />
 
 
         <TextView
@@ -50,6 +50,7 @@
             app:atg_isAppendMode="false"
             app:atg_textColor="@color/colorPrimary"
             app:atg_textSize="10sp" />
+
         <TextView
             android:id="@+id/collect_num"
             android:layout_width="wrap_content"

@@ -33,33 +33,33 @@ public class FuncUtils {
                 .putString(key, value)
                 .commit();
 
-        return appContext.getSharedPreferences("config", appContext.MODE_PRIVATE);
+        return appContext.getSharedPreferences("config", Context.MODE_PRIVATE);
     }
 
     public static SharedPreferences putBoolean(String key, boolean value) {
-        appContext.getSharedPreferences("config", appContext.MODE_PRIVATE)
+        appContext.getSharedPreferences("config", Context.MODE_PRIVATE)
                 .edit()
                 .putBoolean(key, value)
                 .commit();
 
-        return appContext.getSharedPreferences("config", appContext.MODE_PRIVATE);
+        return appContext.getSharedPreferences("config", Context.MODE_PRIVATE);
     }
 
     public static String getString(String key, String defaultVal) {
-        String result = appContext.getSharedPreferences("config", appContext.MODE_PRIVATE)
+        String result = appContext.getSharedPreferences("config", Context.MODE_PRIVATE)
                 .getString(key.trim(), defaultVal.trim());
         return result;
     }
 
     public static boolean getBoolean(String key, boolean defaultValue) {
-        return appContext.getSharedPreferences("config", appContext.MODE_PRIVATE).getBoolean(key, defaultValue);
+        return appContext.getSharedPreferences("config", Context.MODE_PRIVATE).getBoolean(key, defaultValue);
     }
 
     public static SharedPreferences clear() {
-        SharedPreferences sp = appContext.getSharedPreferences("config", appContext.MODE_PRIVATE);
+        SharedPreferences sp = appContext.getSharedPreferences("config", Context.MODE_PRIVATE);
         sp.edit().clear().commit();
 
-        return appContext.getSharedPreferences("config", appContext.MODE_PRIVATE);
+        return appContext.getSharedPreferences("config", Context.MODE_PRIVATE);
     }
 
     public static int px2dip(int px) {

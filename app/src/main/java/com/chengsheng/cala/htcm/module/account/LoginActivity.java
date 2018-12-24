@@ -1,7 +1,6 @@
 package com.chengsheng.cala.htcm.module.account;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkRequest;
@@ -70,17 +69,8 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        registerTV = findViewById(R.id.register_button);
-        loginTV = findViewById(R.id.login_button);
-        retrieveTV = findViewById(R.id.retrieve_pw_button);
-        cellphoneEdittext = findViewById(R.id.cellphone_edittext);
-        passwordEdittext = findViewById(R.id.password_edittext);
-        deleteInput = findViewById(R.id.delete_input);
-        previewIcon = findViewById(R.id.preview_icon);
-        loginTelService = findViewById(R.id.login_tel_service);
-        outLoginPage = findViewById(R.id.out_login_page);
-        deleteInput.setVisibility(View.INVISIBLE);
 
+        initViews();
         final ZLoadingDialog dialog = new ZLoadingDialog(this);
         dialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
         dialog.setLoadingColor(getResources().getColor(R.color.colorPrimary));
@@ -131,129 +121,97 @@ public class LoginActivity extends BaseActivity {
         });
 
         //隐藏密码按钮。
-        previewIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!passVisible) {
-                    passVisible = true;
-                    passwordEdittext.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                } else {
-                    passVisible = false;
-                    passwordEdittext.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                }
+        previewIcon.setOnClickListener(v -> {
+            if (!passVisible) {
+                passVisible = true;
+                passwordEdittext.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            } else {
+                passVisible = false;
+                passwordEdittext.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
             }
         });
 
         //清空密码框按钮。
-        deleteInput.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                passwordEdittext.setText("");
-                deleteInput.setVisibility(View.INVISIBLE);
-            }
+        deleteInput.setOnClickListener(v -> {
+            passwordEdittext.setText("");
+            deleteInput.setVisibility(View.INVISIBLE);
         });
 
 
         //注册功能按钮。
-        registerTV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(intent);
-            }
-        });
+        registerTV.setOnClickListener(v -> startActivity(new RegisterActivity()));
 
         //忘记密码按钮。
-        retrieveTV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, RetrievePWActivity.class);
-                startActivity(intent);
-            }
-        });
+        retrieveTV.setOnClickListener(v -> startActivity(new RetrievePWActivity()));
 
-        outLoginPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        outLoginPage.setOnClickListener(v -> finish());
 
         //登录按钮。
-        loginTV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (tempLogin) {
-                    userNameInput = cellphoneEdittext.getText().toString();
-                    passwordInput = passwordEdittext.getText().toString();
-                    if (userNameInput.equals("") || passwordInput.equals("")) {
-                        Toast.makeText(LoginActivity.this, "请输入电话号码和密码！", Toast.LENGTH_SHORT).show();
-                    } else {
-                        dialog.show();
-                        service.login(GlobalConstant.clientId,
-                                GlobalConstant.grantType, userNameInput, passwordInput,
-                                GlobalConstant.clientSecret, GlobalConstant.scope)
-                                .subscribeOn(Schedulers.newThread())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new DisposableObserver<LoginData>() {
-                                    @Override
-                                    public void onNext(LoginData data) {
-                                        showShortToast("登录成功");
-                                        CallBackDataAuth.doUpdateStateInterface(true);
-                                        UserUtil.setAccessToken(data.getAccess_token());
-                                        UserUtil.setTokenType(data.getToken_type());
-                                        UserUtil.setMobile(userNameInput);
-                                        dialog.cancel();
-                                        finish();
-                                    }
+        loginTV.setOnClickListener(v -> {
+            if (tempLogin) {
+                userNameInput = cellphoneEdittext.getText().toString();
+                passwordInput = passwordEdittext.getText().toString();
+                if (userNameInput.equals("") || passwordInput.equals("")) {
+                    Toast.makeText(LoginActivity.this, "请输入电话号码和密码！", Toast.LENGTH_SHORT).show();
+                } else {
+                    dialog.show();
+                    service.login(GlobalConstant.clientId,
+                            GlobalConstant.grantType, userNameInput, passwordInput,
+                            GlobalConstant.clientSecret, GlobalConstant.scope)
+                            .subscribeOn(Schedulers.newThread())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new DisposableObserver<LoginData>() {
+                                @Override
+                                public void onNext(LoginData data) {
+                                    showShortToast("登录成功");
+                                    UserUtil.setAccessToken(data.getAccess_token());
+                                    UserUtil.setTokenType(data.getToken_type());
+                                    UserUtil.setMobile(userNameInput);
+                                    CallBackDataAuth.doUpdateStateInterface(true);
+                                    dialog.cancel();
+                                    finish();
+                                }
 
-                                    @Override
-                                    public void onError(Throwable e) {
-                                        Log.e("TAG", "错误:" + e.toString());
-                                        dialog.cancel();
-                                        AlertDialog alertDialog;
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                                        builder.setTitle("登录失败");
-                                        builder.setMessage("登录失败：账户或密码错误!");
-                                        builder.setPositiveButton("确认", null);
-                                        alertDialog = builder.create();
-                                        alertDialog.show();
-                                    }
+                                @Override
+                                public void onError(Throwable e) {
+                                    Log.e("TAG", "错误:" + e.toString());
+                                    dialog.cancel();
+                                    AlertDialog alertDialog;
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                                    builder.setTitle("登录失败");
+                                    builder.setMessage("登录失败：账户或密码错误!");
+                                    builder.setPositiveButton("确认", null);
+                                    alertDialog = builder.create();
+                                    alertDialog.show();
+                                }
 
-                                    @Override
-                                    public void onComplete() {
-                                    }
-                                });
-                    }
-
-
+                                @Override
+                                public void onComplete() {
+                                }
+                            });
                 }
 
+
             }
+
         });
 
-        loginTelService.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog alertDialog;
-                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                builder.setTitle("客服电话");
-                builder.setMessage("您确定需要拨打客服电话!");
-                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(Intent.ACTION_DIAL);
-                        Uri data = Uri.parse("tel:" + loginTelService.getText().toString());
-                        intent.setData(data);
-                        startActivity(intent);
-                    }
-                });
+        loginTelService.setOnClickListener(v -> {
+            AlertDialog alertDialog;
+            AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+            builder.setTitle("客服电话");
+            builder.setMessage("您确定需要拨打客服电话!");
+            builder.setPositiveButton("确定", (dialog1, which) -> {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                Uri data = Uri.parse("tel:" + loginTelService.getText().toString());
+                intent.setData(data);
+                startActivity(intent);
+            });
 
-                builder.setNegativeButton("暂不", null);
+            builder.setNegativeButton("暂不", null);
 
-                alertDialog = builder.create();
-                alertDialog.show();
-            }
+            alertDialog = builder.create();
+            alertDialog.show();
         });
     }
 
@@ -267,5 +225,18 @@ public class LoginActivity extends BaseActivity {
         super.onResume();
         String userNum = getIntent().getStringExtra("USER_NUMBER");
         cellphoneEdittext.setText(userNum);
+    }
+
+    private void initViews() {
+        registerTV = findViewById(R.id.register_button);
+        loginTV = findViewById(R.id.login_button);
+        retrieveTV = findViewById(R.id.retrieve_pw_button);
+        cellphoneEdittext = findViewById(R.id.cellphone_edittext);
+        passwordEdittext = findViewById(R.id.password_edittext);
+        deleteInput = findViewById(R.id.delete_input);
+        previewIcon = findViewById(R.id.preview_icon);
+        loginTelService = findViewById(R.id.login_tel_service);
+        outLoginPage = findViewById(R.id.out_login_page);
+        deleteInput.setVisibility(View.INVISIBLE);
     }
 }

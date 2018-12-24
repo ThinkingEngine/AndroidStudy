@@ -1,6 +1,5 @@
 package com.chengsheng.cala.htcm.module.activitys;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.module.account.LoginActivity;
+import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
 import com.chengsheng.cala.htcm.utils.PreferenceUtil;
 import com.chengsheng.cala.htcm.utils.UserUtil;
 
@@ -34,52 +34,32 @@ public class SettingActivity extends BaseActivity {
 
         titleText.setText("设置");
 
-        intoShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        intoShare.setOnClickListener(v -> {
 //                Intent intent = new Intent(SettingActivity.this,EstimateOrderActivity.class);
 //                startActivity(intent);
-            }
         });
 
-        intoSecuritySetting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SettingActivity.this, SecuritySettingsActivity.class);
-                startActivity(intent);
-            }
+        intoSecuritySetting.setOnClickListener(v -> {
+            Intent intent = new Intent(SettingActivity.this, SecuritySettingsActivity.class);
+            startActivity(intent);
         });
 
-        intoCommonUse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SettingActivity.this, CommonUseActivity.class);
-                startActivity(intent);
-            }
+        intoCommonUse.setOnClickListener(v -> {
+            Intent intent = new Intent(SettingActivity.this, CommonUseActivity.class);
+            startActivity(intent);
         });
 
-        intoFeedback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SettingActivity.this, FeedbackActivity.class);
-                startActivity(intent);
-            }
+        intoFeedback.setOnClickListener(v -> {
+            Intent intent = new Intent(SettingActivity.this, FeedbackActivity.class);
+            startActivity(intent);
         });
 
-        intoAbout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SettingActivity.this, AboutActivity.class);
-                startActivity(intent);
-            }
+        intoAbout.setOnClickListener(v -> {
+            Intent intent = new Intent(SettingActivity.this, AboutActivity.class);
+            startActivity(intent);
         });
 
-        outLineButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showLogOutDialog();
-            }
-        });
+        outLineButton.setOnClickListener(v -> showLogOutDialog());
     }
 
     @Override
@@ -108,19 +88,15 @@ public class SettingActivity extends BaseActivity {
         builder.setTitle("退出提示");
         builder.setMessage("是否退出应用?");
         builder.setNegativeButton("暂不", null);
-        builder.setPositiveButton("退出", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                PreferenceUtil.clear();
-                outLineButton.setVisibility(View.INVISIBLE);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        LoginActivity.start(SettingActivity.this);
-                        finish();
-                    }
-                }, 300);
-            }
+        builder.setPositiveButton("退出", (dialog, which) -> {
+            PreferenceUtil.clear();
+            //通知其他组件，用户登录状态已发生改变，需要刷新界面
+            CallBackDataAuth.doUpdateStateInterface(true);
+            outLineButton.setVisibility(View.INVISIBLE);
+            new Handler().postDelayed(() -> {
+                LoginActivity.start(SettingActivity.this);
+                finish();
+            }, 300);
         });
         alertDialog = builder.create();
         alertDialog.show();

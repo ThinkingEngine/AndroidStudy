@@ -230,28 +230,15 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
             viewHolder.userBitmapMark.setVisibility(View.INVISIBLE);
             viewHolder.deleteExamItem.setVisibility(View.INVISIBLE);
 
-            viewHolder.unscrambleMark.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ActivityUtil.Companion.startActivity(context, new LoginActivity());
-                }
-            });
+            viewHolder.unscrambleMark.setOnClickListener(v -> ActivityUtil.Companion.startActivity(context, new LoginActivity()));
 
-            viewHolder.aiAssistantItem.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ActivityUtil.Companion.startActivity(context, new LoginActivity());
-                }
-            });
+            viewHolder.aiAssistantItem.setOnClickListener(v -> ActivityUtil.Companion.startActivity(context, new LoginActivity()));
 
         } else if (datas.isEmpty() && type == 0) {
-            viewHolder.aiAssistantGroupDetail.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, BarADActivity.class);
-                    intent.putExtra("NUM", 1);
-                    context.startActivity(intent);
-                }
+            viewHolder.aiAssistantGroupDetail.setOnClickListener(v -> {
+                Intent intent = new Intent(context, BarADActivity.class);
+                intent.putExtra("NUM", 0);
+                context.startActivity(intent);
             });
         }
     }

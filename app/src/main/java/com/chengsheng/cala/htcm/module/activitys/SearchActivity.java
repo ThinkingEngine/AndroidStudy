@@ -3,24 +3,33 @@ package com.chengsheng.cala.htcm.module.activitys;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.chengsheng.cala.htcm.adapter.ExamAppointmentRecyclerAdapter;
 import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.constant.GlobalConstant;
+import com.chengsheng.cala.htcm.data.repository.ComboRepository;
+import com.chengsheng.cala.htcm.protocol.ExamApponitments;
 import com.chengsheng.cala.htcm.utils.FuncUtils;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagFlowLayout;
+import com.zyao89.view.zloading.ZLoadingDialog;
+import com.zyao89.view.zloading.Z_TYPE;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.observers.DefaultObserver;
+
 
 public class SearchActivity extends BaseActivity {
 
@@ -28,10 +37,18 @@ public class SearchActivity extends BaseActivity {
     private TextView backText;
     private ImageView clearSearchBox;
     private EditText globalSearchBox;
-    private RecyclerView searchRecord;
+    private RecyclerView searchRecord, comboSearchResult;
+    private LinearLayout searchModelBox;
+
+    private RecyclerAdapter adapter;
+    private ExamAppointmentRecyclerAdapter examAdapter;//
 
     private String[] marks = new String[]{"青少年", "老年", "华美丽人", "中年", "加班族", "熬夜族", "优雅绅士", "婴幼儿"};
     private List<String> searchRecordData = new ArrayList<>();
+    private String currentMark = "";//当前搜索的标签
+    private String filtersPre = "price:between=;name:like=";//搜索条件的前缀
+
+    private ZLoadingDialog loadingDialog;
 
 
     @Override
@@ -41,11 +58,15 @@ public class SearchActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        searchMarks = findViewById(R.id.search_marks);
-        backText = findViewById(R.id.back_text);
-        searchRecord = findViewById(R.id.search_record);
-        globalSearchBox = findViewById(R.id.global_search_box);
-        clearSearchBox = findViewById(R.id.clear_search_box);
+        loadingDialog = new ZLoadingDialog(this);
+        loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
+        loadingDialog.setDialogBackgroundColor(getResources().getColor(R.color.colorText));
+        loadingDialog.setHintText("搜索中...");
+        loadingDialog.setLoadingColor(getResources().getColor(R.color.colorPrimary));
+        loadingDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
+        loadingDialog.setCancelable(false);
+
+        initViews();
 
         String record = FuncUtils.getString("SEARCH_RECORD", "");
         if (!record.equals("")) {
@@ -55,40 +76,37 @@ public class SearchActivity extends BaseActivity {
             }
         }
 
-        clearSearchBox.setOnClickListener(v -> globalSearchBox.setText(""));
-
-
-        globalSearchBox.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (!s.toString().equals("")) {
-                    searchRecordData.add(s.toString());
+        globalSearchBox.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                if (!globalSearchBox.getText().toString().equals("")) {
+                    currentMark = globalSearchBox.getText().toString();
+                    searchRecordData.add(currentMark);
+                    getSearchResult(currentMark);
                 }
             }
         });
+
 
         final List<String> datas = new ArrayList<>();
         for (String mark : marks) {
             datas.add(mark);
         }
-        TagAdapter adapter = new TagAdapter(datas);
-        searchMarks.setAdapter(adapter);
+        TagAdapter tagAdapter = new TagAdapter(datas);
+        searchMarks.setAdapter(tagAdapter);
 
         searchRecord.setLayoutManager(new LinearLayoutManager(this));
-        searchRecord.setAdapter(new RecyclerAdapter());
+        adapter = new RecyclerAdapter();
+        searchRecord.setAdapter(adapter);
 
         searchMarks.setOnTagClickListener((view, position, parent) -> {
-            Toast.makeText(SearchActivity.this, " " + datas.get(position), Toast.LENGTH_SHORT).show();
+            currentMark = datas.get(position);
+
+            getSearchResult(currentMark);
+
+            if (!searchRecordData.contains(currentMark)) {
+                searchRecordData.add(currentMark);
+            }
+            adapter.notifyDataSetChanged();
             return true;
         });
 
@@ -99,6 +117,55 @@ public class SearchActivity extends BaseActivity {
     @Override
     public void getData() {
 
+    }
+
+    //获取搜索的结果
+    private void getSearchResult(String currentMark) {
+
+        loadingDialog.show();
+        ComboRepository
+                .Companion
+                .getDefault()
+                .getComboInfoFilters(filtersPre + currentMark, "1", GlobalConstant.COMBO_TYPE_A)
+                .subscribe(new DefaultObserver<ExamApponitments>() {
+                    @Override
+                    public void onNext(ExamApponitments examApponitments) {
+                        loadingDialog.cancel();
+                        searchModelBox.setVisibility(View.INVISIBLE);
+                        examAdapter = new ExamAppointmentRecyclerAdapter(SearchActivity.this, examApponitments.getItems());
+                        comboSearchResult.setVisibility(View.VISIBLE);
+                        comboSearchResult.setAdapter(examAdapter);
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        loadingDialog.cancel();
+                        showError(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        loadingDialog.cancel();
+                    }
+                });
+    }
+
+    private void initViews() {
+        searchMarks = findViewById(R.id.search_marks);
+        backText = findViewById(R.id.back_text);
+        searchRecord = findViewById(R.id.search_record);
+        globalSearchBox = findViewById(R.id.global_search_box);
+        clearSearchBox = findViewById(R.id.clear_search_box);
+        comboSearchResult = findViewById(R.id.combo_search_result);
+        searchModelBox = findViewById(R.id.search_model_box);
+
+        clearSearchBox.setOnClickListener(v -> {
+            globalSearchBox.setText("");
+            comboSearchResult.setVisibility(View.INVISIBLE);
+            searchModelBox.setVisibility(View.VISIBLE);
+        });
+        comboSearchResult.setLayoutManager(new LinearLayoutManager(this));
     }
 
     class RecyclerAdapter extends RecyclerView.Adapter<MyViewHolder> {
@@ -124,11 +191,24 @@ public class SearchActivity extends BaseActivity {
             } else {
                 viewHolder.searchText.setText(searchRecordData.get(i));
             }
+
+            viewHolder.deleteSearchRecord.setOnClickListener(v -> removeData(i));
+            viewHolder.hasSearchItem.setOnClickListener(v -> {
+                currentMark = viewHolder.searchText.getText().toString();
+                getSearchResult(currentMark);
+            });
+
         }
 
         @Override
         public int getItemCount() {
             return searchRecordData.size();
+        }
+
+        public void removeData(int i) {
+            searchRecordData.remove(i);
+            notifyItemRemoved(i);
+            notifyDataSetChanged();
         }
 
     }
@@ -139,15 +219,18 @@ public class SearchActivity extends BaseActivity {
 
         ImageView deleteSearchRecord;
         TextView textMark;
+        RelativeLayout hasSearchItem;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             searchText = itemView.findViewById(R.id.search_text);
             deleteSearchRecord = itemView.findViewById(R.id.delete_search_record);
+            hasSearchItem = itemView.findViewById(R.id.has_search_item);
 
             textMark = itemView.findViewById(R.id.text_mark);
         }
+
 
     }
 
@@ -173,8 +256,6 @@ public class SearchActivity extends BaseActivity {
             super(datas);
         }
 
-//        @Override
-
         @Override
         public View getView(FlowLayout parent, int position, String s) {
             View rootView = LayoutInflater.from(SearchActivity.this).inflate(R.layout.families_select_mark_bg_layout, null);
@@ -182,17 +263,6 @@ public class SearchActivity extends BaseActivity {
             textView.setText(s);
             return rootView;
         }
-        //        }
     }
-    //        public void onSelected(int position, View view) {
-    //            TextView textView = view.findViewById(R.id.select_families_mark);
-    //            textView.setSelected(true);
-    //            textView.setTextColor(SearchActivity.this.getResources().getColor(R.color.colorWhite));
-    //        }
-    //
-    //        @Override
-    //        public void unSelected(int position, View view) {
-    //            TextView textView = view.findViewById(R.id.select_families_mark);
-    //            textView.setSelected(false);
-    //            textView.setTextColor(SearchActivity.this.getResources().getColor(R.color.colorThrText));
+
 }

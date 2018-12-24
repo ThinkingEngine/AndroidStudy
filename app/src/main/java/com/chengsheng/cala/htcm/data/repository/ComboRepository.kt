@@ -1,5 +1,7 @@
 package com.chengsheng.cala.htcm.data.repository
 
+import com.chengsheng.cala.htcm.data.retrofit.RetrofitHelper
+import com.chengsheng.cala.htcm.data.transformProto
 import com.chengsheng.cala.htcm.protocol.ExamApponitments
 import io.reactivex.Observable
 
@@ -32,7 +34,7 @@ class ComboRepository {
      *  根据搜索条件获取套餐
      * */
 
-    fun getComboInfoFilters():Observable<ExamApponitments>?{
-        return
+    fun getComboInfoFilters(filters: String, page: String, sortFields: String): Observable<ExamApponitments>? {
+        return transformProto(RetrofitHelper.getInstance().comboService.getComboInfoFilters(filters, page, sortFields))
     }
 }

@@ -14,7 +14,8 @@ import com.chengsheng.cala.htcm.widget.MemberCardPopWindow
  * CreateDate: 2018/12/23 3:39 PM
  * Description: 会员卡
  */
-class MemberCardAdapter(private var activity: BaseActivity, data: List<Any>) : BaseQuickAdapter<Any>(R.layout.item_member_card, data) {
+class MemberCardAdapter(private var activity: BaseActivity, data: List<Any>) :
+        BaseQuickAdapter<Any>(R.layout.item_member_card, data) {
     override fun convert(helper: BaseViewHolder?, data: Any?) {
 
         //查看详情

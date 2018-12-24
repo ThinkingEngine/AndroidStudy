@@ -13,11 +13,11 @@ import com.chengsheng.cala.htcm.protocol.childmodelb.ExamItem;
 
 import java.util.List;
 
-public class BeforeExamRecyclerViewAdapter extends RecyclerView.Adapter<BeforeExamRecyclerViewAdapter.BeforeExamVH> {
+public class BeforeExamAdapter extends RecyclerView.Adapter<BeforeExamAdapter.BeforeExamVH> {
     private Context context;
     private List<ExamItem> datas;
 
-    public BeforeExamRecyclerViewAdapter(Context context,List<ExamItem> datas){
+    public BeforeExamAdapter(Context context, List<ExamItem> datas){
         this.context = context;
         this.datas = datas;
     }

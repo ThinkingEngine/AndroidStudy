@@ -3,15 +3,9 @@ package com.chengsheng.cala.htcm.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.AbsoluteSizeSpan;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,24 +22,20 @@ import com.chengsheng.cala.htcm.module.activitys.ModePaymentActivity;
 import com.chengsheng.cala.htcm.protocol.AssistantItem;
 import com.chengsheng.cala.htcm.protocol.FamiliesListItem;
 import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
-import com.chengsheng.cala.htcm.utils.FuncUtils;
 import com.chengsheng.cala.htcm.module.activitys.BarCodeActivity;
 import com.chengsheng.cala.htcm.module.activitys.ExamDetailsActivity;
 import com.chengsheng.cala.htcm.module.activitys.UserCardActivity;
-import com.chengsheng.cala.htcm.utils.ToastUtil;
 import com.daimajia.swipe.SwipeLayout;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.jakewharton.rxbinding2.view.RxView;
 
-import java.text.ParseException;
 import java.util.List;
 
 
-public class AIAssistantSubRecyclerView extends RecyclerView.Adapter<AIAssistantSubRecyclerView.AIAssistantSubViewHolder> {
+public class AIAssistantSubAdapter extends RecyclerView.Adapter<AIAssistantSubAdapter.AIAssistantSubViewHolder> {
     private Context context;
     private List<AssistantItem> datas;
 
-    public AIAssistantSubRecyclerView(Context context, List<AssistantItem> datas) {
+    public AIAssistantSubAdapter(Context context, List<AssistantItem> datas) {
         this.context = context;
         this.datas = datas;
     }

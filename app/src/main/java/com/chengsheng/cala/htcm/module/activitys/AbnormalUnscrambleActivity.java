@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.R;
-import com.chengsheng.cala.htcm.adapter.AbnormalScrambleExpandableListAdapter;
+import com.chengsheng.cala.htcm.adapter.AbnormalScrambleExpandableAdapter;
 
 public class AbnormalUnscrambleActivity extends BaseActivity {
 
@@ -29,7 +29,7 @@ public class AbnormalUnscrambleActivity extends BaseActivity {
 
         title.setText("异常解读");
 
-        AbnormalScrambleExpandableListAdapter adapter = new AbnormalScrambleExpandableListAdapter(this);
+        AbnormalScrambleExpandableAdapter adapter = new AbnormalScrambleExpandableAdapter(this);
 
         abnormalUnscrambleExpandable.setAdapter(adapter);
     }

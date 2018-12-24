@@ -57,7 +57,6 @@
                     android:textSize="13sp"
                     tools:text="1999000000" />
 
-
             </LinearLayout>
 
             <FrameLayout
@@ -106,7 +105,7 @@
 
         </RelativeLayout>
 
-        <!--订单-->
+        <!--会员卡、优惠券-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
@@ -114,6 +113,7 @@
             android:gravity="center_vertical">
 
             <LinearLayout
+                android:id="@+id/layoutMember"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -126,19 +126,19 @@
                     android:src="@mipmap/tijiandingdan" />
 
                 <TextView
-                    android:id="@+id/medical_exam_order_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="6dp"
                     android:drawablePadding="4dp"
-                    android:text="@string/medical_exam_order"
+                    android:text="会员卡"
                     android:textColor="@color/colorText"
                     android:textSize="16sp" />
 
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layoutCoupon"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -151,19 +151,35 @@
                     android:src="@mipmap/fuwudingdan" />
 
                 <TextView
-                    android:id="@+id/service_order_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="6dp"
                     android:gravity="center_horizontal"
-                    android:text="@string/serivce_order"
+                    android:text="优惠券"
                     android:textColor="@color/colorText"
                     android:textSize="16sp" />
 
             </LinearLayout>
 
         </LinearLayout>
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/stv_medical_order"
+            style="@style/userCenterSuperTextStyle"
+            android:layout_marginTop="16dp"
+            fresco:sBottomDividerLineMarginLeft="35dp"
+            fresco:sLeftIconRes="@mipmap/tijiandingdan"
+            fresco:sLeftTextString="体检订单"
+            fresco:sRightIconRes="@mipmap/liebiaojinru" />
+
+        <com.allen.library.SuperTextView
+            android:id="@+id/stv_service_order"
+            style="@style/userCenterSuperTextStyle"
+            fresco:sBottomDividerLineMarginLeft="35dp"
+            fresco:sLeftIconRes="@mipmap/tijiandingdan"
+            fresco:sLeftTextString="服务订单"
+            fresco:sRightIconRes="@mipmap/liebiaojinru" />
 
         <com.allen.library.SuperTextView
             android:id="@+id/stv_family_manager"

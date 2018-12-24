@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dp_15">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/ivDoctorAvatar"
+        android:layout_width="@dimen/dp_72"
+        android:layout_height="@dimen/dp_72"
+        android:layout_gravity="center"
+        android:background="@mipmap/yishengtouxiang"
+        fresco:roundAsCircle="true" />
+
+    <TextView
+        android:id="@+id/tvDoctorName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_15"
+        android:layout_toEndOf="@id/ivDoctorAvatar"
+        android:text="冯友兰"
+        android:textColor="#333333"
+        android:textSize="@dimen/sp_16" />
+
+    <TextView
+        android:id="@+id/tvDoctorPosition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_6"
+        android:layout_toEndOf="@id/tvDoctorName"
+        android:text="主治医师"
+        android:textColor="#999999"
+        android:textSize="@dimen/sp_16" />
+
+    <TextView
+        android:id="@+id/tvDoctorSkill"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvDoctorName"
+        android:layout_marginStart="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_toEndOf="@id/ivDoctorAvatar"
+        android:ellipsize="end"
+        android:maxEms="30"
+        android:maxLines="2"
+        android:text="擅长：测试测试测试测试测试测试测试测试测试测试妇科常见并和多发病以及不孕不育的诊断与治疗。" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/ivDoctorAvatar"
+        android:layout_marginTop="@dimen/dp_16"
+        android:background="#F0F0F0" />
+
+</RelativeLayout>

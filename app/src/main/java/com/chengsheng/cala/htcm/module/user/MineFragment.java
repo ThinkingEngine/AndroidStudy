@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -37,7 +38,7 @@ import io.reactivex.observers.DefaultObserver;
  */
 public class MineFragment extends BaseFragment {
 
-    private TextView medicalExamOrderText;
+    private SuperTextView medicalExamOrderText;
     private TextView userNameText;
     private TextView userCellphoneNum;
     private SimpleDraweeView userIcon;
@@ -70,8 +71,8 @@ public class MineFragment extends BaseFragment {
 
     @Override
     public void initView(View rootView) {
-        medicalExamOrderText = rootView.findViewById(R.id.medical_exam_order_text);//体检订单文本
-        TextView serviceOrderText = rootView.findViewById(R.id.service_order_text);
+        medicalExamOrderText = rootView.findViewById(R.id.stv_medical_order);//体检订单文本
+        SuperTextView serviceOrderText = rootView.findViewById(R.id.stv_service_order);
         userNameText = rootView.findViewById(R.id.user_name_text);
         userCellphoneNum = rootView.findViewById(R.id.user_cellphone_num);
         userIcon = rootView.findViewById(R.id.user_icon);
@@ -83,90 +84,65 @@ public class MineFragment extends BaseFragment {
         stv_device = rootView.findViewById(R.id.stv_device);
         SuperTextView stv_setting = rootView.findViewById(R.id.stv_setting);
         stv_collection = rootView.findViewById(R.id.stv_collection);
+        LinearLayout layoutMember = rootView.findViewById(R.id.layoutMember);
+        LinearLayout layoutCoupon = rootView.findViewById(R.id.layoutCoupon);
 
         //修改用户信息
-        layoutUpdateUserInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!UserUtil.isLogin()) {
-                    LoginActivity.start(context);
-                } else {
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("USER_INFO", userInfo);
-                    startActivity(new AccountSettingActivity(), bundle);
-                }
+        layoutUpdateUserInfo.setOnClickListener(view -> {
+            if (!UserUtil.isLogin()) {
+                LoginActivity.start(context);
+            } else {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("USER_INFO", userInfo);
+                startActivity(new AccountSettingActivity(), bundle);
             }
         });
+
+        //会员卡
+        layoutMember.setOnClickListener(view ->
+                startActivityWithLoginStatus(new MemberCardActivity()));
+
+        //优惠券
+        layoutCoupon.setOnClickListener(view ->
+                startActivityWithLoginStatus(new CouponActivity()));
 
         //家人管理
-        stv_family_manager.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivityWithLoginStatus(new FamilyManageActivity());
-            }
-        });
+        stv_family_manager.setOnClickListener(view ->
+                startActivityWithLoginStatus(new FamilyManageActivity()));
 
         //我的收藏
-        stv_collection.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivityWithLoginStatus(new MyCollectionActivity());
-            }
-        });
+        stv_collection.setOnClickListener(view ->
+                startActivityWithLoginStatus(new MyCollectionActivity()));
 
         //我的设备
-        stv_device.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivityWithLoginStatus(new MyDevicesActivity());
-            }
-        });
+        stv_device.setOnClickListener(view ->
+                startActivityWithLoginStatus(new MyDevicesActivity()));
 
         //设置
-        stv_setting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new SettingActivity());
-            }
-        });
+        stv_setting.setOnClickListener(view ->
+                startActivity(new SettingActivity()));
 
         //联系客服
-        stv_contact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                contactService();
-            }
-        });
+        stv_contact.setOnClickListener(view -> contactService());
 
         //查看消息
-        messageIconContainerMine.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityWithLoginStatus(new ServiceMessageActivity());
-            }
-        });
+        messageIconContainerMine.setOnClickListener(v ->
+                startActivityWithLoginStatus(new ServiceMessageActivity()));
 
         //体检订单
-        medicalExamOrderText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (UserUtil.isLogin()) {
-                    Intent intent = new Intent(getContext(), ExamOrderFormActivity.class);
-                    intent.putExtra("CUSTOMER_ID", String.valueOf(userInfo.getId()));
-                    context.startActivity(intent);
-                } else {
-                    startActivity(new LoginActivity());
-                }
+        medicalExamOrderText.setOnClickListener(v -> {
+            if (UserUtil.isLogin()) {
+                Intent intent = new Intent(getContext(), ExamOrderFormActivity.class);
+                intent.putExtra("CUSTOMER_ID", String.valueOf(userInfo.getId()));
+                context.startActivity(intent);
+            } else {
+                startActivity(new LoginActivity());
             }
         });
 
         //服务订单
-        serviceOrderText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityWithLoginStatus(new ServiceOrderActivity());
-            }
-        });
+        serviceOrderText.setOnClickListener(v ->
+                startActivityWithLoginStatus(new ServiceOrderActivity()));
 
     }
 

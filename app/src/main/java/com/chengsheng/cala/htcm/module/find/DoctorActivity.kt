@@ -31,7 +31,7 @@ class DoctorActivity : BaseRefreshActivity<DoctorProtocol.ItemsBean>() {
         OrganizationRepository.default?.getAllDoctor(page)
                 ?.subscribe({
 
-                    fillData(ArrayList())
+                    fillData(it.items)
 
                 }) {
                     showError(it)

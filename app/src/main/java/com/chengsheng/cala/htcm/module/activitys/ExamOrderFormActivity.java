@@ -4,26 +4,21 @@ import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.chengsheng.cala.htcm.base.BaseActivity;
-import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
-import com.chengsheng.cala.htcm.protocol.FamiliesList;
-import com.chengsheng.cala.htcm.protocol.FamiliesListItem;
+import com.chengsheng.cala.htcm.adapter.MainViewPagerAdapter;
+import com.chengsheng.cala.htcm.base.BaseActivity;
+import com.chengsheng.cala.htcm.constant.GlobalConstant;
+import com.chengsheng.cala.htcm.module.fragments.ExamOrderFormFragment;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
+import com.chengsheng.cala.htcm.protocol.FamiliesList;
+import com.chengsheng.cala.htcm.protocol.FamiliesListItem;
 import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
 import com.chengsheng.cala.htcm.utils.MessageEvent;
 import com.chengsheng.cala.htcm.utils.UpdateConditionInterface;
-import com.chengsheng.cala.htcm.adapter.MainViewPagerAdapter;
-import com.chengsheng.cala.htcm.widget.ConditionPopupWindow;
-import com.chengsheng.cala.htcm.module.fragments.ExamOrderFormFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -39,9 +34,10 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
+/**
+ * 体检订单
+ */
 public class ExamOrderFormActivity extends BaseActivity implements ExamOrderFormFragment.OnFragmentInteractionListener, UpdateConditionInterface {
-    private TextView title;
-    private ImageView back, iconButton;
     private TabLayout orderFormSelectHeader;
     private ViewPager orderFormFragment;
 
@@ -51,47 +47,37 @@ public class ExamOrderFormActivity extends BaseActivity implements ExamOrderForm
 
     private Retrofit retrofit;
     private HTCMApp app;
-    private StringBuffer sb;
-
-    private String id;
-    private boolean isGetFamilies = false;
-
 
     private void initViews() {
-        title = findViewById(R.id.title_header_exam_order_form).findViewById(R.id.menu_bar_title);
-        back = findViewById(R.id.title_header_exam_order_form).findViewById(R.id.back_login);
-        iconButton = findViewById(R.id.title_header_exam_order_form).findViewById(R.id.search_button);
         orderFormSelectHeader = findViewById(R.id.order_form_select_header);
         orderFormFragment = findViewById(R.id.order_form_fragment);
-        title.setText("体检订单");
-        iconButton.setImageResource(R.mipmap.tijian_xuanren);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(MessageEvent messageEvent) {
-        isGetFamilies = messageEvent.getFamiliesListsState();
+        boolean isGetFamilies = messageEvent.getFamiliesListsState();
     }
 
     private void initDatas() {
 
         fragments = new ArrayList<>();
-        for (int i = 0; i < marks.length; i++) {
-            orderFormSelectHeader.addTab(orderFormSelectHeader.newTab().setText(marks[i]));
-            fragments.add(ExamOrderFormFragment.newInstance(marks[i], ""));
+        for (String mark : marks) {
+            orderFormSelectHeader.addTab(orderFormSelectHeader.newTab().setText(mark));
+            fragments.add(ExamOrderFormFragment.newInstance(mark, ""));
         }
 
         MainViewPagerAdapter adapter = new MainViewPagerAdapter(getSupportFragmentManager(), fragments);
         orderFormFragment.setAdapter(adapter);
-
         orderFormSelectHeader.setupWithViewPager(orderFormFragment);
 
-        final ConditionPopupWindow window = new ConditionPopupWindow(this, listDatas);
-        iconButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                window.showAsDropDown(iconButton);
-            }
-        });
+        //筛选
+//        final ConditionPopupWindow window = new ConditionPopupWindow(this, listDatas);
+//        iconButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                window.showAsDropDown(iconButton);
+//            }
+//        });
     }
 
     private void getFamilies() {
@@ -114,9 +100,6 @@ public class ExamOrderFormActivity extends BaseActivity implements ExamOrderForm
                             map.put("ID", String.valueOf(familiesListItem.getId()));
                             listDatas.add(map);
                         }
-
-
-
                     }
 
                     @Override
@@ -154,7 +137,7 @@ public class ExamOrderFormActivity extends BaseActivity implements ExamOrderForm
         CallBackDataAuth.setUpdateConditionInterface(this);
 
 
-        id = getIntent().getStringExtra("CUSTOMER_ID");
+        String id = getIntent().getStringExtra("CUSTOMER_ID");
 
         getFamilies();
         initViews();

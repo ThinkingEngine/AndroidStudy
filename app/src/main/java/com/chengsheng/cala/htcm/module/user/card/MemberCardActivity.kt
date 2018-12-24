@@ -1,4 +1,4 @@
-package com.chengsheng.cala.htcm.module.user
+package com.chengsheng.cala.htcm.module.user.card
 
 import android.annotation.SuppressLint
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -23,10 +23,6 @@ class MemberCardActivity : BaseRefreshActivity<Any>() {
     }
 
     override fun initViews() {
-        titleBar?.setFinishClickListener {
-            finish()
-        }
-
         //添加卡
         RxView.clicks(layoutAddCard).subscribe {
             startActivity(AddMemCardActivity())

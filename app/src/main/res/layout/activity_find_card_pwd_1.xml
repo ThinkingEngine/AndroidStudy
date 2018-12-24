@@ -10,29 +10,7 @@
         android:id="@+id/titleBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="添加健康礼卡" />
-
-    <EditText
-        style="@style/BasicInputFiledStyle"
-        android:layout_marginStart="@dimen/dp_16"
-        android:layout_marginEnd="@dimen/dp_16"
-        android:hint="卡号" />
-
-    <View
-        style="@style/horizontalLineStyle"
-        android:layout_marginStart="@dimen/dp_16"
-        android:layout_marginEnd="@dimen/dp_16" />
-
-    <EditText
-        style="@style/BasicInputFiledStyle"
-        android:layout_marginStart="@dimen/dp_16"
-        android:layout_marginEnd="@dimen/dp_16"
-        android:hint="卡密码" />
-
-    <View
-        style="@style/horizontalLineStyle"
-        android:layout_marginStart="@dimen/dp_16"
-        android:layout_marginEnd="@dimen/dp_16" />
+        app:title="找回卡密码" />
 
     <TextView
         android:id="@+id/tvBindMobile"
@@ -77,7 +55,6 @@
             android:text="获取验证码"
             android:textColor="#20D3B3"
             android:textSize="@dimen/sp_14" />
-
     </LinearLayout>
 
     <View
@@ -86,8 +63,11 @@
         android:layout_marginEnd="@dimen/dp_16" />
 
     <Button
+        android:id="@+id/btnNextStep"
         style="@style/BasicButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
         android:layout_margin="@dimen/dp_20"
-        android:text="确定绑定" />
+        android:text="下一步" />
 
 </LinearLayout>

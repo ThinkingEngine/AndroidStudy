@@ -1,8 +1,7 @@
-package com.chengsheng.cala.htcm.module.user
+package com.chengsheng.cala.htcm.module.user.card
 
 import com.chengsheng.cala.htcm.R
 import com.chengsheng.cala.htcm.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_add_card.*
 
 /**
  * Author: 任和
@@ -16,9 +15,6 @@ class AddMemCardActivity : BaseActivity() {
     }
 
     override fun initView() {
-        titleBar?.setFinishClickListener {
-            finish()
-        }
     }
 
     override fun getData() {

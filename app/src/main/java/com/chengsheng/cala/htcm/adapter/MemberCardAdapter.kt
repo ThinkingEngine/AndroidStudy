@@ -6,7 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chengsheng.cala.htcm.R
 import com.chengsheng.cala.htcm.base.BaseActivity
-import com.chengsheng.cala.htcm.module.user.MemberCardDetailActivity
+import com.chengsheng.cala.htcm.module.user.card.MemberCardDetailActivity
 import com.chengsheng.cala.htcm.widget.MemberCardPopWindow
 
 /**

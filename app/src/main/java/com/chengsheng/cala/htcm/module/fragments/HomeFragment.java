@@ -3,6 +3,7 @@ package com.chengsheng.cala.htcm.module.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -47,6 +48,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import cn.bingoogolapple.bgabanner.BGABanner;
+import cn.bingoogolapple.bgabanner.BGALocalImageSize;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DefaultObserver;
 import io.reactivex.observers.DisposableObserver;
@@ -62,9 +65,9 @@ public class HomeFragment extends Fragment implements UpdateAIAssisont, UpdateSt
 
     private Retrofit retrofit;
 
-    Handler mHandler = new Handler();
+//    Handler mHandler = new Handler();
 
-    private ViewPager bodyBanner;
+    private BGABanner bodyBanner;
     private MyRecyclerView newsRecyclerView;
     private MyRecyclerView appointmentRecyclerView;
     private SwipeRefreshLayout refreshPage;
@@ -73,11 +76,9 @@ public class HomeFragment extends Fragment implements UpdateAIAssisont, UpdateSt
     private ImageView examEeportMark;
     private RelativeLayout aiAssistant;
     private RelativeLayout recommendNews;
-    private LinearLayout pointGroup;
     private FrameLayout newMessage;
     private ImageView currentHasMessage;
 
-    private HTCMApp app;
 
     private int[] barImages = {R.mipmap.bannera, R.mipmap.bannerb, R.mipmap.bannerc};//bar图片数据
 
@@ -94,7 +95,6 @@ public class HomeFragment extends Fragment implements UpdateAIAssisont, UpdateSt
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        app = HTCMApp.create(getContext());
         CallBackDataAuth.setUpdateAIAssisont(this);
         CallBackDataAuth.setUpdateStateInterface(this);
     }
@@ -103,171 +103,56 @@ public class HomeFragment extends Fragment implements UpdateAIAssisont, UpdateSt
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //生成主页面视图.
         View rootView = inflater.inflate(R.layout.fragment_main_page, container, false);
-
-        //关联主页面控件。
-        bodyBanner = rootView.findViewById(R.id.banner_a);//bar
-        appointmentRecyclerView = rootView.findViewById(R.id.appointment_recycler_view);
-        newsRecyclerView = rootView.findViewById(R.id.recommend_news_recycler_view);
-        refreshPage = rootView.findViewById(R.id.refresh_main_page);
-        appointmentExamMark = rootView.findViewById(R.id.appointment_exam_mark);
-        myExamMark = rootView.findViewById(R.id.my_exam_mark);
-        aiAssistant = rootView.findViewById(R.id.ai_assistant);
-        recommendNews = rootView.findViewById(R.id.recommend_news);
-        examEeportMark = rootView.findViewById(R.id.exam_report_mark);
-        pointGroup = rootView.findViewById(R.id.point_group);
-        newMessage = rootView.findViewById(R.id.title_header_main_page).findViewById(R.id.new_message);
-        currentHasMessage = rootView.findViewById(R.id.title_header_main_page).findViewById(R.id.current_has_message);
-
-        appointmentRecyclerView.setFocusable(false);
-        appointmentRecyclerView.setNestedScrollingEnabled(false);
-        newsRecyclerView.setFocusable(false);
-        newsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        newsRecyclerView.setNestedScrollingEnabled(false);
-        currentHasMessage.setVisibility(View.INVISIBLE);
+        initViews(rootView);
 
         //检测当前是否有未读信息。
         updateServiceSMS();
-
         //为“智能助理”列表注入数据
         updateAIAssistant();
+        //新闻列表
         updateNews();
 
-        final List<ImageView> data = new ArrayList<>();
-        for (int i = 0; i < barImages.length; i++) {
-            ImageView imageView = new ImageView(getContext());
-            final int finalI = i;
-            //查看详情
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getContext(), BarADActivity.class);
-                    intent.putExtra("NUM", finalI);
-                    getContext().startActivity(intent);
-                }
-            });
-            imageView.setImageResource(barImages[i]);
-            data.add(imageView);
-        }
-        for (int i = 0; i < barImages.length; i++) {
-            ImageView point = new ImageView(getContext());
-            point.setImageResource(R.drawable.selecter_white_dot);
-            int pointSize = getResources().getDimensionPixelSize(R.dimen.point);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(pointSize, pointSize);
-            if (i > 0) {
-                params.leftMargin = getResources().getDimensionPixelSize(R.dimen.point);
-                point.setSelected(false);
-            } else {
-                point.setSelected(true);
-            }
-
-            point.setLayoutParams(params);
-            pointGroup.addView(point);
-        }
-
-        BannerAdapter bannerAdapter = new BannerAdapter(bodyBanner, data);
-        bodyBanner.setAdapter(bannerAdapter);
-
-        bodyBanner.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int i, float v, int i1) {
-
-            }
-
-            int lastPosition;
-
-            @Override
-            public void onPageSelected(int i) {
-                i = i % data.size();
-                pointGroup.getChildAt(i).setSelected(true);
-                pointGroup.getChildAt(lastPosition).setSelected(false);
-                lastPosition = i;
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int i) {
-
-            }
+        BGALocalImageSize localImageSize = new BGALocalImageSize(1080,504,540,252);
+        bodyBanner.setData(localImageSize,ImageView.ScaleType.CENTER_CROP,R.mipmap.bannera,R.mipmap.bannerb,R.mipmap.bannerc);
+        bodyBanner.setDelegate((banner, itemView, model, position) -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("NUM",position);
+            ActivityUtil.Companion.startActivity(getContext(),new BarADActivity(),bundle);
         });
-
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                int currentPosition = bodyBanner.getCurrentItem();
-                if (currentPosition == Objects.requireNonNull(bodyBanner.getAdapter()).getCount() - 1) {
-                    bodyBanner.setCurrentItem(0);
-                } else {
-                    bodyBanner.setCurrentItem(currentPosition + 1);
-                }
-
-                mHandler.postDelayed(this, 5000);
-            }
-        }, 5000);
-
 
         //跳转到“智能助理”
-        aiAssistant.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ActivityUtil.Companion.startActivityWithLoginStatus(getContext(), new AIAssistantActivity());
-            }
-        });
+        aiAssistant.setOnClickListener(v -> ActivityUtil.Companion.startActivityWithLoginStatus(getContext(), new AIAssistantActivity()));
 
         //跳转到 “我的体检”
-        myExamMark.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                ActivityUtil.Companion.startActivityWithLoginStatus(getContext(), new MyExamActivity());
-            }
-        });
+        myExamMark.setOnClickListener(v -> ActivityUtil.Companion.startActivityWithLoginStatus(getContext(), new MyExamActivity()));
 
         //跳转到“体检报告”
-        examEeportMark.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                ActivityUtil.Companion.startActivityWithLoginStatus(getContext(), new ExamReportActivity());
-            }
-        });
+        examEeportMark.setOnClickListener(v -> ActivityUtil.Companion.startActivityWithLoginStatus(getContext(), new ExamReportActivity()));
 
         //刷新主页面
-        refreshPage.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                if (UserUtil.isLogin()) {
-                    updateServiceSMS();
-                    updateNews();
-                    updateAIAssistant();
-                } else {
-                    updateNews();
-                }
-
+        refreshPage.setOnRefreshListener(() -> {
+            if (UserUtil.isLogin()) {
+                updateServiceSMS();
+                updateNews();
+                updateAIAssistant();
+            } else {
+                updateNews();
             }
+
         });
 
         //跳转到“体检预约”
-        appointmentExamMark.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), ExamAppointmentActivity.class);
-                startActivity(intent);
-            }
+        appointmentExamMark.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), ExamAppointmentActivity.class);
+            startActivity(intent);
         });
 
-        recommendNews.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), NewsListActivity.class);
-                startActivity(intent);
-            }
+        recommendNews.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), NewsListActivity.class);
+            startActivity(intent);
         });
 
-        newMessage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ActivityUtil.Companion.startActivityWithLoginStatus(getContext(), new ServiceMessageActivity());
-            }
-        });
+        newMessage.setOnClickListener(v -> ActivityUtil.Companion.startActivityWithLoginStatus(getContext(), new ServiceMessageActivity()));
 
         return rootView;
     }
@@ -303,19 +188,6 @@ public class HomeFragment extends Fragment implements UpdateAIAssisont, UpdateSt
                         refreshPage.setRefreshing(false);
                         FooterAdapter footAdapter = new FooterAdapter(recommendedNews.getItems(), getContext());
                         newsRecyclerView.setAdapter(footAdapter);
-//                            if (recommendedNews.getItems().size() == 4 && recommendedNews.getMeta().getPagination().getTotal_pages() > 1) {
-//                                View footer = LayoutInflater.from(getContext()).inflate(R.layout.recycler_footer_layout, null);
-//                                TextView textView = footer.findViewById(R.id.recycler_footer);
-//                                textView.setOnClickListener(new View.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(View v) {
-//                                        Toast.makeText(getContext(), "点击尾部", Toast.LENGTH_SHORT).show();
-//                                    }
-//                                });
-//                                footAdapter.addFooterView(footer);
-//                            }
-
-
                     }
 
                     @Override
@@ -416,6 +288,28 @@ public class HomeFragment extends Fragment implements UpdateAIAssisont, UpdateSt
                         refreshPage.setRefreshing(false);
                     }
                 });
+    }
+
+    private void initViews(View rootView){
+        //关联主页面控件。
+        bodyBanner = rootView.findViewById(R.id.banner_a);//bar
+        appointmentRecyclerView = rootView.findViewById(R.id.appointment_recycler_view);
+        newsRecyclerView = rootView.findViewById(R.id.recommend_news_recycler_view);
+        refreshPage = rootView.findViewById(R.id.refresh_main_page);
+        appointmentExamMark = rootView.findViewById(R.id.appointment_exam_mark);
+        myExamMark = rootView.findViewById(R.id.my_exam_mark);
+        aiAssistant = rootView.findViewById(R.id.ai_assistant);
+        recommendNews = rootView.findViewById(R.id.recommend_news);
+        examEeportMark = rootView.findViewById(R.id.exam_report_mark);
+        newMessage = rootView.findViewById(R.id.title_header_main_page).findViewById(R.id.new_message);
+        currentHasMessage = rootView.findViewById(R.id.title_header_main_page).findViewById(R.id.current_has_message);
+
+        appointmentRecyclerView.setFocusable(false);
+        appointmentRecyclerView.setNestedScrollingEnabled(false);
+        newsRecyclerView.setFocusable(false);
+        newsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        newsRecyclerView.setNestedScrollingEnabled(false);
+        currentHasMessage.setVisibility(View.INVISIBLE);
     }
 
 }

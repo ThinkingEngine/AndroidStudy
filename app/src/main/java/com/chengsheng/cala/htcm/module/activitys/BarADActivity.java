@@ -1,6 +1,7 @@
 package com.chengsheng.cala.htcm.module.activitys;
 
 import android.app.Dialog;
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,33 +60,25 @@ public class BarADActivity extends BaseActivity {
     @Override
     public void initView() {
 
-        int adNum = getIntent().getIntExtra("NUM", 1);
+        Bundle bundle = getIntent().getExtras();
+        int adNum = bundle.getInt("NUM");
 
         back = findViewById(R.id.title_header_bar_ad).findViewById(R.id.back_login);
         title = findViewById(R.id.title_header_bar_ad).findViewById(R.id.menu_bar_title);
         childTitle = findViewById(R.id.title_header_bar_ad).findViewById(R.id.search_button);
         ad = findViewById(R.id.ad_bar_image);
-//        listView = findViewById(R.id.bar_ad_listview);
 
-        childTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                shareList = new ArrayList<>();
-                shareList.add("朋友圈");
-                shareList.add("微信好友");
-                shareList.add("QQ好友");
-                shareList.add("QQ空间");
-                shareList.add("复制链接");
-                shareSelection();
-            }
+        childTitle.setOnClickListener(v -> {
+            shareList = new ArrayList<>();
+            shareList.add("朋友圈");
+            shareList.add("微信好友");
+            shareList.add("QQ好友");
+            shareList.add("QQ空间");
+            shareList.add("复制链接");
+            shareSelection();
         });
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        back.setOnClickListener(v -> finish());
 
         childTitle.setImageResource(R.mipmap.fenxiang);
         title.setText(ad_name[adNum]);
@@ -123,49 +116,10 @@ public class BarADActivity extends BaseActivity {
         ta.setInterpolator(new AccelerateInterpolator());
         ta.setDuration(200);
 
-        dissen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        dissen.setOnClickListener(v -> dialog.dismiss());
 
         BarADActivity.ShareAdapter adapter = new BarADActivity.ShareAdapter();
         gridView.setAdapter(adapter);
-    }
-
-
-    class BARBaseAdapter extends BaseAdapter {
-
-        private String uri;
-
-        public BARBaseAdapter(String uri) {
-            this.uri = uri;
-        }
-
-        @Override
-        public int getCount() {
-            return 1;
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return position;
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            View view = LayoutInflater.from(BarADActivity.this).inflate(R.layout.bar_image_layout, null);
-            SimpleDraweeView ad = view.findViewById(R.id.bar_ad);
-            ad.setImageURI(uri);
-            return view;
-        }
     }
 
     class ShareAdapter extends BaseAdapter {

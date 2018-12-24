@@ -25,6 +25,7 @@ import com.chengsheng.cala.htcm.module.activitys.MyDevicesActivity;
 import com.chengsheng.cala.htcm.module.activitys.ServiceMessageActivity;
 import com.chengsheng.cala.htcm.module.activitys.ServiceOrderActivity;
 import com.chengsheng.cala.htcm.module.activitys.SettingActivity;
+import com.chengsheng.cala.htcm.module.user.card.MemberCardActivity;
 import com.chengsheng.cala.htcm.protocol.childmodela.UserInfo;
 import com.chengsheng.cala.htcm.utils.UserUtil;
 import com.facebook.drawee.view.SimpleDraweeView;

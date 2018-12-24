@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.chengsheng.cala.htcm.widget.AppTitleBar
+        android:id="@+id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tvBindMobile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:padding="@dimen/dp_16"
+        android:text="5348989898767639876"
+        android:textColor="#333333"
+        android:textSize="@dimen/sp_16" />
+
+    <View
+        style="@style/horizontalLineStyle"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16" />
+
+    <EditText
+        style="@style/BasicInputFiledStyle"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:hint="旧密码" />
+
+    <View
+        style="@style/horizontalLineStyle"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16" />
+
+    <EditText
+        style="@style/BasicInputFiledStyle"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:hint="新密码" />
+
+    <View
+        style="@style/horizontalLineStyle"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16" />
+
+    <EditText
+        style="@style/BasicInputFiledStyle"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:hint="确认密码" />
+
+    <View
+        style="@style/horizontalLineStyle"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16" />
+
+    <Button
+        style="@style/BasicButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:layout_margin="@dimen/dp_20"
+        android:text="确认" />
+
+    <TextView
+        android:id="@+id/tvForgetPwd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="忘记旧密码？"
+        android:textColor="#FF20D3B3"
+        android:textSize="@dimen/sp_14" />
+
+</LinearLayout>

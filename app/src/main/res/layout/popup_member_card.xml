@@ -33,9 +33,15 @@
             android:textSize="@dimen/sp_18" />
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_60"
+            android:layout_marginTop="@dimen/dp_40"
+            android:src="@mipmap/zhineng_tiaoxingma_big" />
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="@dimen/dp_16"
             android:src="@mipmap/erweima_big" />
 
         <TextView

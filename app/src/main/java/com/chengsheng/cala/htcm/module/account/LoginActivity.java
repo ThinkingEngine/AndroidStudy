@@ -231,8 +231,8 @@ public class LoginActivity extends BaseActivity {
         registerTV = findViewById(R.id.register_button);
         loginTV = findViewById(R.id.login_button);
         retrieveTV = findViewById(R.id.retrieve_pw_button);
-        cellphoneEdittext = findViewById(R.id.cellphone_edittext);
-        passwordEdittext = findViewById(R.id.password_edittext);
+        cellphoneEdittext = findViewById(R.id.et_login_account);
+        passwordEdittext = findViewById(R.id.et_login_password);
         deleteInput = findViewById(R.id.delete_input);
         previewIcon = findViewById(R.id.preview_icon);
         loginTelService = findViewById(R.id.login_tel_service);

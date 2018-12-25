@@ -2,7 +2,6 @@ package com.chengsheng.cala.htcm.module.activitys;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,7 +33,7 @@ import retrofit2.Retrofit;
 
 /**
  * 服务通知类
- * */
+ */
 
 public class ServiceMessageActivity extends BaseActivity implements UpdateStateInterface, CheckServiceInterface {
 
@@ -63,7 +62,6 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
 
         initActivityParam();
         initViews();
-
 
         serviceMessageList.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
@@ -107,8 +105,6 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
                     @Override
                     public void onNext(MessageList messageList) {
 
-                        serviceMessageList.setLayoutManager(new LinearLayoutManager(ServiceMessageActivity.this));
-
                         if (!addMode) {
                             dataCollect = messageList.getItems();
                             for (MessageItem messageItem : dataCollect) {
@@ -124,12 +120,12 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
                             currentPage = 0;
 
                         } else {
-                            if(messageList.getItems().isEmpty()){
+                            if (messageList.getItems().isEmpty()) {
                                 showShortToast("已无更多数据了");
                                 currentPage--;
-                            }else{
+                            } else {
 
-                                for(int i = 0;i < messageList.getItems().size();i++){
+                                for (int i = 0; i < messageList.getItems().size(); i++) {
                                     dataCollect.add(messageList.getItems().get(i));
                                 }
                                 adapter.notifyDataSetChanged();
@@ -142,21 +138,19 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
                         }
 
 
-                        childTitle.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (childTitle.isSelected()) {
-                                    childTitle.setText("全部已读");
-                                    childTitle.setTextColor(getResources().getColor(R.color.colorThrText));
-                                    childTitle.setSelected(false);
-                                    List<String> check = new ArrayList<>();
-                                    for (MessageItem item : dataCollect) {
-                                        if (!item.isIs_read()) {
-                                            check.add(String.valueOf(item.getId()));
-                                        }
+                        childTitle.setOnClickListener(v -> {
+                            if (childTitle.isSelected()) {
+                                childTitle.setText("全部已读");
+                                childTitle.setTextColor(getResources().getColor(R.color.colorThrText));
+                                childTitle.setSelected(false);
+                                List<String> check = new ArrayList<>();
+                                for (MessageItem item : dataCollect) {
+                                    if (!item.isIs_read()) {
+                                        check.add(String.valueOf(item.getId()));
                                     }
-                                    postCheckSMS(check);
                                 }
+//                                CallBackDataAuth.doUpdateStateInterface(true);
+                                postCheckSMS(check);
                             }
                         });
 
@@ -189,6 +183,7 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
             retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
         }
 
+        loadingDialog.show();
         NetService service = retrofit.create(NetService.class);
         service.markMessageReaded(app.getTokenType() + " " + app.getAccessToken(), checks)
                 .subscribeOn(Schedulers.newThread())
@@ -202,6 +197,7 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
 
                     @Override
                     public void onError(Throwable e) {
+                        loadingDialog.cancel();
                         Log.e("TAG", "Service check fal!");
                     }
 
@@ -229,7 +225,7 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
 
     }
 
-    private void initViews(){
+    private void initViews() {
         ImageView back = findViewById(R.id.title_header_service_messages).findViewById(R.id.back_login);
         TextView title = findViewById(R.id.title_header_service_messages).findViewById(R.id.menu_bar_title);
         childTitle = findViewById(R.id.title_header_service_messages).findViewById(R.id.message_mark_text);
@@ -244,16 +240,12 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
         serviceMessageList.setFocusableInTouchMode(false);
 
         title.setText("服务通知");
+        serviceMessageList.setLayoutManager(new LinearLayoutManager(this));
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        back.setOnClickListener(v -> finish());
     }
 
-    private void initActivityParam(){
+    private void initActivityParam() {
         app = HTCMApp.create(getApplicationContext());
         CallBackDataAuth.setUpdateStateInterface(this);
         CallBackDataAuth.setCheckServiceInterface(this);

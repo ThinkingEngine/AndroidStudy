@@ -25,6 +25,8 @@ public class CallBackDataAuth {
 
     private static ConditionInterface mConditionInterface;
 
+    private static LoginBackInterface mLoginBackInterface;
+
 
     public static void setAuthStateCallBack(AuthStateCallBack authStateCallBack){
         mAuthStateCallBack = authStateCallBack;
@@ -88,6 +90,14 @@ public class CallBackDataAuth {
 
     public static void doConditionInterface(List<CompareItem> condition){
         mConditionInterface.selectCondition(condition);
+    }
+
+    public static void setLoginBackInterface(LoginBackInterface loginBackInterface){
+        mLoginBackInterface = loginBackInterface;
+    }
+
+    public static void doLoginBackInterface(boolean hasLogin){
+        mLoginBackInterface.loginStatus(hasLogin);
     }
 
 }

@@ -130,4 +130,7 @@ class RetrofitHelper private constructor() {
     //会员卡
     var memberCardService = httpCreate(MemberCardService::class.java)
 
+    //套餐
+    var comboService = httpCreate(ComboService::class.java)
+
 }

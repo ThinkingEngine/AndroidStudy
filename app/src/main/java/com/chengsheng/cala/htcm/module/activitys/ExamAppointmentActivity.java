@@ -1,9 +1,6 @@
 package com.chengsheng.cala.htcm.module.activitys;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.ImageView;
@@ -52,8 +49,6 @@ public class ExamAppointmentActivity extends BaseActivity implements HeaderScrol
     private TextView comboSalesVolumeA, comboSalesVolumeB;
     private ImageView comboRecommendButton;
 
-    private PopupWindow window;
-
     private ExamAppointmentRecyclerAdapter adapter;
     private ExamApponitments examApponitmentsDatas;
     private ZLoadingDialog loadDialog;
@@ -85,7 +80,6 @@ public class ExamAppointmentActivity extends BaseActivity implements HeaderScrol
 
     @Override
     protected void onDestroy() {
-//        window.dismiss();
         super.onDestroy();
     }
 
@@ -101,142 +95,79 @@ public class ExamAppointmentActivity extends BaseActivity implements HeaderScrol
         loadDialog = new ZLoadingDialog(this);
         loadDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
         loadDialog.setLoadingColor(getResources().getColor(R.color.colorPrimary));
-        loadDialog.setHintText("加载中......");
+        loadDialog.setHintText("加载中...");
         loadDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
         loadDialog.setDialogBackgroundColor(getResources().getColor(R.color.colorText));
 
-        title = findViewById(R.id.title_header_exam_appointment).findViewById(R.id.menu_bar_title);
-        back = findViewById(R.id.title_header_exam_appointment).findViewById(R.id.back_login);
-        search = findViewById(R.id.title_header_exam_appointment).findViewById(R.id.search_button);
-        headerScrollView = findViewById(R.id.scroll_view_header);
-        imageView = findViewById(R.id.rl1);
-        textView = findViewById(R.id.rl2);
-        examAppointmentItem = findViewById(R.id.exam_appointment_recycler);//体检预约列表。
-        refreshExamAppointmentPage = findViewById(R.id.refresh_exam_appointment_page);
-        comboRecommendButton = findViewById(R.id.combo_recommend_button);
+        initViews();
 
-        title.setText("体检预约");//修改标题
-
-        allPriceA = findViewById(R.id.price_model_a).findViewById(R.id.all_price);
-        allPriceB = findViewById(R.id.price_model_b).findViewById(R.id.all_price);
-        allPriceStateA = findViewById(R.id.price_model_a).findViewById(R.id.all_price_state);
-        allPriceStateB = findViewById(R.id.price_model_b).findViewById(R.id.all_price_state);
-        comboSynthesizeA = findViewById(R.id.price_model_a).findViewById(R.id.combo_synthesize);
-        comboSynthesizeB = findViewById(R.id.price_model_b).findViewById(R.id.combo_synthesize);
-        comboSalesVolumeA = findViewById(R.id.price_model_a).findViewById(R.id.combo_sales_volume);
-        comboSalesVolumeB = findViewById(R.id.price_model_b).findViewById(R.id.combo_sales_volume);
-
-        setTextState(true, false, false);
-        //获取网络数据。
-        updataComboInfo(String.valueOf(1), currentFilter, true);
-
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ExamAppointmentActivity.this, SearchActivity.class);
-                startActivity(intent);
-            }
-        });
 
         //下拉刷新
-        refreshExamAppointmentPage.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                updataComboInfo(String.valueOf(1), currentFilter, false);
-            }
-        });
+        refreshExamAppointmentPage.setOnRefreshListener(() -> updataComboInfo(String.valueOf(1), currentFilter, false));
 
-        allPriceA.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (value) {
-                    currentFilter = GlobalConstant.COMBO_TYPE_B;
-                    value = false;
-                    allPriceStateA.setSelected(value);
-                    allPriceStateB.setSelected(value);
-                } else {
-                    currentFilter = GlobalConstant.COMBO_TYPE_C;
-                    value = true;
-                    allPriceStateA.setSelected(value);
-                    allPriceStateB.setSelected(value);
-                }
-
-                updataComboInfo(String.valueOf(1), currentFilter, true);
-                setTextState(false, true, false);
-            }
-        });
-
-        allPriceB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (value) {
-                    currentFilter = GlobalConstant.COMBO_TYPE_B;
-                    value = false;
-                    allPriceStateA.setSelected(value);
-                    allPriceStateB.setSelected(value);
-                } else {
-                    currentFilter = GlobalConstant.COMBO_TYPE_C;
-                    value = true;
-                    allPriceStateA.setSelected(value);
-                    allPriceStateB.setSelected(value);
-                }
-
+        allPriceA.setOnClickListener(v -> {
+            if (value) {
                 currentFilter = GlobalConstant.COMBO_TYPE_B;
-                updataComboInfo(String.valueOf(1), currentFilter, true);
-                setTextState(false, true, false);
+                value = false;
+                allPriceStateA.setSelected(value);
+                allPriceStateB.setSelected(value);
+            } else {
+                currentFilter = GlobalConstant.COMBO_TYPE_C;
+                value = true;
+                allPriceStateA.setSelected(value);
+                allPriceStateB.setSelected(value);
             }
+
+            updataComboInfo(String.valueOf(1), currentFilter, true);
+            setTextState(false, true, false);
         });
 
-        comboSynthesizeA.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentFilter = GlobalConstant.COMBO_TYPE_A;
-                updataComboInfo(String.valueOf(1), currentFilter, true);
-                setTextState(true, false, false);
+        allPriceB.setOnClickListener(v -> {
+            if (value) {
+                currentFilter = GlobalConstant.COMBO_TYPE_B;
+                value = false;
+                allPriceStateA.setSelected(value);
+                allPriceStateB.setSelected(value);
+            } else {
+                currentFilter = GlobalConstant.COMBO_TYPE_C;
+                value = true;
+                allPriceStateA.setSelected(value);
+                allPriceStateB.setSelected(value);
             }
-        });
-        comboSynthesizeB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentFilter = GlobalConstant.COMBO_TYPE_A;
-                updataComboInfo(String.valueOf(1), currentFilter, true);
-                setTextState(true, false, false);
-            }
+
+            currentFilter = GlobalConstant.COMBO_TYPE_B;
+            updataComboInfo(String.valueOf(1), currentFilter, true);
+            setTextState(false, true, false);
         });
 
-        comboSalesVolumeA.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentFilter = GlobalConstant.COMBO_TYPE_D;
-                updataComboInfo(String.valueOf(1), currentFilter, true);
-                setTextState(false, false, true);
-            }
+        comboSynthesizeA.setOnClickListener(v -> {
+            currentFilter = GlobalConstant.COMBO_TYPE_A;
+            updataComboInfo(String.valueOf(1), currentFilter, true);
+            setTextState(true, false, false);
         });
-        comboSalesVolumeB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentFilter = GlobalConstant.COMBO_TYPE_D;
-                updataComboInfo(String.valueOf(1), currentFilter, true);
-                setTextState(false, false, true);
-            }
+        comboSynthesizeB.setOnClickListener(v -> {
+            currentFilter = GlobalConstant.COMBO_TYPE_A;
+            updataComboInfo(String.valueOf(1), currentFilter, true);
+            setTextState(true, false, false);
+        });
+
+        comboSalesVolumeA.setOnClickListener(v -> {
+            currentFilter = GlobalConstant.COMBO_TYPE_D;
+            updataComboInfo(String.valueOf(1), currentFilter, true);
+            setTextState(false, false, true);
+        });
+        comboSalesVolumeB.setOnClickListener(v -> {
+            currentFilter = GlobalConstant.COMBO_TYPE_D;
+            updataComboInfo(String.valueOf(1), currentFilter, true);
+            setTextState(false, false, true);
         });
 
         final CustomComboDialog dialog = new CustomComboDialog(ExamAppointmentActivity.this);
 
         //定制套餐
-        comboRecommendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                dialog.show();
-            }
+        comboRecommendButton.setOnClickListener(v -> {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            dialog.show();
         });
         HeaderScrollView.setCallback(this);
 
@@ -245,7 +176,8 @@ public class ExamAppointmentActivity extends BaseActivity implements HeaderScrol
 
     @Override
     public void getData() {
-
+        //获取网络数据。
+        updataComboInfo(String.valueOf(1), currentFilter, true);
     }
 
     private void setTextState(boolean Synthesize, boolean price, boolean sales) {
@@ -321,6 +253,33 @@ public class ExamAppointmentActivity extends BaseActivity implements HeaderScrol
         if (status) {
             updataComboInfo(String.valueOf(1), currentFilter, true);
         }
+    }
+
+    private void initViews() {
+        title = findViewById(R.id.title_header_exam_appointment).findViewById(R.id.menu_bar_title);
+        back = findViewById(R.id.title_header_exam_appointment).findViewById(R.id.back_login);
+        search = findViewById(R.id.title_header_exam_appointment).findViewById(R.id.search_button);
+        headerScrollView = findViewById(R.id.scroll_view_header);
+        imageView = findViewById(R.id.rl1);
+        textView = findViewById(R.id.rl2);
+        examAppointmentItem = findViewById(R.id.exam_appointment_recycler);//体检预约列表。
+        refreshExamAppointmentPage = findViewById(R.id.refresh_exam_appointment_page);
+        comboRecommendButton = findViewById(R.id.combo_recommend_button);
+
+        allPriceA = findViewById(R.id.price_model_a).findViewById(R.id.all_price);
+        allPriceB = findViewById(R.id.price_model_b).findViewById(R.id.all_price);
+        allPriceStateA = findViewById(R.id.price_model_a).findViewById(R.id.all_price_state);
+        allPriceStateB = findViewById(R.id.price_model_b).findViewById(R.id.all_price_state);
+        comboSynthesizeA = findViewById(R.id.price_model_a).findViewById(R.id.combo_synthesize);
+        comboSynthesizeB = findViewById(R.id.price_model_b).findViewById(R.id.combo_synthesize);
+        comboSalesVolumeA = findViewById(R.id.price_model_a).findViewById(R.id.combo_sales_volume);
+        comboSalesVolumeB = findViewById(R.id.price_model_b).findViewById(R.id.combo_sales_volume);
+
+        title.setText("体检预约");//修改标题
+        setTextState(true, false, false);
+        back.setOnClickListener(v -> finish());
+        //进入搜索页面
+        search.setOnClickListener(v -> startActivity(new SearchActivity()));
     }
 
 

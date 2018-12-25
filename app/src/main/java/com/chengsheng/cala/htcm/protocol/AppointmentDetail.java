@@ -19,6 +19,7 @@ public class AppointmentDetail implements Serializable {
     private String intro;//
     private String exam_notice;//
     private boolean is_hot;//
+    private String reserve_notice;
     private List<PackageTag> package_tag;//
     private List<DiseaseType> screen_disease_type;//
     private List<com.chengsheng.cala.htcm.protocol.childmodelb.ExamItem> exam_items;//
@@ -138,6 +139,14 @@ public class AppointmentDetail implements Serializable {
 
     public void setOrganization(Organization organization) {
         this.organization = organization;
+    }
+
+    public String getReserve_notice() {
+        return reserve_notice;
+    }
+
+    public void setReserve_notice(String reserve_notice) {
+        this.reserve_notice = reserve_notice;
     }
 
     @Override

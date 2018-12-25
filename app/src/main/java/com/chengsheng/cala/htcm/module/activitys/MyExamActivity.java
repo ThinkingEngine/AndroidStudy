@@ -24,6 +24,8 @@ import com.chengsheng.cala.htcm.adapter.MyExamPagerViewAdapter;
 import com.chengsheng.cala.htcm.utils.UserUtil;
 import com.chengsheng.cala.htcm.widget.ConditionPopupWindow;
 import com.chengsheng.cala.htcm.module.fragments.MyExamAllFragment;
+import com.zyao89.view.zloading.ZLoadingDialog;
+import com.zyao89.view.zloading.Z_TYPE;
 
 
 import java.util.ArrayList;
@@ -50,7 +52,8 @@ public class MyExamActivity extends BaseActivity implements TabLayout.OnTabSelec
     private String token;
 
     private Retrofit retrofit;
-    private NetService service;
+    private ZLoadingDialog loadingDialog;
+    private boolean getFamilies = true;//是否已经获取到家人信息
 
     @Override
     public int getLayoutId() {
@@ -60,16 +63,20 @@ public class MyExamActivity extends BaseActivity implements TabLayout.OnTabSelec
     @Override
     public void initView() {
         app = HTCMApp.create(getApplicationContext());
-
+        loadingDialog = new ZLoadingDialog(this);
+        loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
+        loadingDialog.setHintText("加载中...");
+        loadingDialog.setLoadingColor(getResources().getColor(R.color.colorPrimary));
+        loadingDialog.setDialogBackgroundColor(getResources().getColor(R.color.colorText));
+        loadingDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
+        loadingDialog.setCancelable(false);
 
         //初始化Activity数据.
         token = app.getTokenType() + " " + app.getAccessToken();
-
+        //获取家人信息
         getFamilies();
-
-
+        //初始化界面
         initViews();
-
         //初始化碎片
         List<Fragment> fragments = new ArrayList<>();
         for (int i = 0; i < tabs.length; i++) {
@@ -87,9 +94,10 @@ public class MyExamActivity extends BaseActivity implements TabLayout.OnTabSelec
 
         final List<Map<String, String>> listDatas = new ArrayList<>();
         final ConditionPopupWindow window = new ConditionPopupWindow(this, listDatas);
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        searchButton.setOnClickListener(v -> {
+            if(familiesList.getItems().isEmpty()){
+                getFamilies();
+            }else{
                 if (familiesList != null && listDatas.isEmpty()) {
                     Map<String, String> header = new HashMap<>();
                     header.put("SELECT", "false");
@@ -106,6 +114,7 @@ public class MyExamActivity extends BaseActivity implements TabLayout.OnTabSelec
                 }
                 window.showAsDropDown(searchButton);
             }
+
         });
     }
 
@@ -121,6 +130,9 @@ public class MyExamActivity extends BaseActivity implements TabLayout.OnTabSelec
             retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
         }
 
+        if(!getFamilies){
+            loadingDialog.show();
+        }
         NetService service = retrofit.create(NetService.class);
         service.getFamiliesList(token)
                 .subscribeOn(Schedulers.newThread())
@@ -128,19 +140,21 @@ public class MyExamActivity extends BaseActivity implements TabLayout.OnTabSelec
                 .subscribe(new DisposableObserver<FamiliesList>() {
                     @Override
                     public void onNext(FamiliesList list) {
-                        showShortToast("获取到家人列表");
                         familiesList = list;
+                        getFamilies = true;
+                        loadingDialog.cancel();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        showShortToast("未能获取到家人列表");
-                        Log.e("TAG", "请求家人列表失败! " + e.toString());
+                        showShortToast("未能获取到家人列表,请重试!");
+                        getFamilies = false;
+                        loadingDialog.cancel();
                     }
 
                     @Override
                     public void onComplete() {
-
+                        loadingDialog.cancel();
                     }
                 });
 

@@ -18,6 +18,7 @@ import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.module.home.MainActivity;
 import com.chengsheng.cala.htcm.protocol.ZhiFuBaoSign;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
@@ -93,40 +94,31 @@ public class ModePaymentActivity extends BaseActivity {
         title.setText("支付方式");
         totalPayText.setText("¥"+orderVal);
 
-        payModeZhifubaoBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (selectPayModeButton.isSelected()) {
-                    selectPayModeButton.setSelected(false);
-                    payMode = "";
-                } else {
-                    selectPayModeButton.setSelected(true);
-                    payMode = "ZFB";
-                }
+        payModeZhifubaoBox.setOnClickListener(v -> {
+            if (selectPayModeButton.isSelected()) {
+                selectPayModeButton.setSelected(false);
+                payMode = "";
+            } else {
+                selectPayModeButton.setSelected(true);
+                payMode = "ZFB";
             }
         });
 
-        immediatePayButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (payMode.equals("")) {
-                    Toast.makeText(ModePaymentActivity.this, "请选择支付方式!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Thread payThread;
-                    payThread = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            PayTask payTask = new PayTask(ModePaymentActivity.this);
+        immediatePayButton.setOnClickListener(v -> {
+            if (payMode.equals("")) {
+                Toast.makeText(ModePaymentActivity.this, "请选择支付方式!", Toast.LENGTH_SHORT).show();
+            } else {
+                Thread payThread;
+                payThread = new Thread(() -> {
+                    PayTask payTask = new PayTask(ModePaymentActivity.this);
 
-                            String result = payTask.pay(FuncUtils.getString("PAY_SIGN", ""), true);
-                            Message msg = new Message();
-                            msg.what = 1;
-                            msg.obj = result;
-                            mHandler.sendMessage(msg);
-                        }
-                    });
-                    payThread.start();
-                }
+                    String result = payTask.pay(FuncUtils.getString("PAY_SIGN", ""), true);
+                    Message msg = new Message();
+                    msg.what = 1;
+                    msg.obj = result;
+                    mHandler.sendMessage(msg);
+                });
+                payThread.start();
             }
         });
 
@@ -182,12 +174,7 @@ public class ModePaymentActivity extends BaseActivity {
         builder.setMessage("您的订单暂未完成支付无法生效，请尽快完成支付。");
         builder.setPositiveButton("立即支付", null);
 
-        builder.setNegativeButton("确认返回", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                finish();
-            }
-        });
+        builder.setNegativeButton("确认返回", (dialog, which) -> startActivity(new MainActivity()));
         alertDialog = builder.create();
         alertDialog.show();
     }

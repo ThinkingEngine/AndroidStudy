@@ -29,8 +29,8 @@ class DeleteMemberCardActivity : BaseActivity() {
                 .throttleFirst(1, TimeUnit.SECONDS)
                 .subscribe {
                     val password = StringUtils.getText(etPassword)
-                    if (password.isEmpty()) {
-                        showShortToast("请输入卡密码")
+                    if (password.isEmpty() || password.length < 6) {
+                        showShortToast("请输入6位卡密码")
                         return@subscribe
                     }
                     delete(password)

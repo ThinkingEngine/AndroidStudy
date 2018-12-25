@@ -31,6 +31,7 @@ import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.data.repository.MemberRepository;
 import com.chengsheng.cala.htcm.protocol.FamiliesDetailInfo;
 import com.chengsheng.cala.htcm.protocol.FamiliesListItem;
+import com.chengsheng.cala.htcm.protocol.Message;
 import com.chengsheng.cala.htcm.protocol.URLResult;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
@@ -259,7 +260,29 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
         builder.setMessage("当前家人已经绑定手机号，修改相关信息将先通过短信验证，是否发送验证码到" + info.getMobile() + "?");
         builder.setNegativeButton("取消", null);
         builder.setPositiveButton("发送", (dialog1, which) -> {
+            MemberRepository
+                    .Companion.getDefault()
+                    .sendModCode(familiesID)
+                    .subscribe(new DefaultObserver<Message>() {
+                        @Override
+                        public void onNext(Message message) {
+                            showShortToast("已成功发送验证请求！请耐心等待验证码短信");
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("FAMILIES_INFO", info);
+                            bundle.putString("MODE","CELLPHONE"+",MODE_FAM");
+                            ActivityUtil.Companion.startActivity(FamiliesDetailsActivity.this,new ModeFamiliesInfoActivity(),bundle);
+                        }
 
+                        @Override
+                        public void onError(Throwable e) {
+                            showShortToast("验证请求失败!请重试");
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
         });
 
         dialog = builder.create();

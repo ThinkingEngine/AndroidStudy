@@ -62,9 +62,12 @@ public class API {
     public static final String DEL_FAM = SERVICE_BASE_URL + "api/family/account-family-members/";
 
     /*获取家人详细信息*/
-    public static final String GET_FAM_INFO = SERVICE_BASE_URL+"api/family/account-family-members/";
+    public static final String GET_FAM_INFO = SERVICE_BASE_URL + "api/family/account-family-members/";
 
     /*设置默认就诊人*/
-    public static final String SET_DEFULT = SERVICE_BASE_URL+"api/family/account-family-members/"+"{families_id}"+"/default-customer";
+    public static final String SET_DEFULT = SERVICE_BASE_URL + "api/family/account-family-members/" + "{families_id}" + "/default-customer";
+
+    /*发送短信验证码-修改家人信息*/
+    public static final String SEND_MOD_CODE = SERVICE_BASE_URL + "api/family/account-family-members/" + "{families_id}" + "/sms-validation-code";
 
 }

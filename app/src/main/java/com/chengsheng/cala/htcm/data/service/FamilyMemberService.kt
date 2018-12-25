@@ -3,6 +3,7 @@ package com.chengsheng.cala.htcm.data.service
 import com.chengsheng.cala.htcm.constant.API
 import com.chengsheng.cala.htcm.protocol.FamiliesDetailInfo
 import com.chengsheng.cala.htcm.protocol.FamiliesList
+import com.chengsheng.cala.htcm.protocol.Message
 import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -19,19 +20,24 @@ interface FamilyMemberService {
     @Headers("Authorization:true")
     fun getFamilies():Observable<Response<FamiliesList>>
 
-    /*解除家人绑定*/
+    /* 解除家人绑定 */
     @DELETE(API.DEL_FAM+"{families_id}")
     @Headers("Authorization:true")
     fun delFam(@Path("families_id")familiesDd:String):Observable<Response<ResponseBody>>
 
-    /*获取家人详细信息*/
+    /* 获取家人详细信息 */
     @GET(API.GET_FAM_INFO+"{families_id}")
     @Headers("Authorization:true")
     fun getFamInfo(@Path("families_id")familiesDd: String):Observable<Response<FamiliesDetailInfo>>
 
-    /*设置默认就诊人*/
+    /* 设置默认就诊人 */
     @POST(API.SET_DEFULT)
     @Headers("Authorization:true")
     fun setDefault(@Path("families_id")familiesDd: String):Observable<Response<ResponseBody>>
+
+    /*发送短信验证码-修改家人信息*/
+    @POST(API.SEND_MOD_CODE)
+    @Headers("Authorization:true")
+    fun sendModCode(@Path("families_id")familiesDd: String):Observable<Response<Message>>
 
 }

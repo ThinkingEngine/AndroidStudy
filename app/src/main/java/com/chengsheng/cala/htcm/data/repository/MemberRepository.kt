@@ -4,6 +4,7 @@ import com.chengsheng.cala.htcm.data.retrofit.RetrofitHelper
 import com.chengsheng.cala.htcm.data.transformProto
 import com.chengsheng.cala.htcm.protocol.FamiliesDetailInfo
 import com.chengsheng.cala.htcm.protocol.FamiliesList
+import com.chengsheng.cala.htcm.protocol.Message
 import io.reactivex.Observable
 import okhttp3.ResponseBody
 
@@ -45,5 +46,9 @@ class MemberRepository {
 
     fun setDefault(familyId: String): Observable<ResponseBody>? {
         return transformProto(RetrofitHelper.getInstance().memberService.setDefault(familyId))
+    }
+
+    fun sendModCode(familyId: String): Observable<Message>? {
+        return transformProto(RetrofitHelper.getInstance().memberService.sendModCode(familyId))
     }
 }

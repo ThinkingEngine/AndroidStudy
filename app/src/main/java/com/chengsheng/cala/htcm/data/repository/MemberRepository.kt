@@ -51,4 +51,8 @@ class MemberRepository {
     fun sendModCode(familyId: String): Observable<Message>? {
         return transformProto(RetrofitHelper.getInstance().memberService.sendModCode(familyId))
     }
+
+    fun valiModeCoe(familyId: String, uuid: String, code: String): Observable<ResponseBody>? {
+        return transformProto(RetrofitHelper.getInstance().memberService.valiModeCode(familyId, uuid, code))
+    }
 }

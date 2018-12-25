@@ -70,4 +70,7 @@ public class API {
     /*发送短信验证码-修改家人信息*/
     public static final String SEND_MOD_CODE = SERVICE_BASE_URL + "api/family/account-family-members/" + "{families_id}" + "/sms-validation-code";
 
+    /* 验证短信验证码-修改家人信息 */
+    public static final String VALI_MOD_CODE = SERVICE_BASE_URL + "api/family/account-family-members/" + "{families_id}" + "/sms-validation";
+
 }

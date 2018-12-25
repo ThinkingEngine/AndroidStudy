@@ -18,26 +18,32 @@ interface FamilyMemberService {
 
     @GET(API.FAMILY_MEMBER)
     @Headers("Authorization:true")
-    fun getFamilies():Observable<Response<FamiliesList>>
+    fun getFamilies(): Observable<Response<FamiliesList>>
 
     /* 解除家人绑定 */
-    @DELETE(API.DEL_FAM+"{families_id}")
+    @DELETE(API.DEL_FAM + "{families_id}")
     @Headers("Authorization:true")
-    fun delFam(@Path("families_id")familiesDd:String):Observable<Response<ResponseBody>>
+    fun delFam(@Path("families_id") familiesDd: String): Observable<Response<ResponseBody>>
 
     /* 获取家人详细信息 */
-    @GET(API.GET_FAM_INFO+"{families_id}")
+    @GET(API.GET_FAM_INFO + "{families_id}")
     @Headers("Authorization:true")
-    fun getFamInfo(@Path("families_id")familiesDd: String):Observable<Response<FamiliesDetailInfo>>
+    fun getFamInfo(@Path("families_id") familiesDd: String): Observable<Response<FamiliesDetailInfo>>
 
     /* 设置默认就诊人 */
     @POST(API.SET_DEFULT)
     @Headers("Authorization:true")
-    fun setDefault(@Path("families_id")familiesDd: String):Observable<Response<ResponseBody>>
+    fun setDefault(@Path("families_id") familiesDd: String): Observable<Response<ResponseBody>>
 
-    /*发送短信验证码-修改家人信息*/
+    /* 发送短信验证码-修改家人信息 */
     @POST(API.SEND_MOD_CODE)
     @Headers("Authorization:true")
-    fun sendModCode(@Path("families_id")familiesDd: String):Observable<Response<Message>>
+    fun sendModCode(@Path("families_id") familiesDd: String): Observable<Response<Message>>
+
+    /* 验证短信验证码-修改家人信息 */
+    @POST(API.VALI_MOD_CODE)
+    @FormUrlEncoded
+    @Headers("Authorization:true")
+    fun valiModeCode(@Path("families_id") familiesDd: String, @Field("uuid") uuid: String, @Field("code") code: String): Observable<Response<ResponseBody>>
 
 }

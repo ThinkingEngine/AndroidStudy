@@ -1,24 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPageBackground"
     tools:context=".module.fragments.FamilyListFragment">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/fresh_family_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <include layout="@layout/layout_refresh_common" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/families_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="14dp">
-
-        </android.support.v7.widget.RecyclerView>
-
-    </android.support.v4.widget.SwipeRefreshLayout>
-
-</RelativeLayout>
+</FrameLayout>

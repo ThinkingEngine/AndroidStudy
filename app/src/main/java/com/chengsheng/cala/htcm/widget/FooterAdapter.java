@@ -16,6 +16,7 @@ import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.manager.FrescoManager;
 import com.chengsheng.cala.htcm.module.activitys.NewsDetailActivity;
 import com.chengsheng.cala.htcm.protocol.articleModel.RecommendedItem;
+import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
@@ -70,15 +71,12 @@ public class FooterAdapter extends RecyclerView.Adapter<FooterAdapter.NewsViewHo
             holder.newsMarks.setTags(tags);
             holder.collectNum.setText(String.valueOf(data.getCurrent_collected_num()));
 
-            holder.commendNewsItem.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(mContext, NewsDetailActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("NEWS_DETAIL", data);
-                    intent.putExtras(bundle);
-                    mContext.startActivity(intent);
-                }
+            holder.commendNewsItem.setOnClickListener(v -> {
+                Intent intent = new Intent(mContext, NewsDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("NEWS_DETAIL", data);
+                intent.putExtras(bundle);
+                mContext.startActivity(intent);
             });
         }
     }

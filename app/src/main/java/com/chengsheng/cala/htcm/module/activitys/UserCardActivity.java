@@ -2,7 +2,7 @@ package com.chengsheng.cala.htcm.module.activitys;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,7 +32,6 @@ public class UserCardActivity extends BaseActivity {
     public void initView() {
         Bundle bundle = getIntent().getExtras();
         FamiliesListItem data = (FamiliesListItem) bundle.getSerializable("FAMILIES_INFO");
-
         Bitmap bitmap = QRCodeUtil.createQRImage(data.getHealth_card_no(),FuncUtils.dip2px(220),FuncUtils.dip2px(220));
         initViews();
 
@@ -41,12 +40,7 @@ public class UserCardActivity extends BaseActivity {
         userIdCard.setText(data.getHealth_card_no());
         userQrCard.setImageBitmap(bitmap);
 
-        closeUserCardButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        closeUserCardButton.setOnClickListener(v -> finish());
 
     }
 

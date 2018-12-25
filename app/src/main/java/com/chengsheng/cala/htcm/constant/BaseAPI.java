@@ -18,7 +18,7 @@ public class BaseAPI {
     /**
      * 业务基地址
      */
-    private static final String DEV_SERVICE_URL = "http://192.168.1.119:8000/";
+    private static final String DEV_SERVICE_URL = "http://192.168.1.119:9001/";
     private static final String LIVE_SERVICE_URL = "http://api.peis-mobile.zz-tech.com.cn:85/";
 
     /**

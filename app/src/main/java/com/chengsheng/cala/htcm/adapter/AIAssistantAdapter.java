@@ -45,7 +45,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 
 
-public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistantRecyclerAdapter.AssistantViewHolder> {
+public class AIAssistantAdapter extends RecyclerView.Adapter<AIAssistantAdapter.AssistantViewHolder> {
 
     private Context context;
     private List<AssistantItem> datas;
@@ -57,7 +57,7 @@ public class AIAssistantRecyclerAdapter extends RecyclerView.Adapter<AIAssistant
     private ZLoadingDialog loadingDialog;
 
 
-    public AIAssistantRecyclerAdapter(Context context, List<AssistantItem> datas, int type, String error) {
+    public AIAssistantAdapter(Context context, List<AssistantItem> datas, int type, String error) {
         this.context = context;
         this.datas = datas;
         this.error = error;

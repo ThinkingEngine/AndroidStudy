@@ -122,12 +122,9 @@ public class FamilyListFragment extends Fragment implements AuthStateCallBack {
                 });
 
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                updateData();
-                swipeRefreshLayout.setRefreshing(false);
-            }
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            updateData();
+            swipeRefreshLayout.setRefreshing(false);
         });
 
         return rootViews;

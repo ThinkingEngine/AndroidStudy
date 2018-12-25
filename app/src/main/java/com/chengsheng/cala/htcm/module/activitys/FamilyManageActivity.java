@@ -58,38 +58,32 @@ public class FamilyManageActivity extends BaseActivity implements FamilyListFrag
         ft.commit();
         stats = "manage";
 
-        addFamily.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction ft = fm.beginTransaction();
-                if (stats.equals("manage")) {
-                    ft.replace(R.id.family_manage_container, addFamilyFragment);
-                    ft.commit();
-                    stats = "add";
-                    titleHeader.setText("添加家人");
-                    addFamily.setVisibility(View.INVISIBLE);
-                } else {
-                    Log.e("states", "当前状态错误");
-                }
-
+        addFamily.setOnClickListener(v -> {
+            FragmentTransaction ft1 = fm.beginTransaction();
+            if (stats.equals("manage")) {
+                ft1.replace(R.id.family_manage_container, addFamilyFragment);
+                ft1.commit();
+                stats = "add";
+                titleHeader.setText("添加家人");
+                addFamily.setVisibility(View.INVISIBLE);
+            } else {
+                Log.e("states", "当前状态错误");
             }
+
         });
 
-        backHomeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction ft = fm.beginTransaction();
-                if (stats.equals("add")) {
-                    ft.add(R.id.family_manage_container, familyListFragment);
-                    ft.commit();
-                    stats = "manage";
-                    titleHeader.setText("家人管理");
-                    addFamily.setVisibility(View.VISIBLE);
+        backHomeButton.setOnClickListener(v -> {
+            FragmentTransaction ft12 = fm.beginTransaction();
+            if (stats.equals("add")) {
+                ft12.add(R.id.family_manage_container, familyListFragment);
+                ft12.commit();
+                stats = "manage";
+                titleHeader.setText("家人管理");
+                addFamily.setVisibility(View.VISIBLE);
 
-                } else if (stats.equals("manage")) {
-                    Intent intent = new Intent(FamilyManageActivity.this, MainActivity.class);
-                    startActivity(intent);
-                }
+            } else if (stats.equals("manage")) {
+                Intent intent = new Intent(FamilyManageActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
     }

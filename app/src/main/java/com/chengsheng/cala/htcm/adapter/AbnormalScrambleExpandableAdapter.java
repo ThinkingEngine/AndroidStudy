@@ -10,11 +10,11 @@ import android.widget.TextView;
 
 import com.chengsheng.cala.htcm.R;
 
-public class AbnormalScrambleExpandableListAdapter extends BaseExpandableListAdapter {
+public class AbnormalScrambleExpandableAdapter extends BaseExpandableListAdapter {
     private Context context;
 
 
-    public AbnormalScrambleExpandableListAdapter(Context context) {
+    public AbnormalScrambleExpandableAdapter(Context context) {
         this.context = context;
     }
 
@@ -92,17 +92,17 @@ public class AbnormalScrambleExpandableListAdapter extends BaseExpandableListAda
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        AbnormalScrambleExpandableListAdapter.ChildViewHolder holder;
+        AbnormalScrambleExpandableAdapter.ChildViewHolder holder;
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.layout, null);
-            holder = new AbnormalScrambleExpandableListAdapter.ChildViewHolder();
+            holder = new AbnormalScrambleExpandableAdapter.ChildViewHolder();
             holder.itemAdvices = convertView.findViewById(R.id.item_advices);
             holder.itemExplain = convertView.findViewById(R.id.item_explain);
             holder.checkAllAdvice = convertView.findViewById(R.id.check_all_advice);
 
             convertView.setTag(holder);
         } else {
-            holder = (AbnormalScrambleExpandableListAdapter.ChildViewHolder) convertView.getTag();
+            holder = (AbnormalScrambleExpandableAdapter.ChildViewHolder) convertView.getTag();
         }
 
         return convertView;

@@ -28,6 +28,11 @@ class MemberCardDetailActivity : BaseActivity() {
         RxView.clicks(layoutTradeDetail).subscribe {
             startActivity(TradeDetailActivity())
         }
+
+        //充值
+        RxView.clicks(btnDeposit).subscribe {
+            startActivity(DepositActivity())
+        }
     }
 
     override fun getData() {

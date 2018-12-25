@@ -13,7 +13,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.chengsheng.cala.htcm.R;
-import com.chengsheng.cala.htcm.adapter.AIAssistantRecyclerAdapter;
+
+//import com.chengsheng.cala.htcm.adapter.AIAssistantRecyclerAdapter;
+import com.chengsheng.cala.htcm.adapter.AIAssistantAdapter;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.module.activitys.AIAssistantActivity;
 import com.chengsheng.cala.htcm.module.activitys.BarADActivity;
@@ -228,7 +230,7 @@ public class HomeFragment extends Fragment implements UpdateAIAssisont, UpdateSt
     private void updateAIAssistant() {
         if (!UserUtil.isLogin()) {
             List<AssistantItem> temp = new ArrayList<>();
-            AIAssistantRecyclerAdapter appointment = new AIAssistantRecyclerAdapter(getContext(), temp, -2, "");
+            AIAssistantAdapter appointment = new AIAssistantAdapter(getContext(), temp, -2, "");
             appointmentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             appointmentRecyclerView.setAdapter(appointment);
             return;
@@ -251,11 +253,11 @@ public class HomeFragment extends Fragment implements UpdateAIAssisont, UpdateSt
                                 datas.add(assistantItem);
                             }
                         }
-                        AIAssistantRecyclerAdapter appointment;
+                        AIAssistantAdapter appointment;
                         if (datas.isEmpty()) {
-                            appointment = new AIAssistantRecyclerAdapter(getContext(), datas, 0, "");
+                            appointment = new AIAssistantAdapter(getContext(), datas, 0, "");
                         } else {
-                            appointment = new AIAssistantRecyclerAdapter(getContext(), datas, 1, "");
+                            appointment = new AIAssistantAdapter(getContext(), datas, 1, "");
                         }
                         appointmentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                         appointmentRecyclerView.setAdapter(appointment);
@@ -266,7 +268,7 @@ public class HomeFragment extends Fragment implements UpdateAIAssisont, UpdateSt
                     public void onError(Throwable e) {
                         refreshPage.setRefreshing(false);
                         List<AssistantItem> temp = new ArrayList<>();
-                        AIAssistantRecyclerAdapter appointment = new AIAssistantRecyclerAdapter(getContext(), temp, -1, e.toString());
+                        AIAssistantAdapter appointment = new AIAssistantAdapter(getContext(), temp, -1, e.toString());
                         appointmentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                         appointmentRecyclerView.setAdapter(appointment);
                     }

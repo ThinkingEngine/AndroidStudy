@@ -37,4 +37,7 @@ public class API {
     /*套餐列表启用的*/
     public static final String EXAM_PACKAGE = SERVICE_BASE_URL + "api/physical-exam-item/exam-packages/enable";
 
+    /*获取家人列表*/
+    public static final String FAMILY_MEMBER = SERVICE_BASE_URL + "api/family/account-family-members";
+
 }

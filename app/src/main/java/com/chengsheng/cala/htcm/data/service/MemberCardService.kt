@@ -36,7 +36,7 @@ interface MemberCardService {
     @HTTP(method = "DELETE", path = API.DELETE_MEMBER_CARD, hasBody = true)
     @Headers("Authorization:true")
     fun deleteMemberCard(@Path("id") id: Int,
-                         @Body() password: RequestBody): Observable<Response<JsonObject>>
+                         @Body() password: RequestBody): Observable<Response<Any>>
 
     /**
      * 发送短信验证码
@@ -44,5 +44,16 @@ interface MemberCardService {
     @POST(API.SEND_CAPTCHA)
     @Headers("Authorization:true")
     fun sendCaptcha(@Query("mobile") mobile: String): Observable<Response<JsonObject>>
+
+    /**
+     * 绑定会员卡
+     */
+    @POST(API.BIND_MEMBER_CARD)
+    @Headers("Authorization:true")
+    fun bind(@Query("bind_mobile") bind_mobile: String,
+             @Query("card_number") card_number: String,
+             @Query("password") password: String,
+             @Query("uuid") uuid: String,
+             @Query("code") code: String): Observable<Response<JsonObject>>
 
 }

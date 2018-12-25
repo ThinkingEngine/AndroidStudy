@@ -17,7 +17,9 @@
         style="@style/BasicInputFiledStyle"
         android:layout_marginStart="@dimen/dp_16"
         android:layout_marginEnd="@dimen/dp_16"
-        android:hint="卡号" />
+        android:hint="卡号"
+        android:inputType="number"
+        android:maxLength="20" />
 
     <View
         style="@style/horizontalLineStyle"
@@ -29,7 +31,9 @@
         style="@style/BasicInputFiledStyle"
         android:layout_marginStart="@dimen/dp_16"
         android:layout_marginEnd="@dimen/dp_16"
-        android:hint="卡密码" />
+        android:hint="卡密码"
+        android:inputType="numberPassword"
+        android:maxLength="6" />
 
     <View
         style="@style/horizontalLineStyle"
@@ -66,6 +70,8 @@
             android:layout_weight="1"
             android:background="@null"
             android:hint="验证码"
+            android:inputType="number"
+            android:maxLength="8"
             android:padding="@dimen/dp_16"
             android:textColor="#333333"
             android:textColorHint="#C7C7C7"
@@ -90,6 +96,7 @@
         android:layout_marginEnd="@dimen/dp_16" />
 
     <Button
+        android:id="@+id/btnBind"
         style="@style/BasicButtonStyle"
         android:layout_margin="@dimen/dp_20"
         android:text="确定绑定" />

@@ -49,7 +49,7 @@ class MemberCardRepository private constructor() {
     /**
      * 解绑会员卡
      */
-    fun deleteMemberCard(id: Int, password: String): Observable<JsonObject>? {
+    fun deleteMemberCard(id: Int, password: String): Observable<Any>? {
         val map = HashMap<String, String>()
         map["password"] = password
         return transformProto(RetrofitHelper.getInstance().memberCardService.deleteMemberCard(id, createJson(map)))
@@ -60,6 +60,13 @@ class MemberCardRepository private constructor() {
      */
     fun sendCaptcha(mobile: String): Observable<JsonObject>? {
         return transformProto(RetrofitHelper.getInstance().memberCardService.sendCaptcha(mobile))
+    }
+
+    /**
+     * 绑定会员卡
+     */
+    fun bind(cardNumber: String, password: String, mobile: String, captcha: String, uuid: String): Observable<JsonObject>? {
+        return transformProto(RetrofitHelper.getInstance().memberCardService.bind(mobile, cardNumber, password, uuid, captcha))
     }
 
 }

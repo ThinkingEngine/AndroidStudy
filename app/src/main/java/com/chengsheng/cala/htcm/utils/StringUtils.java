@@ -20,9 +20,13 @@ public class StringUtils {
      * 每隔4位对字符串加空格
      */
     public static String addBlank(String replace) {
-        if (replace.isEmpty() || replace.length() < 4) return replace;
-        String regex = "(.{4})";
-        replace = replace.replaceAll(regex, "$1 ");
-        return replace;
+        if (replace != null) {
+            if (replace.isEmpty() || replace.length() < 4) return replace;
+            String regex = "(.{4})";
+            replace = replace.replaceAll(regex, "$1 ");
+            return replace;
+        } else {
+            return "";
+        }
     }
 }

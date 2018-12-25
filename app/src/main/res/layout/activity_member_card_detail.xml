@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorF7F7F7"
@@ -10,6 +11,7 @@
         android:id="@+id/titleBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:rightImageView="@mipmap/icon_more"
         app:title="详情" />
 
     <ScrollView
@@ -53,12 +55,13 @@
                     android:textSize="@dimen/sp_16" />
 
                 <TextView
+                    android:id="@+id/tvCardNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_8"
-                    android:text="5101 0123 7697 9672"
                     android:textColor="#FF4A4A4A"
-                    android:textSize="@dimen/sp_18" />
+                    android:textSize="@dimen/sp_18"
+                    tools:text="5101 0123 7697 9672" />
 
                 <View
                     android:layout_width="match_parent"
@@ -70,7 +73,8 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_10">
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:gravity="center_vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -80,12 +84,13 @@
                         android:textSize="@dimen/sp_14" />
 
                     <TextView
+                        android:id="@+id/tvBalance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp_6"
-                        android:text="￥9800.00"
                         android:textColor="#FFFFAF00"
-                        android:textSize="@dimen/sp_20" />
+                        android:textSize="@dimen/sp_20"
+                        tools:text="￥9800.00" />
 
                 </LinearLayout>
 
@@ -115,15 +120,16 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
+                        android:id="@+id/tvBindMobile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/dp_16"
-                        android:text="19983523698"
                         android:textColor="#FF999999"
                         android:textSize="@dimen/sp_14"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="19983523698" />
 
                     <View
                         android:layout_width="match_parent"
@@ -150,6 +156,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
+                        android:id="@+id/tvBindDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/dp_16"

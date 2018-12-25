@@ -4,6 +4,8 @@
     <declare-styleable name="titleBar">
         <!--是否显示返回按钮-->
         <attr name="isShowReturn" format="boolean" />
+        <!--是否显示底部分割线-->
+        <attr name="isShowDivide" format="boolean" />
         <!--页面标题-->
         <attr name="title" format="string" />
         <!--右边可操作按钮图标-->

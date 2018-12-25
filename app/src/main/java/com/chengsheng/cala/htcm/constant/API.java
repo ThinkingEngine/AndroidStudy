@@ -34,10 +34,25 @@ public class API {
     /* 医生列表 */
     public static final String DOCTORS = SERVICE_BASE_URL + "api/organization/doctors/enabled";
 
-    /*套餐列表启用的*/
+    /* 会员卡列表 */
+    public static final String MEMBER_CARD_LIST = SERVICE_BASE_URL + "api/health-card/health-cards";
+
+    /* 会员卡详情 */
+    public static final String MEMBER_CARD_DETAIL = SERVICE_BASE_URL + "api/health-card/health-cards/{id}";
+
+    /* 解绑会员卡 */
+    public static final String DELETE_MEMBER_CARD = SERVICE_BASE_URL + "api/health-card/health-cards/{id}";
+
+    /* 绑定会员卡发送短信验证码 */
+    public static final String SEND_CAPTCHA = SERVICE_BASE_URL + "api/health-card/health-cards/sms-validation-code";
+
+    /* 绑定会员卡 */
+    public static final String BIND_MEMBER_CARD = SERVICE_BASE_URL + "api/health-card/health-cards";
+
+    /* 套餐列表启用的 */
     public static final String EXAM_PACKAGE = SERVICE_BASE_URL + "api/physical-exam-item/exam-packages/enable";
 
-    /*获取家人列表*/
+    /* 获取家人列表 */
     public static final String FAMILY_MEMBER = SERVICE_BASE_URL + "api/family/account-family-members";
 
     /*获取订单列表*/

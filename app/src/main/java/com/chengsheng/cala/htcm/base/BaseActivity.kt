@@ -14,6 +14,7 @@ import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_add_card.*
+import org.simple.eventbus.EventBus
 import java.util.concurrent.TimeUnit
 
 /**
@@ -34,6 +35,8 @@ abstract class BaseActivity : AppCompatActivity() {
         initView()
         getData()
 
+        EventBus.getDefault().register(this)
+
         titleBar?.setFinishClickListener {
             finish()
         }
@@ -41,6 +44,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        EventBus.getDefault().unregister(this)
         ActivityManager.getAppManager().finishActivity(this)
     }
 
@@ -174,7 +178,5 @@ abstract class BaseActivity : AppCompatActivity() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
-
 }

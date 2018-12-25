@@ -3,7 +3,7 @@
     <color name="colorPrimary">#20d3b3</color>
     <color name="colorPrimaryDark">#ff6262</color>
     <color name="colorAccent">#93dc21</color>
-
+    <color name="colorDialogBg">#8f000000</color>
     <color name="colorCutoff">#e6e6e6</color>
     <color name="colorPageBackground">#f5f5f5</color>
     <color name="colorSecText">#666666</color>
@@ -23,5 +23,6 @@
     <color name="colorF7F7F7">#F7F7F7</color>
     <color name="colorF0F0F0">#F0F0F0</color>
     <color name="color363439">#363439</color>
+    <color name="color333333">#333333</color>
     <color name="colorCCCCCC">#CCCCCC</color>
 </resources>

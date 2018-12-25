@@ -27,8 +27,8 @@ public class BaseAPI {
     public static final String ACCOUNT_BASE_URL = BuildConfig.isDev ? DEV_BASE_URL : LIVE_BASE_URL;
 
     /**
-     * 账号api接口根地址
+     * 业务api接口根地址
      */
-    public static final String SERVICE_BASE_URL = BuildConfig.isDev ? DEV_SERVICE_URL : LIVE_SERVICE_URL;//获取服务URL
+    public static final String SERVICE_BASE_URL = BuildConfig.isDev ? DEV_SERVICE_URL : LIVE_SERVICE_URL;
 
 }

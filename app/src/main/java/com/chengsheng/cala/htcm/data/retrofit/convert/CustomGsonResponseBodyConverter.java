@@ -1,5 +1,6 @@
 package com.chengsheng.cala.htcm.data.retrofit.convert;
 
+import com.chengsheng.cala.htcm.protocol.ErrorProtocol;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.lang.reflect.Type;
 import java.nio.charset.Charset;
 
 import okhttp3.MediaType;
@@ -28,34 +30,12 @@ final class CustomGsonResponseBodyConverter<T> implements Converter<ResponseBody
 
     @Override
     public T convert(ResponseBody value) throws IOException {
+        if (value.contentLength() == 0) {
+            String res = "{\"message\":\"\\u5bc6\\u7801\\u9a8c\\u8bc1\\u4e0d\\u901a\\u8fc7\"}";
+            return new Gson().fromJson(res, (Type) ErrorProtocol.class);
+        }
 
         String response = value.string();
-//        BaseEntity baseEntity = gson.fromJson(response, BaseEntity.class);
-//
-//        String errorMsg;
-//
-//        if (String.valueOf(baseEntity.getCode()).startsWith("4")) {
-//            //token过期
-//            value.close();
-//            if (baseEntity.getMessage() == null || baseEntity.getMessage().isEmpty()) {
-//                errorMsg = "登录已失效";
-//            } else {
-//                errorMsg = baseEntity.getMessage();
-//            }
-//
-//            throw new InvalidLoginException(errorMsg);
-//
-//        } else if (!String.valueOf(baseEntity.getCode()).startsWith("2")) {
-//            value.close();
-//            if (baseEntity.getMessage() == null || baseEntity.getMessage().isEmpty()) {
-//                errorMsg = "系统异常";
-//            } else {
-//                errorMsg = baseEntity.getMessage();
-//            }
-//
-//            throw new BusinessException(baseEntity.getCode(), errorMsg);
-//        }
-
         MediaType contentType = value.contentType();
         Charset charset = contentType != null ? contentType.charset(UTF_8) : UTF_8;
         InputStream inputStream = new ByteArrayInputStream(response.getBytes());

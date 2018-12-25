@@ -30,8 +30,7 @@ fun createJson(map: Map<*, *>): RequestBody {
     return RequestBody.create(MediaType.parse("application/json; charset=utf-8"), JSONObject(map).toString())
 }
 
-
-fun <T> transformProto(observable: Observable<Response<T>>?): Observable<T>? {
+fun <T> transformProto(observable: Observable<Response<T>>): Observable<T>? {
     return observable?.flatMap { protocol ->
         when {
             protocol.code().toString().startsWith("2") -> {

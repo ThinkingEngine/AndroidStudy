@@ -34,4 +34,13 @@ public class API {
     /* 医生列表 */
     public static final String DOCTORS = SERVICE_BASE_URL + "api/organization/doctors/enabled";
 
+    /* 会员卡列表 */
+    public static final String MEMBER_CARD_LIST = SERVICE_BASE_URL + "api/health-card/health-cards";
+
+    /* 会员卡详情 */
+    public static final String MEMBER_CARD_DETAIL = SERVICE_BASE_URL + "api/health-card/health-cards/3";
+
+    /* 绑定会员卡 */
+    public static final String BIND_MEMBER_CARD = SERVICE_BASE_URL + "api/health-card/health-cards";
+
 }

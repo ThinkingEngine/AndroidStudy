@@ -5,6 +5,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chengsheng.cala.htcm.R
 import com.chengsheng.cala.htcm.adapter.MemberCardAdapter
 import com.chengsheng.cala.htcm.base.BaseRefreshActivity
+import com.chengsheng.cala.htcm.data.repository.MemberCardRepository
+import com.chengsheng.cala.htcm.utils.LogUtil
 import com.jakewharton.rxbinding2.view.RxView
 import kotlinx.android.synthetic.main.activity_member_card.*
 
@@ -30,7 +32,12 @@ class MemberCardActivity : BaseRefreshActivity<Any>() {
     }
 
     override fun getData(page: Int) {
+        MemberCardRepository.default?.getCardList()
+                ?.subscribe({
 
+                }) {
+                    showError(it)
+                }
     }
 
     override fun getCurrentAdapter(): BaseQuickAdapter<Any>? {

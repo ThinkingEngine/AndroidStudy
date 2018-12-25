@@ -2,10 +2,7 @@ package com.chengsheng.cala.htcm.data.retrofit
 
 import com.chengsheng.cala.htcm.BuildConfig
 import com.chengsheng.cala.htcm.data.retrofit.convert.CustomGsonConverterFactory
-import com.chengsheng.cala.htcm.data.service.ExamOrderService
-import com.chengsheng.cala.htcm.data.service.OrganizationService
-import com.chengsheng.cala.htcm.data.service.ProjectService
-import com.chengsheng.cala.htcm.data.service.UserService
+import com.chengsheng.cala.htcm.data.service.*
 import com.chengsheng.cala.htcm.utils.UserUtil
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -126,10 +123,11 @@ class RetrofitHelper private constructor() {
     var orderService = httpCreate(ExamOrderService::class.java)
     //服务
     var projectService = httpCreate(ProjectService::class.java)
-
+    //我的订单
     var myExamService = httpCreate(com.chengsheng.cala.htcm.data.service.MyExamService::class.java)
-
     //机构
     var organizationService = httpCreate(OrganizationService::class.java)
+    //会员卡
+    var memberCardService = httpCreate(MemberCardService::class.java)
 
 }

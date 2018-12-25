@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:zhy="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:zhy="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPageBackground"
-    android:orientation="vertical"
     tools:context="com.chengsheng.cala.htcm.module.activitys.SearchActivity">
 
     <RelativeLayout
+        android:id="@+id/combo_search_header"
         android:layout_width="match_parent"
         android:layout_height="55dp"
+        android:layout_alignParentTop="true"
         android:background="@drawable/has_bottom_line_no_off_bg">
 
         <RelativeLayout
@@ -43,6 +44,7 @@
                 android:layout_toRightOf="@id/global_search_mark"
                 android:background="@null"
                 android:hint="搜索套餐名称、标签…"
+                android:lines="1"
                 android:textSize="14sp" />
 
             <ImageView
@@ -66,39 +68,55 @@
             android:textColor="@color/colorText"
             android:textSize="14sp" />
     </RelativeLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="搜索发现"
-        android:textSize="14sp"
-        android:textColor="@color/colorText"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="10dp"/>
-
-    <com.zhy.view.flowlayout.TagFlowLayout
-        android:id="@+id/search_marks"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="14dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginBottom="10dp"
-        zhy:max_select="1" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="搜索记录"
-        android:textSize="14sp"
-        android:textColor="@color/colorText"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="10dp"/>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/search_record"
+        android:id="@+id/combo_search_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
-        android:layout_marginEnd="14dp"
-        android:layout_marginTop="8dp"/>
+        android:layout_below="@id/combo_search_header"
+        android:visibility="invisible" />
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/search_model_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/combo_search_header"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="10dp"
+            android:text="搜索发现"
+            android:textColor="@color/colorText"
+            android:textSize="14sp" />
+
+        <com.zhy.view.flowlayout.TagFlowLayout
+            android:id="@+id/search_marks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="10dp"
+            zhy:max_select="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="10dp"
+            android:text="搜索记录"
+            android:textColor="@color/colorText"
+            android:textSize="14sp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/search_record"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="14dp" />
+    </LinearLayout>
+
+</RelativeLayout>

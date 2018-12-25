@@ -121,37 +121,32 @@ public class ComboDetailActivity extends BaseActivity {
         });
 
         //分享该套餐
-        share.setOnClickListener(new View.OnClickListener() {
+        share.setOnClickListener(v -> new ShareDialog().build(ComboDetailActivity.this).showDialog().setOnShareListener(new ShareDialog.OnShareClickListener() {
             @Override
-            public void onClick(View v) {
-                new ShareDialog().build(ComboDetailActivity.this).showDialog().setOnShareListener(new ShareDialog.OnShareClickListener() {
-                    @Override
-                    public void shareToWeChat() {
+            public void shareToWeChat() {
 
-                    }
-
-                    @Override
-                    public void shareToMoment() {
-
-                    }
-
-                    @Override
-                    public void shareToQQ() {
-
-                    }
-
-                    @Override
-                    public void shareToQZone() {
-
-                    }
-
-                    @Override
-                    public void copyLink() {
-
-                    }
-                });
             }
-        });
+
+            @Override
+            public void shareToMoment() {
+
+            }
+
+            @Override
+            public void shareToQQ() {
+
+            }
+
+            @Override
+            public void shareToQZone() {
+
+            }
+
+            @Override
+            public void copyLink() {
+
+            }
+        }));
 
 
         //立即预约

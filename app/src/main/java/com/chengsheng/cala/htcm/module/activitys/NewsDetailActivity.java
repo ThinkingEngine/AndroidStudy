@@ -1,8 +1,6 @@
 package com.chengsheng.cala.htcm.module.activitys;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,14 +13,15 @@ import com.chengsheng.cala.htcm.protocol.articleModel.ArticleCollect;
 import com.chengsheng.cala.htcm.protocol.articleModel.RecommendedItem;
 import com.chengsheng.cala.htcm.network.ArticlesService;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
+import com.chengsheng.cala.htcm.widget.ShareDialog;
+import com.zyao89.view.zloading.ZLoadingDialog;
+import com.zyao89.view.zloading.Z_TYPE;
 
-import java.io.IOException;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
-import retrofit2.HttpException;
 import retrofit2.Retrofit;
 
 public class NewsDetailActivity extends BaseActivity {
@@ -31,12 +30,11 @@ public class NewsDetailActivity extends BaseActivity {
     private ImageView back;
     private ImageView collectNews;
     private ImageView shareNews;
-    private TextView newsDetailHeader, newsDetailMarks, newsDetailDate;
-    private TextView newsBrowseNum;
     private WebView newsContent;
 
     private Retrofit retrofit;
     private HTCMApp app;
+    private ZLoadingDialog loadingDialog;
 
 
     @Override
@@ -48,15 +46,20 @@ public class NewsDetailActivity extends BaseActivity {
     public void initView() {
         app = HTCMApp.create(getApplicationContext());
 
-        if (retrofit == null) {
-            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
-        }
-
-        initViews();
-
         Bundle bundle = getIntent().getExtras();
         final RecommendedItem recommendedItem = (RecommendedItem) bundle.getSerializable("NEWS_DETAIL");
 
+        loadingDialog = new ZLoadingDialog(this);
+        loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
+        loadingDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
+        loadingDialog.setLoadingColor(getResources().getColor(R.color.colorPrimary));
+        loadingDialog.setDialogBackgroundColor(getResources().getColor(R.color.colorText));
+
+        initViews();
+
+        if (retrofit == null) {
+            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
+        }
         ArticlesService service = retrofit.create(ArticlesService.class);
         service.articleHasCollect(app.getTokenType() + " " + app.getAccessToken(), GlobalConstant.ARTICLE_COLLECT + recommendedItem.getId())
                 .subscribeOn(Schedulers.newThread())
@@ -71,14 +74,8 @@ public class NewsDetailActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof HttpException) {
-                            ResponseBody body = ((HttpException) e).response().errorBody();
-                            try {
-                                Log.e("TAG", "onError" + body.string());
-                            } catch (IOException e1) {
-                                e1.printStackTrace();
-                            }
-                        }
+
+
                     }
 
                     @Override
@@ -89,17 +86,11 @@ public class NewsDetailActivity extends BaseActivity {
 
         setViews(recommendedItem);
 
-        collectNews.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.e("TAG", "点击标签1");
-                if (collectNews.isSelected()) {
-                    collectCancelArticle(recommendedItem);
-                    Log.e("TAG", "点击标签2");
-                } else {
-                    collectArticle(recommendedItem);
-                    Log.e("TAG", "点击标签3");
-                }
+        collectNews.setOnClickListener(v -> {
+            if (collectNews.isSelected()) {
+                collectCancelArticle(recommendedItem);
+            } else {
+                collectArticle(recommendedItem);
             }
         });
     }
@@ -115,21 +106,44 @@ public class NewsDetailActivity extends BaseActivity {
         collectNews = findViewById(R.id.title_header_news_details).findViewById(R.id.collect_icon);
         shareNews = findViewById(R.id.title_header_news_details).findViewById(R.id.share);
 
-//        newsDetailHeader = findViewById(R.id.news_detail_header);
-//        newsDetailMarks = findViewById(R.id.news_detail_marks);
-//        newsDetailDate = findViewById(R.id.news_detail_date);
-//        newsBrowseNum = findViewById(R.id.news_browse_num);
         newsContent = findViewById(R.id.news_content);
 
-        title.setText("咨讯详情");
+        title.setText("资讯详情");
+
+        shareNews.setOnClickListener(v -> new ShareDialog()
+                .build(this)
+                .showDialog()
+                .setOnShareListener(new ShareDialog.OnShareClickListener() {
+                    @Override
+                    public void shareToWeChat() {
+
+                    }
+
+                    @Override
+                    public void shareToMoment() {
+
+                    }
+
+                    @Override
+                    public void shareToQQ() {
+
+                    }
+
+                    @Override
+                    public void shareToQZone() {
+
+                    }
+
+                    @Override
+                    public void copyLink() {
+
+                    }
+                }));
+
+        back.setOnClickListener(v -> finish());
     }
 
     private void setViews(RecommendedItem recommendedItem) {
-//        newsDetailHeader.setText(recommendedItem.getTitle());
-//        newsDetailMarks.setText(recommendedItem.getArticle_type_name());
-//        newsDetailDate.setText(recommendedItem.getOnline_at());
-//        newsBrowseNum.setText(String.valueOf(recommendedItem.getBasic_read_num()));
-
         newsContent.loadUrl(recommendedItem.getUrl());
     }
 
@@ -138,6 +152,8 @@ public class NewsDetailActivity extends BaseActivity {
             retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
         }
 
+        loadingDialog.setHintText("收藏中....");
+        loadingDialog.show();
         ArticlesService service = retrofit.create(ArticlesService.class);
         service.articleCollect(app.getTokenType() + " " + app.getAccessToken(), GlobalConstant.ARTICLE_COLLECT + recommendedItem.getId())
                 .subscribeOn(Schedulers.newThread())
@@ -145,24 +161,15 @@ public class NewsDetailActivity extends BaseActivity {
                 .subscribe(new DisposableObserver<ResponseBody>() {
                     @Override
                     public void onNext(ResponseBody responseBody) {
-                        try {
-                            collectNews.setSelected(true);
-                            Log.e("TAG", "收藏操作成功" + responseBody.string());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        collectNews.setSelected(true);
+                        loadingDialog.cancel();
+                        showShortToast("收藏成功!");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof HttpException) {
-                            ResponseBody body = ((HttpException) e).response().errorBody();
-                            try {
-                                Log.e("TAG", "收藏操作失败" + body.string());
-                            } catch (IOException e1) {
-                                e1.printStackTrace();
-                            }
-                        }
+                        loadingDialog.cancel();
+                        showShortToast("收藏失败，请重新再试");
                     }
 
                     @Override
@@ -177,6 +184,8 @@ public class NewsDetailActivity extends BaseActivity {
             retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
         }
 
+        loadingDialog.setHintText("取消中....");
+        loadingDialog.show();
         ArticlesService service = retrofit.create(ArticlesService.class);
         service.articleCancelCollect(app.getTokenType() + " " + app.getAccessToken(), GlobalConstant.ARTICLE_COLLECT + recommendedItem.getId())
                 .subscribeOn(Schedulers.newThread())
@@ -184,25 +193,15 @@ public class NewsDetailActivity extends BaseActivity {
                 .subscribe(new DisposableObserver<ResponseBody>() {
                     @Override
                     public void onNext(ResponseBody responseBody) {
-                        try {
-                            Log.e("TAG", "取消收藏操作成功" + responseBody.string());
-                            collectNews.setSelected(false);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        collectNews.setSelected(false);
+                        loadingDialog.cancel();
+                        showShortToast("已取消收藏!");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
-                        if (e instanceof HttpException) {
-                            ResponseBody body = ((HttpException) e).response().errorBody();
-                            try {
-                                Log.e("TAG", "取消收藏操作失败" + body.string());
-                            } catch (IOException e1) {
-                                e1.printStackTrace();
-                            }
-                        }
+                        loadingDialog.cancel();
+                        showShortToast("取消收藏失败，请重新再试");
                     }
 
                     @Override

@@ -11,7 +11,8 @@ import android.widget.TextView;
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.module.account.LoginActivity;
-import com.chengsheng.cala.htcm.utils.CleanUtil;
+import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
+import com.chengsheng.cala.htcm.utils.PreferenceUtil;
 import com.chengsheng.cala.htcm.utils.UserUtil;
 
 //设置页面
@@ -74,6 +75,7 @@ public class SettingActivity extends BaseActivity {
         intoFeedback = findViewById(R.id.into_feedback);
         intoAbout = findViewById(R.id.into_about);
         outLineButton = findViewById(R.id.out_line_button);
+
         outLineButton.setVisibility(UserUtil.isLogin() ? View.VISIBLE : View.INVISIBLE);
     }
 
@@ -87,7 +89,9 @@ public class SettingActivity extends BaseActivity {
         builder.setMessage("是否退出应用?");
         builder.setNegativeButton("暂不", null);
         builder.setPositiveButton("退出", (dialog, which) -> {
-            CleanUtil.cleanAllLoginInfo();
+            PreferenceUtil.clear();
+            //通知其他组件，用户登录状态已发生改变，需要刷新界面
+            CallBackDataAuth.doUpdateStateInterface(true);
             outLineButton.setVisibility(View.INVISIBLE);
             new Handler().postDelayed(() -> {
                 LoginActivity.start(SettingActivity.this);

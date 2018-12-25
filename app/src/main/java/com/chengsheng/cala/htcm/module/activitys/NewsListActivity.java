@@ -2,7 +2,6 @@ package com.chengsheng.cala.htcm.module.activitys;
 
 import android.annotation.SuppressLint;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -56,12 +55,15 @@ public class NewsListActivity extends BaseActivity implements NewsListFragment.O
         loadingDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
         loadingDialog.setLoadingColor(getResources().getColor(R.color.colorText));
         loadingDialog.setDialogBackgroundColor(getResources().getColor(R.color.colorText));
+
         initViews();
+
+
         if (retrofit == null) {
             retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
         }
 
-        loadingDialog.show();
+//        loadingDialog.show();
         ArticlesService service = retrofit.create(ArticlesService.class);
         service.getNewsTitles()
                 .subscribeOn(Schedulers.newThread())
@@ -74,20 +76,18 @@ public class NewsListActivity extends BaseActivity implements NewsListFragment.O
                         for (int i = 0; i < marks.length; i++) {
                             marks[i] = newsTitles.getItems().get(i).getName();
                             newsSelectHeader.getTabAt(i).setText(marks[i]);
-                            loadingDialog.cancel();
+//                            loadingDialog.cancel();
                         }
-
-
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        loadingDialog.cancel();
+//                        loadingDialog.cancel();
                     }
 
                     @Override
                     public void onComplete() {
-                        loadingDialog.cancel();
+//                        loadingDialog.cancel();
                     }
                 });
     }
@@ -105,15 +105,10 @@ public class NewsListActivity extends BaseActivity implements NewsListFragment.O
         newsSelectHeader = findViewById(R.id.news_select_header);
         newsListChild = findViewById(R.id.news_list_child);
 
-
         title.setText("资讯");
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        back.setOnClickListener(v -> finish());
+
     }
 
     private void initDatas(NewsTitles newsTitles) {

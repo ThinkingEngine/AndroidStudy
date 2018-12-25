@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.chengsheng.cala.htcm.R;
+
+//import com.chengsheng.cala.htcm.adapter.AIAssistantRecyclerAdapter;
 import com.chengsheng.cala.htcm.adapter.AIAssistantAdapter;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.module.activitys.AIAssistantActivity;
@@ -58,7 +59,6 @@ public class HomeFragment extends Fragment implements UpdateAIAssisont, UpdateSt
 
     private Retrofit retrofit;
 
-//    Handler mHandler = new Handler();
 
     private BGABanner bodyBanner;
     private MyRecyclerView newsRecyclerView;
@@ -71,9 +71,6 @@ public class HomeFragment extends Fragment implements UpdateAIAssisont, UpdateSt
     private RelativeLayout recommendNews;
     private FrameLayout newMessage;
     private ImageView currentHasMessage;
-
-
-    private int[] barImages = {R.mipmap.bannera, R.mipmap.bannerb, R.mipmap.bannerc};//bar图片数据
 
     public HomeFragment() {
 
@@ -160,7 +157,6 @@ public class HomeFragment extends Fragment implements UpdateAIAssisont, UpdateSt
 
     @Override
     public void updateServiceMessage(boolean status) {
-        Log.e("TAG", "status" + status);
         if (status) {
             updateServiceSMS();
             updateAIAssistant();
@@ -250,6 +246,7 @@ public class HomeFragment extends Fragment implements UpdateAIAssisont, UpdateSt
                 .subscribe(new DisposableObserver<AssistantList>() {
                     @Override
                     public void onNext(AssistantList assistantList) {
+
                         List<AssistantItem> datas = new ArrayList<>();
                         for (AssistantItem assistantItem : assistantList.getItems()) {
                             if (!assistantItem.getOrder().isIs_closed_recommend()) {
@@ -304,5 +301,6 @@ public class HomeFragment extends Fragment implements UpdateAIAssisont, UpdateSt
         newsRecyclerView.setNestedScrollingEnabled(false);
         currentHasMessage.setVisibility(View.INVISIBLE);
     }
+
 
 }

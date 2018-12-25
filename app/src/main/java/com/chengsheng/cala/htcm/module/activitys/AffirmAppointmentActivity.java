@@ -55,6 +55,7 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
     private TextView appointmentTotalPrice;
     private TextView examTotalPrice;
     private TextView appointmentDateText;
+    private TextView userNeedNote;
     private LinearLayout selectAppointmentDate;
 
     private AppointmentBody uploadBody;//数据上传体
@@ -106,12 +107,7 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
         initViews();
 
         //选择日期
-        selectAppointmentDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getDate(appointmentDateText);
-            }
-        });
+        selectAppointmentDate.setOnClickListener(v -> getDate(appointmentDateText));
 
         /**
          * 暂时废弃
@@ -138,16 +134,13 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
         //获取选择的家人list。
         getFamiliesList();
         //立即支付 点击事件
-        immediatePay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (uploadBody.getCustomer_id() == -1) {
-                    showShortToast("对不起，你还没有选择家人的!");
-                } else if (uploadBody.getReserve_date().equals("") || uploadBody.getReserve_date().equals("请选择体检日期")) {
-                    showShortToast("对不起，你还没有选择体检日期的!");
-                } else {
-                    affirmButton();
-                }
+        immediatePay.setOnClickListener(v -> {
+            if (uploadBody.getCustomer_id() == -1) {
+                showShortToast("对不起，你还没有选择家人的!");
+            } else if (uploadBody.getReserve_date().equals("") || uploadBody.getReserve_date().equals("请选择体检日期")) {
+                showShortToast("对不起，你还没有选择体检日期的!");
+            } else {
+                affirmButton();
             }
         });
     }
@@ -273,6 +266,8 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
         examPersonRecycler = findViewById(R.id.affirm_appointment_model_b).findViewById(R.id.exam_person_recycler);
         selectAppointmentDate = findViewById(R.id.affirm_appointment_model_c).findViewById(R.id.select_appointment_date);
         appointmentDateText = findViewById(R.id.affirm_appointment_model_c).findViewById(R.id.appointment_date_text);
+        userNeedNote = findViewById(R.id.affirm_appointment_model_f).findViewById(R.id.user_need_note);
+
 //        keyIllnessScreeningCoatiner = findViewById(R.id.affirm_appointment_model_b).findViewById(R.id.key_illness_screening_coatiner);
         examTotalPrice = findViewById(R.id.exam_total_price);
         immediatePay = findViewById(R.id.immediate_pay);
@@ -287,8 +282,10 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
         groupName.setText("体检机构：" + detail.getOrganization().getName());
         appointmentTotalPrice.setText("¥ " + detail.getPrice());
         examTotalPrice.setText("合计：¥" + detail.getPrice());
+        userNeedNote.setText(detail.getReserve_notice());
         uploadBody.setExam_package_id(detail.getId());
         uploadBody.setReserve_date(appointmentDateText.getText().toString());
+
 
     }
 
@@ -298,12 +295,9 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
             calendar = Calendar.getInstance();
         }
 
-        new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                textView.setText(year + "-" + (month + 1) + "-" + dayOfMonth);
-                uploadBody.setReserve_date(year + "-" + (month + 1) + "-" + dayOfMonth);
-            }
+        new DatePickerDialog(this, (view, year, month, dayOfMonth) -> {
+            textView.setText(year + "-" + (month + 1) + "-" + dayOfMonth);
+            uploadBody.setReserve_date(year + "-" + (month + 1) + "-" + dayOfMonth);
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 }

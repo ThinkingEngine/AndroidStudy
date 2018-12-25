@@ -135,7 +135,7 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
         }
 
         defaultExam.setOnClickListener(v -> {
-            if(!info.isIs_default()){
+            if (!info.isIs_default()) {
                 setDefault(info);
             }
         });
@@ -149,6 +149,8 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
             builder.setNegativeButton("取消", (dialog, which) -> Toast.makeText(FamiliesDetailsActivity.this, "取消操作", Toast.LENGTH_SHORT).show());
             builder.show();
         });
+
+        editFamInfo.setOnClickListener(v -> modeInfoDialog(info));
 
 //        //点击进入修改手机号码界面.
 //        inputChangeCellphone.setOnClickListener(v -> {
@@ -251,13 +253,14 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
 
     }
 
-    private void modeInfoDialog(String message, FamiliesDetailInfo info) {
+    private void modeInfoDialog(FamiliesDetailInfo info) {
         AlertDialog dialog;
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("家人信息修改");
-        builder.setMessage("你确定要修改" + info.getFullname() + "的" + message + "?");
-        builder.setNegativeButton("暂不", null);
-        builder.setPositiveButton("修改", (dialog1, which) -> showPopwindow());
+        builder.setMessage("当前家人已经绑定手机号，修改相关信息将先通过短信验证，是否发送验证码到" + info.getMobile() + "?");
+        builder.setNegativeButton("取消", null);
+        builder.setPositiveButton("发送", (dialog1, which) -> {
+
+        });
 
         dialog = builder.create();
         dialog.show();
@@ -378,27 +381,27 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
     }
 
     //设置默认就诊人
-    private void setDefault(FamiliesDetailInfo info){
+    private void setDefault(FamiliesDetailInfo info) {
         MemberRepository
                 .Companion.getDefault()
                 .setDefault(familiesID)
                 .subscribe(new DefaultObserver<ResponseBody>() {
-            @Override
-            public void onNext(ResponseBody responseBody) {
-                defaultExam.setTextColor(getResources().getColor(R.color.colorThrText));
-                showShortToast("你已成功设置"+info.getFullname()+"为默认就诊人");
-            }
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        defaultExam.setTextColor(getResources().getColor(R.color.colorThrText));
+                        showShortToast("你已成功设置" + info.getFullname() + "为默认就诊人");
+                    }
 
-            @Override
-            public void onError(Throwable e) {
-                showError(e);
-            }
+                    @Override
+                    public void onError(Throwable e) {
+                        showError(e);
+                    }
 
-            @Override
-            public void onComplete() {
+                    @Override
+                    public void onComplete() {
 
-            }
-        });
+                    }
+                });
     }
 
     //上传更新家人信息

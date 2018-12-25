@@ -12,373 +12,331 @@
         android:id="@+id/title_header_families_details"
         layout="@layout/message_header_layout" />
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:layout_marginTop="11dp"
-        android:background="@color/colorWhite">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/need_id_a"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="14dp"
-            android:text="健康卡:"
-            android:textColor="@color/colorSecText"
-            android:textSize="18dp" />
-
-        <TextView
-            android:id="@+id/health_card_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="2dp"
-            android:layout_toRightOf="@id/need_id_a"
-            android:text="无"
-            android:textColor="@color/colorText"
-            android:textSize="18dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/authentication_mark"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="14dp"
-            android:text="立即认证"
-            android:textColor="@color/colorPrimary"
-            android:textSize="16sp" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/has_bottom_line_item_bg">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="14dp"
-            android:text="@string/header_icon"
-            android:textColor="@color/colorText"
-            android:textSize="16sp" />
-
-        <ImageView
-            android:id="@+id/input_change_header_icon"
-            android:layout_width="12dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="14dp"
-            android:paddingLeft="3dp"
-            android:paddingRight="3dp"
-            android:src="@mipmap/liebiaojinru" />
+            android:orientation="vertical">
 
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/families_header_icon_had"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="14dp"
-            android:layout_toLeftOf="@id/input_change_header_icon"
-            android:src="@mipmap/touxiang"
-            fresco:actualImageScaleType="centerInside"
-            fresco:backgroundImage="@mipmap/morentouxiang_wode"
-            fresco:roundAsCircle="true" />
-    </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/health_card_bt"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_marginTop="11dp"
+                android:background="@color/colorWhite">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:background="@drawable/has_bottom_line_item_bg">
+                <TextView
+                    android:id="@+id/need_id_a"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="14dp"
+                    android:text="健康卡:"
+                    android:textColor="@color/colorSecText"
+                    android:textSize="18dp" />
 
-        <TextView
-            android:id="@+id/f_n_a"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="14dp"
-            android:text="@string/name"
-            android:textColor="@color/colorText"
-            android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/health_card_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="2dp"
+                    android:layout_toRightOf="@id/need_id_a"
+                    android:text="无"
+                    android:textColor="@color/colorText"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="2dp"
-            android:layout_toRightOf="@id/f_n_a"
-            android:gravity="center"
-            android:text="*"
-            android:textColor="@color/colorPrimaryDark" />
+                <ImageView
+                    android:id="@+id/authentication_mark"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="14dp"
+                    android:src="@mipmap/erweima" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/has_bottom_line_item_bg">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="14dp"
+                    android:text="@string/header_icon"
+                    android:textColor="@color/colorText"
+                    android:textSize="16sp" />
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/families_header_icon_had"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="14dp"
+                    android:src="@mipmap/touxiang"
+                    fresco:actualImageScaleType="centerInside"
+                    fresco:backgroundImage="@mipmap/morentouxiang_wode"
+                    fresco:roundAsCircle="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:background="@drawable/has_bottom_line_item_bg">
+
+                <TextView
+                    android:id="@+id/f_n_a"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="14dp"
+                    android:text="@string/name"
+                    android:textColor="@color/colorText"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="2dp"
+                    android:layout_toRightOf="@id/f_n_a"
+                    android:gravity="center"
+                    android:text="*"
+                    android:textColor="@color/colorPrimaryDark" />
 
 
-        <ImageView
-            android:id="@+id/input_change_name"
-            android:layout_width="12dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="14dp"
-            android:paddingLeft="3dp"
-            android:paddingRight="3dp"
-            android:src="@mipmap/liebiaojinru" />
+                <TextView
+                    android:id="@+id/families_name_had"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="14dp"
+                    android:textColor="@color/colorSecText"
+                    android:textSize="16sp" />
+            </RelativeLayout>
 
-        <TextView
-            android:id="@+id/families_name_had"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="14dp"
-            android:layout_toLeftOf="@id/input_change_name"
-            android:textColor="@color/colorSecText"
-            android:textSize="16sp" />
-    </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:background="@drawable/has_bottom_line_item_bg">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:background="@drawable/has_bottom_line_item_bg">
+                <TextView
+                    android:id="@+id/f_n_b"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="14dp"
+                    android:text="@string/sex"
+                    android:textColor="@color/colorText"
+                    android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/f_n_b"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="14dp"
-            android:text="@string/sex"
-            android:textColor="@color/colorText"
-            android:textSize="16sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="2dp"
+                    android:layout_toRightOf="@id/f_n_b"
+                    android:gravity="center"
+                    android:text="*"
+                    android:textColor="@color/colorPrimaryDark" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="2dp"
-            android:layout_toRightOf="@id/f_n_b"
-            android:gravity="center"
-            android:text="*"
-            android:textColor="@color/colorPrimaryDark" />
+                <Button
+                    android:id="@+id/sex_selecter_female"
+                    android:layout_width="54dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="14dp"
+                    android:background="@drawable/selecter_corenr_color_bg"
+                    android:enabled="false"
+                    android:textSize="14sp" />
 
-        <Button
-            android:id="@+id/sex_selecter_female"
-            android:layout_width="54dp"
-            android:layout_height="24dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="14dp"
-            android:background="@drawable/selecter_corenr_color_bg"
-            android:textSize="14sp" />
+                <Button
+                    android:id="@+id/sex_selecter_male"
+                    android:layout_width="54dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="7dp"
+                    android:layout_toLeftOf="@id/sex_selecter_female"
+                    android:background="@drawable/selecter_corenr_color_bg"
+                    android:enabled="false"
+                    android:textSize="14sp" />
 
-        <Button
-            android:id="@+id/sex_selecter_male"
-            android:layout_width="54dp"
-            android:layout_height="24dp"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="7dp"
-            android:layout_toLeftOf="@id/sex_selecter_female"
-            android:background="@drawable/selecter_corenr_color_bg"
-            android:textSize="14sp" />
+            </RelativeLayout>
 
-        <TextView
-            android:id="@+id/families_sex_had"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="40dp"
-            android:text="女"
-            android:textColor="@color/colorSecText"
-            android:textSize="16sp" />
-    </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:background="@drawable/has_bottom_line_item_bg">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:background="@drawable/has_bottom_line_item_bg">
+                <TextView
+                    android:id="@+id/f_n_c"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="14dp"
+                    android:text="出生年月"
+                    android:textColor="@color/colorText"
+                    android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/f_n_c"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="14dp"
-            android:text="出生年月"
-            android:textColor="@color/colorText"
-            android:textSize="16sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="2dp"
+                    android:layout_toRightOf="@id/f_n_c"
+                    android:gravity="center"
+                    android:text="*"
+                    android:textColor="@color/colorPrimaryDark" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="2dp"
-            android:layout_toRightOf="@id/f_n_c"
-            android:gravity="center"
-            android:text="*"
-            android:textColor="@color/colorPrimaryDark" />
 
-        <ImageView
-            android:id="@+id/input_change_age"
-            android:layout_width="12dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="14dp"
-            android:paddingLeft="3dp"
-            android:paddingRight="3dp"
-            android:src="@mipmap/liebiaojinru" />
+                <TextView
+                    android:id="@+id/families_age_had"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="14dp"
+                    android:textColor="@color/colorSecText"
+                    android:textSize="16sp" />
+            </RelativeLayout>
 
-        <TextView
-            android:id="@+id/families_age_had"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="14dp"
-            android:layout_toLeftOf="@id/input_change_age"
-            android:textColor="@color/colorSecText"
-            android:textSize="16sp" />
-    </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:background="@color/colorWhite">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:background="@color/colorWhite">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="14dp"
+                    android:text="@string/id_num"
+                    android:textColor="@color/colorText"
+                    android:textSize="16sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="14dp"
-            android:text="@string/id_num"
-            android:textColor="@color/colorText"
-            android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/families_id_num_had"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="14dp"
+                    android:textColor="@color/colorSecText"
+                    android:textSize="16sp" />
+            </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/input_change_id_num"
-            android:layout_width="12dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="14dp"
-            android:paddingLeft="3dp"
-            android:paddingRight="3dp"
-            android:src="@mipmap/liebiaojinru" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorWhite">
 
-        <TextView
-            android:id="@+id/families_id_num_had"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="14dp"
-            android:layout_toLeftOf="@id/input_change_id_num"
-            android:textColor="@color/colorSecText"
-            android:textSize="16sp" />
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/f_n_d"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="14dp"
+                    android:text="@string/cellphone_number"
+                    android:textColor="@color/colorText"
+                    android:textSize="16sp" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/colorWhite">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="2dp"
+                    android:layout_toRightOf="@id/f_n_d"
+                    android:gravity="center"
+                    android:text="*"
+                    android:textColor="@color/colorPrimaryDark" />
 
-        <TextView
-            android:id="@+id/f_n_d"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="14dp"
-            android:text="@string/cellphone_number"
-            android:textColor="@color/colorText"
-            android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/families_tel_num_had"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="14dp"
+                    android:textColor="@color/colorSecText"
+                    android:textSize="16sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="2dp"
-            android:layout_toRightOf="@id/f_n_d"
-            android:gravity="center"
-            android:text="*"
-            android:textColor="@color/colorPrimaryDark" />
+            </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/input_change_cellphone"
-            android:layout_width="12dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="13dp"
-            android:paddingLeft="3dp"
-            android:paddingRight="3dp"
-            android:src="@mipmap/liebiaojinru" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorWhite">
 
-        <TextView
-            android:id="@+id/families_tel_num_had"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="14dp"
-            android:layout_toLeftOf="@id/input_change_cellphone"
-            android:textColor="@color/colorSecText"
-            android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/f_n_e"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="14dp"
+                    android:text="@string/families_relation"
+                    android:textColor="@color/colorText"
+                    android:textSize="16sp" />
 
-    </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="2dp"
+                    android:layout_toRightOf="@id/f_n_e"
+                    android:gravity="center"
+                    android:text="*"
+                    android:textColor="@color/colorPrimaryDark" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/colorWhite">
+                <TextView
+                    android:id="@+id/families_relation_had"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="32dp"
+                    android:textColor="@color/colorSecText"
+                    android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/f_n_e"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="14dp"
-            android:text="@string/families_relation"
-            android:textColor="@color/colorText"
-            android:textSize="16sp" />
+            </RelativeLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="2dp"
-            android:layout_toRightOf="@id/f_n_e"
-            android:gravity="center"
-            android:text="*"
-            android:textColor="@color/colorPrimaryDark" />
+            <Button
+                android:id="@+id/default_exam"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="11dp"
+                android:background="@drawable/wire_frame_bg_type_a"
+                android:text="设置默认就诊人"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/families_relation_had"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="32dp"
-            android:textColor="@color/colorSecText"
-            android:textSize="16sp" />
-
-        <ImageView
-            android:id="@+id/input_change_relation"
-            android:layout_width="12dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="14dp"
-            android:paddingLeft="3dp"
-            android:paddingRight="3dp"
-            android:src="@mipmap/liebiaojinru" />
-    </RelativeLayout>
+            <Button
+                android:id="@+id/edit_fam_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="11dp"
+                android:background="@drawable/wire_frame_bg_type_a"
+                android:text="编辑家人信息"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

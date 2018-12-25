@@ -13,17 +13,16 @@ import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.module.fragments.AddFamilyFragment;
-import com.chengsheng.cala.htcm.module.fragments.FamilyListFragment;
+import com.chengsheng.cala.htcm.module.fragments.FamiliyManageListFragment;
 import com.chengsheng.cala.htcm.module.home.MainActivity;
 
-public class FamilyManageActivity extends BaseActivity implements FamilyListFragment.OnFamilyListInteractionListener,
-        AddFamilyFragment.OnAddFamilyFragmentInteractionListener {
+public class FamilyManageActivity extends BaseActivity implements AddFamilyFragment.OnAddFamilyFragmentInteractionListener {
 
     private ImageView backHomeButton;
     private TextView titleHeader;
     private TextView addFamily;
 
-    private FamilyListFragment familyListFragment;
+    private FamiliyManageListFragment familyListFragment;
     private AddFamilyFragment addFamilyFragment;
 
     private FragmentManager fm;
@@ -43,7 +42,8 @@ public class FamilyManageActivity extends BaseActivity implements FamilyListFrag
 
         initViews();
 
-        familyListFragment = FamilyListFragment.newInstance(app.getTokenType(), app.getAccessToken());
+//        familyListFragment = FamilyListFragment.newInstance(app.getTokenType(), app.getAccessToken());
+        familyListFragment = new FamiliyManageListFragment();
         addFamilyFragment = AddFamilyFragment.newInstance(app.getTokenType(), app.getAccessToken());
 
         fm = getSupportFragmentManager();
@@ -120,9 +120,5 @@ public class FamilyManageActivity extends BaseActivity implements FamilyListFrag
 
 
     }
-
-    @Override
-    public void onFamilyListInteraction(Bundle data) {
-
-    }
+    
 }

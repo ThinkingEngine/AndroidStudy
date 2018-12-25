@@ -11,6 +11,7 @@ public class FamiliesDetailInfo implements Serializable {
     private String fullname;
     private String id_card_no;
     private boolean is_auth;
+    private boolean is_default;
     private String owner_relationship;
     private int age;
     private String birthday;
@@ -104,6 +105,14 @@ public class FamiliesDetailInfo implements Serializable {
 
     public void setHealth_card_no(String health_card_no) {
         this.health_card_no = health_card_no;
+    }
+
+    public boolean isIs_default() {
+        return is_default;
+    }
+
+    public void setIs_default(boolean is_default) {
+        this.is_default = is_default;
     }
 
     @Override

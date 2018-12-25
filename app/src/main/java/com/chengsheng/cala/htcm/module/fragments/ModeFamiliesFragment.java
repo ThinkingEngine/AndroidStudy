@@ -62,6 +62,8 @@ public class ModeFamiliesFragment extends Fragment {
     private HTCMApp app;
     private ZLoadingDialog loadingDialog;
 
+    private String[] mark;//标签
+
     private OnFragmentInteractionListener mListener;
 
     public ModeFamiliesFragment() {
@@ -87,6 +89,9 @@ public class ModeFamiliesFragment extends Fragment {
         }
 
         app = HTCMApp.create(getContext());
+
+        mark = mParam1.split(",");
+
         loadingDialog = new ZLoadingDialog(getContext());
         loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
         loadingDialog.setHintText("上传中...");
@@ -99,7 +104,7 @@ public class ModeFamiliesFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView;
 
-        if (mParam1.equals("CELLPHONE")) {
+        if (mark[0].equals("CELLPHONE")) {
             rootView = inflater.inflate(R.layout.mode_cellphone_layout, null);
             title = rootView.findViewById(R.id.title_header_mode_families).findViewById(R.id.menu_bar_title);
             back = rootView.findViewById(R.id.title_header_mode_families).findViewById(R.id.back_login);
@@ -109,39 +114,33 @@ public class ModeFamiliesFragment extends Fragment {
             final EditText getCodeFormSmsMode = rootView.findViewById(R.id.get_code_form_sms_mode);
             final EditText getNumberSmsMode = rootView.findViewById(R.id.get_number_sms_mode);
 
-            getCodeSmsButtonMode.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (getNumberSmsMode.getText().toString().equals("")) {
-                        Toast.makeText(getContext(), "电话号码不能为空!", Toast.LENGTH_SHORT).show();
-                    } else if (!FuncUtils.isMobileNO(getNumberSmsMode.getText().toString())) {
-                        Toast.makeText(getContext(), "请输入正确的电话号码!", Toast.LENGTH_SHORT).show();
-                    } else{
-                        getCode(getNumberSmsMode.getText().toString());
-                    }
+            getCodeSmsButtonMode.setOnClickListener(v -> {
+                if (getNumberSmsMode.getText().toString().equals("")) {
+                    Toast.makeText(getContext(), "电话号码不能为空!", Toast.LENGTH_SHORT).show();
+                } else if (!FuncUtils.isMobileNO(getNumberSmsMode.getText().toString())) {
+                    Toast.makeText(getContext(), "请输入正确的电话号码!", Toast.LENGTH_SHORT).show();
+                } else{
+                    getCode(getNumberSmsMode.getText().toString());
                 }
             });
-            makeModeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String uuid = FuncUtils.getString("TEMP_UUID","");
-                    if (getNumberSmsMode.getText().toString().equals("")) {
-                        Toast.makeText(getContext(), "电话号码不能为空!", Toast.LENGTH_SHORT).show();
-                    } else if (!FuncUtils.isMobileNO(getNumberSmsMode.getText().toString())) {
-                        Toast.makeText(getContext(), "请输入正确的电话号码!", Toast.LENGTH_SHORT).show();
-                    } else if(uuid.equals("")){
-                        Toast.makeText(getContext(), "您的号码还未验证!", Toast.LENGTH_SHORT).show();
-                    }else if(getCodeFormSmsMode.getText().toString().equals("")){
-                        Toast.makeText(getContext(), "验证码不能为空!", Toast.LENGTH_SHORT).show();
-                    }else{
-                        Map<String,String> map = new HashMap<>();
-                        map.put("new_mobile",getNumberSmsMode.getText().toString());
-                        map.put("uuid",uuid);
-                        map.put("code",getCodeFormSmsMode.getText().toString());
-                        map.put("fullname",mParam2.getFullname());
+            makeModeButton.setOnClickListener(v -> {
+                String uuid = FuncUtils.getString("TEMP_UUID","");
+                if (getNumberSmsMode.getText().toString().equals("")) {
+                    Toast.makeText(getContext(), "电话号码不能为空!", Toast.LENGTH_SHORT).show();
+                } else if (!FuncUtils.isMobileNO(getNumberSmsMode.getText().toString())) {
+                    Toast.makeText(getContext(), "请输入正确的电话号码!", Toast.LENGTH_SHORT).show();
+                } else if(uuid.equals("")){
+                    Toast.makeText(getContext(), "您的号码还未验证!", Toast.LENGTH_SHORT).show();
+                }else if(getCodeFormSmsMode.getText().toString().equals("")){
+                    Toast.makeText(getContext(), "验证码不能为空!", Toast.LENGTH_SHORT).show();
+                }else{
+                    Map<String,String> map = new HashMap<>();
+                    map.put("new_mobile",getNumberSmsMode.getText().toString());
+                    map.put("uuid",uuid);
+                    map.put("code",getCodeFormSmsMode.getText().toString());
+                    map.put("fullname",mParam2.getFullname());
 
-                        modeFamiliesTel(map);
-                    }
+                    modeFamiliesTel(map);
                 }
             });
 
@@ -150,14 +149,9 @@ public class ModeFamiliesFragment extends Fragment {
             title.setText("修改手机号码");
 
 
-            back.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    backMark = true;
-                }
-            });
+            back.setOnClickListener(v -> backMark = true);
 
-        } else if (mParam1.equals("RELATION")) {
+        } else if (mark[0].equals("RELATION")) {
 
             rootView = inflater.inflate(R.layout.mode_relation_layout, null);
             title = rootView.findViewById(R.id.title_header_mode_relation).findViewById(R.id.menu_bar_title);
@@ -184,57 +178,43 @@ public class ModeFamiliesFragment extends Fragment {
 
             final TagAdapter adapter = new TagAdapter(dataSource);
             familiesRelationSelecterMode.setAdapter(adapter);
-            familiesRelationSelecterMode.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
-                @Override
-                public boolean onTagClick(View view, int position, FlowLayout parent) {
-                    if (position != dataSource.size() - 1) {
-                        familiesTag = dataSource.get(position);
-                    }
-                    TextView textView = view.findViewById(R.id.select_families_mark);
-                    if (position == dataSource.size() - 1 && textView.isSelected()) {
-                        addFamiliesMarksBoxMode.setVisibility(View.VISIBLE);
-                    } else {
-                        addFamiliesMarksBoxMode.setVisibility(View.INVISIBLE);
-                    }
-                    return true;
+            familiesRelationSelecterMode.setOnTagClickListener((view, position, parent) -> {
+                if (position != dataSource.size() - 1) {
+                    familiesTag = dataSource.get(position);
+                }
+                TextView textView = view.findViewById(R.id.select_families_mark);
+                if (position == dataSource.size() - 1 && textView.isSelected()) {
+                    addFamiliesMarksBoxMode.setVisibility(View.VISIBLE);
+                } else {
+                    addFamiliesMarksBoxMode.setVisibility(View.INVISIBLE);
+                }
+                return true;
+            });
+
+            addFamiliesMarksButtonMode.setOnClickListener(v -> {
+                if (newFamiliesMarkInputMode.getText().toString().equals("")) {
+                    Toast.makeText(getContext(), "请输入新的标签", Toast.LENGTH_SHORT).show();
+                } else {
+                    String newMark = newFamiliesMarkInputMode.getText().toString();
+                    dataSource.add(0, newMark);
+                    adapter.notifyDataChanged();
+                    familiesRelationSelecterMode.setAdapter(adapter);
+                    newFamiliesMarkInputMode.setText("");
                 }
             });
 
-            addFamiliesMarksButtonMode.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (newFamiliesMarkInputMode.getText().toString().equals("")) {
-                        Toast.makeText(getContext(), "请输入新的标签", Toast.LENGTH_SHORT).show();
-                    } else {
-                        String newMark = newFamiliesMarkInputMode.getText().toString();
-                        dataSource.add(0, newMark);
-                        adapter.notifyDataChanged();
-                        familiesRelationSelecterMode.setAdapter(adapter);
-                        newFamiliesMarkInputMode.setText("");
-                    }
+            childTitle.setOnClickListener(v -> {
+                if (familiesTag.equals("") || familiesTag == null) {
+                    Toast.makeText(getContext(), "你还没选择家人的关系!", Toast.LENGTH_SHORT).show();
+                } else {
+                    mParam2.setOwner_relationship(familiesTag);
+                    uploadModeInfo(mParam2);
                 }
+
             });
 
-            childTitle.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (familiesTag.equals("") || familiesTag == null) {
-                        Toast.makeText(getContext(), "你还没选择家人的关系!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        mParam2.setOwner_relationship(familiesTag);
-                        uploadModeInfo(mParam2);
-                    }
-
-                }
-            });
-
-            back.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    backMark = true;
-                }
-            });
-        } else if (mParam1.equals("NAME")) {
+            back.setOnClickListener(v -> backMark = true);
+        } else if (mark[0].equals("NAME")) {
             rootView = inflater.inflate(R.layout.mode_name_layout, null);
             title = rootView.findViewById(R.id.title_header_mode_name).findViewById(R.id.menu_bar_title);
             back = rootView.findViewById(R.id.title_header_mode_name).findViewById(R.id.back_login);
@@ -244,32 +224,19 @@ public class ModeFamiliesFragment extends Fragment {
             childTitle.setText("完成");
             title.setText("修改姓名");
 
-            cleanInput.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    inputNewName.setText("");
-                }
-            });
-            childTitle.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    newName = inputNewName.getText().toString();
-                    if (newName.equals("") || newName == null) {
-                        Toast.makeText(getContext(), "名字不能为空!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        mParam2.setFullname(newName);
-                        uploadModeInfo(mParam2);
-                    }
+            cleanInput.setOnClickListener(v -> inputNewName.setText(""));
+            childTitle.setOnClickListener(v -> {
+                newName = inputNewName.getText().toString();
+                if (newName.equals("") || newName == null) {
+                    Toast.makeText(getContext(), "名字不能为空!", Toast.LENGTH_SHORT).show();
+                } else {
+                    mParam2.setFullname(newName);
+                    uploadModeInfo(mParam2);
                 }
             });
 
 
-            back.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    backMark = true;
-                }
-            });
+            back.setOnClickListener(v -> backMark = true);
         } else {
             rootView = inflater.inflate(R.layout.mode_name_layout, null);
             title = rootView.findViewById(R.id.title_header_mode_name).findViewById(R.id.menu_bar_title);
@@ -280,34 +247,21 @@ public class ModeFamiliesFragment extends Fragment {
             childTitle.setText("完成");
             title.setText("修改身份证号码");
 
-            cleanInput.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    inputNewName.setText("");
-                }
-            });
-            childTitle.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    id = inputNewName.getText().toString();
-                    if (id.equals("") || id == null) {
-                        Toast.makeText(getContext(), "身份证号不能为空!", Toast.LENGTH_SHORT).show();
-                    } else if (!FuncUtils.isIdentityCode(id, getContext())) {
-                        Toast.makeText(getContext(), "身份证号格式不对!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        mParam2.setId_card_no(id);
-                        uploadModeInfo(mParam2);
-                    }
+            cleanInput.setOnClickListener(v -> inputNewName.setText(""));
+            childTitle.setOnClickListener(v -> {
+                id = inputNewName.getText().toString();
+                if (id.equals("") || id == null) {
+                    Toast.makeText(getContext(), "身份证号不能为空!", Toast.LENGTH_SHORT).show();
+                } else if (!FuncUtils.isIdentityCode(id, getContext())) {
+                    Toast.makeText(getContext(), "身份证号格式不对!", Toast.LENGTH_SHORT).show();
+                } else {
+                    mParam2.setId_card_no(id);
+                    uploadModeInfo(mParam2);
                 }
             });
 
 
-            back.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    backMark = true;
-                }
-            });
+            back.setOnClickListener(v -> backMark = true);
         }
 
         return rootView;

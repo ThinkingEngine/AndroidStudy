@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".module.activitys.FamilyManageActivity">
 
     <RelativeLayout
@@ -16,7 +15,6 @@
         android:layout_marginRight="14dp"
         android:background="@drawable/fmailies_item_bg">
 
-
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/families_header_icon"
             android:layout_width="66dp"
@@ -26,8 +24,8 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             fresco:actualImageScaleType="fitCenter"
-            fresco:roundAsCircle="true"
-            fresco:backgroundImage="@mipmap/morentouxiang_wode"/>
+            fresco:backgroundImage="@mipmap/morentouxiang_wode"
+            fresco:roundAsCircle="true" />
 
 
         <TextView
@@ -59,13 +57,13 @@
             android:layout_height="16dp"
             android:layout_marginStart="6dp"
             android:layout_marginTop="30dp"
-            android:paddingEnd="8dp"
-            android:paddingStart="8dp"
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
             android:layout_toRightOf="@id/families_name_text"
             android:background="@drawable/orange_button_bg"
             android:gravity="center"
+            android:paddingStart="8dp"
+            android:paddingTop="2dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="2dp"
             android:textColor="@color/colorWhite"
             android:textSize="10sp" />
 
@@ -76,7 +74,6 @@
             android:layout_below="@id/families_tel_text"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/families_header_icon"
-            android:text="51061419980808****"
             android:textColor="@color/colorSecText"
             android:textSize="14sp" />
 
@@ -88,18 +85,6 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
             android:src="@mipmap/erweima" />
-
-        <Button
-            android:id="@+id/families_certification_button"
-            android:layout_width="70dp"
-            android:layout_height="28dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/login_button_bg"
-            android:text="@string/immediately_certification"
-            android:textColor="@color/colorWhite"
-            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/certification_note_text"
@@ -115,4 +100,4 @@
 
     </RelativeLayout>
 
-</RelativeLayout>
+</FrameLayout>

@@ -23,7 +23,7 @@ public class ModeFamiliesInfoActivity extends BaseActivity implements ModeFamili
     public void initView() {
         Bundle bundle = getIntent().getExtras();
         FamiliesDetailInfo info = (FamiliesDetailInfo) bundle.getSerializable("FAMILIES_INFO");
-        String modeParam = getIntent().getStringExtra("MODE");
+        String modeParam = bundle.getString("MODE");
         fragment = ModeFamiliesFragment.newInstance(modeParam,info);
 
         FragmentManager fm = getSupportFragmentManager();

@@ -132,4 +132,7 @@ class RetrofitHelper private constructor() {
     //套餐
     var comboService = httpCreate(ComboService::class.java)
 
+    //家庭成员
+    var memberService = httpCreate(FamilyMemberService::class.java)
+
 }

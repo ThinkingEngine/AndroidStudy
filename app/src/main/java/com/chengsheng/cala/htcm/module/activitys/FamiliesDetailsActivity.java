@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -20,8 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,14 +28,17 @@ import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.data.repository.MemberRepository;
 import com.chengsheng.cala.htcm.protocol.FamiliesDetailInfo;
+import com.chengsheng.cala.htcm.protocol.FamiliesListItem;
+import com.chengsheng.cala.htcm.protocol.Message;
 import com.chengsheng.cala.htcm.protocol.URLResult;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
+import com.chengsheng.cala.htcm.utils.ActivityUtil;
 import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
 import com.chengsheng.cala.htcm.utils.FuncUtils;
 import com.chengsheng.cala.htcm.utils.UpdateStateInterface;
-import com.chengsheng.cala.htcm.widget.ImmediatelyDialogView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zyao89.view.zloading.ZLoadingDialog;
 import com.zyao89.view.zloading.Z_TYPE;
@@ -48,34 +50,30 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DefaultObserver;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
-import retrofit2.HttpException;
 import retrofit2.Retrofit;
 
 public class FamiliesDetailsActivity extends BaseActivity implements UpdateStateInterface {
     private ImageView backButton;
     private TextView title;
     private TextView unbundle;
-    private TextView healthCardNum, authenticationMark;
-    private ImageView inputChangeHeaderIcon,
-            inputChangeName,
-            inputChangeAge,
-            inputChangeIdNum,
-            inputChangeCellphone,
-            inputChangeRelation;
+    private TextView healthCardNum;
+    private ImageView authenticationMark;
     private SimpleDraweeView familiesHeaderIconHad;
     private TextView familiesNameHad;
     private Button sexSelecterMale, sexSelecterFemale;
-    private TextView familiesSexHad;
     private TextView familiesAgeHad;
     private TextView familiesIdNumHad;
     private TextView familiesTelNumHad;
     private TextView familiesRelationHad;
+    private Button defaultExam, editFamInfo;
+    private RelativeLayout healthCardBt;
 
     private Uri headerImageUri;
     private String familiesID;
@@ -87,11 +85,6 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
     private Retrofit familiesDetailRetrofit;
     private ZLoadingDialog loadingDialog;
 
-    private FamiliesDetailInfo familiesDetailInfo;
-
-    private String unbundleFamilies = "api/family/account-family-members/";
-
-
     @Override
     public int getLayoutId() {
         return R.layout.activity_families_details;
@@ -100,8 +93,11 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
     @Override
     public void initView() {
         app = HTCMApp.create(getApplicationContext());
+
         familiesID = getIntent().getStringExtra("FAMILIES_ID");
+
         CallBackDataAuth.setUpdateStateInterface(this);
+
         loadingDialog = new ZLoadingDialog(this);
         loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
         loadingDialog.setDialogBackgroundColor(getResources().getColor(R.color.colorText));
@@ -109,112 +105,19 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
         loadingDialog.setHintText("更新中....");
         loadingDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
 
-        //获取家人详细信息。
-        getFamiliesInfo();
         //初始化界面。
         initViews();
 
-
-        //认证家人
-        authenticationMark.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ImmediatelyDialogView immediatelyDialogView = new ImmediatelyDialogView(FamiliesDetailsActivity.this, familiesDetailInfo.getId());
-                immediatelyDialogView.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                immediatelyDialogView.show();
-            }
-        });
-
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 
     @Override
     public void getData() {
-
+        //获取家人详细信息。
+        getFamiliesInfo();
     }
 
-    private void initViews() {
-        backButton = findViewById(R.id.title_header_families_details).findViewById(R.id.back_login);
-        title = findViewById(R.id.title_header_families_details).findViewById(R.id.menu_bar_title);
-        unbundle = findViewById(R.id.title_header_families_details).findViewById(R.id.message_mark_text);
-        healthCardNum = findViewById(R.id.health_card_num);
-        authenticationMark = findViewById(R.id.authentication_mark);//立即认证 按钮
-        inputChangeHeaderIcon = findViewById(R.id.input_change_header_icon);//
-        inputChangeName = findViewById(R.id.input_change_name);//修改家人姓名
-        inputChangeAge = findViewById(R.id.input_change_age);
-        inputChangeIdNum = findViewById(R.id.input_change_id_num);
-        inputChangeCellphone = findViewById(R.id.input_change_cellphone);//修改手机号码按钮
-        inputChangeRelation = findViewById(R.id.input_change_relation);//修改家人关系按钮
-        familiesHeaderIconHad = findViewById(R.id.families_header_icon_had);
-        familiesNameHad = findViewById(R.id.families_name_had);
-        sexSelecterMale = findViewById(R.id.sex_selecter_male);
-        sexSelecterFemale = findViewById(R.id.sex_selecter_female);
-        familiesSexHad = findViewById(R.id.families_sex_had);
-        familiesAgeHad = findViewById(R.id.families_age_had);
-        familiesIdNumHad = findViewById(R.id.families_id_num_had);
-        familiesTelNumHad = findViewById(R.id.families_tel_num_had);
-        familiesRelationHad = findViewById(R.id.families_relation_had);
-
-        title.setText("家人详情");
-        unbundle.setText("解绑");
-
-        setSexModel(sex);
-
-        sexSelecterMale.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sexSelecterMale.setSelected(true);
-                sexSelecterMale.setTextColor(getResources().getColor(R.color.colorWhite));
-                sexSelecterFemale.setSelected(false);
-                sexSelecterFemale.setTextColor(getResources().getColor(R.color.colorThrText));
-            }
-        });
-
-        sexSelecterFemale.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sexSelecterMale.setSelected(false);
-                sexSelecterMale.setTextColor(getResources().getColor(R.color.colorThrText));
-                sexSelecterFemale.setSelected(true);
-                sexSelecterFemale.setTextColor(getResources().getColor(R.color.colorWhite));
-            }
-        });
-    }
 
     private void setViews(final FamiliesDetailInfo info) {
-        if (info.isIs_auth()) {
-            authenticationMark.setVisibility(View.INVISIBLE);
-            inputChangeHeaderIcon.setVisibility(View.VISIBLE);
-            inputChangeName.setVisibility(View.INVISIBLE);
-            inputChangeAge.setVisibility(View.INVISIBLE);
-            inputChangeIdNum.setVisibility(View.INVISIBLE);
-            inputChangeCellphone.setVisibility(View.INVISIBLE);
-            sexSelecterMale.setVisibility(View.INVISIBLE);
-            sexSelecterFemale.setVisibility(View.INVISIBLE);
-            familiesSexHad.setVisibility(View.VISIBLE);
-            healthCardNum.setText(info.getHealth_card_no());
-            if (info.getSex().equals("male")) {
-                familiesSexHad.setText("男");
-            } else {
-                familiesSexHad.setText("女");
-            }
-        } else {
-            authenticationMark.setVisibility(View.VISIBLE);
-            inputChangeHeaderIcon.setVisibility(View.VISIBLE);
-            inputChangeName.setVisibility(View.VISIBLE);
-            inputChangeAge.setVisibility(View.VISIBLE);
-            inputChangeIdNum.setVisibility(View.VISIBLE);
-            inputChangeCellphone.setVisibility(View.VISIBLE);
-            sexSelecterMale.setVisibility(View.VISIBLE);
-            sexSelecterFemale.setVisibility(View.VISIBLE);
-            familiesSexHad.setVisibility(View.INVISIBLE);
-            healthCardNum.setText("无");
-        }
 
         familiesNameHad.setText(info.getFullname());
         familiesAgeHad.setText(info.getBirthday());
@@ -222,209 +125,164 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
         familiesTelNumHad.setText(info.getMobile());
         familiesRelationHad.setText(info.getOwner_relationship());
         familiesHeaderIconHad.setImageURI(info.getAvatar_path());
+        healthCardNum.setText(info.getHealth_card_no());
 
         setSexModel(info.getSex());
 
+        if (info.isIs_default()) {
+            defaultExam.setTextColor(getResources().getColor(R.color.colorThrText));
+        } else {
+            defaultExam.setTextColor(getResources().getColor(R.color.colorPrimary));
+        }
+
+        defaultExam.setOnClickListener(v -> {
+            if (!info.isIs_default()) {
+                setDefault(info);
+            }
+        });
+
         //解绑家人
-        unbundle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(FamiliesDetailsActivity.this);
-                builder.setTitle("提示");
-                builder.setMessage("解绑后您将不能再为【" + info.getFullname() + "】购买套餐或查看其体检报告，确认解绑吗？");
-                builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String familiesID = String.valueOf(familiesDetailInfo.getId());
-                        NetService service1 = familiesDetailRetrofit.create(NetService.class);
-                        service1.deleteFamilies(unbundleFamilies + familiesID, app.getTokenType() + " " + app.getAccessToken())
-                                .subscribeOn(Schedulers.newThread())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new DisposableObserver<ResponseBody>() {
-                                    @Override
-                                    public void onNext(ResponseBody responseBody) {
-                                        CallBackDataAuth.doAuthStateCallBack(true);
-                                        Toast.makeText(FamiliesDetailsActivity.this, "解绑操作完成", Toast.LENGTH_SHORT).show();
-                                        finish();
-                                    }
-
-                                    @Override
-                                    public void onError(Throwable e) {
-                                        if (e instanceof HttpException) {
-                                            ResponseBody body = ((HttpException) e).response().errorBody();
-                                            try {
-                                                Log.e("DETE", body.string());
-                                                Toast.makeText(FamiliesDetailsActivity.this, "解绑操作失败", Toast.LENGTH_SHORT).show();
-                                            } catch (IOException e1) {
-                                                e1.printStackTrace();
-                                            }
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onComplete() {
-
-                                    }
-                                });
-                    }
-                });
-
-                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(FamiliesDetailsActivity.this, "取消操作", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                builder.show();
-            }
+        unbundle.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(FamiliesDetailsActivity.this);
+            builder.setTitle("提示");
+            builder.setMessage("解绑后您将不能再为【" + info.getFullname() + "】购买套餐或查看其体检报告，确认解绑吗？");
+            builder.setPositiveButton("确认", (dialog, which) -> unbundleFam());
+            builder.setNegativeButton("取消", (dialog, which) -> Toast.makeText(FamiliesDetailsActivity.this, "取消操作", Toast.LENGTH_SHORT).show());
+            builder.show();
         });
 
-        //点击进入修改手机号码界面.
-        inputChangeCellphone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(FamiliesDetailsActivity.this, ModeFamiliesInfoActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("FAMILIES_INFO", info);
-                intent.putExtras(bundle);
-                intent.putExtra("MODE", "CELLPHONE");
-                startActivity(intent);
-            }
-        });
+        editFamInfo.setOnClickListener(v -> modeInfoDialog(info));
+
+//        //点击进入修改手机号码界面.
+//        inputChangeCellphone.setOnClickListener(v -> {
+//            Intent intent = new Intent(FamiliesDetailsActivity.this, ModeFamiliesInfoActivity.class);
+//            Bundle bundle = new Bundle();
+//            bundle.putSerializable("FAMILIES_INFO", info);
+//            intent.putExtras(bundle);
+//            intent.putExtra("MODE", "CELLPHONE");
+//            startActivity(intent);
+//        });
 
         //点击进入修改家人关系页面
-        inputChangeRelation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(FamiliesDetailsActivity.this, ModeFamiliesInfoActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("FAMILIES_INFO", info);
-                intent.putExtras(bundle);
-                intent.putExtra("MODE", "RELATION");
-                startActivity(intent);
-            }
-        });
+//        inputChangeRelation.setOnClickListener(v -> {
+//            Intent intent = new Intent(FamiliesDetailsActivity.this, ModeFamiliesInfoActivity.class);
+//            Bundle bundle = new Bundle();
+//            bundle.putSerializable("FAMILIES_INFO", info);
+//            intent.putExtras(bundle);
+//            intent.putExtra("MODE", "RELATION");
+//            startActivity(intent);
+//        });
 
-        inputChangeName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(FamiliesDetailsActivity.this, ModeFamiliesInfoActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("FAMILIES_INFO", info);
-                intent.putExtras(bundle);
-                intent.putExtra("MODE", "NAME");
-                startActivity(intent);
-            }
-        });
+//        inputChangeName.setOnClickListener(v -> {
+//            Intent intent = new Intent(FamiliesDetailsActivity.this, ModeFamiliesInfoActivity.class);
+//            Bundle bundle = new Bundle();
+//            bundle.putSerializable("FAMILIES_INFO", info);
+//            intent.putExtras(bundle);
+//            intent.putExtra("MODE", "NAME");
+//            startActivity(intent);
+//        });
 
-        inputChangeIdNum.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(FamiliesDetailsActivity.this, ModeFamiliesInfoActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("FAMILIES_INFO", info);
-                intent.putExtras(bundle);
-                intent.putExtra("MODE", "ID");
-                startActivity(intent);
-            }
-        });
+//        inputChangeIdNum.setOnClickListener(v -> {
+//            Intent intent = new Intent(FamiliesDetailsActivity.this, ModeFamiliesInfoActivity.class);
+//            Bundle bundle = new Bundle();
+//            bundle.putSerializable("FAMILIES_INFO", info);
+//            intent.putExtras(bundle);
+//            intent.putExtra("MODE", "ID");
+//            startActivity(intent);
+//        });
 
-        sexSelecterMale.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!sexSelecterMale.isSelected()) {
-                    dialog("提示", "你确认修改性别!", "sex", "male");
-                }
-            }
-        });
+//        sexSelecterMale.setOnClickListener(v -> {
+//            if (!sexSelecterMale.isSelected()) {
+//                dialog("提示", "你确认修改性别!", "sex", "male");
+//            }
+//        });
+//
+//        sexSelecterFemale.setOnClickListener(v -> {
+//            if (!sexSelecterFemale.isSelected()) {
+//                dialog("提示", "你确认修改性别!", "sex", "female");
+//            }
+//        });
 
-        sexSelecterFemale.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!sexSelecterFemale.isSelected()) {
-                    dialog("提示", "你确认修改性别!", "sex", "female");
-                }
-            }
-        });
+//        inputChangeAge.setOnClickListener(v -> {
+//            AlertDialog dialog;
+//            AlertDialog.Builder builder = new AlertDialog.Builder(FamiliesDetailsActivity.this);
+//            builder.setTitle("提示");
+//            builder.setMessage("您确认要更改你的出生年月!");
+//            builder.setNegativeButton("暂不", null);
+//            builder.setPositiveButton("确定", (dialog1, which) -> updateBrithday());
+//            dialog = builder.create();
+//            dialog.show();
+//        });
 
-        inputChangeAge.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog dialog;
-                AlertDialog.Builder builder = new AlertDialog.Builder(FamiliesDetailsActivity.this);
-                builder.setTitle("提示");
-                builder.setMessage("您确认要更改你的出生年月!");
-                builder.setNegativeButton("暂不", null);
-                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        updateBrithday();
-                    }
-                });
-                dialog = builder.create();
-                dialog.show();
-            }
+        healthCardBt.setOnClickListener(v -> {
+            FamiliesListItem familiesListItem = new FamiliesListItem();
+            familiesListItem.setHealth_card_no(info.getHealth_card_no());
+            familiesListItem.setAvatar_path(info.getAvatar_path());
+            familiesListItem.setFullname(info.getFullname());
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("FAMILIES_INFO", familiesListItem);
+            ActivityUtil.Companion.startActivity(this, new UserCardActivity(), bundle);
         });
 
     }
 
     //获取家人信息
     private void getFamiliesInfo() {
-
-        if (familiesDetailRetrofit == null) {
-            familiesDetailRetrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
-        }
-
         loadingDialog.show();
-        NetService service = familiesDetailRetrofit.create(NetService.class);
-        service.getFamiliesDetail(GlobalConstant.FAMILIES_INFO + familiesID, app.getTokenType() + " " + app.getAccessToken())
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableObserver<FamiliesDetailInfo>() {
-                    @Override
-                    public void onNext(final FamiliesDetailInfo info) {
-                        Log.e("FAMILIES", "家人详细信息 数据请求成功:" + info.toString());
-                        familiesDetailInfo = info;
-                        app.setFamiliesDetailInfo(info);
-                        setViews(info);
-                        loadingDialog.cancel();
-                        //修改家人头像
-                        inputChangeHeaderIcon.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                modeInfoDialog("头像", info);
-                            }
-                        });
-                    }
+        MemberRepository.Companion.getDefault().getFamInfo(familiesID).subscribe(new DefaultObserver<FamiliesDetailInfo>() {
+            @Override
+            public void onNext(FamiliesDetailInfo info) {
+                app.setFamiliesDetailInfo(info);
+                setViews(info);
+                loadingDialog.cancel();
+                //修改家人头像
+//                inputChangeHeaderIcon.setOnClickListener(v -> modeInfoDialog("头像", info));
+            }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        loadingDialog.cancel();
-                        Toast.makeText(FamiliesDetailsActivity.this, "信息请求失败！", Toast.LENGTH_SHORT).show();
+            @Override
+            public void onError(Throwable e) {
+                loadingDialog.cancel();
+                Toast.makeText(FamiliesDetailsActivity.this, "信息请求失败！", Toast.LENGTH_SHORT).show();
+            }
 
-                    }
+            @Override
+            public void onComplete() {
 
-                    @Override
-                    public void onComplete() {
-                        loadingDialog.cancel();
-                    }
-                });
+            }
+        });
+
 
     }
 
-
-    //
-    private void modeInfoDialog(String message, FamiliesDetailInfo info) {
+    private void modeInfoDialog(FamiliesDetailInfo info) {
         AlertDialog dialog;
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("家人信息修改");
-        builder.setMessage("你确定要修改" + info.getFullname() + "的" + message + "?");
-        builder.setNegativeButton("暂不", null);
-        builder.setPositiveButton("修改", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                showPopwindow();
-            }
+        builder.setMessage("当前家人已经绑定手机号，修改相关信息将先通过短信验证，是否发送验证码到" + info.getMobile() + "?");
+        builder.setNegativeButton("取消", null);
+        builder.setPositiveButton("发送", (dialog1, which) -> {
+            MemberRepository
+                    .Companion.getDefault()
+                    .sendModCode(familiesID)
+                    .subscribe(new DefaultObserver<Message>() {
+                        @Override
+                        public void onNext(Message message) {
+                            showShortToast("已成功发送验证请求！请耐心等待验证码短信");
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("FAMILIES_INFO", info);
+                            bundle.putString("MODE","CELLPHONE"+",MODE_FAM");
+                            ActivityUtil.Companion.startActivity(FamiliesDetailsActivity.this,new ModeFamiliesInfoActivity(),bundle);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            showShortToast("验证请求失败!请重试");
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
         });
 
         dialog = builder.create();
@@ -485,55 +343,43 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.show();
 
-        dialog.findViewById(R.id.get_photo_camera).setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                File outputImage = new File(FamiliesDetailsActivity.this.getExternalCacheDir(), "user_header.jpg");
-                if (outputImage.exists()) {
-                    outputImage.delete();
-                }
-
-                try {
-                    outputImage.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                if (Build.VERSION.SDK_INT >= 24) {
-                    headerImageUri = FileProvider.getUriForFile(FamiliesDetailsActivity.this, "com.example.cameraalbumtest.fileprovider", outputImage);
-                } else {
-                    headerImageUri = Uri.fromFile(outputImage);
-                }
-
-                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, headerImageUri);
-                startActivityForResult(intent, 1);
+        dialog.findViewById(R.id.get_photo_camera).setOnClickListener(view1 -> {
+            File outputImage = new File(FamiliesDetailsActivity.this.getExternalCacheDir(), "user_header.jpg");
+            if (outputImage.exists()) {
+                outputImage.delete();
             }
+
+            try {
+                outputImage.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if (Build.VERSION.SDK_INT >= 24) {
+                headerImageUri = FileProvider.getUriForFile(FamiliesDetailsActivity.this, "com.example.cameraalbumtest.fileprovider", outputImage);
+            } else {
+                headerImageUri = Uri.fromFile(outputImage);
+            }
+
+            Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, headerImageUri);
+            startActivityForResult(intent, 1);
         });
 
         //从相册获取头像
-        dialog.findViewById(R.id.get_photo_gra).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (ContextCompat.checkSelfPermission(FamiliesDetailsActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(FamiliesDetailsActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                } else {
-                    Intent intent = new Intent("android.intent.action.GET_CONTENT");
-                    intent.setType("image/*");
-                    startActivityForResult(intent, 2);
-                    dialog.dismiss();
-                }
-            }
-        });
-
-        dialog.findViewById(R.id.get_photo_cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        dialog.findViewById(R.id.get_photo_gra).setOnClickListener(view12 -> {
+            if (ContextCompat.checkSelfPermission(FamiliesDetailsActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(FamiliesDetailsActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            } else {
+                Intent intent = new Intent("android.intent.action.GET_CONTENT");
+                intent.setType("image/*");
+                startActivityForResult(intent, 2);
                 dialog.dismiss();
             }
         });
+
+        dialog.findViewById(R.id.get_photo_cancel).setOnClickListener(view13 -> dialog.dismiss());
     }
 
     @Override
@@ -555,6 +401,30 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
                 }
             default:
         }
+    }
+
+    //设置默认就诊人
+    private void setDefault(FamiliesDetailInfo info) {
+        MemberRepository
+                .Companion.getDefault()
+                .setDefault(familiesID)
+                .subscribe(new DefaultObserver<ResponseBody>() {
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        defaultExam.setTextColor(getResources().getColor(R.color.colorThrText));
+                        showShortToast("你已成功设置" + info.getFullname() + "为默认就诊人");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        showError(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     //上传更新家人信息
@@ -605,16 +475,32 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
         builder.setMessage(message);
 
         builder.setNegativeButton("暂不", null);
-        builder.setPositiveButton("修改", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                updateInfo(key, val);
-            }
-        });
+        builder.setPositiveButton("修改", (dialog, which) -> updateInfo(key, val));
 
         alertDialog = builder.create();
         alertDialog.show();
 
+    }
+
+    private void unbundleFam() {
+        MemberRepository.Companion.getDefault().delFam(familiesID).subscribe(new DefaultObserver<ResponseBody>() {
+            @Override
+            public void onNext(ResponseBody responseBody) {
+                CallBackDataAuth.doAuthStateCallBack(true);
+                showShortToast("解绑操作完成");
+                finish();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                showShortToast("解绑操作失败");
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 
     private void updateInfo(String key, String val) {
@@ -657,12 +543,9 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
         if (calendar == null) {
             calendar = Calendar.getInstance();
         }
-        DatePickerDialog timePickerDialog = new DatePickerDialog(this, R.style.Theme_AppCompat_DayNight_Dialog_Alert, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                String brith = year + "-" + (month + 1) + "-" + dayOfMonth;
-                updateInfo("birthday", brith);
-            }
+        DatePickerDialog timePickerDialog = new DatePickerDialog(this, R.style.Theme_AppCompat_DayNight_Dialog_Alert, (view, year, month, dayOfMonth) -> {
+            String brith = year + "-" + (month + 1) + "-" + dayOfMonth;
+            updateInfo("birthday", brith);
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
         timePickerDialog.show();
@@ -698,5 +581,30 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
             sexSelecterFemale.setSelected(true);
             sexSelecterFemale.setTextColor(getResources().getColor(R.color.colorWhite));
         }
+    }
+
+    private void initViews() {
+        backButton = findViewById(R.id.title_header_families_details).findViewById(R.id.back_login);
+        title = findViewById(R.id.title_header_families_details).findViewById(R.id.menu_bar_title);
+        unbundle = findViewById(R.id.title_header_families_details).findViewById(R.id.message_mark_text);
+        healthCardNum = findViewById(R.id.health_card_num);
+        authenticationMark = findViewById(R.id.authentication_mark);//
+        familiesHeaderIconHad = findViewById(R.id.families_header_icon_had);
+        familiesNameHad = findViewById(R.id.families_name_had);
+        sexSelecterMale = findViewById(R.id.sex_selecter_male);
+        sexSelecterFemale = findViewById(R.id.sex_selecter_female);
+        familiesAgeHad = findViewById(R.id.families_age_had);
+        familiesIdNumHad = findViewById(R.id.families_id_num_had);
+        familiesTelNumHad = findViewById(R.id.families_tel_num_had);
+        familiesRelationHad = findViewById(R.id.families_relation_had);
+        editFamInfo = findViewById(R.id.edit_fam_info);
+        defaultExam = findViewById(R.id.default_exam);
+
+        healthCardBt = findViewById(R.id.health_card_bt);
+
+        title.setText("家人详情");
+        unbundle.setText("解绑");
+        backButton.setOnClickListener(v -> finish());
+
     }
 }

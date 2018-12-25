@@ -26,6 +26,7 @@ fun initCaptchaTimer(textView: TextView) {
         }
 
         override fun onFinish() {
+            textView.text = "获得验证码"
             releaseCaptchaTimer()
         }
     }

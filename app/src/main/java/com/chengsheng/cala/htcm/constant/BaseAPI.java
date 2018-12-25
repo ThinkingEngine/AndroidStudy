@@ -18,7 +18,7 @@ public class BaseAPI {
     /**
      * 业务基地址
      */
-    private static final String DEV_SERVICE_URL = "http://192.168.1.119:8000/";
+    private static final String DEV_SERVICE_URL = "http://192.168.1.119:9001/";
     private static final String LIVE_SERVICE_URL = "http://api.peis-mobile.zz-tech.com.cn:85/";
 
     /**
@@ -27,8 +27,8 @@ public class BaseAPI {
     public static final String ACCOUNT_BASE_URL = BuildConfig.isDev ? DEV_BASE_URL : LIVE_BASE_URL;
 
     /**
-     * 账号api接口根地址
+     * 业务api接口根地址
      */
-    public static final String SERVICE_BASE_URL = BuildConfig.isDev ? DEV_SERVICE_URL : LIVE_SERVICE_URL;//获取服务URL
+    public static final String SERVICE_BASE_URL = BuildConfig.isDev ? DEV_SERVICE_URL : LIVE_SERVICE_URL;
 
 }

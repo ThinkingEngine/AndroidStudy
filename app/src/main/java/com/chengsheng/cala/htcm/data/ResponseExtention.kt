@@ -6,7 +6,7 @@ import com.chengsheng.cala.htcm.data.retrofit.exception.BusinessException
 import com.chengsheng.cala.htcm.data.retrofit.exception.InvalidLoginException
 import com.chengsheng.cala.htcm.module.account.LoginActivity
 import com.chengsheng.cala.htcm.network.NetWorkUtils
-import com.chengsheng.cala.htcm.utils.PreferenceUtil
+import com.chengsheng.cala.htcm.utils.CleanUtil
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -54,7 +54,7 @@ fun checkError(throwable: Throwable, context: Context): String {
         throwable is BusinessException -> errorMessage = throwable.message ?: RESPONSE_FAILURE
         throwable is InvalidLoginException -> {
             errorMessage = LOGIN_ILLEGAL
-            PreferenceUtil.clear()
+            CleanUtil.cleanAllLoginInfo()
             LoginActivity.start(context)
         }
         else -> errorMessage = REQUEST_FAILURE

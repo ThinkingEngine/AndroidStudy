@@ -2,6 +2,7 @@ package com.chengsheng.cala.htcm.data.repository
 
 import com.chengsheng.cala.htcm.data.retrofit.RetrofitHelper
 import com.chengsheng.cala.htcm.data.transformProto
+import com.chengsheng.cala.htcm.protocol.MemberCardProtocol
 import io.reactivex.Observable
 
 /**
@@ -31,7 +32,7 @@ class MemberCardRepository private constructor() {
     /**
      * 获取会员卡列表
      */
-    fun getCardList(): Observable<Any>? {
+    fun getCardList(): Observable<MemberCardProtocol>? {
         return transformProto(RetrofitHelper.getInstance().memberCardService.getCardList())
     }
 

@@ -7,6 +7,8 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.chengsheng.cala.htcm.R
 import com.chengsheng.cala.htcm.base.BaseActivity
 import com.chengsheng.cala.htcm.module.user.card.MemberCardDetailActivity
+import com.chengsheng.cala.htcm.protocol.MemberCardProtocol
+import com.chengsheng.cala.htcm.utils.StringUtils
 import com.chengsheng.cala.htcm.widget.MemberCardPopWindow
 
 /**
@@ -14,9 +16,16 @@ import com.chengsheng.cala.htcm.widget.MemberCardPopWindow
  * CreateDate: 2018/12/23 3:39 PM
  * Description: 会员卡
  */
-class MemberCardAdapter(private var activity: BaseActivity, data: List<Any>) :
-        BaseQuickAdapter<Any>(R.layout.item_member_card, data) {
-    override fun convert(helper: BaseViewHolder?, data: Any?) {
+class MemberCardAdapter(private var activity: BaseActivity, data: List<MemberCardProtocol.ItemsBean>) :
+        BaseQuickAdapter<MemberCardProtocol.ItemsBean>(R.layout.item_member_card, data) {
+    override fun convert(helper: BaseViewHolder?, data: MemberCardProtocol.ItemsBean?) {
+        helper?.setText(R.id.tvCardId, StringUtils.addBlank(data?.card_number))
+        helper?.setText(R.id.tvAvailable, data?.balance)
+        try {
+            helper?.setText(R.id.tvBindDate, "绑定日期:" + data?.bind_at?.substring(0, 10))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
         //查看详情
         helper?.getView<ConstraintLayout>(R.id.layoutMemberItem)?.setOnClickListener {

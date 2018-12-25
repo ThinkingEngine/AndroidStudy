@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#8f000000">
+    android:background="@color/colorDialogBg">
 
     <LinearLayout
         android:id="@+id/popup_animation"
@@ -25,24 +26,26 @@
             android:textSize="@dimen/sp_14" />
 
         <TextView
+            android:id="@+id/tvMemberId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
-            android:text="5238  5902  7639  6219"
+            android:layout_marginTop="@dimen/dp_8"
             android:textColor="#FFFFFF"
-            android:textSize="@dimen/sp_18" />
+            android:textSize="@dimen/sp_18"
+            tools:text="5238  5902  7639  6219" />
 
         <ImageView
+            android:id="@+id/ivBarCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_40"
             android:src="@mipmap/zhineng_tiaoxingma_big" />
 
         <ImageView
+            android:id="@+id/ivQRCode"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:layout_marginTop="@dimen/dp_16"
-            android:src="@mipmap/erweima_big" />
+            android:layout_marginTop="@dimen/dp_16" />
 
         <TextView
             android:layout_width="wrap_content"

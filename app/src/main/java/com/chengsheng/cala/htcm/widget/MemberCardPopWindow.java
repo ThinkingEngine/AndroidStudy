@@ -1,12 +1,16 @@
 package com.chengsheng.cala.htcm.widget;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
 import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.utils.ZXUtils;
 import com.luck.picture.lib.tools.ScreenUtils;
 
 import razerdp.basepopup.BasePopupWindow;
@@ -18,10 +22,21 @@ import razerdp.basepopup.BasePopupWindow;
  */
 public class MemberCardPopWindow extends BasePopupWindow {
 
-    public MemberCardPopWindow(Context context) {
+    public MemberCardPopWindow(Context context, String id) {
         super(context);
         setBackPressEnable(true);
         setDismissWhenTouchOutside(true);
+
+        TextView tvMemberId = (TextView) findViewById(R.id.tvMemberId);
+        ImageView ivQRCode = (ImageView) findViewById(R.id.ivQRCode);
+        ImageView ivBarCode = (ImageView) findViewById(R.id.ivBarCode);
+        tvMemberId.setText(id);
+
+        //二维码
+        Bitmap bitmap = ZXUtils.createQRImage(
+                id, ScreenUtils.dip2px(context, 150), ScreenUtils.dip2px(context, 150));
+
+        ivQRCode.setImageBitmap(bitmap);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.chengsheng.cala.htcm.adapter
 
+import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -29,12 +30,14 @@ class MemberCardAdapter(private var activity: BaseActivity, data: List<MemberCar
 
         //查看详情
         helper?.getView<ConstraintLayout>(R.id.layoutMemberItem)?.setOnClickListener {
-            activity.startActivity(MemberCardDetailActivity())
+            val bundle = Bundle()
+            bundle.putInt("id", data?.id!!)
+            activity.startActivity(MemberCardDetailActivity(), bundle)
         }
 
         //显示二维码
         helper?.getView<View>(R.id.viewShowCardPop)?.setOnClickListener {
-            MemberCardPopWindow(mContext).showPopupWindow()
+            MemberCardPopWindow(mContext, StringUtils.addBlank(data?.card_number)).showPopupWindow()
         }
     }
 }

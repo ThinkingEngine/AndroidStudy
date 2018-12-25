@@ -44,11 +44,13 @@ public class AppTitleBar extends FrameLayout {
         ivFinishPage = contentView.findViewById(R.id.iv_finish_pager);
         tvTitle = contentView.findViewById(R.id.tv_pager_title);
         ivRightAction = contentView.findViewById(R.id.iv_right_action);
+        View viewDivide = contentView.findViewById(R.id.viewDivide);
 
         //获取自定义属性
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.titleBar);
         String title = array.getString(R.styleable.titleBar_title);
         Boolean isShowFinish = array.getBoolean(R.styleable.titleBar_isShowReturn, true);
+        Boolean isShowDivide = array.getBoolean(R.styleable.titleBar_isShowDivide, true);
         int rightImgResId = array.getResourceId(R.styleable.titleBar_rightImageView, -1);
         array.recycle();
 
@@ -86,6 +88,10 @@ public class AppTitleBar extends FrameLayout {
                 }
             });
         }
+
+        //设置是否显示分割线
+        viewDivide.setVisibility(isShowDivide ? View.VISIBLE : View.INVISIBLE);
+
     }
 
     /**

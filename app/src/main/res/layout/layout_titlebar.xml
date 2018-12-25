@@ -44,6 +44,7 @@
     </FrameLayout>
 
     <View
+        android:id="@+id/viewDivide"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_1"
         android:background="@color/colorCutoff" />

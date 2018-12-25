@@ -6,10 +6,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chengsheng.cala.htcm.R
 import com.chengsheng.cala.htcm.adapter.MemberCardAdapter
 import com.chengsheng.cala.htcm.base.BaseRefreshActivity
+import com.chengsheng.cala.htcm.constant.GlobalConstant.DELETE_MEMBER_CARD_SUC
 import com.chengsheng.cala.htcm.data.repository.MemberCardRepository
 import com.chengsheng.cala.htcm.protocol.MemberCardProtocol
 import com.jakewharton.rxbinding2.view.RxView
 import kotlinx.android.synthetic.main.member_card_list_footer.*
+import org.simple.eventbus.Subscriber
+import org.simple.eventbus.ThreadMode
 
 /**
  * Author: 任和
@@ -50,5 +53,10 @@ class MemberCardActivity : BaseRefreshActivity<MemberCardProtocol.ItemsBean>() {
 
     override fun getCurrentAdapter(): BaseQuickAdapter<MemberCardProtocol.ItemsBean>? {
         return MemberCardAdapter(this, ArrayList())
+    }
+
+    @Subscriber(mode = ThreadMode.MAIN, tag = DELETE_MEMBER_CARD_SUC)
+    fun refresh(event: String) {
+        getData(FIRST_PAGE)
     }
 }

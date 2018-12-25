@@ -1,8 +1,11 @@
 package com.chengsheng.cala.htcm.data.repository
 
+import com.chengsheng.cala.htcm.data.createJson
 import com.chengsheng.cala.htcm.data.retrofit.RetrofitHelper
 import com.chengsheng.cala.htcm.data.transformProto
+import com.chengsheng.cala.htcm.protocol.MemberCardDetailProtocol
 import com.chengsheng.cala.htcm.protocol.MemberCardProtocol
+import com.google.gson.JsonObject
 import io.reactivex.Observable
 
 /**
@@ -34,6 +37,29 @@ class MemberCardRepository private constructor() {
      */
     fun getCardList(): Observable<MemberCardProtocol>? {
         return transformProto(RetrofitHelper.getInstance().memberCardService.getCardList())
+    }
+
+    /**
+     * 会员卡详情
+     */
+    fun getCardDetail(id: Int): Observable<MemberCardDetailProtocol>? {
+        return transformProto(RetrofitHelper.getInstance().memberCardService.getCardDetail(id))
+    }
+
+    /**
+     * 解绑会员卡
+     */
+    fun deleteMemberCard(id: Int, password: String): Observable<JsonObject>? {
+        val map = HashMap<String, String>()
+        map["password"] = password
+        return transformProto(RetrofitHelper.getInstance().memberCardService.deleteMemberCard(id, createJson(map)))
+    }
+
+    /**
+     * 发送验证码
+     */
+    fun getCardDetail(mobile: String): Observable<JsonObject>? {
+        return transformProto(RetrofitHelper.getInstance().memberCardService.sendCaptcha(mobile))
     }
 
 }

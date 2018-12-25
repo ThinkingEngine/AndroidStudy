@@ -26,7 +26,6 @@ fun initCaptchaTimer(textView: TextView) {
         }
 
         override fun onFinish() {
-            textView.visibility = View.INVISIBLE
             releaseCaptchaTimer()
         }
     }

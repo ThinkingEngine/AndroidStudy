@@ -58,7 +58,7 @@ class MemberCardRepository private constructor() {
     /**
      * 发送验证码
      */
-    fun getCardDetail(mobile: String): Observable<JsonObject>? {
+    fun sendCaptcha(mobile: String): Observable<JsonObject>? {
         return transformProto(RetrofitHelper.getInstance().memberCardService.sendCaptcha(mobile))
     }
 

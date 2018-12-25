@@ -41,7 +41,7 @@ interface MemberCardService {
     /**
      * 发送短信验证码
      */
-    @GET(API.MEMBER_CARD_DETAIL)
+    @POST(API.SEND_CAPTCHA)
     @Headers("Authorization:true")
     fun sendCaptcha(@Query("mobile") mobile: String): Observable<Response<JsonObject>>
 

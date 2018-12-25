@@ -29,8 +29,8 @@ abstract class BaseRefreshFragment<T> : BaseFragment(), OnLoadmoreListener {
     protected val FIRST_PAGE: Int = 1
     protected var currentPage: Int = FIRST_PAGE
 
-    var smartRefreshLayout: SmartRefreshLayout? = null
-    var recyclerView: RecyclerView? = null
+    protected var smartRefreshLayout: SmartRefreshLayout? = null
+    protected var recyclerView: RecyclerView? = null
     private var classicsHeader: ClassicsHeader? = null
 
     protected var adapter: BaseQuickAdapter<T>? = null

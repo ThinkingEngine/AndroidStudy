@@ -14,7 +14,6 @@ import android.widget.RelativeLayout;
 
 import com.chengsheng.cala.htcm.R;
 
-//import com.chengsheng.cala.htcm.adapter.AIAssistantRecyclerAdapter;
 import com.chengsheng.cala.htcm.adapter.AIAssistantAdapter;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.module.activitys.AIAssistantActivity;
@@ -152,6 +151,7 @@ public class HomeFragment extends Fragment implements UpdateAIAssisont, UpdateSt
         if (status) {
             updateServiceSMS();
             updateAIAssistant();
+            updateNews();
         }
     }
 

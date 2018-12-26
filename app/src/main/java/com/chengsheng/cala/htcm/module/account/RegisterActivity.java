@@ -19,6 +19,7 @@ import com.chengsheng.cala.htcm.network.NetService;
 import com.chengsheng.cala.htcm.protocol.SMSVerificationResult;
 import com.chengsheng.cala.htcm.protocol.childmodela.RegisterError;
 import com.chengsheng.cala.htcm.utils.FuncUtils;
+import com.chengsheng.cala.htcm.utils.TimeUtilKt;
 import com.google.gson.Gson;
 import com.zyao89.view.zloading.ZLoadingDialog;
 import com.zyao89.view.zloading.Z_TYPE;
@@ -62,12 +63,7 @@ public class RegisterActivity extends BaseActivity {
         userProtocol = findViewById(R.id.user_protocol);
         serviceNum = findViewById(R.id.service_num);
 
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        login.setOnClickListener(v -> finish());
 
     }
 
@@ -96,78 +92,58 @@ public class RegisterActivity extends BaseActivity {
 //        final Retrofit retrofitURL = myRetrofit.createURL(GlobalConstant.TEST_URL);
         initViews();
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        back.setOnClickListener(v -> {
+            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
         });
 
-        deleteInput.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getUserNum.setText("");
-            }
-        });
+        deleteInput.setOnClickListener(v -> getUserNum.setText(""));
 
         //获取手机验证码按钮。
-        getCodeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        getCodeButton.setOnClickListener(v -> {
 
-                final String number = getUserNum.getText().toString();
-                if (FuncUtils.isMobileNO(number)) {
-                    getPhoneCode(number);
-                } else {
-                    Toast.makeText(RegisterActivity.this, "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
-                }
-
+            final String number = getUserNum.getText().toString();
+            if (FuncUtils.isMobileNO(number)) {
+                getPhoneCode(number);
+            } else {
+                Toast.makeText(RegisterActivity.this, "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
             }
+
         });
 
-        serviceNum.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog alertDialog;
-                AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                builder.setTitle("呼叫客服");
-                builder.setMessage("您确认拨打客服电话？");
-                builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(Intent.ACTION_DIAL);
-                        Uri data = Uri.parse("tel:" + serviceNum.getText().toString());
-                        intent.setData(data);
-                        startActivity(intent);
-                    }
-                });
-                builder.setNegativeButton("暂不", null);
-                alertDialog = builder.create();
-                alertDialog.show();
-            }
+        serviceNum.setOnClickListener(v -> {
+            AlertDialog alertDialog;
+            AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+            builder.setTitle("呼叫客服");
+            builder.setMessage("您确认拨打客服电话？");
+            builder.setPositiveButton("确认", (dialog, which) -> {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                Uri data = Uri.parse("tel:" + serviceNum.getText().toString());
+                intent.setData(data);
+                startActivity(intent);
+            });
+            builder.setNegativeButton("暂不", null);
+            alertDialog = builder.create();
+            alertDialog.show();
         });
 
         //立即注册按钮。
-        comingRegisterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (getUserNum.getText().toString().equals("") || !FuncUtils.isMobileNO(getUserNum.getText().toString())) {
-                    Toast.makeText(RegisterActivity.this, "请输入正确的手机号码!", Toast.LENGTH_SHORT).show();
-                } else if (getCodeUser.getText().toString().equals("")) {
-                    Toast.makeText(RegisterActivity.this, "验证码不能为空!", Toast.LENGTH_SHORT).show();
-                } else if (passwordInput.getText().toString().equals("")) {
-                    Toast.makeText(RegisterActivity.this, "密码不能为空!", Toast.LENGTH_SHORT).show();
-                } else if (isOkPasswd.getText().toString().equals("")) {
-                    Toast.makeText(RegisterActivity.this, "请确认你的密码!", Toast.LENGTH_SHORT).show();
-                } else if (!passwordInput.getText().toString().equals(isOkPasswd.getText().toString())) {
-                    Toast.makeText(RegisterActivity.this, "两次密码输入不一致!", Toast.LENGTH_SHORT).show();
-                } else if (verificationCodeId.equals("") || !userNum.equals(getUserNum.getText().toString())) {
-                    Toast.makeText(RegisterActivity.this, "该号码尚未验证，请先取得验证码!", Toast.LENGTH_SHORT).show();
-                } else {
-                    registerNewUser();
-                }
+        comingRegisterButton.setOnClickListener(v -> {
+            if (getUserNum.getText().toString().equals("") || !FuncUtils.isMobileNO(getUserNum.getText().toString())) {
+                Toast.makeText(RegisterActivity.this, "请输入正确的手机号码!", Toast.LENGTH_SHORT).show();
+            } else if (getCodeUser.getText().toString().equals("")) {
+                Toast.makeText(RegisterActivity.this, "验证码不能为空!", Toast.LENGTH_SHORT).show();
+            } else if (passwordInput.getText().toString().equals("")) {
+                Toast.makeText(RegisterActivity.this, "密码不能为空!", Toast.LENGTH_SHORT).show();
+            } else if (isOkPasswd.getText().toString().equals("")) {
+                Toast.makeText(RegisterActivity.this, "请确认你的密码!", Toast.LENGTH_SHORT).show();
+            } else if (!passwordInput.getText().toString().equals(isOkPasswd.getText().toString())) {
+                Toast.makeText(RegisterActivity.this, "两次密码输入不一致!", Toast.LENGTH_SHORT).show();
+            } else if (verificationCodeId.equals("") || !userNum.equals(getUserNum.getText().toString())) {
+                Toast.makeText(RegisterActivity.this, "该号码尚未验证，请先取得验证码!", Toast.LENGTH_SHORT).show();
+            } else {
+                registerNewUser();
             }
         });
     }
@@ -184,6 +160,9 @@ public class RegisterActivity extends BaseActivity {
         }
 
         loadingDialog.show();
+
+        TimeUtilKt.initCaptchaTimer(getCodeButton);
+
         NetService service = retrofit.create(NetService.class);
         service.getSMSVerification(getUserNum.getText().toString())
                 .subscribeOn(Schedulers.newThread())
@@ -258,11 +237,8 @@ public class RegisterActivity extends BaseActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(error.getError());
         builder.setMessage(error.getMessage());
-        builder.setPositiveButton("请重新更改您的注册信息!", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+        builder.setPositiveButton("请重新更改您的注册信息!", (dialog, which) -> {
 
-            }
         });
 
         alertDialog = builder.create();

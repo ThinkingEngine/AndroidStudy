@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--APP标题栏扩展属性-->
     <declare-styleable name="titleBar">
         <!--是否显示返回按钮-->
         <attr name="isShowReturn" format="boolean" />

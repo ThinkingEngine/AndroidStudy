@@ -18,7 +18,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:replace="android:theme">
-
         <activity android:name=".module.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,64 +25,63 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--APP首页-->
+        <!-- APP首页 -->
         <activity android:name=".module.home.MainActivity" />
         <activity android:name=".module.account.RegisterActivity" />
         <activity
             android:name=".module.account.LoginActivity"
             android:launchMode="singleTask" />
         <activity android:name=".module.activitys.RetrievePWActivity" />
-        <!--设置-->
+        <!-- 设置 -->
         <activity android:name=".module.activitys.SettingActivity" />
-
         <activity android:name=".module.activitys.FAQActivity" />
-        <!--我的设备-->
+        <!-- 我的设备 -->
         <activity android:name=".module.activitys.MyDevicesActivity" />
-        <!--账户设置-->
+        <!-- 账户设置 -->
         <activity android:name=".module.activitys.AccountSettingActivity" />
         <activity android:name=".module.activitys.MessageActivity" />
-        <!--安全设置页-->
+        <!-- 安全设置页 -->
         <activity android:name=".module.activitys.SecuritySettingsActivity" />
-        <!--通用-->
+        <!-- 通用 -->
         <activity android:name=".module.activitys.CommonUseActivity" />
-        <!--意见反馈-->
+        <!-- 意见反馈 -->
         <activity android:name=".module.activitys.FeedbackActivity" />
-        <!--关于应用-->
+        <!-- 关于应用 -->
         <activity android:name=".module.activitys.AboutActivity" />
-        <!--手势解锁-->
+        <!-- 手势解锁 -->
         <activity android:name=".module.activitys.GesturesUnlockActivity" />
-        <!--用户二维码及个人信息页-->
+        <!-- 用户二维码及个人信息页 -->
         <activity android:name=".module.activitys.UserCardActivity" />
-        <!--家人管理-->
+        <!-- 家人管理 -->
         <activity android:name=".module.activitys.FamilyManageActivity" />
-        <!--家人详情-->
+        <!-- 家人详情 -->
         <activity android:name=".module.activitys.FamiliesDetailsActivity" />
-        <!--体检预约-->
+        <!-- 体检预约 -->
         <activity android:name=".module.activitys.ExamAppointmentActivity" />
-        <!--智能助理-->
+        <!-- 智能助理 -->
         <activity android:name=".module.activitys.AIAssistantActivity" />
-        <!--我的体检-->
+        <!-- 我的体检 -->
         <activity android:name=".module.activitys.MyExamActivity" />
-        <!--体检详情-->
+        <!-- 体检详情 -->
         <activity android:name=".module.activitys.ExamDetailsActivity" />
-        <!--套餐详情-->
+        <!-- 套餐详情 -->
         <activity android:name=".module.activitys.ComboDetailActivity" />
-        <!--确认订单-->
+        <!-- 确认订单 -->
         <activity android:name=".module.activitys.AffirmAppointmentActivity" />
-        <!--选择付款方式-->
+        <!-- 选择付款方式 -->
         <activity android:name=".module.activitys.ModePaymentActivity" />
-        <!--支付结果-->
+        <!-- 支付结果 -->
         <activity android:name=".module.activitys.PayResultActivity" />
         <activity android:name=".module.activitys.AddExamPersonActivity" />
-        <!--体检报告-->
+        <!-- 体检报告 -->
         <activity android:name=".module.activitys.ExamReportActivity" />
-        <!--体检报告详情-->
+        <!-- 体检报告详情 -->
         <activity android:name=".module.activitys.ExamReportDetailActivity" />
         <activity android:name=".module.activitys.ExamResultUnscrambleActivity" />
-        <!--检前须知 页-->
+        <!-- 检前须知 页 -->
         <activity android:name=".module.activitys.BeforeExamActivity" />
         <activity android:name=".module.activitys.ExamOrderFormActivity" />
-        <!--订单详情-->
+        <!-- 订单详情 -->
         <activity android:name=".module.activitys.OrderDetailActivity" />
         <activity android:name=".module.activitys.ExamReportCompareActivity" />
 
@@ -97,67 +95,68 @@
                 android:resource="@xml/paths" />
         </provider>
 
-        <!--修改家人信息-->
+        <!-- 修改家人信息 -->
         <activity android:name=".module.activitys.ModeFamiliesInfoActivity" />
-        <!--条形码-->
+        <!-- 条形码 -->
         <activity android:name=".module.activitys.BarCodeActivity" />
         <activity android:name=".module.activitys.IntelligentCheckActivity" />
         <activity android:name=".module.activitys.ServiceOrderActivity" />
         <activity android:name=".module.activitys.AbnormalUnscrambleActivity" />
-        <!--新闻资讯列表-->
+        <!-- 新闻资讯列表 -->
         <activity android:name=".module.activitys.NewsListActivity" />
-        <!--订单消息页-->
+        <!-- 订单消息页 -->
         <activity android:name=".module.activitys.ServiceMessageActivity" />
-        <!--新闻详情-->
+        <!-- 新闻详情 -->
         <activity android:name=".module.activitys.NewsDetailActivity" />
         <activity android:name=".module.activitys.EstimateOrderActivity" />
         <activity android:name=".module.activitys.PlusImageActivity" />
-        <!--用户头像修改-->
+        <!-- 用户头像修改 -->
         <activity android:name=".module.activitys.HeaderIconActivity" />
-        <!--修改电话号码-->
+        <!-- 修改电话号码 -->
         <activity android:name=".module.activitys.ChangePhoneActivity" />
-        <!--我的收藏-->
+        <!-- 我的收藏 -->
         <activity android:name=".module.activitys.MyCollectionActivity" />
-        <!--BAR页-->
+        <!-- BAR页 -->
         <activity android:name=".module.activitys.BarADActivity" />
-        <!--搜索-->
+        <!-- 搜索 -->
         <activity android:name=".module.activitys.SearchActivity" />
         <activity android:name=".module.TestActivity" />
-        <!--特色服务-->
+        <!-- 特色服务 -->
         <activity android:name=".module.find.FeatureServiceActivity" />
-        <!--自助登记-->
+        <!-- 自助登记 -->
         <activity android:name=".module.activitys.RegisterDetailActivity" />
-        <!--服务详情-->
+        <!-- 服务详情 -->
         <activity android:name=".module.find.ServiceDetailActivity" />
-        <!--加载大图页面-->
+        <!-- 加载大图页面 -->
         <activity android:name=".module.LoadBigPictureActivity" />
-        <!--科室详情-->
+        <!-- 科室详情 -->
         <activity android:name=".module.find.OrganizationDetailActivity" />
-        <!--科室列表-->
+        <!-- 科室列表 -->
         <activity android:name=".module.find.OrganizationActivity" />
-        <!--专家列表-->
+        <!-- 专家列表 -->
         <activity android:name=".module.find.DoctorActivity" />
-        <!--优惠券-->
+        <!-- 优惠券 -->
         <activity android:name=".module.user.CouponActivity" />
-        <!--会员卡-->
+        <!-- 会员卡 -->
         <activity android:name=".module.user.card.MemberCardActivity" />
-        <!--会员卡详情-->
+        <!-- 会员卡详情 -->
         <activity android:name=".module.user.card.MemberCardDetailActivity" />
-        <!--添加会员卡-->
+        <!-- 添加会员卡 -->
         <activity android:name=".module.user.card.AddMemCardActivity" />
-        <!--修改卡密码-->
+        <!-- 修改卡密码 -->
         <activity android:name=".module.user.card.ChangeCardPwdActivity" />
-        <!--找回卡密码-->
+        <!-- 找回卡密码 -->
         <activity android:name=".module.user.card.FindCardPwdAStep1Activity" />
-        <!--找回卡密码-->
+        <!-- 找回卡密码 -->
         <activity android:name=".module.user.card.FindCardPwdAStep2Activity" />
         <!--交易记录-->
         <activity android:name=".module.user.card.TradeRecordActivity" />
-        <!--充值-->
+        <!-- 充值 -->
         <activity android:name=".module.user.card.DepositActivity" />
-        <!--解绑会员卡-->
+        <!-- 解绑会员卡 -->
         <activity android:name=".module.user.card.DeleteMemberCardActivity" />
 
+        <activity android:name=".module.activitys.EditFamActivity" />
     </application>
 
 </manifest>

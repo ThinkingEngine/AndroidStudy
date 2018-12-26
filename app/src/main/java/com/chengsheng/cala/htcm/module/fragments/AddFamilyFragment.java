@@ -38,6 +38,7 @@ import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
 import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
 import com.chengsheng.cala.htcm.utils.FuncUtils;
+import com.chengsheng.cala.htcm.utils.StringUtils;
 import com.chengsheng.cala.htcm.utils.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zhy.view.flowlayout.FlowLayout;
@@ -145,144 +146,121 @@ public class AddFamilyFragment extends Fragment {
         View rootViews = inflater.inflate(R.layout.fragment_add_family, container, false);
         initViews(rootViews);
 
-        maleMark.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                maleMark.setSelected(true);
-                maleMark.setTextColor(getContext().getResources().getColor(R.color.colorWhite));
-                femaleMark.setSelected(false);
-                femaleMark.setTextColor(getContext().getResources().getColor(R.color.colorThrText));
-                sex = "male";
-            }
+        maleMark.setOnClickListener(v -> {
+            maleMark.setSelected(true);
+            maleMark.setTextColor(getContext().getResources().getColor(R.color.colorWhite));
+            femaleMark.setSelected(false);
+            femaleMark.setTextColor(getContext().getResources().getColor(R.color.colorThrText));
+            sex = "male";
         });
-        femaleMark.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                maleMark.setSelected(false);
-                maleMark.setTextColor(getContext().getResources().getColor(R.color.colorThrText));
-                femaleMark.setSelected(true);
-                femaleMark.setTextColor(getContext().getResources().getColor(R.color.colorWhite));
-                sex = "female";
-            }
+        femaleMark.setOnClickListener(v -> {
+            maleMark.setSelected(false);
+            maleMark.setTextColor(getContext().getResources().getColor(R.color.colorThrText));
+            femaleMark.setSelected(true);
+            femaleMark.setTextColor(getContext().getResources().getColor(R.color.colorWhite));
+            sex = "female";
         });
 
-        inputFamiliesAge.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (calendar == null) {
-                    calendar = Calendar.getInstance();
+        inputFamiliesAge.setOnClickListener(v -> {
+            if (calendar == null) {
+                calendar = Calendar.getInstance();
+            }
+            DatePickerDialog timePickerDialog = new DatePickerDialog(getContext(), R.style.Theme_AppCompat_DayNight_Dialog_Alert, (view, year, month, dayOfMonth) -> {
+                String current = FuncUtils.getCurrentTimeDay();
+                String selectDate = year + "-" + (month + 1) + "-" + dayOfMonth;
+                if (FuncUtils.isDate2Bigger(current, selectDate)) {
+                    Toast.makeText(getContext(), "出生日期选择有误！请重新选择", Toast.LENGTH_SHORT).show();
+                    inputFamiliesAge.setText("");
+                } else {
+                    inputFamiliesAge.setText(selectDate);
                 }
-                DatePickerDialog timePickerDialog = new DatePickerDialog(getContext(), R.style.Theme_AppCompat_DayNight_Dialog_Alert, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        String current = FuncUtils.getCurrentTimeDay();
-                        String selectDate = year + "-" + (month + 1) + "-" + dayOfMonth;
-                        if (FuncUtils.isDate2Bigger(current, selectDate)) {
-                            Toast.makeText(getContext(), "出生日期选择有误！请重新选择", Toast.LENGTH_SHORT).show();
-                            inputFamiliesAge.setText("");
-                        } else {
-                            inputFamiliesAge.setText(selectDate);
-                        }
 
-                    }
-                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-                timePickerDialog.show();
-            }
+            }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+            timePickerDialog.show();
         });
 
         //头像选择按钮
-        selectHeaderIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showPopwindow();
-            }
-        });
+        selectHeaderIcon.setOnClickListener(v -> showPopwindow());
 
         //获取验证码
-        getCode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final String phone = inputFamiliesTel.getText().toString();
-                if (phone == null) {
-                    Toast.makeText(getContext(), "手机号码不能为空!", Toast.LENGTH_SHORT).show();
-                } else if (!FuncUtils.isMobileNO(phone)) {
-                    Toast.makeText(getContext(), "请输入正确的手机号码!", Toast.LENGTH_SHORT).show();
-                } else if (phone.equals(phoneHasCode)) {
-                    Toast.makeText(getContext(), "当前号码已验证!", Toast.LENGTH_SHORT).show();
-                } else {
-                    getCodeFromNet(phone);
-                }
+        getCode.setOnClickListener(v -> {
+            final String phone = inputFamiliesTel.getText().toString();
+            if (phone == null) {
+                Toast.makeText(getContext(), "手机号码不能为空!", Toast.LENGTH_SHORT).show();
+            } else if (!FuncUtils.isMobileNO(phone)) {
+                Toast.makeText(getContext(), "请输入正确的手机号码!", Toast.LENGTH_SHORT).show();
+            } else if (phone.equals(phoneHasCode)) {
+                Toast.makeText(getContext(), "当前号码已验证!", Toast.LENGTH_SHORT).show();
+            } else {
+                getCodeFromNet(phone);
             }
         });
 
         //提交家人信息。
-        commitFamiliesInfoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (inputFamiliesName.getText().toString().equals("")) {
-                    Toast.makeText(getContext(), "请输入姓名!", Toast.LENGTH_SHORT).show();
-                } else if (inputFamiliesTel.getText().toString().equals("")) {
-                    Toast.makeText(getContext(), "电话号码不能为空!", Toast.LENGTH_SHORT).show();
-                } else if (inputFamiliesAge.getText().toString().equals("")) {
-                    Toast.makeText(getContext(), "您还未确认你的年龄!", Toast.LENGTH_SHORT).show();
-                } else if (!inputFamiliesTel.getText().toString().equals("") && !FuncUtils.isMobileNO(inputFamiliesTel.getText().toString())) {
-                    Toast.makeText(getContext(), "请输入正确的电话号码!", Toast.LENGTH_SHORT).show();
-                } else if (inputFamiliesCode.getText().toString().equals("")) {
-                    Toast.makeText(getContext(), "手机验证码不能为空!", Toast.LENGTH_SHORT).show();
-                } else if (uuid.equals("") || uuid == null) {
-                    Toast.makeText(getContext(), "手机号码验证异常!请重新验证", Toast.LENGTH_SHORT).show();
+        commitFamiliesInfoButton.setOnClickListener(v -> {
+            if (inputFamiliesName.getText().toString().equals("")) {
+                Toast.makeText(getContext(), "请输入姓名!", Toast.LENGTH_SHORT).show();
+            } else if (inputFamiliesTel.getText().toString().equals("")) {
+                Toast.makeText(getContext(), "电话号码不能为空!", Toast.LENGTH_SHORT).show();
+            } else if (inputFamiliesAge.getText().toString().equals("")) {
+                Toast.makeText(getContext(), "您还未确认你的年龄!", Toast.LENGTH_SHORT).show();
+            } else if (!inputFamiliesTel.getText().toString().equals("") && !FuncUtils.isMobileNO(inputFamiliesTel.getText().toString())) {
+                Toast.makeText(getContext(), "请输入正确的电话号码!", Toast.LENGTH_SHORT).show();
+            } else if (inputFamiliesCode.getText().toString().equals("")) {
+                Toast.makeText(getContext(), "手机验证码不能为空!", Toast.LENGTH_SHORT).show();
+            } else if (uuid.equals("") || uuid == null) {
+                Toast.makeText(getContext(), "手机号码验证异常!请重新验证", Toast.LENGTH_SHORT).show();
+            } else {
+                loadingDialog.show();
+                final Map<String, String> map = new HashMap<>();
+                map.put("fullname", inputFamiliesName.getText().toString());
+                map.put("mobile", phoneHasCode);
+                map.put("sex", sex);
+                map.put("id_card_no", inputFamiliesIdNum.getText().toString());
+                map.put("birthday", inputFamiliesAge.getText().toString());
+                map.put("owner_relationship", familiesTag);
+                map.put("uuid", uuid);
+                map.put("code", inputFamiliesCode.getText().toString());
+
+                if (isSelectHeader) {
+                    String path = FuncUtils.getReal(getContext(), headerImageUri);
+                    File file = new File(path);
+                    RequestBody descriptionString = RequestBody.create(MediaType.parse("multipart/form-data"), "avatar");
+                    RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpg"), file);
+                    MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
+                    Map<String, RequestBody> mapa = new HashMap<>();
+                    mapa.put("bucket_name", descriptionString);
+
+                    getCodeRetrofit = myRetrofit.createURL(GlobalConstant.API_BASE_URL);
+                    NetService service = getCodeRetrofit.create(NetService.class);
+                    service.uploadFile(mParam1 + mParam2, mapa, body)
+                            .subscribeOn(Schedulers.newThread())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new DisposableObserver<URLResult>() {
+                                @Override
+                                public void onNext(URLResult urlResult) {
+                                    map.put("avatar_path", urlResult.getFile_url());
+                                    commitFamilies(getCodeRetrofit, map);
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+                                    loadingDialog.cancel();
+                                    Log.e("UP", "上传图片失败:" + e);
+                                    Toast.makeText(getContext(), "上传图片失败！", Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onComplete() {
+
+                                }
+                            });
                 } else {
-                    loadingDialog.show();
-                    final Map<String, String> map = new HashMap<>();
-                    map.put("fullname", inputFamiliesName.getText().toString());
-                    map.put("mobile", phoneHasCode);
-                    map.put("sex", sex);
-                    map.put("id_card_no", inputFamiliesIdNum.getText().toString());
-                    map.put("birthday", inputFamiliesAge.getText().toString());
-                    map.put("owner_relationship", familiesTag);
-                    map.put("uuid", uuid);
-                    map.put("code", inputFamiliesCode.getText().toString());
-
-                    if (isSelectHeader) {
-                        String path = FuncUtils.getReal(getContext(), headerImageUri);
-                        File file = new File(path);
-                        RequestBody descriptionString = RequestBody.create(MediaType.parse("multipart/form-data"), "avatar");
-                        RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpg"), file);
-                        MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
-                        Map<String, RequestBody> mapa = new HashMap<>();
-                        mapa.put("bucket_name", descriptionString);
-
-                        getCodeRetrofit = myRetrofit.createURL(GlobalConstant.API_BASE_URL);
-                        NetService service = getCodeRetrofit.create(NetService.class);
-                        service.uploadFile(mParam1 + mParam2, mapa, body)
-                                .subscribeOn(Schedulers.newThread())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new DisposableObserver<URLResult>() {
-                                    @Override
-                                    public void onNext(URLResult urlResult) {
-                                        map.put("avatar_path", urlResult.getFile_url());
-                                        commitFamilies(getCodeRetrofit, map);
-                                    }
-
-                                    @Override
-                                    public void onError(Throwable e) {
-                                        loadingDialog.cancel();
-                                        Log.e("UP", "上传图片失败:" + e);
-                                        Toast.makeText(getContext(), "上传图片失败！", Toast.LENGTH_SHORT).show();
-                                    }
-
-                                    @Override
-                                    public void onComplete() {
-
-                                    }
-                                });
-                    } else {
-                        map.put("avatar_path", "");
-                        Log.e("UP", "上传数据检查" + map.toString());
-                        commitFamilies(getCodeRetrofit, map);
-                    }
-
+                    map.put("avatar_path", "");
+                    Log.e("UP", "上传数据检查" + map.toString());
+                    commitFamilies(getCodeRetrofit, map);
                 }
+
             }
         });
 
@@ -346,7 +324,7 @@ public class AddFamilyFragment extends Fragment {
         addFamiliesMarksBox.setVisibility(View.INVISIBLE);
         selectHeaderIcon.setBackground(getResources().getDrawable(R.mipmap.tianjiatouxiang));
 
-        timer = new TimeCount(60000,1000,getCode);
+        timer = new TimeCount(60000, 1000, getCode);
 
         final List<String> data = new ArrayList<>();
         for (int i = 0; i < relations.length; i++) {
@@ -373,36 +351,30 @@ public class AddFamilyFragment extends Fragment {
         });
 
         //添加新的家人关系标签按钮.
-        addFamiliesMarksButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (newFamiliesMarkInput.getText().toString().equals("")) {
-                    Toast.makeText(getContext(), "请输入新的标签", Toast.LENGTH_SHORT).show();
-                } else {
+        addFamiliesMarksButton.setOnClickListener(v -> {
+            if (newFamiliesMarkInput.getText().toString().equals("")) {
+                Toast.makeText(getContext(), "请输入新的标签", Toast.LENGTH_SHORT).show();
+            } else {
+                String newMark = newFamiliesMarkInput.getText().toString();
+                data.add(0, newMark);
+                tagAdapter.setSelected(0, newMark);
+                tagAdapter.notifyDataChanged();
+                familiesRelationSelecter.setAdapter(tagAdapter);
+                newFamiliesMarkInput.setText("");
+            }
+        });
+
+        //当失去焦点的时候，体检输入的标签
+        newFamiliesMarkInput.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                if (!newFamiliesMarkInput.getText().toString().equals("")) {
                     String newMark = newFamiliesMarkInput.getText().toString();
                     data.add(0, newMark);
                     tagAdapter.setSelected(0, newMark);
                     tagAdapter.notifyDataChanged();
                     familiesRelationSelecter.setAdapter(tagAdapter);
+                    familiesTag = newFamiliesMarkInput.getText().toString();
                     newFamiliesMarkInput.setText("");
-                }
-            }
-        });
-
-        //当失去焦点的时候，体检输入的标签
-        newFamiliesMarkInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    if (!newFamiliesMarkInput.getText().toString().equals("")) {
-                        String newMark = newFamiliesMarkInput.getText().toString();
-                        data.add(0, newMark);
-                        tagAdapter.setSelected(0, newMark);
-                        tagAdapter.notifyDataChanged();
-                        familiesRelationSelecter.setAdapter(tagAdapter);
-                        familiesTag = newFamiliesMarkInput.getText().toString();
-                        newFamiliesMarkInput.setText("");
-                    }
                 }
             }
         });
@@ -429,7 +401,7 @@ public class AddFamilyFragment extends Fragment {
                     public void onNext(Message message) {
                         loadingDialog.cancel();
                         timer.start();
-                        ToastUtil.showLongToast(getContext(),"获取验证码请求成功");
+                        ToastUtil.showLongToast(getContext(), "获取验证码请求成功");
                         phoneHasCode = num;
                         uuid = message.getUuid();
                     }
@@ -437,7 +409,7 @@ public class AddFamilyFragment extends Fragment {
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.cancel();
-                        ToastUtil.showLongToast(getContext(),"获取验证码请求失败,请检查网络环境");
+                        ToastUtil.showLongToast(getContext(), "获取验证码请求失败,请检查网络环境");
                     }
 
                     @Override
@@ -460,55 +432,43 @@ public class AddFamilyFragment extends Fragment {
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.show();
 
-        dialog.findViewById(R.id.get_photo_camera).setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                File outputImage = new File(getContext().getExternalCacheDir(), "user_header.jpg");
-                if (outputImage.exists()) {
-                    outputImage.delete();
-                }
-
-                try {
-                    outputImage.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                if (Build.VERSION.SDK_INT >= 24) {
-                    headerImageUri = FileProvider.getUriForFile(getContext(), "com.example.cameraalbumtest.fileprovider", outputImage);
-                } else {
-                    headerImageUri = Uri.fromFile(outputImage);
-                }
-
-                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, headerImageUri);
-                startActivityForResult(intent, 1);
+        dialog.findViewById(R.id.get_photo_camera).setOnClickListener(view1 -> {
+            File outputImage = new File(getContext().getExternalCacheDir(), "user_header.jpg");
+            if (outputImage.exists()) {
+                outputImage.delete();
             }
+
+            try {
+                outputImage.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if (Build.VERSION.SDK_INT >= 24) {
+                headerImageUri = FileProvider.getUriForFile(getContext(), "com.example.cameraalbumtest.fileprovider", outputImage);
+            } else {
+                headerImageUri = Uri.fromFile(outputImage);
+            }
+
+            Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, headerImageUri);
+            startActivityForResult(intent, 1);
         });
 
         //从相册获取头像
-        dialog.findViewById(R.id.get_photo_gra).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                } else {
-                    Intent intent = new Intent("android.intent.action.GET_CONTENT");
-                    intent.setType("image/*");
-                    startActivityForResult(intent, 2);
-                    dialog.dismiss();
-                }
-            }
-        });
-
-        dialog.findViewById(R.id.get_photo_cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        dialog.findViewById(R.id.get_photo_gra).setOnClickListener(view13 -> {
+            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            } else {
+                Intent intent = new Intent("android.intent.action.GET_CONTENT");
+                intent.setType("image/*");
+                startActivityForResult(intent, 2);
                 dialog.dismiss();
             }
         });
+
+        dialog.findViewById(R.id.get_photo_cancel).setOnClickListener(view12 -> dialog.dismiss());
     }
 
     @Override

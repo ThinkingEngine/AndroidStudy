@@ -14,15 +14,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.data.repository.MemberRepository;
+import com.chengsheng.cala.htcm.module.activitys.EditFamActivity;
 import com.chengsheng.cala.htcm.protocol.FamiliesDetailInfo;
 import com.chengsheng.cala.htcm.protocol.Message;
-import com.chengsheng.cala.htcm.network.MyRetrofit;
-import com.chengsheng.cala.htcm.network.NetService;
+import com.chengsheng.cala.htcm.utils.ActivityUtil;
 import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
 import com.chengsheng.cala.htcm.utils.FuncUtils;
+import com.chengsheng.cala.htcm.utils.TimeUtilKt;
+import com.chengsheng.cala.htcm.utils.ToastUtil;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagFlowLayout;
 import com.zyao89.view.zloading.ZLoadingDialog;
@@ -33,9 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.observers.DisposableObserver;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.observers.DefaultObserver;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 
@@ -98,6 +98,8 @@ public class ModeFamiliesFragment extends Fragment {
         loadingDialog.setHintTextColor(getContext().getResources().getColor(R.color.colorPrimary));
         loadingDialog.setDialogBackgroundColor(getContext().getResources().getColor(R.color.colorText));
         loadingDialog.setLoadingColor(getContext().getResources().getColor(R.color.colorPrimary));
+
+
     }
 
     @Override
@@ -114,42 +116,65 @@ public class ModeFamiliesFragment extends Fragment {
             final EditText getCodeFormSmsMode = rootView.findViewById(R.id.get_code_form_sms_mode);
             final EditText getNumberSmsMode = rootView.findViewById(R.id.get_number_sms_mode);
 
+            childTitle.setVisibility(View.INVISIBLE);
+            back.setOnClickListener(v -> backMark = true);
+
+            if (mark.length > 0 && mark[1].equals("MODE_FAM")) {
+                title.setText("编辑家人信息");
+                getNumberSmsMode.setText(mParam2.getMobile());
+                getNumberSmsMode.setEnabled(false);
+                getNumberSmsMode.setTextColor(getResources().getColor(R.color.colorThrText));
+                TimeUtilKt.initCaptchaTimer(getCodeSmsButtonMode);
+
+                makeModeButton.setOnClickListener(v -> {
+                    String uuid = FuncUtils.getString("TEMP_UUID", "");
+                    if (getNumberSmsMode.getText().toString().equals("")) {
+                        Toast.makeText(getContext(), "电话号码不能为空!", Toast.LENGTH_SHORT).show();
+                    } else if (!FuncUtils.isMobileNO(getNumberSmsMode.getText().toString())) {
+                        Toast.makeText(getContext(), "请输入正确的电话号码!", Toast.LENGTH_SHORT).show();
+                    } else if (uuid.equals("")) {
+                        Toast.makeText(getContext(), "您的号码还未验证!", Toast.LENGTH_SHORT).show();
+                    } else if (getCodeFormSmsMode.getText().toString().equals("")) {
+                        Toast.makeText(getContext(), "验证码不能为空!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        valiSMSMod(uuid, getCodeFormSmsMode.getText().toString());
+                    }
+                });
+
+            } else {
+                title.setText("修改手机号码");
+                getNumberSmsMode.setHint("请输入新的手机号码");
+                getCodeFormSmsMode.setHint("请输入新的手机验证码");
+                makeModeButton.setOnClickListener(v -> {
+                    String uuid = FuncUtils.getString("TEMP_UUID", "");
+                    if (getNumberSmsMode.getText().toString().equals("")) {
+                        Toast.makeText(getContext(), "电话号码不能为空!", Toast.LENGTH_SHORT).show();
+                    } else if (!FuncUtils.isMobileNO(getNumberSmsMode.getText().toString())) {
+                        Toast.makeText(getContext(), "请输入正确的电话号码!", Toast.LENGTH_SHORT).show();
+                    } else if (uuid.equals("")) {
+                        Toast.makeText(getContext(), "您的号码还未验证!", Toast.LENGTH_SHORT).show();
+                    } else if (getCodeFormSmsMode.getText().toString().equals("")) {
+                        Toast.makeText(getContext(), "验证码不能为空!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Map<String, String> map = new HashMap<>();
+                        map.put("mobile", getNumberSmsMode.getText().toString());
+                        map.put("uuid", uuid);
+                        map.put("code", getCodeFormSmsMode.getText().toString());
+
+                        modeFamiliesTel(map);
+                    }
+                });
+            }
+
             getCodeSmsButtonMode.setOnClickListener(v -> {
                 if (getNumberSmsMode.getText().toString().equals("")) {
                     Toast.makeText(getContext(), "电话号码不能为空!", Toast.LENGTH_SHORT).show();
                 } else if (!FuncUtils.isMobileNO(getNumberSmsMode.getText().toString())) {
                     Toast.makeText(getContext(), "请输入正确的电话号码!", Toast.LENGTH_SHORT).show();
-                } else{
-                    getCode(getNumberSmsMode.getText().toString());
+                } else {
+                    getCode(getNumberSmsMode.getText().toString(), getCodeSmsButtonMode);
                 }
             });
-            makeModeButton.setOnClickListener(v -> {
-                String uuid = FuncUtils.getString("TEMP_UUID","");
-                if (getNumberSmsMode.getText().toString().equals("")) {
-                    Toast.makeText(getContext(), "电话号码不能为空!", Toast.LENGTH_SHORT).show();
-                } else if (!FuncUtils.isMobileNO(getNumberSmsMode.getText().toString())) {
-                    Toast.makeText(getContext(), "请输入正确的电话号码!", Toast.LENGTH_SHORT).show();
-                } else if(uuid.equals("")){
-                    Toast.makeText(getContext(), "您的号码还未验证!", Toast.LENGTH_SHORT).show();
-                }else if(getCodeFormSmsMode.getText().toString().equals("")){
-                    Toast.makeText(getContext(), "验证码不能为空!", Toast.LENGTH_SHORT).show();
-                }else{
-                    Map<String,String> map = new HashMap<>();
-                    map.put("new_mobile",getNumberSmsMode.getText().toString());
-                    map.put("uuid",uuid);
-                    map.put("code",getCodeFormSmsMode.getText().toString());
-                    map.put("fullname",mParam2.getFullname());
-
-                    modeFamiliesTel(map);
-                }
-            });
-
-
-            childTitle.setVisibility(View.INVISIBLE);
-            title.setText("修改手机号码");
-
-
-            back.setOnClickListener(v -> backMark = true);
 
         } else if (mark[0].equals("RELATION")) {
 
@@ -234,8 +259,6 @@ public class ModeFamiliesFragment extends Fragment {
                     uploadModeInfo(mParam2);
                 }
             });
-
-
             back.setOnClickListener(v -> backMark = true);
         } else {
             rootView = inflater.inflate(R.layout.mode_name_layout, null);
@@ -297,10 +320,35 @@ public class ModeFamiliesFragment extends Fragment {
         void onFragmentInteraction(Boolean isBack);
     }
 
+    //验证短信验证码-修改家人信息
+    private void valiSMSMod(String uuid, String code) {
+        loadingDialog.show();
+        MemberRepository.Companion.getDefault().valiModeCoe(String.valueOf(mParam2.getId()), uuid, code).subscribe(new DefaultObserver<ResponseBody>() {
+            @Override
+            public void onNext(ResponseBody responseBody) {
+                loadingDialog.cancel();
+                ToastUtil.showShortToast(getContext(), "验证成功");
+                Bundle bundle = new Bundle();
+                bundle.putString("FAM_ID", String.valueOf(mParam2.getId()));
+                ActivityUtil.Companion.startActivity(getContext(), new EditFamActivity(), bundle);
+                getActivity().finish();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                loadingDialog.cancel();
+                ToastUtil.showShortToast(getContext(), "验证失败！请重试");
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    //上传修改后的家人信息
     private void uploadModeInfo(FamiliesDetailInfo info) {
-        if (retrofit == null) {
-            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
-        }
 
         Map<String, String> map = new HashMap<>();
         map.put("mobile", info.getMobile());
@@ -311,24 +359,22 @@ public class ModeFamiliesFragment extends Fragment {
         map.put("birthday", info.getBirthday());
         map.put("id_card_no", info.getId_card_no());
         loadingDialog.show();
-        NetService service = retrofit.create(NetService.class);
-        service.modeFamiliesInfo(app.getTokenType() + " " + app.getAccessToken(), GlobalConstant.MODE_FAMILIES + String.valueOf(mParam2.getId()), map)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableObserver<ResponseBody>() {
+
+        MemberRepository
+                .Companion.getDefault()
+                .putFamInfo(String.valueOf(mParam2.getId()), map)
+                .subscribe(new DefaultObserver<ResponseBody>() {
                     @Override
                     public void onNext(ResponseBody responseBody) {
                         loadingDialog.cancel();
-                        Toast.makeText(getContext(), "修改关系成功!", Toast.LENGTH_SHORT).show();
                         CallBackDataAuth.doUpdateStateInterface(true);
+                        Toast.makeText(getContext(), "修改关系成功!", Toast.LENGTH_SHORT).show();
                         getActivity().finish();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        loadingDialog.cancel();
-                        Log.e("TAG", "测试:" + e.toString());
-                        Toast.makeText(getContext(), "修改失败！请重试", Toast.LENGTH_SHORT).show();
+                        ToastUtil.showShortToast(getContext(), "提交失败");
                     }
 
                     @Override
@@ -338,52 +384,73 @@ public class ModeFamiliesFragment extends Fragment {
                 });
     }
 
-    private void getCode(String phone){
-        if (retrofit == null) {
-            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
-        }
-
-        NetService service = retrofit.create(NetService.class);
-        loadingDialog.show();
-        service.getCodeModeFamiliesPhone(app.getTokenType()+" "+app.getAccessToken(),String.valueOf(mParam2.getId()),phone)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableObserver<Message>() {
+    //通过指定号码获取验证码
+    private void getCode(String phone, Button button) {
+        TimeUtilKt.initCaptchaTimer(button);
+        MemberRepository
+                .Companion.getDefault()
+                .vailCode(String.valueOf(mParam2.getId()), phone)
+                .subscribe(new DefaultObserver<Message>() {
                     @Override
                     public void onNext(Message message) {
                         loadingDialog.cancel();
-                        Toast.makeText(getContext(),"请求成功，请等待验证码短信",Toast.LENGTH_SHORT).show();
-                        FuncUtils.putString("TEMP_UUID",message.getUuid());
+                        Toast.makeText(getContext(), "请求成功，请等待验证码短信", Toast.LENGTH_SHORT).show();
+                        FuncUtils.putString("TEMP_UUID", message.getUuid());
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.cancel();
-                        Toast.makeText(getContext(),"请求失败，请重试",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "请求失败，请重试", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onComplete() {
-                        loadingDialog.cancel();
+
                     }
                 });
     }
 
-    private void modeFamiliesTel(Map<String,String> map){
-        if (retrofit == null) {
-            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
-        }
+    //修改用户手机号码
+    private void modeFamiliesTel(Map<String, String> map) {
+//        if (retrofit == null) {
+//            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
+//        }
+//
+//        NetService service = retrofit.create(NetService.class);
+//        loadingDialog.show();
+//        service.modeFamiliesTel(app.getTokenType() + " " + app.getAccessToken(), String.valueOf(mParam2.getId()), map)
+//                .subscribeOn(Schedulers.newThread())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new DisposableObserver<ResponseBody>() {
+//                    @Override
+//                    public void onNext(ResponseBody responseBody) {
+//                        loadingDialog.cancel();
+//                        Toast.makeText(getContext(), "您已成功修改", Toast.LENGTH_SHORT).show();
+//                        CallBackDataAuth.doUpdateStateInterface(true);
+//                        getActivity().finish();
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        loadingDialog.cancel();
+//                        Toast.makeText(getContext(), "修改失败！", Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//                        loadingDialog.cancel();
+//                    }
+//                });
 
-        NetService service = retrofit.create(NetService.class);
-        loadingDialog.show();
-        service.modeFamiliesTel(app.getTokenType()+" "+app.getAccessToken(),String.valueOf(mParam2.getId()),map)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableObserver<ResponseBody>() {
+        MemberRepository
+                .Companion.getDefault()
+                .vailCell(String.valueOf(mParam2.getId()), map)
+                .subscribe(new DefaultObserver<ResponseBody>() {
                     @Override
                     public void onNext(ResponseBody responseBody) {
                         loadingDialog.cancel();
-                        Toast.makeText(getContext(),"您已成功修改",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "您已成功修改", Toast.LENGTH_SHORT).show();
                         CallBackDataAuth.doUpdateStateInterface(true);
                         getActivity().finish();
                     }
@@ -391,12 +458,13 @@ public class ModeFamiliesFragment extends Fragment {
                     @Override
                     public void onError(Throwable e) {
                         loadingDialog.cancel();
-                        Toast.makeText(getContext(),"修改失败！",Toast.LENGTH_SHORT).show();
+                        Log.e("TAG","e:"+e);
+                        Toast.makeText(getContext(), "修改失败！", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onComplete() {
-                        loadingDialog.cancel();
+
                     }
                 });
     }

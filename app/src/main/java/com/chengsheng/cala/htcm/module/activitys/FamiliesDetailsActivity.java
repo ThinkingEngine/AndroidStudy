@@ -269,8 +269,9 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
                             showShortToast("已成功发送验证请求！请耐心等待验证码短信");
                             Bundle bundle = new Bundle();
                             bundle.putSerializable("FAMILIES_INFO", info);
-                            bundle.putString("MODE","CELLPHONE"+",MODE_FAM");
-                            ActivityUtil.Companion.startActivity(FamiliesDetailsActivity.this,new ModeFamiliesInfoActivity(),bundle);
+                            bundle.putString("MODE", "CELLPHONE" + ",MODE_FAM");
+                            FuncUtils.putString("TEMP_UUID", message.getUuid());
+                            ActivityUtil.Companion.startActivity(FamiliesDetailsActivity.this, new ModeFamiliesInfoActivity(), bundle);
                         }
 
                         @Override

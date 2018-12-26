@@ -91,4 +91,20 @@ public class API {
     /* 发送短信验证码-修改家人信息 */
     public static final String SEND_MOD_CODE = SERVICE_BASE_URL + "api/family/account-family-members/" + "{families_id}" + "/sms-validation-code";
 
+    /* 验证短信验证码-修改家人信息 */
+    public static final String VALI_MOD_CODE = SERVICE_BASE_URL + "api/family/account-family-members/" + "{families_id}" + "/sms-validation";
+
+    /* 修改家庭成员信息 */
+    public static final String PUT_FAM = SERVICE_BASE_URL + "api/family/account-family-members/{families_id}";
+
+
+    /* 发送短信验证码-修改家人手机号 */
+    public static final String VAIL_CODE = SERVICE_BASE_URL + "api/family/account-family-members/{families_id}/mobile/sms-validation-code";
+
+    /* 验证短信验证码-修家人改手机号 */
+    public static final String VAIL_CELL = SERVICE_BASE_URL + "api/family/account-family-members/{families_id}/mobile/sms-validation";
+
+    /* 文件上传服务（头像上传） */
+    public static final String HEADER_UP = SERVICE_BASE_URL + "api/file-storage/files";
+
 }

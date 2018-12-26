@@ -30,7 +30,8 @@ class AddMemCardActivity : BaseActivity() {
     }
 
     override fun initView() {
-        tvBindMobile?.text = UserUtil.getMobile()
+        //手机号默认使用当前登录账号，可手动输入
+        etBindMobile?.setText(UserUtil.getMobile())
 
         //获取短信验证码
         RxView.clicks(btnGetCaptcha)
@@ -45,6 +46,7 @@ class AddMemCardActivity : BaseActivity() {
                 .subscribe {
                     val cardNumber = StringUtils.getText(etCardNumber)
                     val password = StringUtils.getText(etCardPassword)
+                    val mobile = StringUtils.getText(etBindMobile)
                     val captcha = StringUtils.getText(etCaptcha)
 
                     if (cardNumber.isEmpty()) {
@@ -55,12 +57,16 @@ class AddMemCardActivity : BaseActivity() {
                         showShortToast("请输入卡密码")
                         return@subscribe
                     }
-                    if (captcha.isEmpty()) {
-                        showShortToast("请输入验证码")
+                    if (mobile.isEmpty()) {
+                        showShortToast("请输入手机号")
                         return@subscribe
                     }
                     if (uuid.isEmpty()) {
                         showShortToast("请先获取验证码")
+                        return@subscribe
+                    }
+                    if (captcha.isEmpty()) {
+                        showShortToast("请输入验证码")
                         return@subscribe
                     }
 
@@ -77,8 +83,12 @@ class AddMemCardActivity : BaseActivity() {
      */
     private fun getCaptcha() {
         showLoading()
-//        MemberCardRepository.default?.sendCaptcha(UserUtil.getMobile())
-        MemberCardRepository.default?.sendCaptcha("17716130287")
+        val mobile = StringUtils.getText(etBindMobile)
+        if (mobile.isEmpty()) {
+            showShortToast("请输入手机号")
+            return
+        }
+        MemberCardRepository.default?.sendCaptcha(mobile)
                 ?.subscribe({
                     uuid = it["uuid"].asString
                     initCaptchaTimer(btnGetCaptcha)

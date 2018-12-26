@@ -23,6 +23,9 @@ class MemberCardDetailActivity : BaseActivity() {
 
     //会员卡id
     private var id: Int = 0
+    //会员卡好
+    private var cardNumber: String? = ""
+
     private var moreDialog: MemberMoreDialog? = null
 
     override fun getLayoutId(): Int {
@@ -42,7 +45,10 @@ class MemberCardDetailActivity : BaseActivity() {
 
         //修改卡密码
         RxView.clicks(layoutChangePassword).subscribe {
-            startActivity(ChangeCardPwdActivity())
+            val bundle = Bundle()
+            bundle.putInt("id", id)
+            bundle.putString("cardNumber", cardNumber!!)
+            startActivity(ChangeCardPwdActivity(), bundle)
         }
 
         //交易记录
@@ -61,7 +67,7 @@ class MemberCardDetailActivity : BaseActivity() {
         id = intent.getIntExtra("id", 0)
         MemberCardRepository.default?.getCardDetail(id)
                 ?.subscribe({
-
+                    cardNumber = it.card_number
                     tvCardNumber?.text = StringUtils.addBlank(it.card_number)
                     tvBalance?.text = "￥" + it.balance
                     tvBindMobile?.text = it.bind_mobile

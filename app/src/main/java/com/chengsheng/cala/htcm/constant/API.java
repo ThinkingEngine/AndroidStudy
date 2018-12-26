@@ -49,25 +49,28 @@ public class API {
     /* 绑定会员卡 */
     public static final String BIND_MEMBER_CARD = SERVICE_BASE_URL + "api/health-card/health-cards";
 
+    /* 通过旧密码修改会员卡密码 */
+    public static final String CHANGE_CARD_PASSWORD = SERVICE_BASE_URL + "api/health-card/health-cards/{id}/password-old";
+
     /* 套餐列表启用的 */
     public static final String EXAM_PACKAGE = SERVICE_BASE_URL + "api/physical-exam-item/exam-packages/enable";
 
     /* 获取家人列表 */
     public static final String FAMILY_MEMBER = SERVICE_BASE_URL + "api/family/account-family-members";
 
-    /*获取订单列表*/
+    /* 获取订单列表 */
     public static final String EXAM_ORDER = SERVICE_BASE_URL + "api/physical-exam-order/orders";
 
-    /*解除家人绑定*/
+    /* 解除家人绑定 */
     public static final String DEL_FAM = SERVICE_BASE_URL + "api/family/account-family-members/";
 
-    /*获取家人详细信息*/
+    /* 获取家人详细信息 */
     public static final String GET_FAM_INFO = SERVICE_BASE_URL + "api/family/account-family-members/";
 
-    /*设置默认就诊人*/
+    /* 设置默认就诊人 */
     public static final String SET_DEFULT = SERVICE_BASE_URL + "api/family/account-family-members/" + "{families_id}" + "/default-customer";
 
-    /*发送短信验证码-修改家人信息*/
+    /* 发送短信验证码-修改家人信息 */
     public static final String SEND_MOD_CODE = SERVICE_BASE_URL + "api/family/account-family-members/" + "{families_id}" + "/sms-validation-code";
 
 }

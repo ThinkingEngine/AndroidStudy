@@ -11,6 +11,7 @@ import com.chengsheng.cala.htcm.utils.UserUtil
 import com.chengsheng.cala.htcm.utils.initCaptchaTimer
 import com.chengsheng.cala.htcm.utils.releaseCaptchaTimer
 import com.jakewharton.rxbinding2.view.RxView
+import com.jakewharton.rxbinding2.widget.RxTextView
 import kotlinx.android.synthetic.main.activity_add_card.*
 import org.simple.eventbus.EventBus
 import java.util.concurrent.TimeUnit
@@ -32,6 +33,13 @@ class AddMemCardActivity : BaseActivity() {
     override fun initView() {
         //手机号默认使用当前登录账号，可手动输入
         etBindMobile?.setText(UserUtil.getMobile())
+
+        //监听密码输入，当长度为6位时自动给手机号设置焦点
+        RxTextView.textChanges(etCardPassword).subscribe {
+            if (it != null && it.isNotEmpty() && it.length == 6) {
+                etBindMobile.requestFocus()
+            }
+        }
 
         //获取短信验证码
         RxView.clicks(btnGetCaptcha)

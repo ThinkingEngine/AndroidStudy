@@ -56,4 +56,13 @@ interface MemberCardService {
              @Query("uuid") uuid: String,
              @Query("code") code: String): Observable<Response<JsonObject>>
 
+    /**
+     * 修改卡密码
+     */
+    @POST(API.CHANGE_CARD_PASSWORD)
+    @Headers("Authorization:true")
+    fun changePassword(@Path("id") id: Int,
+                       @Query("old_password") old_password: String,
+                       @Query("new_password") new_password: String): Observable<Response<Any>>
+
 }

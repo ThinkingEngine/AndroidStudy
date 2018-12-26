@@ -66,7 +66,16 @@ class MemberCardRepository private constructor() {
      * 绑定会员卡
      */
     fun bind(cardNumber: String, password: String, mobile: String, captcha: String, uuid: String): Observable<JsonObject>? {
-        return transformProto(RetrofitHelper.getInstance().memberCardService.bind(mobile, cardNumber, password, uuid, captcha))
+        return transformProto(RetrofitHelper.getInstance().memberCardService.bind(
+                mobile, cardNumber, password, uuid, captcha))
+    }
+
+    /**
+     * 修改卡密码
+     */
+    fun changePassword(id: Int, oldPassword: String, newPassword: String): Observable<Any>? {
+        return transformProto(RetrofitHelper.getInstance().memberCardService.changePassword(
+                id, oldPassword, newPassword))
     }
 
 }

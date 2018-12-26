@@ -3,6 +3,7 @@ package com.chengsheng.cala.htcm.data.service
 import com.chengsheng.cala.htcm.constant.API
 import com.chengsheng.cala.htcm.protocol.MemberCardDetailProtocol
 import com.chengsheng.cala.htcm.protocol.MemberCardProtocol
+import com.chengsheng.cala.htcm.protocol.TradeRecordProtocol
 import com.google.gson.JsonObject
 import io.reactivex.Observable
 import okhttp3.RequestBody
@@ -56,5 +57,59 @@ interface MemberCardService {
              @Query("uuid") uuid: String,
              @Query("code") code: String): Observable<Response<JsonObject>>
 
+    /**
+     * 修改卡密码
+     */
+    @POST(API.CHANGE_CARD_PASSWORD)
+    @Headers("Authorization:true")
+    fun changePassword(@Path("id") id: Int,
+                       @Query("old_password") old_password: String,
+                       @Query("new_password") new_password: String): Observable<Response<Any>>
+
+    /**
+     * 找回密码-发送验证码
+     */
+    @POST(API.SEND_CARD_CAPTCHA)
+    @Headers("Authorization:true")
+    fun sendCardCaptcha(@Path("id") id: Int): Observable<Response<JsonObject>>
+
+    /**
+     * 找回密码-验证短信验证码
+     */
+    @POST(API.CHECK_CARD_CAPTCHA)
+    @Headers("Authorization:true")
+    fun checkCardCaptcha(@Path("id") id: Int,
+                         @Query("code") code: String,
+                         @Query("uuid") uuid: String): Observable<Response<Any>>
+
+    /**
+     * 找回密码
+     */
+    @POST(API.FIND_CARD_PASSWORD)
+    @Headers("Authorization:true")
+    fun findPassword(@Path("id") id: Int,
+                     @Query("new_password") password: String): Observable<Response<Any>>
+
+    /**
+     * 支付宝签名
+     */
+    @POST(API.CARD_DEPOSIT_ALIPAY_SIGN)
+    @Headers("Authorization:true")
+    fun getAlipaySign(@Path("id") id: String): Observable<Response<JsonObject>>
+
+    /**
+     * 创建订单
+     */
+    @POST(API.CREATE_CARD_DEPOSIT_ORDER)
+    @Headers("Authorization:true")
+    fun createOrder(@Path("id") id: Int,
+                    @Query("amount") amount: Double): Observable<Response<JsonObject>>
+
+    /**
+     * 交易记录
+     */
+    @GET(API.TRADE_RECORD)
+    @Headers("Authorization:true")
+    fun getTradeDetail(@Path("id") id: Int): Observable<Response<TradeRecordProtocol>>
 
 }

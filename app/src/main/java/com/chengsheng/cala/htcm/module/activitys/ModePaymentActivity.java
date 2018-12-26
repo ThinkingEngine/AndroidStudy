@@ -1,27 +1,25 @@
 package com.chengsheng.cala.htcm.module.activitys;
 
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
-import com.chengsheng.cala.htcm.base.BaseActivity;
-import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.base.BaseActivity;
+import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.module.home.MainActivity;
-import com.chengsheng.cala.htcm.protocol.ZhiFuBaoSign;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
+import com.chengsheng.cala.htcm.protocol.ZhiFuBaoSign;
 import com.chengsheng.cala.htcm.utils.FuncUtils;
 
 import java.io.IOException;
@@ -92,7 +90,7 @@ public class ModePaymentActivity extends BaseActivity {
         immediatePayButton = findViewById(R.id.immediate_pay_button);
 
         title.setText("支付方式");
-        totalPayText.setText("¥"+orderVal);
+        totalPayText.setText("¥" + orderVal);
 
         payModeZhifubaoBox.setOnClickListener(v -> {
             if (selectPayModeButton.isSelected()) {

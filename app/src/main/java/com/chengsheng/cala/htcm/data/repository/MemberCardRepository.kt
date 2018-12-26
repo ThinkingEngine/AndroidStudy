@@ -5,6 +5,7 @@ import com.chengsheng.cala.htcm.data.retrofit.RetrofitHelper
 import com.chengsheng.cala.htcm.data.transformProto
 import com.chengsheng.cala.htcm.protocol.MemberCardDetailProtocol
 import com.chengsheng.cala.htcm.protocol.MemberCardProtocol
+import com.chengsheng.cala.htcm.protocol.TradeRecordProtocol
 import com.google.gson.JsonObject
 import io.reactivex.Observable
 
@@ -66,7 +67,61 @@ class MemberCardRepository private constructor() {
      * 绑定会员卡
      */
     fun bind(cardNumber: String, password: String, mobile: String, captcha: String, uuid: String): Observable<JsonObject>? {
-        return transformProto(RetrofitHelper.getInstance().memberCardService.bind(mobile, cardNumber, password, uuid, captcha))
+        return transformProto(RetrofitHelper.getInstance().memberCardService.bind(
+                mobile, cardNumber, password, uuid, captcha))
     }
+
+    /**
+     * 修改卡密码
+     */
+    fun changePassword(id: Int, oldPassword: String, newPassword: String): Observable<Any>? {
+        return transformProto(RetrofitHelper.getInstance().memberCardService.changePassword(
+                id, oldPassword, newPassword))
+    }
+
+    /**
+     * 找回卡密码-发送短信验证码
+     */
+    fun sendCardCaptcha(id: Int): Observable<JsonObject>? {
+        return transformProto(RetrofitHelper.getInstance().memberCardService.sendCardCaptcha(id))
+    }
+
+    /**
+     * 找回卡密码-验证短信验证码
+     */
+    fun checkCardCaptcha(id: Int, captcha: String, uuid: String): Observable<Any>? {
+        return transformProto(RetrofitHelper.getInstance().memberCardService.checkCardCaptcha(
+                id, captcha, uuid))
+    }
+
+    /**
+     * 找回卡密码-发送短信验证码
+     */
+    fun findPassword(id: Int, password: String): Observable<Any>? {
+        return transformProto(RetrofitHelper.getInstance().memberCardService.findPassword(
+                id, password))
+    }
+
+    /**
+     * 支付宝签名
+     */
+    fun getAlipaySign(id: String): Observable<JsonObject>? {
+        return transformProto(RetrofitHelper.getInstance().memberCardService.getAlipaySign(id))
+    }
+
+    /**
+     * 创建订单
+     */
+    fun createOrder(id: Int, amount: Double): Observable<JsonObject>? {
+        return transformProto(RetrofitHelper.getInstance().memberCardService.createOrder(id, amount))
+    }
+
+    /**
+     * 交易记录
+     */
+    fun getTradeRecord(id: Int): Observable<TradeRecordProtocol>? {
+        return transformProto(RetrofitHelper.getInstance().memberCardService.getTradeDetail(id))
+    }
+
 
 }

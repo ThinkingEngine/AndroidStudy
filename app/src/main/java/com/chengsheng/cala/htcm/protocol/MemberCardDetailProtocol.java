@@ -1,11 +1,14 @@
 package com.chengsheng.cala.htcm.protocol;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Author: 任和
  * CreateDate: 2018/12/25 2:26 PM
  * Description:
  */
-public class MemberCardDetailProtocol {
+public class MemberCardDetailProtocol implements Parcelable {
 
     /**
      * id : 3
@@ -20,6 +23,26 @@ public class MemberCardDetailProtocol {
     private String balance;
     private String bind_at;
     private String bind_mobile;
+
+    protected MemberCardDetailProtocol(Parcel in) {
+        id = in.readInt();
+        card_number = in.readString();
+        balance = in.readString();
+        bind_at = in.readString();
+        bind_mobile = in.readString();
+    }
+
+    public static final Creator<MemberCardDetailProtocol> CREATOR = new Creator<MemberCardDetailProtocol>() {
+        @Override
+        public MemberCardDetailProtocol createFromParcel(Parcel in) {
+            return new MemberCardDetailProtocol(in);
+        }
+
+        @Override
+        public MemberCardDetailProtocol[] newArray(int size) {
+            return new MemberCardDetailProtocol[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -59,5 +82,19 @@ public class MemberCardDetailProtocol {
 
     public void setBind_mobile(String bind_mobile) {
         this.bind_mobile = bind_mobile;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(card_number);
+        parcel.writeString(balance);
+        parcel.writeString(bind_at);
+        parcel.writeString(bind_mobile);
     }
 }

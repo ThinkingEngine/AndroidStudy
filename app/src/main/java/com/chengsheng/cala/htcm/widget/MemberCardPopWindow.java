@@ -34,7 +34,7 @@ public class MemberCardPopWindow extends BasePopupWindow {
 
         //二维码
         Bitmap bitmap = ZXUtils.createQRImage(
-                id, ScreenUtils.dip2px(context, 150), ScreenUtils.dip2px(context, 150));
+                id, ScreenUtils.dip2px(context, 186), ScreenUtils.dip2px(context, 186));
 
         ivQRCode.setImageBitmap(bitmap);
     }

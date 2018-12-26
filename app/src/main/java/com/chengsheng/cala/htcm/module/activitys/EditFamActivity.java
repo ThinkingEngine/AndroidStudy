@@ -241,7 +241,6 @@ public class EditFamActivity extends BaseActivity implements UpdateStateInterfac
                 }
             } else {
                 newMark.setVisibility(View.VISIBLE);
-                hasMod = true;
             }
             return true;
         });
@@ -261,6 +260,7 @@ public class EditFamActivity extends BaseActivity implements UpdateStateInterfac
                 if(!StringUtils.getText(newMark).isEmpty()){
                     familiesDetailInfo.setOwner_relationship(StringUtils.getText(newMark));
                 }
+                familiesDetailInfo.setOwner_relationship(currentMark);
                 uploadModeInfo(familiesDetailInfo);
             }else{
                 showShortToast("你还未修改信息");

@@ -23,6 +23,7 @@ class MemberCardDetailActivity : BaseActivity() {
 
     //会员卡id
     private var id: Int = 0
+
     private var moreDialog: MemberMoreDialog? = null
 
     override fun getLayoutId(): Int {
@@ -40,19 +41,11 @@ class MemberCardDetailActivity : BaseActivity() {
             }.showDialog()
         }
 
-        //修改卡密码
-        RxView.clicks(layoutChangePassword).subscribe {
-            startActivity(ChangeCardPwdActivity())
-        }
-
         //交易记录
         RxView.clicks(layoutTradeDetail).subscribe {
-            startActivity(TradeDetailActivity())
-        }
-
-        //充值
-        RxView.clicks(btnDeposit).subscribe {
-            startActivity(DepositActivity())
+            val bundle = Bundle()
+            bundle.putInt("id", id)
+            startActivity(TradeRecordActivity(), bundle)
         }
     }
 
@@ -60,13 +53,26 @@ class MemberCardDetailActivity : BaseActivity() {
         showLoading()
         id = intent.getIntExtra("id", 0)
         MemberCardRepository.default?.getCardDetail(id)
-                ?.subscribe({
-
-                    tvCardNumber?.text = StringUtils.addBlank(it.card_number)
-                    tvBalance?.text = "￥" + it.balance
-                    tvBindMobile?.text = it.bind_mobile
-                    tvBindDate?.text = it.bind_at.substring(0, 10)
+                ?.subscribe({ res ->
+                    tvCardNumber?.text = StringUtils.addBlank(res.card_number)
+                    tvBalance?.text = "￥" + res.balance
+                    tvBindMobile?.text = res.bind_mobile
+                    tvBindDate?.text = res.bind_at.substring(0, 10)
                     hideLoading()
+
+                    //修改卡密码
+                    RxView.clicks(layoutChangePassword).subscribe {
+                        val bundle = Bundle()
+                        bundle.putParcelable("cardData", res)
+                        startActivity(ChangeCardPwdActivity(), bundle)
+                    }
+
+                    //充值
+                    RxView.clicks(btnDeposit).subscribe {
+                        val bundle = Bundle()
+                        bundle.putParcelable("cardData", res)
+                        startActivity(DepositActivity(), bundle)
+                    }
 
                 }) {
                     showError(it)

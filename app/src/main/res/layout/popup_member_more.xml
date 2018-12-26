@@ -17,14 +17,14 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:gravity="center"
-            android:padding="@dimen/dp_16"
+            android:padding="@dimen/dp_20"
             android:text="解除绑定"
             android:textColor="@color/color333333" />
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_5"
-            android:background="@color/colorF0F0F0" />
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/colorCCCCCC" />
 
         <TextView
             android:id="@+id/tvCancelDelete"

@@ -65,4 +65,28 @@ interface MemberCardService {
                        @Query("old_password") old_password: String,
                        @Query("new_password") new_password: String): Observable<Response<Any>>
 
+    /**
+     * 找回密码-发送验证码
+     */
+    @POST(API.SEND_CARD_CAPTCHA)
+    @Headers("Authorization:true")
+    fun sendCardCaptcha(@Path("id") id: Int): Observable<Response<JsonObject>>
+
+    /**
+     * 找回密码-验证短信验证码
+     */
+    @POST(API.CHECK_CARD_CAPTCHA)
+    @Headers("Authorization:true")
+    fun checkCardCaptcha(@Path("id") id: Int,
+                         @Query("code") code: String,
+                         @Query("uuid") uuid: String): Observable<Response<Any>>
+
+    /**
+     * 找回密码
+     */
+    @POST(API.FIND_CARD_PASSWORD)
+    @Headers("Authorization:true")
+    fun findPassword(@Path("id") id: Int,
+                     @Query("new_password") password: String): Observable<Response<Any>>
+
 }

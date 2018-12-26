@@ -23,8 +23,6 @@ class MemberCardDetailActivity : BaseActivity() {
 
     //会员卡id
     private var id: Int = 0
-    //会员卡好
-    private var cardNumber: String? = ""
 
     private var moreDialog: MemberMoreDialog? = null
 
@@ -43,14 +41,6 @@ class MemberCardDetailActivity : BaseActivity() {
             }.showDialog()
         }
 
-        //修改卡密码
-        RxView.clicks(layoutChangePassword).subscribe {
-            val bundle = Bundle()
-            bundle.putInt("id", id)
-            bundle.putString("cardNumber", cardNumber!!)
-            startActivity(ChangeCardPwdActivity(), bundle)
-        }
-
         //交易记录
         RxView.clicks(layoutTradeDetail).subscribe {
             startActivity(TradeDetailActivity())
@@ -66,13 +56,19 @@ class MemberCardDetailActivity : BaseActivity() {
         showLoading()
         id = intent.getIntExtra("id", 0)
         MemberCardRepository.default?.getCardDetail(id)
-                ?.subscribe({
-                    cardNumber = it.card_number
-                    tvCardNumber?.text = StringUtils.addBlank(it.card_number)
-                    tvBalance?.text = "￥" + it.balance
-                    tvBindMobile?.text = it.bind_mobile
-                    tvBindDate?.text = it.bind_at.substring(0, 10)
+                ?.subscribe({ res ->
+                    tvCardNumber?.text = StringUtils.addBlank(res.card_number)
+                    tvBalance?.text = "￥" + res.balance
+                    tvBindMobile?.text = res.bind_mobile
+                    tvBindDate?.text = res.bind_at.substring(0, 10)
                     hideLoading()
+
+                    //修改卡密码
+                    RxView.clicks(layoutChangePassword).subscribe {
+                        val bundle = Bundle()
+                        bundle.putParcelable("cardData", res)
+                        startActivity(ChangeCardPwdActivity(), bundle)
+                    }
 
                 }) {
                     showError(it)

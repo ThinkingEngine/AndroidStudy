@@ -78,4 +78,28 @@ class MemberCardRepository private constructor() {
                 id, oldPassword, newPassword))
     }
 
+    /**
+     * 找回卡密码-发送短信验证码
+     */
+    fun sendCardCaptcha(id: Int): Observable<JsonObject>? {
+        return transformProto(RetrofitHelper.getInstance().memberCardService.sendCardCaptcha(id))
+    }
+
+    /**
+     * 找回卡密码-验证短信验证码
+     */
+    fun checkCardCaptcha(id: Int, captcha: String, uuid: String): Observable<Any>? {
+        return transformProto(RetrofitHelper.getInstance().memberCardService.checkCardCaptcha(
+                id, captcha, uuid))
+    }
+
+    /**
+     * 找回卡密码-发送短信验证码
+     */
+    fun findPassword(id: Int, password: String): Observable<Any>? {
+        return transformProto(RetrofitHelper.getInstance().memberCardService.findPassword(
+                id, password))
+    }
+
+
 }

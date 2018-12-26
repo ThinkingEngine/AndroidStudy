@@ -101,6 +101,7 @@ class AddMemCardActivity : BaseActivity() {
                     uuid = it["uuid"].asString
                     initCaptchaTimer(btnGetCaptcha)
                     hideLoading()
+                    showShortToast("短信验证码已发送，请注意查收")
                     etCaptcha.requestFocus()
                 }
                 ) {
@@ -118,11 +119,12 @@ class AddMemCardActivity : BaseActivity() {
         MemberCardRepository.default?.bind(cardNumber, password, mobile, captcha, uuid)
                 ?.subscribe({
                     hideLoading()
-                    showShortToast("操作成功")
+                    showShortToast("添加成功")
                     EventBus.getDefault().post("", GlobalConstant.DELETE_MEMBER_CARD_SUC)
                     Handler().postDelayed({
                         finish()
                     }, 300)
+
                 }) {
                     showError(it)
                     hideLoading()

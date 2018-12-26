@@ -22,7 +22,7 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import kotlin.jvm.Synchronized;
 
-import static com.chengsheng.cala.htcm.data.ResponseExtentionKt.checkError;
+import static com.chengsheng.cala.htcm.data.ResExtentionKt.checkError;
 
 /**
  * Author: 任和

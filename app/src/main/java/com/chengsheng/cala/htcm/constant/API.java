@@ -49,8 +49,17 @@ public class API {
     /* 绑定会员卡 */
     public static final String BIND_MEMBER_CARD = SERVICE_BASE_URL + "api/health-card/health-cards";
 
-    /* 通过旧密码修改会员卡密码 */
+    /* 修改会员卡密码 */
     public static final String CHANGE_CARD_PASSWORD = SERVICE_BASE_URL + "api/health-card/health-cards/{id}/password-old";
+
+    /* 找回卡密码-发送短信 */
+    public static final String SEND_CARD_CAPTCHA = SERVICE_BASE_URL + "api/health-card/health-cards/{id}/password/sms-validation-code";
+
+    /* 找回卡密码-验证短信 */
+    public static final String CHECK_CARD_CAPTCHA = SERVICE_BASE_URL + "api/health-card/health-cards/{id}/password/sms-validation";
+
+    /* 找回卡密码 */
+    public static final String FIND_CARD_PASSWORD = SERVICE_BASE_URL + "api/health-card/health-cards/{id}/password-sms";
 
     /* 套餐列表启用的 */
     public static final String EXAM_PACKAGE = SERVICE_BASE_URL + "api/physical-exam-item/exam-packages/enable";

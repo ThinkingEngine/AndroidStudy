@@ -55,4 +55,16 @@ class MemberRepository {
     fun valiModeCoe(familyId: String, uuid: String, code: String): Observable<ResponseBody>? {
         return transformProto(RetrofitHelper.getInstance().memberService.valiModeCode(familyId, uuid, code))
     }
+
+    fun putFamInfo(familyId: String, map: Map<String, String>): Observable<ResponseBody>? {
+        return transformProto(RetrofitHelper.getInstance().memberService.putFamInfo(familyId, map))
+    }
+
+    fun vailCode(familyId: String, phone: String): Observable<Message>? {
+        return transformProto(RetrofitHelper.getInstance().memberService.smsCode(familyId, phone))
+    }
+
+    fun vailCell(familyId: String, map: Map<String, String>): Observable<ResponseBody>? {
+        return transformProto(RetrofitHelper.getInstance().memberService.vailCell(familyId, map))
+    }
 }

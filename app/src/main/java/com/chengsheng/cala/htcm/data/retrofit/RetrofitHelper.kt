@@ -135,4 +135,7 @@ class RetrofitHelper private constructor() {
     //家庭成员
     var memberService = httpCreate(FamilyMemberService::class.java)
 
+    //文件上传服务
+    var fileUpService = httpCreate(FileService::class.java);
+
 }

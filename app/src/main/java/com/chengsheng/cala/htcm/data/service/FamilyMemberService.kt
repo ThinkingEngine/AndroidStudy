@@ -46,4 +46,21 @@ interface FamilyMemberService {
     @Headers("Authorization:true")
     fun valiModeCode(@Path("families_id") familiesDd: String, @Field("uuid") uuid: String, @Field("code") code: String): Observable<Response<ResponseBody>>
 
+    /* 修改家庭成员信息 */
+    @PUT(API.PUT_FAM)
+    @FormUrlEncoded
+    @Headers("Authorization:true")
+    fun putFamInfo(@Path("families_id")familiesDd: String,@FieldMap map:Map<String,String>):Observable<Response<ResponseBody>>
+
+    /* 发送短信验证码-修改家人手机号 */
+    @POST(API.VAIL_CODE)
+    @FormUrlEncoded
+    @Headers("Authorization:true")
+    fun smsCode(@Path("families_id") familiesDd: String,@Field("mobile")phone:String):Observable<Response<Message>>
+
+    /* 验证短信验证码-修家人改手机号 */
+    @POST(API.VAIL_CELL)
+    @FormUrlEncoded
+    @Headers("Authorization:true")
+    fun vailCell(@Path("families_id")familiesDd: String, @FieldMap map: Map<String, String>):Observable<Response<ResponseBody>>
 }

@@ -56,4 +56,5 @@ interface MemberCardService {
              @Query("uuid") uuid: String,
              @Query("code") code: String): Observable<Response<JsonObject>>
 
+
 }

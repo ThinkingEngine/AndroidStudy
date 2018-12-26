@@ -43,12 +43,9 @@ class MemberCardDetailActivity : BaseActivity() {
 
         //交易记录
         RxView.clicks(layoutTradeDetail).subscribe {
-            startActivity(TradeDetailActivity())
-        }
-
-        //充值
-        RxView.clicks(btnDeposit).subscribe {
-            startActivity(DepositActivity())
+            val bundle = Bundle()
+            bundle.putInt("id", id)
+            startActivity(TradeRecordActivity(), bundle)
         }
     }
 
@@ -68,6 +65,13 @@ class MemberCardDetailActivity : BaseActivity() {
                         val bundle = Bundle()
                         bundle.putParcelable("cardData", res)
                         startActivity(ChangeCardPwdActivity(), bundle)
+                    }
+
+                    //充值
+                    RxView.clicks(btnDeposit).subscribe {
+                        val bundle = Bundle()
+                        bundle.putParcelable("cardData", res)
+                        startActivity(DepositActivity(), bundle)
                     }
 
                 }) {

@@ -61,6 +61,15 @@ public class API {
     /* 找回卡密码 */
     public static final String FIND_CARD_PASSWORD = SERVICE_BASE_URL + "api/health-card/health-cards/{id}/password-sms";
 
+    /* 充值-支付宝签名 */
+    public static final String CARD_DEPOSIT_ALIPAY_SIGN = SERVICE_BASE_URL + "api/health-card/deposit-orders/{id}/ali-sign";
+
+    /* 充值-创建充值订单 */
+    public static final String CREATE_CARD_DEPOSIT_ORDER = SERVICE_BASE_URL + "api/health-card/health-cards/{id}/deposit";
+
+    /* 交易记录 */
+    public static final String TRADE_RECORD = SERVICE_BASE_URL + "api/health-card/health-cards/{id}/trades";
+
     /* 套餐列表启用的 */
     public static final String EXAM_PACKAGE = SERVICE_BASE_URL + "api/physical-exam-item/exam-packages/enable";
 

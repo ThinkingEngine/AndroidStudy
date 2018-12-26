@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentTransaction
 import android.view.KeyEvent
 import com.chengsheng.cala.htcm.R
 import com.chengsheng.cala.htcm.base.BaseActivity
+import com.chengsheng.cala.htcm.constant.BaseAPI
 import com.chengsheng.cala.htcm.module.find.FindFragment
 import com.chengsheng.cala.htcm.module.fragments.HomeFragment
 import com.chengsheng.cala.htcm.module.user.MineFragment

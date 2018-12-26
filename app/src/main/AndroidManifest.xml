@@ -87,12 +87,6 @@
         <activity android:name=".module.activitys.OrderDetailActivity" />
         <activity android:name=".module.activitys.ExamReportCompareActivity" />
 
-        <receiver android:name=".model.broadcasts.NeworkChangeReceiver">
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-        </receiver>
-
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.example.cameraalbumtest.fileprovider"
@@ -164,10 +158,6 @@
         <!--解绑会员卡-->
         <activity android:name=".module.user.card.DeleteMemberCardActivity" />
 
-        <service
-            android:name=".model.services.ServiceSMSService"
-            android:enabled="true"
-            android:exported="false" />
     </application>
 
 </manifest>

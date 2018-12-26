@@ -5,7 +5,6 @@ import android.support.v4.app.FragmentTransaction
 import android.view.KeyEvent
 import com.chengsheng.cala.htcm.R
 import com.chengsheng.cala.htcm.base.BaseActivity
-import com.chengsheng.cala.htcm.constant.BaseAPI
 import com.chengsheng.cala.htcm.module.find.FindFragment
 import com.chengsheng.cala.htcm.module.fragments.HomeFragment
 import com.chengsheng.cala.htcm.module.user.MineFragment
@@ -19,7 +18,6 @@ import kotlinx.android.synthetic.main.activity_new_main.*
 class MainActivity : BaseActivity() {
 
     private var homeFragment: Fragment? = null
-    //    private var healthFragment: Fragment? = null
     private var findFragment: Fragment? = null
     private var mineFragment: Fragment? = null
     private var currentFragment: Fragment? = null
@@ -32,7 +30,6 @@ class MainActivity : BaseActivity() {
 
     override fun initView() {
         homeFragment = HomeFragment.newInstance()
-//        healthFragment = HealthFragment.newInstance()
         findFragment = FindFragment.newInstance()
         mineFragment = MineFragment.newInstance("", "")
 
@@ -45,9 +42,6 @@ class MainActivity : BaseActivity() {
                 R.id.rbHome -> {
                     replaceFragment(homeFragment!!)
                 }
-//                R.id.rbHealth -> {
-//                    replaceFragment(healthFragment!!)
-//                }
                 R.id.rbFind -> {
                     replaceFragment(findFragment!!)
                 }

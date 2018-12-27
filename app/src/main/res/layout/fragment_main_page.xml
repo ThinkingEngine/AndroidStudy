@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -11,10 +11,17 @@
         android:id="@+id/title_header_main_page"
         layout="@layout/main_page_header_layout" />
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/refresh_main_page"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/smartRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:descendantFocusability="afterDescendants">
+
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:id="@+id/classicsHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlClassicsSpinnerStyle="Translate" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -22,10 +29,9 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@color/colorPageBackground"
                 android:orientation="vertical">
-
 
                 <cn.bingoogolapple.bgabanner.BGABanner
                     android:id="@+id/banner_a"
@@ -36,96 +42,79 @@
                     app:banner_pointContainerBackground="@android:color/transparent"
                     app:banner_pointDrawable="@drawable/selecter_white_dot"
                     app:banner_pointTopBottomMargin="15dp"
-                    app:banner_transitionEffect="alpha"/>
+                    app:banner_transitionEffect="alpha" />
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="96dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="14dp"
                     android:layout_marginTop="-10dp"
                     android:layout_marginRight="14dp"
                     android:background="@drawable/fmailies_item_bg"
-                    android:elevation="4dp">
-
-                    <ImageView
-                        android:id="@+id/exam_report_mark"
-                        android:layout_width="42dp"
-                        android:layout_height="42dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="15dp"
-                        android:src="@mipmap/shouye_tijianbaogao" />
+                    android:elevation="4dp"
+                    android:gravity="center"
+                    android:padding="@dimen/dp_10">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/tvExamReport"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/exam_report_mark"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:drawableTop="@mipmap/shouye_tijianbaogao"
+                        android:drawablePadding="@dimen/dp_10"
+                        android:gravity="center"
                         android:text="@string/medical_exam_report"
                         android:textColor="@color/colorText"
                         android:textSize="14sp" />
 
-                    <ImageView
-                        android:id="@+id/appointment_exam_mark"
-                        android:layout_width="42dp"
-                        android:layout_height="42dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_marginLeft="47dp"
-                        android:layout_marginTop="15dp"
-                        android:src="@mipmap/shouye_yuyuetijian" />
-
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/tvExamAppointment"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/appointment_exam_mark"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:drawableTop="@mipmap/shouye_yuyuetijian"
+                        android:drawablePadding="@dimen/dp_10"
+                        android:gravity="center"
                         android:text="@string/medical_appointment"
                         android:textColor="@color/colorText"
                         android:textSize="14sp" />
 
-                    <ImageView
-                        android:id="@+id/my_exam_mark"
-                        android:layout_width="42dp"
-                        android:layout_height="42dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginRight="47dp"
-                        android:src="@mipmap/shouye_wodetijian" />
-
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/tvMyExam"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/my_exam_mark"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="40dp"
+                        android:layout_weight="1"
+                        android:drawableTop="@mipmap/shouye_wodetijian"
+                        android:drawablePadding="@dimen/dp_10"
+                        android:gravity="center"
                         android:text="我的体检"
                         android:textColor="@color/colorText"
                         android:textSize="14sp" />
-                </RelativeLayout>
+                </LinearLayout>
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/ai_assistant"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="14dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="14dp"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="3dp"
                         android:layout_height="16dp"
-                        android:layout_centerVertical="true"
                         android:src="@mipmap/dabiaoti_shuxian" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="22dp"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_weight="1"
                         android:text="智能助理"
                         android:textColor="@color/colorText"
                         android:textSize="18sp"
@@ -134,38 +123,35 @@
                     <ImageView
                         android:layout_width="6dp"
                         android:layout_height="12dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="14dp"
                         android:src="@mipmap/liebiaojinru" />
 
-                </RelativeLayout>
+                </LinearLayout>
 
                 <com.chengsheng.cala.htcm.widget.MyRecyclerView
                     android:id="@+id/appointment_recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/recommend_news"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="14dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="14dp"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center_vertical">
 
                     <ImageView
                         android:layout_width="3dp"
                         android:layout_height="16dp"
-                        android:layout_centerVertical="true"
                         android:src="@mipmap/dabiaoti_shuxian" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="22dp"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_weight="1"
                         android:text="推荐资讯"
                         android:textColor="@color/colorText"
                         android:textSize="18sp"
@@ -174,20 +160,23 @@
                     <ImageView
                         android:layout_width="6dp"
                         android:layout_height="12dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="14dp"
+                        android:layout_marginEnd="14dp"
                         android:src="@mipmap/liebiaojinru" />
 
-                </RelativeLayout>
+                </LinearLayout>
 
                 <com.chengsheng.cala.htcm.widget.MyRecyclerView
-                    android:id="@+id/recommend_news_recycler_view"
+                    android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
             </LinearLayout>
         </ScrollView>
-    </android.support.v4.widget.SwipeRefreshLayout>
 
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlClassicsSpinnerStyle="Translate" />
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

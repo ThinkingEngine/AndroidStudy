@@ -4,24 +4,23 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.adapter.ExamAppointmentRecyclerAdapter;
 import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
-import com.chengsheng.cala.htcm.R;
-import com.chengsheng.cala.htcm.protocol.ExamAppointment;
-import com.chengsheng.cala.htcm.protocol.ExamApponitments;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
+import com.chengsheng.cala.htcm.protocol.ExamAppointment;
+import com.chengsheng.cala.htcm.protocol.ExamApponitments;
 import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
 import com.chengsheng.cala.htcm.utils.UpdateStateInterface;
-import com.chengsheng.cala.htcm.adapter.ExamAppointmentRecyclerAdapter;
+import com.chengsheng.cala.htcm.widget.CustomComboDialog;
 import com.chengsheng.cala.htcm.widget.HeaderScrollView;
 import com.chengsheng.cala.htcm.widget.MyRecyclerView;
-import com.chengsheng.cala.htcm.widget.CustomComboDialog;
 import com.zyao89.view.zloading.ZLoadingDialog;
 import com.zyao89.view.zloading.Z_TYPE;
 
@@ -56,11 +55,6 @@ public class ExamAppointmentActivity extends BaseActivity implements HeaderScrol
 
     private String currentFilter = GlobalConstant.COMBO_TYPE_A;
     private boolean value = true;
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 
     @Override
     public void stopSlide(boolean isStop) {

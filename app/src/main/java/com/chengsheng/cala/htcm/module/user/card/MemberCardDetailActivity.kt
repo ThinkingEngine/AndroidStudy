@@ -32,7 +32,7 @@ class MemberCardDetailActivity : BaseActivity() {
 
     override fun initView() {
         //更多操作
-        titleBar?.setRightClickListener {
+        titleBar?.setRightImageClickListener {
             moreDialog = MemberMoreDialog().build(this) {
                 val bundle = Bundle()
                 bundle.putInt("id", id)

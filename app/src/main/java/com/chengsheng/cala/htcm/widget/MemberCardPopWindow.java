@@ -32,6 +32,8 @@ public class MemberCardPopWindow extends BasePopupWindow {
         ImageView ivBarCode = (ImageView) findViewById(R.id.ivBarCode);
         tvMemberId.setText(id);
 
+        findViewById(R.id.ivCancelDialog).setOnClickListener(view -> dismiss());
+
         //二维码
         Bitmap bitmap = ZXUtils.createQRImage(
                 id, ScreenUtils.dip2px(context, 186), ScreenUtils.dip2px(context, 186));

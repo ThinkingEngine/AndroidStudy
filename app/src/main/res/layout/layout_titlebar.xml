@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
@@ -11,7 +12,7 @@
 
         <!--返回-->
         <ImageView
-            android:id="@+id/iv_finish_pager"
+            android:id="@+id/ivFinishPager"
             android:layout_width="32dp"
             android:layout_height="match_parent"
             android:paddingLeft="8dp"
@@ -20,7 +21,7 @@
 
         <!--页面标题-->
         <TextView
-            android:id="@+id/tv_pager_title"
+            android:id="@+id/tvPagerTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -30,9 +31,9 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
-        <!--右边可操作按钮-->
+        <!--最右边按钮图标-->
         <ImageView
-            android:id="@+id/iv_right_action"
+            android:id="@+id/ivRightImageAction"
             android:layout_width="38dp"
             android:layout_height="match_parent"
             android:layout_gravity="end"
@@ -40,6 +41,21 @@
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:visibility="invisible" />
+
+        <!--最右边文字-->
+        <TextView
+            android:id="@+id/tvRightAction"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:layout_marginEnd="14dp"
+            android:gravity="center"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:textColor="#20D3B3"
+            android:textSize="@dimen/sp_14"
+            android:visibility="invisible"
+            tools:text="右边" />
 
     </FrameLayout>
 

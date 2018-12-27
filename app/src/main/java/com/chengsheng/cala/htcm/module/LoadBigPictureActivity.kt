@@ -47,7 +47,7 @@ class LoadBigPictureActivity : BaseActivity() {
                 .setFinishClickListener {
                     finish()
 
-                }.setRightClickListener {
+                }.setRightImageClickListener {
                     ShareDialog()
                             .build(this)
                             .showDialog()

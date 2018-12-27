@@ -2,15 +2,15 @@ package com.chengsheng.cala.htcm.module.user.card
 
 import android.annotation.SuppressLint
 import android.os.Handler
-import android.os.Message
 import android.support.v7.widget.GridLayoutManager
-import com.alipay.sdk.app.PayTask
 import com.chengsheng.cala.htcm.R
 import com.chengsheng.cala.htcm.adapter.DepositValueAdapter
 import com.chengsheng.cala.htcm.base.BaseActivity
 import com.chengsheng.cala.htcm.constant.GlobalConstant
 import com.chengsheng.cala.htcm.constant.PayType
 import com.chengsheng.cala.htcm.data.repository.MemberCardRepository
+import com.chengsheng.cala.htcm.manager.IPayListener
+import com.chengsheng.cala.htcm.manager.PayManager
 import com.chengsheng.cala.htcm.protocol.DepositValueProtocol
 import com.chengsheng.cala.htcm.protocol.MemberCardDetailProtocol
 import com.chengsheng.cala.htcm.utils.StringUtils
@@ -113,16 +113,8 @@ class DepositActivity : BaseActivity() {
         MemberCardRepository.default?.getAlipaySign(orderId)
                 ?.subscribe({
                     hideLoading()
-                    val payThread: Thread
-                    payThread = Thread {
-                        val payTask = PayTask(this)
-                        val result = payTask.pay(it["ali_sign"].asString, true)
-                        val msg = Message()
-                        msg.what = 1
-                        msg.obj = result
-                        mHandler.sendMessage(msg)
-                    }
-                    payThread.start()
+
+                    callAlipay(it["ali_sign"].asString)
 
                 }) {
                     hideLoading()
@@ -130,28 +122,27 @@ class DepositActivity : BaseActivity() {
                 }
     }
 
-    private val mHandler = @SuppressLint("HandlerLeak")
-    object : Handler() {
-        override fun handleMessage(msg: Message) {
-            if (msg.what == 1) {
-                val payResult = msg.obj.toString()
-                if (payResult.isNotEmpty()) {
-                    when {
-                        payResult.contains("resultStatus={9000}") -> {
-                            EventBus.getDefault().post("", GlobalConstant.DELETE_MEMBER_CARD_SUC)
-                            showShortToast("充值成功")
-                            Handler().postDelayed({
-                                finish()
-                            }, 300)
-                        }
-                        payResult.contains("resultStatus={6001}") -> {
-                            showShortToast("支付已取消")
-                        }
-                        else -> showShortToast("充值失败")
-                    }
-                }
+    /**
+     * 支付宝支付
+     */
+    private fun callAlipay(sign: String) {
+        PayManager.getDefault().callAlipay(this, sign, object : IPayListener {
+            override fun onSuccess() {
+                EventBus.getDefault().post("", GlobalConstant.DELETE_MEMBER_CARD_SUC)
+                showShortToast("充值成功")
+                Handler().postDelayed({
+                    finish()
+                }, 300)
             }
-        }
+
+            override fun onCancel() {
+                showShortToast("充值已取消")
+            }
+
+            override fun onFail() {
+                showShortToast("充值失败")
+            }
+        })
     }
 
     override fun getData() {

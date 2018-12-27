@@ -57,7 +57,7 @@ class MemberCardDetailActivity : BaseActivity() {
                     tvCardNumber?.text = StringUtils.addBlank(res.card_number)
                     tvBalance?.text = "￥" + res.balance
                     tvBindMobile?.text = res.bind_mobile
-                    tvBindDate?.text = res.bind_at.substring(0, 10)
+                    tvBindDate?.text = res.bind_at
                     hideLoading()
 
                     //修改卡密码

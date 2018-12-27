@@ -110,6 +110,7 @@ interface MemberCardService {
      */
     @GET(API.TRADE_RECORD)
     @Headers("Authorization:true")
-    fun getTradeDetail(@Path("id") id: Int): Observable<Response<TradeRecordProtocol>>
+    fun getTradeDetail(@Path("id") id: Int,
+                       @Query("page") page: Int): Observable<Response<TradeRecordProtocol>>
 
 }

@@ -119,8 +119,8 @@ class MemberCardRepository private constructor() {
     /**
      * 交易记录
      */
-    fun getTradeRecord(id: Int): Observable<TradeRecordProtocol>? {
-        return transformProto(RetrofitHelper.getInstance().memberCardService.getTradeDetail(id))
+    fun getTradeRecord(id: Int, page: Int): Observable<TradeRecordProtocol>? {
+        return transformProto(RetrofitHelper.getInstance().memberCardService.getTradeDetail(id,page))
     }
 
 

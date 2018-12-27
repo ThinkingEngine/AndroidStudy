@@ -28,7 +28,7 @@ class TradeRecordActivity : BaseRefreshActivity<TradeRecordProtocol.ItemsBean>()
     @SuppressLint("CheckResult")
     override fun getData(page: Int) {
         val id = intent.getIntExtra("id", 0)
-        MemberCardRepository.default?.getTradeRecord(id)
+        MemberCardRepository.default?.getTradeRecord(id, page)
                 ?.subscribe({
 
                     fillData(it.items)

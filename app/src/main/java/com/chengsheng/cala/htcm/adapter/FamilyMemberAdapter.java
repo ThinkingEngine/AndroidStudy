@@ -37,6 +37,7 @@ public class FamilyMemberAdapter extends BaseQuickAdapter<FamiliesListItem> {
         baseViewHolder.setText(R.id.families_name_text, familiesListItem.getFullname());
         baseViewHolder.setText(R.id.families_tel_text, familiesListItem.getMobile());
         baseViewHolder.setText(R.id.families_id_text,familiesListItem.getId_card_no());
+        baseViewHolder.setText(R.id.certification_note_text,familiesListItem.getHealth_card_no());
         familiesIcon = baseViewHolder.itemView.findViewById(R.id.families_header_icon);
         familiesIcon.setImageURI(familiesListItem.getAvatar_path());
 

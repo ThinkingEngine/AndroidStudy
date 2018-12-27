@@ -149,15 +149,22 @@
         <activity android:name=".module.user.card.FindCardPwdAStep1Activity" />
         <!-- 找回卡密码 -->
         <activity android:name=".module.user.card.FindCardPwdAStep2Activity" />
+
         <!-- 交易记录 -->
         <activity android:name=".module.user.card.TradeDetailActivity" />
         <!-- 充值 -->
         <!--交易记录-->
         <activity android:name=".module.user.card.TradeRecordActivity" />
         <!--充值-->
+
+        <!--交易记录-->
+        <activity android:name=".module.user.card.TradeRecordActivity" />
+        <!-- 充值 -->
+
         <activity android:name=".module.user.card.DepositActivity" />
         <!-- 解绑会员卡 -->
         <activity android:name=".module.user.card.DeleteMemberCardActivity" />
+
 
 
         <service
@@ -166,6 +173,8 @@
             android:exported="false" />
 
         <activity android:name=".module.activitys.EditFamActivity"></activity>
+
+        <activity android:name=".module.activitys.EditFamActivity" />
 
     </application>
 

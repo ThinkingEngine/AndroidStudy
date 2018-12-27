@@ -25,79 +25,79 @@ public class CallBackDataAuth {
 
     private static ConditionInterface mConditionInterface;
 
-    private static LoginBackInterface mLoginBackInterface;
+    private static CellPhoneInterface mCellPhoneInterface;
 
 
-    public static void setAuthStateCallBack(AuthStateCallBack authStateCallBack){
+    public static void setAuthStateCallBack(AuthStateCallBack authStateCallBack) {
         mAuthStateCallBack = authStateCallBack;
     }
 
-    public static void doAuthStateCallBack(boolean isAuth){
+    public static void doAuthStateCallBack(boolean isAuth) {
         mAuthStateCallBack.authResult(isAuth);
     }
 
-    public static void setExamPersonInterface(ExamPersonInterface examPersonInterface){
+    public static void setExamPersonInterface(ExamPersonInterface examPersonInterface) {
         mExamPersonInterface = examPersonInterface;
     }
 
-    public static void doExamPersonCallBack(List<FamiliesListItem> datas){
+    public static void doExamPersonCallBack(List<FamiliesListItem> datas) {
         mExamPersonInterface.examPersonData(datas);
     }
 
-    public static void setExamDateInterface(ExamDateInterface examDateInterface){
+    public static void setExamDateInterface(ExamDateInterface examDateInterface) {
         mExamDateInterface = examDateInterface;
     }
 
-    public static void doExamDateInterface(int id){
+    public static void doExamDateInterface(int id) {
         mExamDateInterface.getExamDate(id);
     }
 
-    public static void setUpdateAIAssisont(UpdateAIAssisont updateAIAssisont){
+    public static void setUpdateAIAssisont(UpdateAIAssisont updateAIAssisont) {
         mUpdateAIAssisont = updateAIAssisont;
     }
 
-    public static void doUpdateAIAssisont(boolean status){
+    public static void doUpdateAIAssisont(boolean status) {
         mUpdateAIAssisont.updateResult(status);
     }
 
-    public static void setUpdateStateInterface(UpdateStateInterface updateStateInterface){
+    public static void setUpdateStateInterface(UpdateStateInterface updateStateInterface) {
         mUpdateStateInterface = updateStateInterface;
     }
 
-    public static void doUpdateStateInterface(boolean state){
+    public static void doUpdateStateInterface(boolean state) {
         mUpdateStateInterface.updateServiceMessage(state);
     }
 
-    public static void setCheckServiceInterface(CheckServiceInterface checkServiceInterface){
+    public static void setCheckServiceInterface(CheckServiceInterface checkServiceInterface) {
         mCheckServiceInterface = checkServiceInterface;
     }
 
-    public static void doCheckServiceInterface(List<String> checks){
+    public static void doCheckServiceInterface(List<String> checks) {
         mCheckServiceInterface.clickSMS(checks);
     }
 
-    public static void setUpdateConditionInterface(UpdateConditionInterface updateConditionInterface){
+    public static void setUpdateConditionInterface(UpdateConditionInterface updateConditionInterface) {
         mUpdateConditionInterface = updateConditionInterface;
     }
 
-    public static void doUpdateConditionInterface(List<Map<String,String>> datas,boolean update){
-        mUpdateConditionInterface.selectCondition(datas,update);
+    public static void doUpdateConditionInterface(List<Map<String, String>> datas, boolean update) {
+        mUpdateConditionInterface.selectCondition(datas, update);
     }
 
-    public static void setConditionInterface(ConditionInterface conditionInterface){
+    public static void setConditionInterface(ConditionInterface conditionInterface) {
         mConditionInterface = conditionInterface;
     }
 
-    public static void doConditionInterface(List<CompareItem> condition){
+    public static void doConditionInterface(List<CompareItem> condition) {
         mConditionInterface.selectCondition(condition);
     }
 
-    public static void setLoginBackInterface(LoginBackInterface loginBackInterface){
-        mLoginBackInterface = loginBackInterface;
+    public static void setCellPhoneInterface(CellPhoneInterface cellPhoneInterface) {
+        mCellPhoneInterface = cellPhoneInterface;
     }
 
-    public static void doLoginBackInterface(boolean hasLogin){
-        mLoginBackInterface.loginStatus(hasLogin);
+    public static void doCellPhoneInterface(String cell){
+        mCellPhoneInterface.setCellphone(cell);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.chengsheng.cala.htcm.module.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -23,6 +24,7 @@ import com.chengsheng.cala.htcm.protocol.Message;
 import com.chengsheng.cala.htcm.utils.ActivityUtil;
 import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
 import com.chengsheng.cala.htcm.utils.FuncUtils;
+import com.chengsheng.cala.htcm.utils.StringUtils;
 import com.chengsheng.cala.htcm.utils.TimeUtilKt;
 import com.chengsheng.cala.htcm.utils.ToastUtil;
 import com.zhy.view.flowlayout.FlowLayout;
@@ -157,11 +159,11 @@ public class ModeFamiliesFragment extends Fragment {
                         Toast.makeText(getContext(), "验证码不能为空!", Toast.LENGTH_SHORT).show();
                     } else {
                         Map<String, String> map = new HashMap<>();
-                        map.put("mobile", getNumberSmsMode.getText().toString());
+                        map.put("mobile", StringUtils.getText(getNumberSmsMode));
                         map.put("uuid", uuid);
                         map.put("code", getCodeFormSmsMode.getText().toString());
 
-                        modeFamiliesTel(map);
+                        modeFamiliesTel(map,StringUtils.getText(getNumberSmsMode));
                     }
                 });
             }
@@ -412,36 +414,7 @@ public class ModeFamiliesFragment extends Fragment {
     }
 
     //修改用户手机号码
-    private void modeFamiliesTel(Map<String, String> map) {
-//        if (retrofit == null) {
-//            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
-//        }
-//
-//        NetService service = retrofit.create(NetService.class);
-//        loadingDialog.show();
-//        service.modeFamiliesTel(app.getTokenType() + " " + app.getAccessToken(), String.valueOf(mParam2.getId()), map)
-//                .subscribeOn(Schedulers.newThread())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new DisposableObserver<ResponseBody>() {
-//                    @Override
-//                    public void onNext(ResponseBody responseBody) {
-//                        loadingDialog.cancel();
-//                        Toast.makeText(getContext(), "您已成功修改", Toast.LENGTH_SHORT).show();
-//                        CallBackDataAuth.doUpdateStateInterface(true);
-//                        getActivity().finish();
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        loadingDialog.cancel();
-//                        Toast.makeText(getContext(), "修改失败！", Toast.LENGTH_SHORT).show();
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//                        loadingDialog.cancel();
-//                    }
-//                });
+    private void modeFamiliesTel(Map<String, String> map,String cell) {
 
         MemberRepository
                 .Companion.getDefault()
@@ -451,6 +424,7 @@ public class ModeFamiliesFragment extends Fragment {
                     public void onNext(ResponseBody responseBody) {
                         loadingDialog.cancel();
                         Toast.makeText(getContext(), "您已成功修改", Toast.LENGTH_SHORT).show();
+                        CallBackDataAuth.doCellPhoneInterface(cell);
                         CallBackDataAuth.doUpdateStateInterface(true);
                         getActivity().finish();
                     }
@@ -459,7 +433,7 @@ public class ModeFamiliesFragment extends Fragment {
                     public void onError(Throwable e) {
                         loadingDialog.cancel();
                         Log.e("TAG","e:"+e);
-                        Toast.makeText(getContext(), "修改失败！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "修改失败", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

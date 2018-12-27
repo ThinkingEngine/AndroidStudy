@@ -35,7 +35,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="23dp"
             android:layout_toRightOf="@id/families_header_icon"
-            android:text="王树彤"
+            tools:text="王树彤"
             android:textColor="@color/colorText"
             android:textSize="20dp" />
 
@@ -47,7 +47,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="6dp"
             android:layout_toRightOf="@id/families_header_icon"
-            android:text="199****7068"
+            tools:text="199****7068"
             android:textColor="@color/colorSecText"
             android:textSize="14sp" />
 
@@ -94,7 +94,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
             android:layout_toRightOf="@id/families_header_icon"
-            android:text="请前往机构获取认证码进行认证"
+            tools:text="请前往机构获取认证码进行认证"
             android:textColor="@color/colorThrText"
             android:textSize="10sp" />
 

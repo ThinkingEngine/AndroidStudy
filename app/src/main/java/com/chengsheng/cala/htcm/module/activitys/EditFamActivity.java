@@ -9,13 +9,10 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +35,7 @@ import com.chengsheng.cala.htcm.protocol.FamiliesDetailInfo;
 import com.chengsheng.cala.htcm.protocol.URLResult;
 import com.chengsheng.cala.htcm.utils.ActivityUtil;
 import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
+import com.chengsheng.cala.htcm.utils.CellPhoneInterface;
 import com.chengsheng.cala.htcm.utils.FuncUtils;
 import com.chengsheng.cala.htcm.utils.StringUtils;
 import com.chengsheng.cala.htcm.utils.ToastUtil;
@@ -70,7 +68,7 @@ import retrofit2.Retrofit;
  * CreateDate: 2018/12/26 9:44 AM
  * Description: 编辑家人信息
  */
-public class EditFamActivity extends BaseActivity implements UpdateStateInterface {
+public class EditFamActivity extends BaseActivity implements UpdateStateInterface,CellPhoneInterface {
 
     private AppTitleBar appTitleBar;
     private SimpleDraweeView header;
@@ -92,6 +90,7 @@ public class EditFamActivity extends BaseActivity implements UpdateStateInterfac
     private String currentSex = "";
     private String currentAge = "";
     private String headerUri = "";
+    private String currentCell = "";
 
     private Uri headerImageUri;
 
@@ -108,6 +107,7 @@ public class EditFamActivity extends BaseActivity implements UpdateStateInterfac
     @Override
     public void initView() {
         CallBackDataAuth.setUpdateStateInterface(this);
+        CallBackDataAuth.setCellPhoneInterface(this);
         famID = getIntent().getExtras().getString("FAM_ID");
         initViews();
     }
@@ -115,6 +115,7 @@ public class EditFamActivity extends BaseActivity implements UpdateStateInterfac
     @Override
     public void getData() {
 
+        //获取家人信息
         MemberRepository
                 .Companion.getDefault()
                 .getFamInfo(famID)
@@ -126,7 +127,7 @@ public class EditFamActivity extends BaseActivity implements UpdateStateInterfac
 
                     @Override
                     public void onError(Throwable e) {
-
+                        showError(e);
                     }
 
                     @Override
@@ -170,7 +171,6 @@ public class EditFamActivity extends BaseActivity implements UpdateStateInterfac
         header.setImageURI(familiesDetailInfo.getAvatar_path());
         nameMod.setText(familiesDetailInfo.getFullname());
         modAge.setText(familiesDetailInfo.getBirthday());
-        modTel.setText(familiesDetailInfo.getMobile());
 
         setSexModel(familiesDetailInfo.getSex());
 
@@ -179,27 +179,38 @@ public class EditFamActivity extends BaseActivity implements UpdateStateInterfac
         currentMark = familiesDetailInfo.getOwner_relationship();
         headerUri = familiesDetailInfo.getAvatar_path();
 
-        if (familiesDetailInfo.getId_card_no().equals("")) {
+        if (familiesDetailInfo.getId_card_no().isEmpty()) {
             modeId.setText("暂无");
         } else {
             modeId.setText(familiesDetailInfo.getId_card_no());
         }
 
+        if(currentCell.equals("")){
+            modTel.setText(familiesDetailInfo.getMobile());
+            currentCell = familiesDetailInfo.getMobile();
+        }else{
+            modTel.setText(currentCell);
+        }
+
+
+        //
         femaleMod.setOnClickListener(v -> {
-            setSexModel("female");
-            familiesDetailInfo.setSex("female");
-            hasMod = true;
-            currentSex = "female";
+            if (!femaleMod.isSelected()) {
+                setSexModel("female");
+                familiesDetailInfo.setSex("female");
+                hasMod = true;
+            }
         });
 
         maleMod.setOnClickListener(v -> {
-            setSexModel("male");
-            familiesDetailInfo.setSex("male");
-            hasMod = true;
-            currentSex = "male";
+            if (!maleMod.isSelected()) {
+                setSexModel("male");
+                familiesDetailInfo.setSex("male");
+                hasMod = true;
+            }
         });
 
-        for (int i = 0; i < relations.length; i++) {
+        for (int i = 0; i < relations.length - 1; i++) {
             if (relations[i].equals(familiesDetailInfo.getOwner_relationship())) {
                 adapter.setSelectedList(i);
                 hasMark = false;
@@ -207,9 +218,12 @@ public class EditFamActivity extends BaseActivity implements UpdateStateInterfac
         }
 
         if (hasMark) {
+            adapter.setSelectedList(relations.length - 1);
             newMark.setVisibility(View.VISIBLE);
+            newMark.setText(familiesDetailInfo.getOwner_relationship());
         }
 
+        //修改名字
         addItemB.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putString("MODE", "NAME");
@@ -217,6 +231,7 @@ public class EditFamActivity extends BaseActivity implements UpdateStateInterfac
             ActivityUtil.Companion.startActivity(this, new ModeFamiliesInfoActivity(), bundle);
         });
 
+        //修改身份证号码
         modeId.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putSerializable("FAMILIES_INFO", familiesDetailInfo);
@@ -224,6 +239,7 @@ public class EditFamActivity extends BaseActivity implements UpdateStateInterfac
             ActivityUtil.Companion.startActivity(this, new ModeFamiliesInfoActivity(), bundle);
         });
 
+        //修改电话号码
         addItemF.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putString("MODE", "CELLPHONE,MODE_TEL");
@@ -231,8 +247,10 @@ public class EditFamActivity extends BaseActivity implements UpdateStateInterfac
             ActivityUtil.Companion.startActivity(this, new ModeFamiliesInfoActivity(), bundle);
         });
 
+        //修改出生年月
         addItemD.setOnClickListener(v -> setDate());
 
+        //修改关系标签
         famReMark.setOnTagClickListener((view, position, parent) -> {
             if (position != (relations.length - 1)) {
                 if (!relations[position].equals(currentMark)) {
@@ -241,6 +259,7 @@ public class EditFamActivity extends BaseActivity implements UpdateStateInterfac
                 }
             } else {
                 newMark.setVisibility(View.VISIBLE);
+                hasMod = true;
             }
             return true;
         });
@@ -256,14 +275,15 @@ public class EditFamActivity extends BaseActivity implements UpdateStateInterfac
 
         //提交修改信息
         saveMod.setOnClickListener(v -> {
-            if(hasMod){
-                if(!StringUtils.getText(newMark).isEmpty()){
+            if (hasMod) {
+                if (!StringUtils.getText(newMark).isEmpty()) {
                     familiesDetailInfo.setOwner_relationship(StringUtils.getText(newMark));
                 }
                 familiesDetailInfo.setOwner_relationship(currentMark);
                 uploadModeInfo(familiesDetailInfo);
-            }else{
-                showShortToast("你还未修改信息");
+            } else {
+                CallBackDataAuth.doUpdateStateInterface(true);
+                finish();
             }
 
         });
@@ -289,12 +309,6 @@ public class EditFamActivity extends BaseActivity implements UpdateStateInterfac
         }
     }
 
-    @Override
-    public void updateServiceMessage(boolean status) {
-        if (status) {
-            getData();
-        }
-    }
 
     private void setDate() {
         if (calendar == null) {
@@ -318,7 +332,7 @@ public class EditFamActivity extends BaseActivity implements UpdateStateInterfac
     private void uploadModeInfo(FamiliesDetailInfo info) {
 
         Map<String, String> map = new HashMap<>();
-        map.put("mobile", info.getMobile());
+        map.put("mobile", currentCell);
         map.put("fullname", info.getFullname());
         map.put("owner_relationship", info.getOwner_relationship());
         map.put("avatar_path", headerUri);
@@ -422,7 +436,7 @@ public class EditFamActivity extends BaseActivity implements UpdateStateInterfac
         }
     }
 
-    private void updateHeader(){
+    private void updateHeader() {
 
         String path = FuncUtils.getReal(this, headerImageUri);
         File file = new File(path);
@@ -436,7 +450,7 @@ public class EditFamActivity extends BaseActivity implements UpdateStateInterfac
         HTCMApp app = HTCMApp.create(this);
 
         NetService service = retrofit.create(NetService.class);
-        service.uploadFile(app.getTokenType()+" "+app.getAccessToken(), mapa, body)
+        service.uploadFile(app.getTokenType() + " " + app.getAccessToken(), mapa, body)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableObserver<URLResult>() {
@@ -455,6 +469,22 @@ public class EditFamActivity extends BaseActivity implements UpdateStateInterfac
 
                     }
                 });
+    }
+
+
+
+    @Override
+    public void updateServiceMessage(boolean status) {
+        if(status){
+            getData();
+        }
+    }
+
+    @Override
+    public void setCellphone(String cell) {
+        hasMod = true;
+        currentCell = cell;
+        modTel.setText(cell);
     }
 
 

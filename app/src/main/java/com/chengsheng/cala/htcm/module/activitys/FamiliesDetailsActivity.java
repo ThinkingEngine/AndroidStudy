@@ -1,23 +1,9 @@
 package com.chengsheng.cala.htcm.module.activitys;
 
-import android.Manifest;
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
-import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -40,8 +26,6 @@ import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
 import com.chengsheng.cala.htcm.utils.FuncUtils;
 import com.chengsheng.cala.htcm.utils.UpdateStateInterface;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.zyao89.view.zloading.ZLoadingDialog;
-import com.zyao89.view.zloading.Z_TYPE;
 
 import java.io.File;
 import java.io.IOException;
@@ -83,7 +67,6 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
 
     private HTCMApp app;
     private Retrofit familiesDetailRetrofit;
-    private ZLoadingDialog loadingDialog;
 
     @Override
     public int getLayoutId() {
@@ -97,13 +80,6 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
         familiesID = getIntent().getStringExtra("FAMILIES_ID");
 
         CallBackDataAuth.setUpdateStateInterface(this);
-
-        loadingDialog = new ZLoadingDialog(this);
-        loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
-        loadingDialog.setDialogBackgroundColor(getResources().getColor(R.color.colorText));
-        loadingDialog.setLoadingColor(getResources().getColor(R.color.colorPrimary));
-        loadingDialog.setHintText("更新中....");
-        loadingDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
 
         //初始化界面。
         initViews();
@@ -228,20 +204,17 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
 
     //获取家人信息
     private void getFamiliesInfo() {
-        loadingDialog.show();
         MemberRepository.Companion.getDefault().getFamInfo(familiesID).subscribe(new DefaultObserver<FamiliesDetailInfo>() {
             @Override
             public void onNext(FamiliesDetailInfo info) {
                 app.setFamiliesDetailInfo(info);
                 setViews(info);
-                loadingDialog.cancel();
                 //修改家人头像
 //                inputChangeHeaderIcon.setOnClickListener(v -> modeInfoDialog("头像", info));
             }
 
             @Override
             public void onError(Throwable e) {
-                loadingDialog.cancel();
                 Toast.makeText(FamiliesDetailsActivity.this, "信息请求失败！", Toast.LENGTH_SHORT).show();
             }
 
@@ -306,14 +279,12 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
         mapa.put("bucket_name", descriptionString);
 
         NetService service = familiesDetailRetrofit.create(NetService.class);
-        loadingDialog.show();
         service.uploadFile(app.getTokenType() + " " + app.getAccessToken(), mapa, body)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableObserver<URLResult>() {
                     @Override
                     public void onNext(URLResult urlResult) {
-                        loadingDialog.cancel();
                         Toast.makeText(FamiliesDetailsActivity.this, "上传新头像成功！", Toast.LENGTH_SHORT).show();
                         updateFamiliesInfo(urlResult);
                     }
@@ -321,87 +292,13 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
                     @Override
                     public void onError(Throwable e) {
                         Log.e("UP", "上传图片失败:" + e);
-                        loadingDialog.cancel();
                         Toast.makeText(FamiliesDetailsActivity.this, "上传图片失败！", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onComplete() {
-                        loadingDialog.cancel();
                     }
                 });
-    }
-
-    //修改头像弹窗框.
-    private void showPopwindow() {
-        final Dialog dialog = new Dialog(this, R.style.dialog_bottom);
-        View view = View.inflate(this, R.layout.bottom_select_layout, null);
-        dialog.setContentView(view);
-
-        Window window = dialog.getWindow();
-        window.setGravity(Gravity.BOTTOM);
-
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        dialog.show();
-
-        dialog.findViewById(R.id.get_photo_camera).setOnClickListener(view1 -> {
-            File outputImage = new File(FamiliesDetailsActivity.this.getExternalCacheDir(), "user_header.jpg");
-            if (outputImage.exists()) {
-                outputImage.delete();
-            }
-
-            try {
-                outputImage.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            if (Build.VERSION.SDK_INT >= 24) {
-                headerImageUri = FileProvider.getUriForFile(FamiliesDetailsActivity.this, "com.example.cameraalbumtest.fileprovider", outputImage);
-            } else {
-                headerImageUri = Uri.fromFile(outputImage);
-            }
-
-            Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, headerImageUri);
-            startActivityForResult(intent, 1);
-        });
-
-        //从相册获取头像
-        dialog.findViewById(R.id.get_photo_gra).setOnClickListener(view12 -> {
-            if (ContextCompat.checkSelfPermission(FamiliesDetailsActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(FamiliesDetailsActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-            } else {
-                Intent intent = new Intent("android.intent.action.GET_CONTENT");
-                intent.setType("image/*");
-                startActivityForResult(intent, 2);
-                dialog.dismiss();
-            }
-        });
-
-        dialog.findViewById(R.id.get_photo_cancel).setOnClickListener(view13 -> dialog.dismiss());
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case 1:
-                if (resultCode == RESULT_OK) {
-                    headerImageUri = data.getData();
-                    familiesHeaderIconHad.setImageURI(headerImageUri);
-                    updateHeader();
-                }
-                break;
-            case 2:
-                if (resultCode == RESULT_OK) {
-                    headerImageUri = data.getData();
-                    familiesHeaderIconHad.setImageURI(headerImageUri);
-                    updateHeader();
-                }
-            default:
-        }
     }
 
     //设置默认就诊人
@@ -437,27 +334,23 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
         FamiliesDetailInfo info = app.getFamiliesDetailInfo();
         NetService service = familiesDetailRetrofit.create(NetService.class);
         Map<String, String> data = daoTOmap(info, "avatar_path", urlResult.getFile_url());
-        loadingDialog.show();
         service.modeFamiliesInfo(app.getTokenType() + " " + app.getAccessToken(), GlobalConstant.MODE_FAMILIES + info.getId(), data)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableObserver<ResponseBody>() {
                     @Override
                     public void onNext(ResponseBody responseBody) {
-                        loadingDialog.cancel();
                         Toast.makeText(FamiliesDetailsActivity.this, "头像更新成功！", Toast.LENGTH_SHORT).show();
                         CallBackDataAuth.doAuthStateCallBack(true);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        loadingDialog.cancel();
                         Toast.makeText(FamiliesDetailsActivity.this, "头像更新失败！", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onComplete() {
-                        loadingDialog.cancel();
                     }
                 });
     }
@@ -465,23 +358,10 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
     @Override
     public void updateServiceMessage(boolean status) {
         if (status) {
-            getFamiliesInfo();
+            getData();
         }
     }
 
-    private void dialog(String title, String message, final String key, final String val) {
-        AlertDialog alertDialog;
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(title);
-        builder.setMessage(message);
-
-        builder.setNegativeButton("暂不", null);
-        builder.setPositiveButton("修改", (dialog, which) -> updateInfo(key, val));
-
-        alertDialog = builder.create();
-        alertDialog.show();
-
-    }
 
     private void unbundleFam() {
         MemberRepository.Companion.getDefault().delFam(familiesID).subscribe(new DefaultObserver<ResponseBody>() {
@@ -513,43 +393,26 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
         Map<String, String> map = daoTOmap(info, key, val);
 
         NetService service = familiesDetailRetrofit.create(NetService.class);
-        loadingDialog.show();
         service.modeFamiliesInfo(app.getTokenType() + " " + app.getAccessToken(), GlobalConstant.MODE_FAMILIES + info.getId(), map)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableObserver<ResponseBody>() {
                     @Override
                     public void onNext(ResponseBody responseBody) {
-                        loadingDialog.cancel();
                         getFamiliesInfo();
                         Toast.makeText(FamiliesDetailsActivity.this, "修改成功！", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        loadingDialog.cancel();
                         Toast.makeText(FamiliesDetailsActivity.this, "修改失败！", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onComplete() {
-                        loadingDialog.cancel();
                     }
                 });
 
-    }
-
-    private void updateBrithday() {
-
-        if (calendar == null) {
-            calendar = Calendar.getInstance();
-        }
-        DatePickerDialog timePickerDialog = new DatePickerDialog(this, R.style.Theme_AppCompat_DayNight_Dialog_Alert, (view, year, month, dayOfMonth) -> {
-            String brith = year + "-" + (month + 1) + "-" + dayOfMonth;
-            updateInfo("birthday", brith);
-        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-
-        timePickerDialog.show();
     }
 
 

@@ -4,13 +4,10 @@ import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -18,22 +15,17 @@ import android.widget.TextView;
 import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.adapter.MainViewPagerAdapter;
-import com.chengsheng.cala.htcm.widget.ConditionPopupWindow;
+import com.chengsheng.cala.htcm.widget.AppTitleBar;
 import com.chengsheng.cala.htcm.module.fragments.ServiceOrderFragment;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ServiceOrderActivity extends BaseActivity implements ServiceOrderFragment.OnFragmentInteractionListener{
 
     private TabLayout serviceOrderSelectHeader;
     private ViewPager serviceOrderFragment;
-    private ImageView backLogin, conditionSelectIcon;
-    private LinearLayout clickContainerServiceOrder;
-    private ImageView arrowUpDownServiceOrder;
-    private TextView menuBarTitle;
+    private AppTitleBar appTitleBar;
 
     private String[] marks = {"全部","待付款","已付款","待评价","已取消"};
     private List<Fragment> fragments;
@@ -56,37 +48,14 @@ public class ServiceOrderActivity extends BaseActivity implements ServiceOrderFr
             serviceOrderSelectHeader.getTabAt(i).setText(marks[i]);
         }
 
-        //临时数据
-        List<Map<String,String>> listDatas = new ArrayList<>();
-        Map<String,String> mapa = new HashMap<>();
-        mapa.put("SELECT","false");
-        mapa.put("DATA","周子轩");
-        Map<String,String> mapb = new HashMap<>();
-        mapb.put("SELECT","false");
-        mapb.put("DATA","周父");
-        Map<String,String> mapc = new HashMap<>();
-        mapc.put("SELECT","false");
-        mapc.put("DATA","周母");
-        listDatas.add(mapa);
-        listDatas.add(mapb);
-        listDatas.add(mapc);
-
-        final ConditionPopupWindow window = new ConditionPopupWindow(this,listDatas);
-
-        conditionSelectIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                window.showAsDropDown(conditionSelectIcon);
-            }
-        });
-
-        clickContainerServiceOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                windowB.showAsDropDown(clickContainerServiceOrder);
-                arrowUpDownServiceOrder.setSelected(true);
-            }
-        });
+//        final ConditionPopupWindow window = new ConditionPopupWindow(this,listDatas);
+//
+//        conditionSelectIcon.setOnClickListener(v -> window.showAsDropDown(conditionSelectIcon));
+//
+//        clickContainerServiceOrder.setOnClickListener(v -> {
+//            windowB.showAsDropDown(clickContainerServiceOrder);
+//            arrowUpDownServiceOrder.setSelected(true);
+//        });
     }
 
     @Override
@@ -98,27 +67,13 @@ public class ServiceOrderActivity extends BaseActivity implements ServiceOrderFr
         serviceOrderFragment = findViewById(R.id.service_order_fragment);
         serviceOrderSelectHeader = findViewById(R.id.service_order_select_header);
 
-        backLogin = findViewById(R.id.title_header_service_oder).findViewById(R.id.back_login);
-        conditionSelectIcon = findViewById(R.id.title_header_service_oder).findViewById(R.id.condition_select_icon);
-        clickContainerServiceOrder = findViewById(R.id.title_header_service_oder).findViewById(R.id.click_container_service_order);
-        arrowUpDownServiceOrder = findViewById(R.id.title_header_service_oder).findViewById(R.id.arrow_up_down_service_order);
-        menuBarTitle = findViewById(R.id.title_header_service_oder).findViewById(R.id.menu_bar_title);
-
-        setTitle(conditions[0]);
-
-        backLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        appTitleBar = findViewById(R.id.at_service_order);
+        appTitleBar.setTitle("全部");
+        appTitleBar.setFinishClickListener(() -> finish());
 
     }
 
-    private void setTitle(String title){
-        menuBarTitle.setText(title);
-        arrowUpDownServiceOrder.setSelected(false);
-    }
+
 
     private void initDatas(){
 
@@ -181,13 +136,9 @@ public class ServiceOrderActivity extends BaseActivity implements ServiceOrderFr
             final TextView textView = view.findViewById(R.id.text_mark);
             textView.setText(conditions[position]);
 
-            textView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    setTitle(textView.getText().toString());
-                    arrowUpDownServiceOrder.setSelected(false);
-                    windowB.dismiss();
-                }
+            textView.setOnClickListener(v -> {
+                setTitle(textView.getText().toString());
+                windowB.dismiss();
             });
 
             return view;

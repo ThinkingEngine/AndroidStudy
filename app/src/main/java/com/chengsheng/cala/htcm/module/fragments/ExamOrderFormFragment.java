@@ -91,7 +91,7 @@ public class ExamOrderFormFragment extends Fragment implements UpdateStateInterf
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_exam_order_form, container, false);
 
-        orderList = rootView.findViewById(R.id.order_list);
+        orderList = rootView.findViewById(R.id.recyclerView);
         networkQuest(currentPage, true);
         orderList.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override

@@ -74,6 +74,8 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="77dp"
                 android:background="@null"
+                android:inputType="text"
+                android:maxLength="16"
                 android:hint="请输入名字"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -152,8 +154,9 @@
             <TextView
                 android:id="@+id/input_families_age"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
                 android:layout_marginLeft="77dp"
                 android:background="@null"
                 android:hint="请选择入年龄"
@@ -180,12 +183,13 @@
             <EditText
                 android:id="@+id/input_families_id_num"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="55dp"
                 android:background="@null"
                 android:hint="请输入身份证号"
                 android:inputType="number"
+                android:maxLength="18"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -224,7 +228,7 @@
                 android:layout_marginLeft="62dp"
                 android:background="@null"
                 android:hint="此号码将作为体检时登记号码"
-                android:inputType="number"
+                android:inputType="phone"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -257,12 +261,13 @@
             <EditText
                 android:id="@+id/input_families_code"
                 android:layout_width="100dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="62dp"
                 android:background="@null"
                 android:hint="请输入验证码"
                 android:inputType="number"
+                android:maxLength="6"
                 android:textSize="14sp" />
 
             <Button

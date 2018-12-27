@@ -9,7 +9,7 @@ public class ExamItem {
     private String exam_purpose;
     private String notice;
     private boolean before_meal;
-    private int wait_person;
+    private int wait_personal;
     private String exam_address;
 
     public int getExam_item_id() {
@@ -77,11 +77,11 @@ public class ExamItem {
     }
 
     public int getWait_person() {
-        return wait_person;
+        return wait_personal;
     }
 
     public void setWait_person(int wait_person) {
-        this.wait_person = wait_person;
+        this.wait_personal = wait_person;
     }
 
     public String getExam_address() {
@@ -103,7 +103,7 @@ public class ExamItem {
                 ", exam_purpose='" + exam_purpose + '\'' +
                 ", notice='" + notice + '\'' +
                 ", before_meal=" + before_meal +
-                ", wait_person=" + wait_person +
+                ", wait_person=" + wait_personal +
                 ", exam_address='" + exam_address + '\'' +
                 '}';
     }

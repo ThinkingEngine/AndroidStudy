@@ -23,7 +23,7 @@ class MemberCardAdapter(private var activity: BaseActivity, data: List<MemberCar
         helper?.setText(R.id.tvCardId, StringUtils.addBlank(data?.card_number))
         helper?.setText(R.id.tvAvailable, data?.balance)
         try {
-            helper?.setText(R.id.tvBindDate, "绑定日期:" + data?.bind_at?.substring(0, 10))
+            helper?.setText(R.id.tvBindDate, "绑定日期:" + data?.bind_at)
         } catch (e: Exception) {
             e.printStackTrace()
         }

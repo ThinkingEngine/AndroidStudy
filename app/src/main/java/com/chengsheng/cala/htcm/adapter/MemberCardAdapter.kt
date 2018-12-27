@@ -37,7 +37,7 @@ class MemberCardAdapter(private var activity: BaseActivity, data: List<MemberCar
 
         //显示二维码
         helper?.getView<View>(R.id.viewShowCardPop)?.setOnClickListener {
-            MemberCardPopWindow(mContext, StringUtils.addBlank(data?.card_number)).showPopupWindow()
+            MemberCardPopWindow(mContext, data?.card_number).showPopupWindow()
         }
     }
 }

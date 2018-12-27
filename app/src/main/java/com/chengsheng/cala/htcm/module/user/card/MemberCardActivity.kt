@@ -6,7 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chengsheng.cala.htcm.R
 import com.chengsheng.cala.htcm.adapter.MemberCardAdapter
 import com.chengsheng.cala.htcm.base.BaseRefreshActivity
-import com.chengsheng.cala.htcm.constant.GlobalConstant.DELETE_MEMBER_CARD_SUC
+import com.chengsheng.cala.htcm.constant.GlobalConstant.UPDATE_MEMBER_CARD_SUCCESS
 import com.chengsheng.cala.htcm.data.repository.MemberCardRepository
 import com.chengsheng.cala.htcm.protocol.MemberCardProtocol
 import com.jakewharton.rxbinding2.view.RxView
@@ -55,7 +55,7 @@ class MemberCardActivity : BaseRefreshActivity<MemberCardProtocol.ItemsBean>() {
         return MemberCardAdapter(this, ArrayList())
     }
 
-    @Subscriber(mode = ThreadMode.MAIN, tag = DELETE_MEMBER_CARD_SUC)
+    @Subscriber(mode = ThreadMode.MAIN, tag = UPDATE_MEMBER_CARD_SUCCESS)
     fun refresh(event: String) {
         getData(FIRST_PAGE)
     }

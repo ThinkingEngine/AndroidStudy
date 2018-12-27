@@ -60,7 +60,7 @@ class FindCardPwdAStep2Activity : BaseActivity() {
 
                     hideLoading()
                     showShortToast("密码设置成功")
-                    EventBus.getDefault().post("", GlobalConstant.DELETE_MEMBER_CARD_SUC)
+                    EventBus.getDefault().post("", GlobalConstant.UPDATE_MEMBER_CARD_SUCCESS)
                     Handler().postDelayed({
                         finish()
                     }, 300)

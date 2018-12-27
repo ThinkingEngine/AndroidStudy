@@ -89,7 +89,7 @@ class ChangeCardPwdActivity : BaseActivity() {
                 }
     }
 
-    @Subscriber(mode = ThreadMode.MAIN, tag = GlobalConstant.DELETE_MEMBER_CARD_SUC)
+    @Subscriber(mode = ThreadMode.MAIN, tag = GlobalConstant.UPDATE_MEMBER_CARD_SUCCESS)
     fun refresh(event: String) {
         finish()
     }

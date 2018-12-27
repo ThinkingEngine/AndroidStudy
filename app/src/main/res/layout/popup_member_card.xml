@@ -49,8 +49,8 @@
 
             <ImageView
                 android:id="@+id/ivQRCode"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="166dp"
+                android:layout_height="166dp"
                 android:layout_marginTop="@dimen/dp_16" />
 
             <TextView

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.utils.StringUtils;
 import com.chengsheng.cala.htcm.utils.ZXUtils;
 import com.luck.picture.lib.tools.ScreenUtils;
 
@@ -22,7 +23,7 @@ import razerdp.basepopup.BasePopupWindow;
  */
 public class MemberCardPopWindow extends BasePopupWindow {
 
-    public MemberCardPopWindow(Context context, String id) {
+    public MemberCardPopWindow(Context context, String cardNumber) {
         super(context);
         setBackPressEnable(true);
         setDismissWhenTouchOutside(true);
@@ -30,13 +31,13 @@ public class MemberCardPopWindow extends BasePopupWindow {
         TextView tvMemberId = (TextView) findViewById(R.id.tvMemberId);
         ImageView ivQRCode = (ImageView) findViewById(R.id.ivQRCode);
         ImageView ivBarCode = (ImageView) findViewById(R.id.ivBarCode);
-        tvMemberId.setText(id);
+        tvMemberId.setText(StringUtils.addBlank(cardNumber));
 
         findViewById(R.id.ivCancelDialog).setOnClickListener(view -> dismiss());
 
         //二维码
         Bitmap bitmap = ZXUtils.createQRImage(
-                id, ScreenUtils.dip2px(context, 186), ScreenUtils.dip2px(context, 186));
+                cardNumber, ScreenUtils.dip2px(context, 166), ScreenUtils.dip2px(context, 166));
 
         ivQRCode.setImageBitmap(bitmap);
     }

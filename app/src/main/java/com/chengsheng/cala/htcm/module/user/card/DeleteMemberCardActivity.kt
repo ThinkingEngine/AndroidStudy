@@ -52,7 +52,7 @@ class DeleteMemberCardActivity : BaseActivity() {
 
                     hideLoading()
                     showShortToast("操作成功")
-                    EventBus.getDefault().post("", GlobalConstant.DELETE_MEMBER_CARD_SUC)
+                    EventBus.getDefault().post("", GlobalConstant.UPDATE_MEMBER_CARD_SUCCESS)
                     Handler().postDelayed({
                         finish()
                     }, 300)

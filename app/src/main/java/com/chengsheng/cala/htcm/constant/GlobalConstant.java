@@ -20,7 +20,7 @@ public class GlobalConstant {
     public static final String TOKEN_TYPE = "tokenType";
     public static final String MOBILE = "mobile";
 
-    public static final String DELETE_MEMBER_CARD_SUC = "deleteMemberCard";
+    public static final String UPDATE_MEMBER_CARD_SUCCESS = "updateMemberCardSuc";
 
     public static final int USER_STATE_REGISTER = 1;
     public static final int USER_STATE_UNREGISTER = 0;

@@ -41,15 +41,30 @@
         android:layout_marginStart="@dimen/dp_16"
         android:layout_marginEnd="@dimen/dp_16" />
 
-    <EditText
-        android:id="@+id/etBindMobile"
-        style="@style/BasicInputFiledStyle"
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_16"
-        android:layout_marginEnd="@dimen/dp_16"
-        android:inputType="number"
-        android:maxLength="11"
-        android:textColor="#333333"
-        tools:text="17716130287" />
+        android:layout_marginEnd="@dimen/dp_16">
+
+        <EditText
+            android:id="@+id/etBindMobile"
+            style="@style/BasicInputFiledStyle"
+            android:layout_marginStart="@dimen/dp_0"
+            android:inputType="number"
+            android:maxLength="11"
+            android:textColor="#333333"
+            tools:text="17716130287" />
+
+        <ImageView
+            android:id="@+id/ivDeleteBindMobile"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:src="@mipmap/shuruqingkogn" />
+
+    </FrameLayout>
 
     <View
         style="@style/horizontalLineStyle"

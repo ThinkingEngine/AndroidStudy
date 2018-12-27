@@ -66,23 +66,25 @@ class DepositActivity : BaseActivity() {
 //            payType = PayType.ALIPAY
 //        }
 //
-//        //选择微信支付
-//        RxView.clicks(layoutWechatPay).subscribe {
-//            ivSelectAlipay.isSelected = false
+        //选择微信支付
+        RxView.clicks(layoutWechatPay).subscribe {
+            //            ivSelectAlipay.isSelected = false
 //            ivSelectWechat.isSelected = true
 //            payType = PayType.WECHAT
-//        }
+            showShortToast("微信支付即将上线，敬请期待")
+        }
 
         //支付
         RxView.clicks(btnDeposit).subscribe {
             //amount为0时是其他金额
             if (amount == 0.0) {
                 //获取输入的金额
-                if (StringUtils.getText(etDepositAmount).isEmpty()) {
-                    showShortToast("请输入充值金额")
+                val inputAmount = StringUtils.getText(etDepositAmount)
+                if (inputAmount.isEmpty() || inputAmount.toDouble() < 1) {
+                    showShortToast("请输入大于1元的任意金额")
                     return@subscribe
                 }
-                amount = StringUtils.getText(etDepositAmount).toDouble()
+                amount = inputAmount.toDouble()
             }
 
             createOrder()
@@ -128,7 +130,7 @@ class DepositActivity : BaseActivity() {
     private fun callAlipay(sign: String) {
         PayManager.getDefault().callAlipay(this, sign, object : IPayListener {
             override fun onSuccess() {
-                EventBus.getDefault().post("", GlobalConstant.DELETE_MEMBER_CARD_SUC)
+                EventBus.getDefault().post("", GlobalConstant.UPDATE_MEMBER_CARD_SUCCESS)
                 showShortToast("充值成功")
                 Handler().postDelayed({
                     finish()

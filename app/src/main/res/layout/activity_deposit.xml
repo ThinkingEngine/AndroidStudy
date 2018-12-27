@@ -118,16 +118,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="其他金额"
+                        android:text="其他金额(元)"
                         android:textColor="#FF666666"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <EditText
                         android:id="@+id/etDepositAmount"
                         style="@style/BasicInputFiledStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="输入大于1的任意金额"
+                        android:layout_marginStart="@dimen/dp_8"
+                        android:hint="输入大于1元的任意金额"
                         android:inputType="numberDecimal"
                         android:maxLength="20" />
 

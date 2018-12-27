@@ -2,6 +2,7 @@ package com.chengsheng.cala.htcm.module.user.card
 
 import android.annotation.SuppressLint
 import android.os.Handler
+import android.view.View
 import com.chengsheng.cala.htcm.R
 import com.chengsheng.cala.htcm.base.BaseActivity
 import com.chengsheng.cala.htcm.constant.GlobalConstant
@@ -34,6 +35,15 @@ class AddMemCardActivity : BaseActivity() {
         //手机号默认使用当前登录账号，可手动输入
         etBindMobile?.setText(UserUtil.getMobile())
 
+        //设置一点删除按钮显示和隐藏
+        RxTextView.textChanges(etBindMobile).subscribe {
+            ivDeleteBindMobile.visibility = if (it != null && it.isNotEmpty()) {
+                View.VISIBLE
+            } else {
+                View.INVISIBLE
+            }
+        }
+
         //监听密码输入，当长度为6位时自动给手机号设置焦点
         RxTextView.textChanges(etCardPassword).subscribe {
             if (it != null && it.isNotEmpty() && it.length == 6) {
@@ -47,6 +57,11 @@ class AddMemCardActivity : BaseActivity() {
                 .subscribe {
                     getCaptcha()
                 }
+
+        //一键删除绑定的手机号
+        RxView.clicks(ivDeleteBindMobile).subscribe {
+            etBindMobile.setText("")
+        }
 
         //绑定会员卡
         RxView.clicks(btnBind)
@@ -78,7 +93,7 @@ class AddMemCardActivity : BaseActivity() {
                         return@subscribe
                     }
 
-                    addCard(cardNumber, password, UserUtil.getMobile(), captcha, uuid)
+                    addCard(cardNumber, password, mobile, captcha, uuid)
                 }
     }
 
@@ -120,7 +135,7 @@ class AddMemCardActivity : BaseActivity() {
                 ?.subscribe({
                     hideLoading()
                     showShortToast("添加成功")
-                    EventBus.getDefault().post("", GlobalConstant.DELETE_MEMBER_CARD_SUC)
+                    EventBus.getDefault().post("", GlobalConstant.UPDATE_MEMBER_CARD_SUCCESS)
                     Handler().postDelayed({
                         finish()
                     }, 300)

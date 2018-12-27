@@ -155,6 +155,16 @@ public class AppTitleBar extends FrameLayout {
     }
 
     /**
+     * 设置右边文字显示隐藏状态
+     */
+    public AppTitleBar setRightTxtVisibility(int visibility) {
+        if (tvRightAction != null) {
+            tvRightAction.setVisibility(visibility);
+        }
+        return this;
+    }
+
+    /**
      * 设置右边文字点击事件
      */
     public AppTitleBar setRightTxtClickListener(OnViewClickListener clickListener) {

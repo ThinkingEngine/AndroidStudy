@@ -48,14 +48,7 @@ public class ServiceOrderActivity extends BaseActivity implements ServiceOrderFr
             serviceOrderSelectHeader.getTabAt(i).setText(marks[i]);
         }
 
-//        final ConditionPopupWindow window = new ConditionPopupWindow(this,listDatas);
-//
-//        conditionSelectIcon.setOnClickListener(v -> window.showAsDropDown(conditionSelectIcon));
-//
-//        clickContainerServiceOrder.setOnClickListener(v -> {
-//            windowB.showAsDropDown(clickContainerServiceOrder);
-//            arrowUpDownServiceOrder.setSelected(true);
-//        });
+
     }
 
     @Override

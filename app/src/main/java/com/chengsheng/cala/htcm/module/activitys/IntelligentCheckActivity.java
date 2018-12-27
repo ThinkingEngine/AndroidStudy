@@ -1,6 +1,5 @@
 package com.chengsheng.cala.htcm.module.activitys;
 
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.widget.ImageView;

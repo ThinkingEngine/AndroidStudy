@@ -69,7 +69,6 @@ public class OrderDetailExpandableListViewAdapter extends BaseExpandableListAdap
             vh = new GroupVH();
             vh.orderDetailItemName = convertView.findViewById(R.id.order_detail_item_name);
             vh.orderDetailItemValue = convertView.findViewById(R.id.order_detail_item_value);
-            vh.orderDetailPayStateMark = convertView.findViewById(R.id.order_detail_pay_state_mark);
 
             convertView.setTag(vh);
         }else{

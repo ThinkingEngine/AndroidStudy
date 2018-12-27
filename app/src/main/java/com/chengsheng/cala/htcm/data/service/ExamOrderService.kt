@@ -2,6 +2,7 @@ package com.chengsheng.cala.htcm.data.service
 
 import com.chengsheng.cala.htcm.constant.API
 import com.chengsheng.cala.htcm.protocol.childmodelb.ExamOrder
+import com.chengsheng.cala.htcm.protocol.childmodelb.ExamOrderDetail
 import com.chengsheng.cala.htcm.protocol.childmodelb.UserExamDetail
 import io.reactivex.Observable
 import okhttp3.ResponseBody
@@ -34,6 +35,13 @@ interface ExamOrderService {
      * */
     @GET(API.EXAM_ORDER)
     @Headers("Authorization:true")
-    fun getExamOrder(@Query("customer_ids") id:String,@Query("mode")  mode:String, @Query("page")  page:String):Observable<Response<ExamOrder>>
+    fun getExamOrder(@Query("customer_ids") id: String, @Query("mode") mode: String, @Query("page") page: String): Observable<Response<ExamOrder>>
+
+    /**
+     * 订单 订单详情
+     * */
+    @GET(API.ORDERS)
+    @Headers("Authorization:true")
+    fun getOrders(@Path("order_id") orderID: String): Observable<Response<ExamOrderDetail>>
 
 }

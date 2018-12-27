@@ -37,7 +37,7 @@ import retrofit2.Retrofit;
 /**
  * 体检订单
  */
-public class ExamOrderFormActivity extends BaseActivity implements ExamOrderFormFragment.OnFragmentInteractionListener, UpdateConditionInterface {
+public class ExamOrderFormActivity extends BaseActivity implements UpdateConditionInterface {
     private TabLayout orderFormSelectHeader;
     private ViewPager orderFormFragment;
 
@@ -63,7 +63,10 @@ public class ExamOrderFormActivity extends BaseActivity implements ExamOrderForm
         fragments = new ArrayList<>();
         for (String mark : marks) {
             orderFormSelectHeader.addTab(orderFormSelectHeader.newTab().setText(mark));
-            fragments.add(ExamOrderFormFragment.newInstance(mark, ""));
+//            fragments.add(ExamOrderFormFragment.newInstance(mark, ""));
+            ExamOrderFragment fragment = new ExamOrderFragment();
+            fragment.setMark(mark);
+            fragments.add(fragment);
         }
 
         MainViewPagerAdapter adapter = new MainViewPagerAdapter(getSupportFragmentManager(), fragments);
@@ -114,10 +117,6 @@ public class ExamOrderFormActivity extends BaseActivity implements ExamOrderForm
                 });
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
 
     @Override
     protected void onDestroy() {

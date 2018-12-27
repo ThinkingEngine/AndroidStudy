@@ -1,5 +1,7 @@
 package com.chengsheng.cala.htcm.constant;
 
+import com.chengsheng.cala.htcm.utils.StringUtils;
+
 import static com.chengsheng.cala.htcm.constant.BaseAPI.ACCOUNT_BASE_URL;
 import static com.chengsheng.cala.htcm.constant.BaseAPI.SERVICE_BASE_URL;
 
@@ -106,5 +108,11 @@ public class API {
 
     /* 文件上传服务（头像上传） */
     public static final String HEADER_UP = SERVICE_BASE_URL + "api/file-storage/files";
+
+    /* 添加家庭成员 */
+    public static final String ADD_MEM = SERVICE_BASE_URL + "api/family/account-family-members";
+
+    /* 体检订单 订单 订单详情 */
+    public static final String ORDERS = SERVICE_BASE_URL + "api/physical-exam-order/orders/{order_id}";
 
 }

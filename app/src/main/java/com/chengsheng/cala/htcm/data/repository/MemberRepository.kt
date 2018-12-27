@@ -67,4 +67,8 @@ class MemberRepository {
     fun vailCell(familyId: String, map: Map<String, String>): Observable<ResponseBody>? {
         return transformProto(RetrofitHelper.getInstance().memberService.vailCell(familyId, map))
     }
+
+    fun addMem(map: Map<String, String>): Observable<ResponseBody>? {
+        return transformProto(RetrofitHelper.getInstance().memberService.addMem(map))
+    }
 }

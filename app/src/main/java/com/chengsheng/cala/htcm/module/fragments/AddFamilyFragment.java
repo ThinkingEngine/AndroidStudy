@@ -32,6 +32,7 @@ import android.widget.Toast;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
 
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.data.repository.MemberRepository;
 import com.chengsheng.cala.htcm.protocol.Message;
 import com.chengsheng.cala.htcm.protocol.URLResult;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
@@ -55,6 +56,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DefaultObserver;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
@@ -192,6 +194,7 @@ public class AddFamilyFragment extends Fragment {
             } else if (phone.equals(phoneHasCode)) {
                 Toast.makeText(getContext(), "当前号码已验证!", Toast.LENGTH_SHORT).show();
             } else {
+                inputFamiliesTel.setFocusable(false);
                 getCodeFromNet(phone);
             }
         });
@@ -240,7 +243,7 @@ public class AddFamilyFragment extends Fragment {
                                 @Override
                                 public void onNext(URLResult urlResult) {
                                     map.put("avatar_path", urlResult.getFile_url());
-                                    commitFamilies(getCodeRetrofit, map);
+                                    commitFamilies(map);
                                 }
 
                                 @Override
@@ -258,7 +261,7 @@ public class AddFamilyFragment extends Fragment {
                 } else {
                     map.put("avatar_path", "");
                     Log.e("UP", "上传数据检查" + map.toString());
-                    commitFamilies(getCodeRetrofit, map);
+                    commitFamilies(map);
                 }
 
             }
@@ -332,22 +335,18 @@ public class AddFamilyFragment extends Fragment {
         }
         final TagAdapter tagAdapter = new TagAdapter(data);
         familiesRelationSelecter.setAdapter(tagAdapter);
-        tagAdapter.onSelected(0, tagAdapter.getView(familiesRelationSelecter, 0, data.get(0)));
-        familiesRelationSelecter.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
-            @Override
-            public boolean onTagClick(View view, int position, FlowLayout parent) {
-//                Toast.makeText(getContext(),"选中:"+data.get(position),Toast.LENGTH_SHORT).show();
-                if (position != data.size() - 1) {
-                    familiesTag = data.get(position);
-                }
-                TextView textView = view.findViewById(R.id.select_families_mark);
-                if (position == data.size() - 1 && textView.isSelected()) {
-                    addFamiliesMarksBox.setVisibility(View.VISIBLE);
-                } else {
-                    addFamiliesMarksBox.setVisibility(View.INVISIBLE);
-                }
-                return true;
+        tagAdapter.setSelectedList(0);
+        familiesRelationSelecter.setOnTagClickListener((view, position, parent) -> {
+            if (position != data.size() - 1) {
+                familiesTag = data.get(position);
             }
+            TextView textView = view.findViewById(R.id.select_families_mark);
+            if (position == data.size() - 1 && textView.isSelected()) {
+                addFamiliesMarksBox.setVisibility(View.VISIBLE);
+            } else {
+                addFamiliesMarksBox.setVisibility(View.INVISIBLE);
+            }
+            return true;
         });
 
         //添加新的家人关系标签按钮.
@@ -356,25 +355,28 @@ public class AddFamilyFragment extends Fragment {
                 Toast.makeText(getContext(), "请输入新的标签", Toast.LENGTH_SHORT).show();
             } else {
                 String newMark = newFamiliesMarkInput.getText().toString();
-                data.add(0, newMark);
-                tagAdapter.setSelected(0, newMark);
+                data.add(data.size() - 1, newMark);
+                tagAdapter.setSelectedList(data.size() - 2);
                 tagAdapter.notifyDataChanged();
                 familiesRelationSelecter.setAdapter(tagAdapter);
+                familiesTag = StringUtils.getText(newFamiliesMarkInput);
                 newFamiliesMarkInput.setText("");
+                addFamiliesMarksBox.setVisibility(View.INVISIBLE);
             }
         });
 
         //当失去焦点的时候，体检输入的标签
         newFamiliesMarkInput.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
-                if (!newFamiliesMarkInput.getText().toString().equals("")) {
+                if (!StringUtils.getText(newFamiliesMarkInput).equals("")) {
                     String newMark = newFamiliesMarkInput.getText().toString();
-                    data.add(0, newMark);
-                    tagAdapter.setSelected(0, newMark);
+                    data.add(data.size() - 1, newMark);
+                    tagAdapter.setSelectedList(data.size() - 2);
                     tagAdapter.notifyDataChanged();
                     familiesRelationSelecter.setAdapter(tagAdapter);
-                    familiesTag = newFamiliesMarkInput.getText().toString();
+                    familiesTag = StringUtils.getText(newFamiliesMarkInput);
                     newFamiliesMarkInput.setText("");
+                    addFamiliesMarksBox.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -390,7 +392,6 @@ public class AddFamilyFragment extends Fragment {
 
         loadingDialog.setHintText("请求验证....");
         loadingDialog.show();
-
 
         NetService service = getCodeRetrofit.create(NetService.class);
         service.addFamiliesCodeRequest(mParam1 + " " + mParam2, num)
@@ -508,45 +509,35 @@ public class AddFamilyFragment extends Fragment {
     }
 
     //提交家人信息
-    private void commitFamilies(Retrofit uploadRetrofit, Map<String, String> map) {
-        if (uploadRetrofit == null) {
-            uploadRetrofit = myRetrofit.createURL(GlobalConstant.API_BASE_URL);
-        }
-        NetService service = uploadRetrofit.create(NetService.class);
-        service.upLoadFamiliesInfo(mParam1 + " " + mParam2, map)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableObserver<ResponseBody>() {
-                    @Override
-                    public void onNext(ResponseBody responseBody) {
-                        try {
-                            loadingDialog.cancel();
-                            Log.e("UP", "添加家庭成员成功:" + responseBody.string());
-                            Toast.makeText(getContext(), "添加家庭成员成功!", Toast.LENGTH_SHORT).show();
-                            CallBackDataAuth.doAuthStateCallBack(true);
-//                    Intent intent = new Intent(getContext(), HomePageActivity.class);
-//                    getContext().startActivity(intent);
-                            Bundle bundle = new Bundle();
-                            bundle.putString("STATE", "manage");
-                            onButtonPressed(bundle, true);
+    private void commitFamilies(Map<String, String> map) {
+        MemberRepository.Companion.getDefault().addMem(map).subscribe(new DefaultObserver<ResponseBody>() {
+            @Override
+            public void onNext(ResponseBody responseBody) {
+                loadingDialog.cancel();
+                ToastUtil.showShortToast(getContext(),"添加成功");
+//                CallBackDataAuth.doAuthStateCallBack(true);
+                inputFamiliesTel.setFocusable(true);
+                Bundle bundle = new Bundle();
+                bundle.putString("STATE", "manage");
+                onButtonPressed(bundle, true);
+            }
 
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
+            @Override
+            public void onError(Throwable e) {
+                loadingDialog.cancel();
+                inputFamiliesTel.setFocusable(true);
+                ToastUtil.showShortToast(getContext(),e.toString());
+            }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        loadingDialog.cancel();
-                        Toast.makeText(getContext(), "添加家庭成员失败!", Toast.LENGTH_SHORT);
-                        Log.e("UP", "添加家庭成员失败:" + e);
-                    }
+            @Override
+            public void onComplete() {
 
-                    @Override
-                    public void onComplete() {
+            }
+        });
+    }
 
-                    }
-                });
+    private void defaultPage(){
+
     }
 
 

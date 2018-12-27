@@ -6,15 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".module.activitys.ServiceOrderActivity">
 
-    <include
-        android:id="@+id/title_header_service_oder"
-        layout="@layout/title_bar_type_four_layout" />
+    <com.chengsheng.cala.htcm.widget.AppTitleBar
+        android:id="@+id/at_service_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/service_order_select_header"
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        android:layout_below="@id/title_header_service_oder"
+        android:layout_below="@id/at_service_order"
         app:tabBackground="@color/colorWhite"
         app:tabIndicatorColor="@color/colorPrimary"
         app:tabSelectedTextColor="@color/colorPrimary"

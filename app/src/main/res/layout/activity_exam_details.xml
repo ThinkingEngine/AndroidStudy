@@ -7,17 +7,18 @@
     android:background="@color/colorPageBackground"
     tools:context=".module.activitys.ExamDetailsActivity">
 
-    <include
-        android:id="@+id/title_header_exam_details"
-        layout="@layout/title_bar_type_two_layout"
+    <com.chengsheng.cala.htcm.widget.AppTitleBar
+        android:id="@+id/titleBar"
         android:layout_width="match_parent"
-        android:layout_height="48dp" />
+        android:layout_height="wrap_content"
+        app:title="详情" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refresh_exam_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/title_header_exam_details">
+        android:layout_below="@id/titleBar"
+        android:visibility="invisible">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -63,9 +64,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="14dp"
                         android:layout_marginTop="14dp"
-                        android:text="体检人：周子萱"
                         android:textColor="@color/colorText"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        tools:text="周子萱" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -92,9 +93,9 @@
                         android:layout_below="@id/exam_person"
                         android:layout_marginLeft="8dp"
                         android:layout_marginTop="10dp"
-                        android:text="2018033100012"
                         android:textColor="@color/colorText"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        tools:text="2018033100012" />
                 </LinearLayout>
 
 
@@ -122,7 +123,7 @@
                         android:layout_marginLeft="8dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginRight="14dp"
-                        android:text="成都中医大健康管理中心"
+                        android:text="成都中医大-健康管理中心"
                         android:textColor="@color/colorText"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -150,9 +151,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
                         android:layout_marginRight="14dp"
-                        android:text="成都市武侯区人民南路四段17号"
                         android:textColor="@color/colorText"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        tools:text="成都市武侯区人民南路四段17号" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -183,9 +184,9 @@
                     android:layout_below="@id/exam_combo_name"
                     android:layout_marginLeft="14dp"
                     android:layout_marginTop="10dp"
-                    android:text="体检日期:2018-04-08"
                     android:textColor="@color/colorThrText"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    tools:text="体检日期:2018-04-08" />
 
                 <LinearLayout
                     android:id="@+id/line6"
@@ -351,20 +352,20 @@
         android:layout_width="match_parent"
         android:layout_height="58dp"
         android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        android:background="@color/colorWhite">
+        android:background="@color/colorWhite"
+        android:orientation="vertical">
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/login_button_bg"
             android:layout_marginStart="14dp"
-            android:layout_marginEnd="14dp"
             android:layout_marginTop="10dp"
+            android:layout_marginEnd="14dp"
             android:layout_marginBottom="10dp"
+            android:background="@drawable/login_button_bg"
             android:text="立即登记"
             android:textColor="@color/colorWhite"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
     </LinearLayout>
 
 </RelativeLayout>

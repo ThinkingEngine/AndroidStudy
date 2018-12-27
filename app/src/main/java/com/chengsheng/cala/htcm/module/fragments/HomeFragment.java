@@ -1,6 +1,5 @@
 package com.chengsheng.cala.htcm.module.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
@@ -35,6 +34,8 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.simple.eventbus.Subscriber;
+import org.simple.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,6 +95,13 @@ public class HomeFragment extends BaseRefreshFragment<RecommendedItem> {
         currentHasMessage.setVisibility(View.INVISIBLE);
         smartRefreshLayout.setEnableLoadmore(false);
 
+        smartRefreshLayout.setOnRefreshListener(refreshlayout -> {
+            updateAIAssistant();
+            if (UserUtil.isLogin()) {
+                getSystemSMS();
+            }
+        });
+
         //新闻列表
         getRecommendNews();
 
@@ -108,7 +116,8 @@ public class HomeFragment extends BaseRefreshFragment<RecommendedItem> {
         });
 
         //智能助理
-        aiAssistant.setOnClickListener(v -> startActivityWithLoginStatus(new AIAssistantActivity()));
+        aiAssistant.setOnClickListener(v ->
+                startActivityWithLoginStatus(new AIAssistantActivity()));
 
         //我的体检
         rootView.findViewById(R.id.tvMyExam).setOnClickListener(v ->
@@ -119,26 +128,21 @@ public class HomeFragment extends BaseRefreshFragment<RecommendedItem> {
                 startActivityWithLoginStatus(new ExamReportActivity()));
 
         //体检预约
-        rootView.findViewById(R.id.tvExamAppointment).setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), ExamAppointmentActivity.class);
-            startActivity(intent);
-        });
+        rootView.findViewById(R.id.tvExamAppointment).setOnClickListener(v ->
+                startActivity(new ExamAppointmentActivity()));
 
-        recommendNews.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), NewsListActivity.class);
-            startActivity(intent);
-        });
+        recommendNews.setOnClickListener(v ->
+                startActivity(new NewsListActivity()));
 
-        newMessage.setOnClickListener(v -> {
-            startActivityWithLoginStatus(new MessageActivity());
-        });
+        newMessage.setOnClickListener(v ->
+                startActivityWithLoginStatus(new MessageActivity()));
     }
 
     @Override
     public void getData(int page) {
+        updateAIAssistant();
         if (UserUtil.isLogin()) {
             getSystemSMS();
-            updateAIAssistant();
         }
     }
 
@@ -221,9 +225,10 @@ public class HomeFragment extends BaseRefreshFragment<RecommendedItem> {
     private void updateAIAssistant() {
         if (!UserUtil.isLogin()) {
             List<AssistantItem> temp = new ArrayList<>();
-            AIAssistantAdapter appointment = new AIAssistantAdapter(getContext(), temp, -2, "");
+            AIAssistantAdapter appointment = new AIAssistantAdapter(context, HomeFragment.this, temp, -2, "");
             appointmentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             appointmentRecyclerView.setAdapter(appointment);
+            smartRefreshLayout.finishRefresh();
             return;
         }
 
@@ -245,9 +250,9 @@ public class HomeFragment extends BaseRefreshFragment<RecommendedItem> {
                         }
                         AIAssistantAdapter appointment;
                         if (datas.isEmpty()) {
-                            appointment = new AIAssistantAdapter(getContext(), datas, 0, "");
+                            appointment = new AIAssistantAdapter(context, HomeFragment.this, datas, 0, "");
                         } else {
-                            appointment = new AIAssistantAdapter(getContext(), datas, 1, "");
+                            appointment = new AIAssistantAdapter(context, HomeFragment.this, datas, 1, "");
                         }
                         appointmentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                         appointmentRecyclerView.setAdapter(appointment);
@@ -257,8 +262,8 @@ public class HomeFragment extends BaseRefreshFragment<RecommendedItem> {
                     @Override
                     public void onError(Throwable e) {
                         List<AssistantItem> temp = new ArrayList<>();
-                        AIAssistantAdapter appointment = new AIAssistantAdapter(getContext(), temp, -1, e.toString());
-                        appointmentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                        AIAssistantAdapter appointment = new AIAssistantAdapter(context, HomeFragment.this, temp, -1, e.toString());
+                        appointmentRecyclerView.setLayoutManager(new LinearLayoutManager(context));
                         appointmentRecyclerView.setAdapter(appointment);
                         smartRefreshLayout.finishRefresh();
                     }
@@ -273,6 +278,15 @@ public class HomeFragment extends BaseRefreshFragment<RecommendedItem> {
     @Override
     public void onResume() {
         super.onResume();
-        getSystemSMS();
+        updateAIAssistant();
+        if (UserUtil.isLogin()) {
+            getSystemSMS();
+        }
     }
+
+    @Subscriber(mode = ThreadMode.MAIN, tag = GlobalConstant.UPDATE_AI_ASSISTANT_DATA)
+    public void refresh(String event) {
+        updateAIAssistant();
+    }
+
 }

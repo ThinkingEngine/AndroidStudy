@@ -15,6 +15,8 @@ import com.chengsheng.cala.htcm.utils.ActivityUtil;
 import com.chengsheng.cala.htcm.utils.ToastUtil;
 import com.chengsheng.cala.htcm.widget.AppLoading;
 
+import org.simple.eventbus.EventBus;
+
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -45,6 +47,11 @@ public abstract class BaseFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initView(view);
         getData();
+        try {
+            EventBus.getDefault().register(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -136,7 +143,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     @Synchronized
-    protected void showLoading() {
+    public void showLoading() {
         try {
             if (null == progress) {
                 progress = new AppLoading(context, R.style.transparentProgressDialog);
@@ -153,7 +160,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     @Synchronized
-    protected void hideLoading() {
+    public void hideLoading() {
         try {
             if (null != progress && progress.isShowing()) {
                 //防止出现闪一下问题，延迟执行
@@ -181,6 +188,16 @@ public abstract class BaseFragment extends Fragment {
                     }
                 });
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        try {
+            EventBus.getDefault().unregister(this);
         } catch (Exception e) {
             e.printStackTrace();
         }

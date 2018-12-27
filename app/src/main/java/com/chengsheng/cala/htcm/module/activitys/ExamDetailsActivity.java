@@ -4,37 +4,31 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.chengsheng.cala.htcm.base.BaseActivity;
-import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
-import com.chengsheng.cala.htcm.protocol.FamiliesListItem;
-import com.chengsheng.cala.htcm.protocol.childmodelb.UserExamDetail;
+import com.chengsheng.cala.htcm.adapter.ExamItemExpandableListViewAdapter;
+import com.chengsheng.cala.htcm.base.BaseActivity;
+import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
-import com.chengsheng.cala.htcm.adapter.ExamItemExpandableListViewAdapter;
+import com.chengsheng.cala.htcm.protocol.FamiliesListItem;
+import com.chengsheng.cala.htcm.protocol.childmodelb.UserExamDetail;
 import com.chengsheng.cala.htcm.widget.MyExpandableListView;
-import com.zyao89.view.zloading.ZLoadingDialog;
-import com.zyao89.view.zloading.Z_TYPE;
-
-import java.io.IOException;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.ResponseBody;
-import retrofit2.HttpException;
 import retrofit2.Retrofit;
 
+/**
+ * 体检详情
+ */
 public class ExamDetailsActivity extends BaseActivity {
-    private ImageView backButton;
-    private TextView menuBarTitle;
     private MyExpandableListView examItemExpandable;
     private TextView examStatsMark;
     private TextView examPerson, examNumDetail, examCompany, examCompanyAddress;
@@ -50,7 +44,6 @@ public class ExamDetailsActivity extends BaseActivity {
 
     private Retrofit retrofit;
     private HTCMApp app;
-    private ZLoadingDialog loadingDialog;
 
     @Override
     public int getLayoutId() {
@@ -60,12 +53,6 @@ public class ExamDetailsActivity extends BaseActivity {
     @Override
     public void initView() {
         app = HTCMApp.create(getApplicationContext());
-        loadingDialog = new ZLoadingDialog(this);
-        loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
-        loadingDialog.setDialogBackgroundColor(getResources().getColor(R.color.colorText));
-        loadingDialog.setLoadingColor(getResources().getColor(R.color.colorPrimary));
-        loadingDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
-        loadingDialog.setHintText("加载中....");
 
         String orderID = getIntent().getStringExtra("ORDER_ID");
 
@@ -81,8 +68,6 @@ public class ExamDetailsActivity extends BaseActivity {
 
     @SuppressLint("CutPasteId")
     private void initViews(final String orderId) {
-        backButton = findViewById(R.id.title_header_exam_details).findViewById(R.id.back_login);
-        menuBarTitle = findViewById(R.id.title_header_exam_details).findViewById(R.id.menu_bar_title);
         examItemExpandable = findViewById(R.id.exam_item_expandable);
         examStatsMark = findViewById(R.id.exam_stats_mark);
         examPerson = findViewById(R.id.exam_person);
@@ -100,18 +85,10 @@ public class ExamDetailsActivity extends BaseActivity {
         refreshExamDetail = findViewById(R.id.refresh_exam_detail);
         rButtonBox = findViewById(R.id.r_button_box);
 
-        menuBarTitle.setText("详情");
         reportWaitNumBox.setVisibility(View.INVISIBLE);
         examCodeDetail.setVisibility(View.VISIBLE);
 
         examItemExpandable.setFocusable(false);
-
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         refreshExamDetail.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -151,31 +128,35 @@ public class ExamDetailsActivity extends BaseActivity {
 
         }
 
-        if(userExamDetail.isCan_autonomous()){
+        if (userExamDetail.isCan_autonomous()) {
             rButtonBox.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             rButtonBox.setVisibility(View.INVISIBLE);
         }
 
-
-        checkExamRepot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (examStats.equals(GlobalConstant.RESERVATION)) {
+        //检前须知
+        checkExamRepot.setOnClickListener(v -> {
+            switch (examStats) {
+                case GlobalConstant.RESERVATION: {
                     Intent intent = new Intent(ExamDetailsActivity.this, BeforeExamActivity.class);
                     intent.putExtra("EXAM_ID", String.valueOf(userExamDetail.getId()));
                     startActivity(intent);
-                } else if (examStats.equals(GlobalConstant.CHECKING)) {
+                    break;
+                }
+                case GlobalConstant.CHECKING: {
                     Intent intent = new Intent(ExamDetailsActivity.this, IntelligentCheckActivity.class);
                     intent.putExtra("EXAM_ID", String.valueOf(userExamDetail.getId()));
                     startActivity(intent);
-                }else if(examStats.equals(GlobalConstant.CHECKED)){
-                    Intent intent = new Intent(ExamDetailsActivity.this,ExamReportDetailActivity.class);
+                    break;
+                }
+                case GlobalConstant.CHECKED: {
+                    Intent intent = new Intent(ExamDetailsActivity.this, ExamReportDetailActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putString(GlobalConstant.EXAM_REPORT_ID,String.valueOf(userExamDetail.getId()));
-                    bundle.putString(GlobalConstant.EXAM_REPORT_NAME,userExamDetail.getName());
+                    bundle.putString(GlobalConstant.EXAM_REPORT_ID, String.valueOf(userExamDetail.getId()));
+                    bundle.putString(GlobalConstant.EXAM_REPORT_NAME, userExamDetail.getName());
                     intent.putExtras(bundle);
                     startActivity(intent);
+                    break;
                 }
             }
         });
@@ -196,20 +177,20 @@ public class ExamDetailsActivity extends BaseActivity {
                 if (examStats.equals(GlobalConstant.RESERVATION)) {
                     FamiliesListItem familiesListItem = new FamiliesListItem();
                     familiesListItem.setHealth_card_no(userExamDetail.getCustomer().getReservation_or_registration().getId());
-                    Intent intent = new Intent(ExamDetailsActivity.this,UserCardActivity.class);
+                    Intent intent = new Intent(ExamDetailsActivity.this, UserCardActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("FAMILIES_INFO",familiesListItem);
+                    bundle.putSerializable("FAMILIES_INFO", familiesListItem);
                     intent.putExtras(bundle);
                     startActivity(intent);
-                }else{
-                    Intent intent = new Intent(ExamDetailsActivity.this,BarCodeActivity.class);
-                    intent.putExtra("FAMILIES_INFO",userExamDetail.getCustomer().getReservation_or_registration().getId());
+                } else {
+                    Intent intent = new Intent(ExamDetailsActivity.this, BarCodeActivity.class);
+                    intent.putExtra("FAMILIES_INFO", userExamDetail.getCustomer().getReservation_or_registration().getId());
                     startActivity(intent);
                 }
             }
         });
 
-        ExamItemExpandableListViewAdapter adapter = new ExamItemExpandableListViewAdapter(this, userExamDetail.getExam_item(),GlobalConstant.EXAM_DETAIL_MARK);
+        ExamItemExpandableListViewAdapter adapter = new ExamItemExpandableListViewAdapter(this, userExamDetail.getExam_item(), GlobalConstant.EXAM_DETAIL_MARK);
         examItemExpandable.setAdapter(adapter);
         examItemExpandable.setIndicatorBounds(examItemExpandable.getWidth() - 140, examItemExpandable.getWidth() - 10);
 
@@ -229,7 +210,7 @@ public class ExamDetailsActivity extends BaseActivity {
             retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
         }
 
-        loadingDialog.show();
+        showLoading();
         NetService service = retrofit.create(NetService.class);
         service.getUserExamDetail(app.getTokenType() + " " + app.getAccessToken(), GlobalConstant.USER_EXAM_DETAIL + orderId)
                 .subscribeOn(Schedulers.newThread())
@@ -237,27 +218,19 @@ public class ExamDetailsActivity extends BaseActivity {
                 .subscribe(new DisposableObserver<UserExamDetail>() {
                     @Override
                     public void onNext(UserExamDetail userExamDetail) {
-                        Log.e("TAG", "体检详情数据请求成功:" + userExamDetail.toString());
                         setViews(userExamDetail);
-                        loadingDialog.cancel();
+                        hideLoading();
+                        refreshExamDetail.setVisibility(View.VISIBLE);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof HttpException) {
-                            ResponseBody body = ((HttpException) e).response().errorBody();
-                            try {
-                                Log.e("TAG", "体检详情数据请求失败:" + body.string());
-                                loadingDialog.cancel();
-                            } catch (IOException e1) {
-                                e1.printStackTrace();
-                            }
-                        }
+                        hideLoading();
                     }
 
                     @Override
                     public void onComplete() {
-                        loadingDialog.cancel();
+                        hideLoading();
                     }
                 });
     }

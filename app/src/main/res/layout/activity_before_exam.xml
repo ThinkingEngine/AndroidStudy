@@ -6,18 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".module.activitys.BeforeExamActivity">
 
-    <include
-        android:id="@+id/title_header_before_exam"
-        layout="@layout/title_bar_type_two_layout" />
+    <com.chengsheng.cala.htcm.widget.AppTitleBar
+        android:id="@+id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="检前须知" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/title_header_before_exam">
+        android:layout_below="@id/titleBar">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <RelativeLayout
                 android:id="@+id/before_exam_container_a"
@@ -44,9 +46,9 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="17dp"
                     android:layout_toRightOf="@id/exam_date_before"
-                    android:text="2018年02月28日"
                     android:textColor="@color/colorText"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:text="2018年02月28日" />
 
                 <TextView
                     android:id="@+id/exam_address_before"
@@ -66,9 +68,9 @@
                     android:layout_marginRight="14dp"
                     android:layout_marginBottom="20dp"
                     android:layout_toRightOf="@id/exam_address_before"
-                    android:text="成都市武侯区人民南路四段17号"
                     android:textColor="@color/colorText"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:text="成都市武侯区人民南路四段17号" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -102,8 +104,7 @@
                     android:id="@+id/user_code"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
-                    android:layout_centerInParent="true"
-                    android:src="@mipmap/erweima_big" />
+                    android:layout_centerInParent="true" />
 
                 <TextView
                     android:id="@+id/user_name_before_exam"
@@ -112,9 +113,9 @@
                     android:layout_below="@id/user_code"
                     android:layout_marginLeft="126dp"
                     android:layout_marginTop="14dp"
-                    android:textStyle="bold"
                     android:textColor="@color/colorText"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/user_some_info"
@@ -124,9 +125,9 @@
                     android:layout_marginLeft="13dp"
                     android:layout_marginTop="18dp"
                     android:layout_toRightOf="@id/user_name_before_exam"
-                    android:text="女  28岁"
                     android:textColor="@color/colorThrText"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    tools:text="女  28岁" />
             </RelativeLayout>
 
             <com.chengsheng.cala.htcm.widget.MyRecyclerView
@@ -134,7 +135,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/before_exam_container_b"
-                android:layout_marginBottom="40dp"/>
+                android:layout_marginBottom="40dp" />
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

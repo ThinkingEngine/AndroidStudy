@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.base.BaseFragment;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.module.account.LoginActivity;
 import com.chengsheng.cala.htcm.module.activitys.BarADActivity;
@@ -31,10 +32,9 @@ import com.chengsheng.cala.htcm.network.NetService;
 import com.chengsheng.cala.htcm.protocol.AssistantItem;
 import com.chengsheng.cala.htcm.protocol.FamiliesListItem;
 import com.chengsheng.cala.htcm.utils.ActivityUtil;
-import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.zyao89.view.zloading.ZLoadingDialog;
-import com.zyao89.view.zloading.Z_TYPE;
+
+import org.simple.eventbus.EventBus;
 
 import java.util.List;
 
@@ -48,29 +48,21 @@ import retrofit2.Retrofit;
 public class AIAssistantAdapter extends RecyclerView.Adapter<AIAssistantAdapter.AssistantViewHolder> {
 
     private Context context;
+    private BaseFragment baseFragment;
     private List<AssistantItem> datas;
-    private String error;
     private int type;
 
     private Retrofit retrofit;
     private HTCMApp app;
-    private ZLoadingDialog loadingDialog;
 
 
-    public AIAssistantAdapter(Context context, List<AssistantItem> datas, int type, String error) {
+    public AIAssistantAdapter(Context context, BaseFragment baseFragment, List<AssistantItem> datas,
+                              int type, String error) {
         this.context = context;
+        this.baseFragment = baseFragment;
         this.datas = datas;
-        this.error = error;
         this.type = type;
-
         app = HTCMApp.create(context);
-        loadingDialog = new ZLoadingDialog(context);
-        loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
-        loadingDialog.setHintText("正在删除.....");
-        loadingDialog.setLoadingColor(context.getResources().getColor(R.color.colorPrimary));
-        loadingDialog.setHintTextColor(context.getResources().getColor(R.color.colorPrimary));
-        loadingDialog.setDialogBackgroundColor(context.getResources().getColor(R.color.colorText));
-        loadingDialog.setCancelable(false);
     }
 
     @NonNull
@@ -99,45 +91,34 @@ public class AIAssistantAdapter extends RecyclerView.Adapter<AIAssistantAdapter.
             viewHolder.userHeaderIconAIAssistant.setImageURI(data.getCustomer().getAvatar());
 
             //删除首页智能助理卡片
-            viewHolder.deleteExamItem.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    removeData(i);
-                }
-            });
+            viewHolder.deleteExamItem.setOnClickListener(v -> removeData(i));
             //跳转到详情页面
-            viewHolder.aiAssistantItem.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, ExamDetailsActivity.class);
+            viewHolder.aiAssistantItem.setOnClickListener(v -> {
+                Intent intent = new Intent(context, ExamDetailsActivity.class);
+                FamiliesListItem familiesListItem = new FamiliesListItem();
+                familiesListItem.setFullname(data.getCustomer().getName());
+                familiesListItem.setAvatar_path(data.getCustomer().getAvatar());
+                familiesListItem.setHealth_card_no(data.getCustomer().getReservation_or_registration().getId());
+                intent.putExtra("ORDER_ID", String.valueOf(data.getOrder().getId()));
+                context.startActivity(intent);
+            });
+
+            viewHolder.userBitmapMark.setOnClickListener(v -> {
+                Bundle bundle = new Bundle();
+                if (data.getCustomer().getReservation_or_registration().getStatus().equals(GlobalConstant.RESERVATION)) {
+                    Intent intent = new Intent(context, UserCardActivity.class);
                     FamiliesListItem familiesListItem = new FamiliesListItem();
                     familiesListItem.setFullname(data.getCustomer().getName());
                     familiesListItem.setAvatar_path(data.getCustomer().getAvatar());
                     familiesListItem.setHealth_card_no(data.getCustomer().getReservation_or_registration().getId());
-                    intent.putExtra("ORDER_ID", String.valueOf(data.getOrder().getId()));
+                    bundle.putSerializable("FAMILIES_INFO", familiesListItem);
+                    intent.putExtras(bundle);
                     context.startActivity(intent);
-                }
-            });
-
-            viewHolder.userBitmapMark.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Bundle bundle = new Bundle();
-                    if (data.getCustomer().getReservation_or_registration().getStatus().equals(GlobalConstant.RESERVATION)) {
-                        Intent intent = new Intent(context, UserCardActivity.class);
-                        FamiliesListItem familiesListItem = new FamiliesListItem();
-                        familiesListItem.setFullname(data.getCustomer().getName());
-                        familiesListItem.setAvatar_path(data.getCustomer().getAvatar());
-                        familiesListItem.setHealth_card_no(data.getCustomer().getReservation_or_registration().getId());
-                        bundle.putSerializable("FAMILIES_INFO", familiesListItem);
-                        intent.putExtras(bundle);
-                        context.startActivity(intent);
-                    } else {
-                        Intent intent = new Intent(context, BarCodeActivity.class);
-                        bundle.putString("FAMILIES_INFO", data.getCustomer().getReservation_or_registration().getId());
-                        intent.putExtras(bundle);
-                        context.startActivity(intent);
-                    }
+                } else {
+                    Intent intent = new Intent(context, BarCodeActivity.class);
+                    bundle.putString("FAMILIES_INFO", data.getCustomer().getReservation_or_registration().getId());
+                    intent.putExtras(bundle);
+                    context.startActivity(intent);
                 }
             });
 
@@ -294,7 +275,7 @@ public class AIAssistantAdapter extends RecyclerView.Adapter<AIAssistantAdapter.
             retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
         }
 
-        loadingDialog.show();
+        baseFragment.showLoading();
         NetService service = retrofit.create(NetService.class);
         service.closeRecommended(app.getTokenType() + " " + app.getAccessToken(), datas.get(i).getOrder().getExam_status(), String.valueOf(datas.get(i).getOrder().getId()))
                 .subscribeOn(Schedulers.newThread())
@@ -305,21 +286,21 @@ public class AIAssistantAdapter extends RecyclerView.Adapter<AIAssistantAdapter.
 
                         if (datas.size() == 1) {
                             datas.remove(i);
-                            CallBackDataAuth.doUpdateAIAssisont(true);
+                            EventBus.getDefault().post("", GlobalConstant.UPDATE_AI_ASSISTANT_DATA);
                         } else {
                             datas.remove(i);
                             notifyItemRemoved(i);
                             notifyDataSetChanged();
                         }
 
-                        loadingDialog.cancel();
-                        Toast.makeText(context, "修改成功!", Toast.LENGTH_SHORT).show();
+                        baseFragment.showShortToast("已删除");
+                        baseFragment.hideLoading();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        loadingDialog.cancel();
-                        Toast.makeText(context, "修改失败!", Toast.LENGTH_SHORT).show();
+                        baseFragment.hideLoading();
+                        Toast.makeText(context, "删除失败", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

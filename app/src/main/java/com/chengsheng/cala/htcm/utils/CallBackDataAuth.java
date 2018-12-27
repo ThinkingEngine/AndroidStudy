@@ -15,8 +15,6 @@ public class CallBackDataAuth {
 
     private static ExamDateInterface mExamDateInterface;
 
-    private static UpdateAIAssisont mUpdateAIAssisont;
-
     private static UpdateStateInterface mUpdateStateInterface;
 
     private static CheckServiceInterface mCheckServiceInterface;
@@ -26,11 +24,6 @@ public class CallBackDataAuth {
     private static ConditionInterface mConditionInterface;
 
     private static CellPhoneInterface mCellPhoneInterface;
-
-
-    public static void setAuthStateCallBack(AuthStateCallBack authStateCallBack) {
-        mAuthStateCallBack = authStateCallBack;
-    }
 
     public static void doAuthStateCallBack(boolean isAuth) {
         mAuthStateCallBack.authResult(isAuth);
@@ -50,14 +43,6 @@ public class CallBackDataAuth {
 
     public static void doExamDateInterface(int id) {
         mExamDateInterface.getExamDate(id);
-    }
-
-    public static void setUpdateAIAssisont(UpdateAIAssisont updateAIAssisont) {
-        mUpdateAIAssisont = updateAIAssisont;
-    }
-
-    public static void doUpdateAIAssisont(boolean status) {
-        mUpdateAIAssisont.updateResult(status);
     }
 
     public static void setUpdateStateInterface(UpdateStateInterface updateStateInterface) {
@@ -96,7 +81,7 @@ public class CallBackDataAuth {
         mCellPhoneInterface = cellPhoneInterface;
     }
 
-    public static void doCellPhoneInterface(String cell){
+    public static void doCellPhoneInterface(String cell) {
         mCellPhoneInterface.setCellphone(cell);
     }
 

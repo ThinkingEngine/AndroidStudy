@@ -26,7 +26,6 @@ import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
 import com.chengsheng.cala.htcm.network.NetworkStateCallback;
 import com.chengsheng.cala.htcm.protocol.LoginData;
-import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
 import com.chengsheng.cala.htcm.utils.UserUtil;
 import com.zyao89.view.zloading.ZLoadingDialog;
 import com.zyao89.view.zloading.Z_TYPE;
@@ -85,7 +84,7 @@ public class LoginActivity extends BaseActivity {
         cellphoneEdittext.setText(registerStr);
 
 
-        //监听网络状态。
+        //监听网络状态
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             if (connectivityManager != null) {
@@ -120,7 +119,7 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
-        //隐藏密码按钮。
+        //隐藏密码按钮
         previewIcon.setOnClickListener(v -> {
             if (!passVisible) {
                 passVisible = true;
@@ -131,22 +130,22 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
-        //清空密码框按钮。
+        //清空密码框按钮
         deleteInput.setOnClickListener(v -> {
             passwordEdittext.setText("");
             deleteInput.setVisibility(View.INVISIBLE);
         });
 
 
-        //注册功能按钮。
+        //注册功能按钮
         registerTV.setOnClickListener(v -> startActivity(new RegisterActivity()));
 
-        //忘记密码按钮。
+        //忘记密码按钮
         retrieveTV.setOnClickListener(v -> startActivity(new RetrievePWActivity()));
 
         outLoginPage.setOnClickListener(v -> finish());
 
-        //登录按钮。
+        //登录
         loginTV.setOnClickListener(v -> {
             if (tempLogin) {
                 userNameInput = cellphoneEdittext.getText().toString();
@@ -167,14 +166,12 @@ public class LoginActivity extends BaseActivity {
                                     UserUtil.setAccessToken(data.getAccess_token());
                                     UserUtil.setTokenType(data.getToken_type());
                                     UserUtil.setMobile(userNameInput);
-                                    CallBackDataAuth.doUpdateStateInterface(true);
                                     dialog.cancel();
                                     finish();
                                 }
 
                                 @Override
                                 public void onError(Throwable e) {
-                                    Log.e("TAG", "错误:" + e.toString());
                                     dialog.cancel();
                                     AlertDialog alertDialog;
                                     AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);

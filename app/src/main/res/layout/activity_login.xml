@@ -53,7 +53,7 @@
         android:hint="@string/cellphone_number"
         android:inputType="number"
         android:maxLength="11"
-        android:paddingBottom="15dp"
+        android:padding="@dimen/dp_12"
         android:textColor="@color/colorText"
         android:textSize="16sp" />
 
@@ -69,20 +69,19 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/et_login_account"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:orientation="horizontal">
 
         <EditText
             android:id="@+id/et_login_password"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_alignParentLeft="true"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginEnd="64dp"
-            android:layout_marginBottom="16dp"
             android:background="@null"
             android:hint="@string/passwd"
+            android:padding="@dimen/dp_12"
             android:textColor="@color/colorText"
             android:textSize="16sp" />
 
@@ -90,9 +89,8 @@
             android:id="@+id/preview_icon"
             android:layout_width="16dp"
             android:layout_height="16dp"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_gravity="right"
             android:background="@mipmap/yulan" />
 
         <Button

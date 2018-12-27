@@ -63,4 +63,10 @@ interface FamilyMemberService {
     @FormUrlEncoded
     @Headers("Authorization:true")
     fun vailCell(@Path("families_id")familiesDd: String, @FieldMap map: Map<String, String>):Observable<Response<ResponseBody>>
+
+    /* 添加家庭成员 */
+    @POST(API.ADD_MEM)
+    @FormUrlEncoded
+    @Headers("Authorization:true")
+    fun addMem(@FieldMap map: Map<String, String>):Observable<Response<ResponseBody>>
 }

@@ -129,67 +129,6 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
 
         editFamInfo.setOnClickListener(v -> modeInfoDialog(info));
 
-//        //点击进入修改手机号码界面.
-//        inputChangeCellphone.setOnClickListener(v -> {
-//            Intent intent = new Intent(FamiliesDetailsActivity.this, ModeFamiliesInfoActivity.class);
-//            Bundle bundle = new Bundle();
-//            bundle.putSerializable("FAMILIES_INFO", info);
-//            intent.putExtras(bundle);
-//            intent.putExtra("MODE", "CELLPHONE");
-//            startActivity(intent);
-//        });
-
-        //点击进入修改家人关系页面
-//        inputChangeRelation.setOnClickListener(v -> {
-//            Intent intent = new Intent(FamiliesDetailsActivity.this, ModeFamiliesInfoActivity.class);
-//            Bundle bundle = new Bundle();
-//            bundle.putSerializable("FAMILIES_INFO", info);
-//            intent.putExtras(bundle);
-//            intent.putExtra("MODE", "RELATION");
-//            startActivity(intent);
-//        });
-
-//        inputChangeName.setOnClickListener(v -> {
-//            Intent intent = new Intent(FamiliesDetailsActivity.this, ModeFamiliesInfoActivity.class);
-//            Bundle bundle = new Bundle();
-//            bundle.putSerializable("FAMILIES_INFO", info);
-//            intent.putExtras(bundle);
-//            intent.putExtra("MODE", "NAME");
-//            startActivity(intent);
-//        });
-
-//        inputChangeIdNum.setOnClickListener(v -> {
-//            Intent intent = new Intent(FamiliesDetailsActivity.this, ModeFamiliesInfoActivity.class);
-//            Bundle bundle = new Bundle();
-//            bundle.putSerializable("FAMILIES_INFO", info);
-//            intent.putExtras(bundle);
-//            intent.putExtra("MODE", "ID");
-//            startActivity(intent);
-//        });
-
-//        sexSelecterMale.setOnClickListener(v -> {
-//            if (!sexSelecterMale.isSelected()) {
-//                dialog("提示", "你确认修改性别!", "sex", "male");
-//            }
-//        });
-//
-//        sexSelecterFemale.setOnClickListener(v -> {
-//            if (!sexSelecterFemale.isSelected()) {
-//                dialog("提示", "你确认修改性别!", "sex", "female");
-//            }
-//        });
-
-//        inputChangeAge.setOnClickListener(v -> {
-//            AlertDialog dialog;
-//            AlertDialog.Builder builder = new AlertDialog.Builder(FamiliesDetailsActivity.this);
-//            builder.setTitle("提示");
-//            builder.setMessage("您确认要更改你的出生年月!");
-//            builder.setNegativeButton("暂不", null);
-//            builder.setPositiveButton("确定", (dialog1, which) -> updateBrithday());
-//            dialog = builder.create();
-//            dialog.show();
-//        });
-
         healthCardBt.setOnClickListener(v -> {
             FamiliesListItem familiesListItem = new FamiliesListItem();
             familiesListItem.setHealth_card_no(info.getHealth_card_no());
@@ -367,7 +306,7 @@ public class FamiliesDetailsActivity extends BaseActivity implements UpdateState
         MemberRepository.Companion.getDefault().delFam(familiesID).subscribe(new DefaultObserver<ResponseBody>() {
             @Override
             public void onNext(ResponseBody responseBody) {
-                CallBackDataAuth.doAuthStateCallBack(true);
+//                CallBackDataAuth.doAuthStateCallBack(true);
                 showShortToast("解绑操作完成");
                 finish();
             }

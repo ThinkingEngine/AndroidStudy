@@ -48,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="14dp"
                     android:layout_marginTop="14dp"
-                    android:text="待付款"
+                    tools:text="待付款"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="20sp" />
 
@@ -70,7 +70,7 @@
                     android:layout_below="@id/payment_state_text"
                     android:layout_marginTop="14dp"
                     android:layout_toRightOf="@id/order_detail_exam_person"
-                    android:text="周子萱"
+                    tools:text="周子萱"
                     android:textColor="@color/colorText"
                     android:textSize="14sp" />
 
@@ -92,7 +92,7 @@
                     android:layout_below="@id/order_detail_exam_person"
                     android:layout_marginTop="10dp"
                     android:layout_toRightOf="@id/order_detail_appointment_date_text"
-                    android:text="2018-04-08"
+                    tools:text="2018-04-08"
                     android:textColor="@color/colorText"
                     android:textSize="14sp" />
 
@@ -115,7 +115,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="14dp"
                     android:layout_toRightOf="@id/order_detail_appointment_num_text"
-                    android:text="2018033100012"
+                    tools:text="2018033100012"
                     android:textColor="@color/colorText"
                     android:textSize="14sp" />
             </RelativeLayout>
@@ -141,7 +141,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
                     android:layout_toRightOf="@id/order_detail_group_text"
-                    android:text="成都中医大健康管理中心"
+                    tools:text="成都中医大健康管理中心"
                     android:textColor="@color/colorText"
                     android:textSize="14sp" />
 
@@ -152,7 +152,7 @@
                     android:layout_below="@id/order_detail_group_text"
                     android:layout_marginLeft="14dp"
                     android:layout_marginTop="10dp"
-                    android:text="体检地址："
+                    tools:text="体检地址："
                     android:textColor="@color/colorThrText"
                     android:textSize="14sp" />
 
@@ -163,7 +163,7 @@
                     android:layout_below="@id/order_detail_group_text"
                     android:layout_marginTop="10dp"
                     android:layout_toRightOf="@id/order_detail_group_address_text"
-                    android:text="成都市武侯区人民南路四段17号"
+                    tools:text="成都市武侯区人民南路四段17号"
                     android:textColor="@color/colorText"
                     android:textSize="14sp" />
 
@@ -174,7 +174,7 @@
                     android:layout_below="@id/order_detail_group_address_text"
                     android:layout_marginLeft="14dp"
                     android:layout_marginTop="10dp"
-                    android:text="手机号："
+                    tools:text="手机号："
                     android:textColor="@color/colorThrText"
                     android:textSize="14sp" />
 
@@ -185,7 +185,7 @@
                     android:layout_below="@id/order_detail_group_address_text"
                     android:layout_marginTop="10dp"
                     android:layout_toRightOf="@id/order_detail_cellphone_text"
-                    android:text="18739487629"
+                    tools:text="18739487629"
                     android:textColor="@color/colorText"
                     android:textSize="14sp" />
 
@@ -196,7 +196,7 @@
                     android:layout_below="@id/order_detail_cellphone_text"
                     android:layout_marginLeft="14dp"
                     android:layout_marginTop="10dp"
-                    android:text="创建时间："
+                    tools:text="创建时间："
                     android:textColor="@color/colorThrText"
                     android:textSize="14sp" />
 
@@ -208,7 +208,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="14dp"
                     android:layout_toRightOf="@id/order_detail_create_time_text"
-                    android:text="2018-03-30 08:30:00"
+                    tools:text="2018-03-30 08:30:00"
                     android:textColor="@color/colorText"
                     android:textSize="14sp" />
             </RelativeLayout>
@@ -232,7 +232,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="14dp"
-                    android:text="订单合计:"
+                    tools:text="订单合计:"
                     android:textColor="@color/colorText"
                     android:textSize="14sp" />
 
@@ -243,7 +243,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="14dp"
-                    android:text="¥ 170.00"
+                    tools:text="¥ 170.00"
                     android:textColor="@color/colorText"
                     android:textSize="14sp" />
             </RelativeLayout>

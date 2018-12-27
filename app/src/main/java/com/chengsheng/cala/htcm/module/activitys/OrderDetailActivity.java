@@ -58,13 +58,14 @@ public class OrderDetailActivity extends BaseActivity {
         id = getIntent().getStringExtra("ORDER_ID");
 
         initViews();
-        getOrderDetail(id);
+
 
     }
 
     @Override
     public void getData() {
-
+        Log.e("TAG","getData");
+        getOrderDetail(id);
     }
 
     private void initViews() {
@@ -86,6 +87,7 @@ public class OrderDetailActivity extends BaseActivity {
     }
 
     private void setViews(final ExamOrderDetail examOrderDetail) {
+
         if (examOrderDetail.getStatus().equals(GlobalConstant.MODE_RECEIVABLE)) {
             paymentStateText.setText("待支付");
             paymentStateText.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
@@ -105,7 +107,8 @@ public class OrderDetailActivity extends BaseActivity {
         realPayMoney.setText("¥ " + examOrderDetail.getAmount().getReceived());
         waitingPayMoney.setText("¥ " + examOrderDetail.getAmount().getDiscount_receivable());
 
-        OrderDetailExpandableListViewAdapter adapter = new OrderDetailExpandableListViewAdapter(this, examOrderDetail.getExam_packages());
+        OrderDetailExpandableListViewAdapter adapter = new OrderDetailExpandableListViewAdapter(this,
+                examOrderDetail.getExam_packages());
         orderItemExpandable.setAdapter(adapter);
 
         //支付按钮
@@ -117,20 +120,25 @@ public class OrderDetailActivity extends BaseActivity {
     }
 
     private void getOrderDetail(String id) {
-        ExamOrderRepository.Companion.getDefault().getOrders(id).subscribe(new DefaultObserver<ExamOrderDetail>() {
+        ExamOrderRepository
+                .Companion.getDefault()
+                .getOrders(id)
+                .subscribe(new DefaultObserver<ExamOrderDetail>() {
             @Override
             public void onNext(ExamOrderDetail examOrderDetail) {
+                Log.e("TAG","examOrderDetail:"+examOrderDetail);
                 setViews(examOrderDetail);
             }
 
             @Override
             public void onError(Throwable e) {
+                Log.e("TAG","onError:"+e);
                 showError(e);
             }
 
             @Override
             public void onComplete() {
-
+                Log.e("TAG","onComplete:");
             }
         });
     }
@@ -150,7 +158,8 @@ public class OrderDetailActivity extends BaseActivity {
             }
 
             NetService service = retrofit.create(NetService.class);
-            service.cancelReservation(app.getTokenType() + " " + app.getAccessToken(), GlobalConstant.CANCEL_RESERVATION + id)
+            service.cancelReservation(app.getTokenType() + " " + app.getAccessToken(),
+                    GlobalConstant.CANCEL_RESERVATION + id)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new DisposableObserver<ResponseBody>() {

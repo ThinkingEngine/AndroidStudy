@@ -58,7 +58,6 @@ public class HomeFragment extends Fragment implements UpdateAIAssisont, UpdateSt
 
     private Retrofit retrofit;
 
-
     private BGABanner bodyBanner;
     private MyRecyclerView newsRecyclerView;
     private MyRecyclerView appointmentRecyclerView;

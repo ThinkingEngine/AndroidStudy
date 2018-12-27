@@ -56,13 +56,13 @@ class MainActivity : BaseActivity() {
         beginTransaction = supportFragmentManager.beginTransaction()
 
         if (currentFragment == null) {
-            beginTransaction?.add(R.id.layout_main_content, fragment)?.commitAllowingStateLoss()
+            beginTransaction?.add(R.id.layout_main_content, fragment)?.commit()
         } else if (currentFragment != fragment) {
             beginTransaction?.hide(currentFragment!!)
             if (fragment.isAdded) {
-                beginTransaction?.show(fragment)?.commitAllowingStateLoss()
+                beginTransaction?.show(fragment)?.commit()
             } else {
-                beginTransaction?.add(R.id.layout_main_content, fragment)?.commitAllowingStateLoss()
+                beginTransaction?.add(R.id.layout_main_content, fragment)?.commit()
             }
         }
         currentFragment = fragment

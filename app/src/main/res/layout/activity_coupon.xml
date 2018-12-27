@@ -50,8 +50,9 @@
                 android:layout_marginStart="@dimen/dp_15"
                 android:layout_weight="3"
                 android:background="@drawable/shape_f0f0f0_30_radius"
-                android:cursorVisible="false"
                 android:focusable="false"
+                android:inputType="number"
+                android:maxLength="20"
                 android:paddingStart="@dimen/dp_15"
                 android:paddingEnd="@dimen/dp_5" />
 

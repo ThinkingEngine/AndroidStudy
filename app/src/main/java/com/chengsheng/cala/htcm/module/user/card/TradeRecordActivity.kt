@@ -35,6 +35,7 @@ class TradeRecordActivity : BaseRefreshActivity<TradeRecordProtocol.ItemsBean>()
 
                 }) {
                     showError(it)
+                    fillData(ArrayList())
                 }
     }
 

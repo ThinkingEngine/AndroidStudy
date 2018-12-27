@@ -161,12 +161,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/dp_16"
-                        android:text="2018-12-20"
                         android:textColor="#FF999999"
                         android:textSize="@dimen/sp_14"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="2018-12-20" />
 
                     <View
                         android:layout_width="match_parent"

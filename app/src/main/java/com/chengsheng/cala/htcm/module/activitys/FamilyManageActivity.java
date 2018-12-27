@@ -42,7 +42,6 @@ public class FamilyManageActivity extends BaseActivity implements AddFamilyFragm
 
         initViews();
 
-//        familyListFragment = FamilyListFragment.newInstance(app.getTokenType(), app.getAccessToken());
         familyListFragment = new FamiliyManageListFragment();
         addFamilyFragment = AddFamilyFragment.newInstance(app.getTokenType(), app.getAccessToken());
 

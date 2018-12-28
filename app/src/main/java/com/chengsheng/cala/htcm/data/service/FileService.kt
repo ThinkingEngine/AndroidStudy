@@ -17,6 +17,9 @@ import retrofit2.http.PartMap
  */
 interface FileService {
 
+    /**
+     *
+     * */
     @POST(API.HEADER_UP)
     @Multipart
     fun upHeader(@PartMap map: Map<String,String>, @Part file: MultipartBody.Part):Observable<Response<URLResult>>

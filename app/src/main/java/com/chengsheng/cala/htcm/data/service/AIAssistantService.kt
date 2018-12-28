@@ -2,10 +2,12 @@ package com.chengsheng.cala.htcm.data.service
 
 import com.chengsheng.cala.htcm.constant.API
 import com.chengsheng.cala.htcm.protocol.AssistantList
+import com.chengsheng.cala.htcm.protocol.childmodelb.IntelligentCheck
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 
@@ -27,4 +29,16 @@ interface AIAssistantService {
     @GET(API.AI)
     @Headers("Authorization:true")
     fun getAIAssistants(@Query("exclude_closed") excludeClosed: String, @Query("page") page: String): Observable<Response<AssistantList>>
+
+    /**
+     * 智能导检
+     *
+     * orderId:String ?
+     *
+     *
+     * 返回类型:IntelligentCheck.class
+     * */
+    @GET(API.AI_CHECK)
+    @Headers("Authorization:true")
+    fun aiCheck(@Path("orderId")orderId:String):Observable<Response<IntelligentCheck>>
 }

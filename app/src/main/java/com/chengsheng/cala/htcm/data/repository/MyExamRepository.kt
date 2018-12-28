@@ -4,6 +4,7 @@ import io.reactivex.Observable
 import com.chengsheng.cala.htcm.data.retrofit.RetrofitHelper
 import com.chengsheng.cala.htcm.data.transformProto
 import com.chengsheng.cala.htcm.protocol.ExamItemsList
+import com.chengsheng.cala.htcm.protocol.childmodelb.UserExamDetail
 
 /**
  * Author: 蔡浪
@@ -34,5 +35,12 @@ class MyExamRepository {
      */
     fun getExamList(mode: String, customerIds: String, page: String): Observable<ExamItemsList>? {
         return transformProto(RetrofitHelper.getInstance().myExamService.getExamList(mode, customerIds, page))
+    }
+
+    /**
+     *我的体检详情
+     * */
+    fun getExamDetail(orderID: String): Observable<UserExamDetail>? {
+        return transformProto(RetrofitHelper.getInstance().myExamService.getExamDetail(orderID))
     }
 }

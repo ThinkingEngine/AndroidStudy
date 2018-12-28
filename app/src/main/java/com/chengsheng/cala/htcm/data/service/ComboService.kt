@@ -10,10 +10,24 @@ import retrofit2.http.Query
 /**
  * Author: 蔡浪
  * CreateDate: 2018-12-24 15:08
- * Description:
+ * Description:套餐
  */
 interface ComboService {
 
+    /**
+     * 套餐列表启用的
+     *
+     *  filters: String
+     *  page: String
+     *  sortFields: String
+     * */
     @GET(API.EXAM_PACKAGE)
     fun getComboInfoFilters(@Query("filters") filters: String, @Query("page") page: String, @Query("sort_fields") sortFields: String): Observable<Response<ExamApponitments>>
+
+    /**
+     * 套餐详情
+     *
+     *
+     * */
+//    @GET()
 }

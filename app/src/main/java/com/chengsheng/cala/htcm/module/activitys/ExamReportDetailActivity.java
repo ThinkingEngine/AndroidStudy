@@ -1,10 +1,8 @@
 package com.chengsheng.cala.htcm.module.activitys;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,8 +18,6 @@ import com.chengsheng.cala.htcm.adapter.ExamAdviceExpandableListAdapter;
 import com.chengsheng.cala.htcm.adapter.ExamResultRecyclerAdapter;
 import com.chengsheng.cala.htcm.widget.MyExpandableListView;
 import com.chengsheng.cala.htcm.widget.MyRecyclerView;
-import com.zyao89.view.zloading.ZLoadingDialog;
-import com.zyao89.view.zloading.Z_TYPE;
 
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -41,7 +37,6 @@ public class ExamReportDetailActivity extends BaseActivity {
 
     private Retrofit retrofit;
     private HTCMApp app;
-    private ZLoadingDialog loadingDialog;
 
 
     @Override
@@ -52,16 +47,8 @@ public class ExamReportDetailActivity extends BaseActivity {
     @Override
     public void initView() {
         app = HTCMApp.create(getApplicationContext());
-        loadingDialog = new ZLoadingDialog(this);
-        loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
-        loadingDialog.setDialogBackgroundColor(getResources().getColor(R.color.colorText));
-        loadingDialog.setLoadingColor(getResources().getColor(R.color.colorPrimary));
-        loadingDialog.setHintText("加载中....");
-        loadingDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
-
 
         Bundle bundle = getIntent().getExtras();
-//        String titleName  = bundle.getString(GlobalConstant.EXAM_REPORT_NAME);
         String orderID = bundle.getString(GlobalConstant.EXAM_REPORT_ID);
 
         initViews();
@@ -104,12 +91,7 @@ public class ExamReportDetailActivity extends BaseActivity {
         examAdvicesExpandable.expandGroup(0);
         examReportDetailName.setText(examReportDetial.getExam_report().getName());
 
-        downLoadDoc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                downLoadDialog();
-            }
-        });
+        downLoadDoc.setOnClickListener(v -> downLoadDialog());
     }
 
     private void getExamReportDetial(String orderId){
@@ -118,7 +100,7 @@ public class ExamReportDetailActivity extends BaseActivity {
             retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
         }
 
-        loadingDialog.show();
+        showLoading();
         NetService service = retrofit.create(NetService.class);
         service.getExamReportDetial(GlobalConstant.EXAM_RESULT+orderId,app.getTokenType()+" "+app.getAccessToken())
                 .subscribeOn(Schedulers.newThread())
@@ -127,17 +109,17 @@ public class ExamReportDetailActivity extends BaseActivity {
                     @Override
                     public void onNext(ExamReportDetial examReportDetial) {
                         setViews(examReportDetial);
-                        loadingDialog.cancel();
+                        hideLoading();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        loadingDialog.cancel();
+                        hideLoading();
                     }
 
                     @Override
                     public void onComplete() {
-                        loadingDialog.cancel();
+                        hideLoading();
                     }
                 });
 
@@ -148,11 +130,8 @@ public class ExamReportDetailActivity extends BaseActivity {
         builder.setTitle("下载标准报告");
         builder.setMessage("你确认要下载标准报告?");
         builder.setNegativeButton("暂不",null);
-        builder.setPositiveButton("下载", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+        builder.setPositiveButton("下载", (dialog, which) -> {
 
-            }
         });
 
         AlertDialog dialog = builder.create();

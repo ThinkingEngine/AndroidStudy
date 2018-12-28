@@ -117,6 +117,7 @@ dependencies {
     implementation 'com.github.razerdp:BasePopup:1.9.4'
     implementation 'cn.bingoogolapple:bga-banner:2.2.5@aar'
     implementation 'com.google.zxing:core:3.3.0'
+    implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
     implementation(name: 'alipaySdk-15.5.7-20181023110917', ext: 'aar')
 
 }

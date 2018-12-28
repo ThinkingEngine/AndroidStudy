@@ -1,7 +1,5 @@
 package com.chengsheng.cala.htcm.constant;
 
-import com.chengsheng.cala.htcm.utils.StringUtils;
-
 import static com.chengsheng.cala.htcm.constant.BaseAPI.ACCOUNT_BASE_URL;
 import static com.chengsheng.cala.htcm.constant.BaseAPI.SERVICE_BASE_URL;
 
@@ -12,8 +10,11 @@ import static com.chengsheng.cala.htcm.constant.BaseAPI.SERVICE_BASE_URL;
  */
 public class API {
 
-    /* 用户信息 */
+    /* 获取用户信息 */
     public static final String USER_INFO_URL = ACCOUNT_BASE_URL + "user/account-infos";
+
+    /* 修改用户信息 */
+    public static final String UPDATE_USER_INFO = ACCOUNT_BASE_URL + "user/account-infos";
 
     /* 获取客户体检订单详情 */
     public static final String USER_EXAM_DETAIL = SERVICE_BASE_URL + "api/physical-exam-order/customer-exams/";
@@ -37,7 +38,7 @@ public class API {
     public static final String DOCTORS = SERVICE_BASE_URL + "api/organization/doctors/enabled";
 
     /* 会员卡列表 */
-    public static final String MEMBER_CARD_LIST = SERVICE_BASE_URL + "api/health-card/health-cards";
+    public static final String MEMBER_CARD_LIST = SERVICE_BASE_URL + "api/health-card/health-cards?sort_fields=bind_at:desc";
 
     /* 会员卡详情 */
     public static final String MEMBER_CARD_DETAIL = SERVICE_BASE_URL + "api/health-card/health-cards/{id}";
@@ -70,7 +71,7 @@ public class API {
     public static final String CREATE_CARD_DEPOSIT_ORDER = SERVICE_BASE_URL + "api/health-card/health-cards/{id}/deposit";
 
     /* 交易记录 */
-    public static final String TRADE_RECORD = SERVICE_BASE_URL + "api/health-card/health-cards/{id}/trades";
+    public static final String TRADE_RECORD = SERVICE_BASE_URL + "api/health-card/health-cards/{id}/trades?sort_fields=change_date:desc";
 
     /* 套餐列表启用的 */
     public static final String EXAM_PACKAGE = SERVICE_BASE_URL + "api/physical-exam-item/exam-packages/enable";
@@ -98,7 +99,6 @@ public class API {
 
     /* 修改家庭成员信息 */
     public static final String PUT_FAM = SERVICE_BASE_URL + "api/family/account-family-members/{families_id}";
-
 
     /* 发送短信验证码-修改家人手机号 */
     public static final String VAIL_CODE = SERVICE_BASE_URL + "api/family/account-family-members/{families_id}/mobile/sms-validation-code";

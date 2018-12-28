@@ -9,7 +9,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/get_photo_camera"
+            android:id="@+id/tvTakePhoto"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/has_bottom_line_no_off_bg"
@@ -19,7 +19,7 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/get_photo_gra"
+            android:id="@+id/tvChoiceFromGallery"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@color/colorWhite"
@@ -29,10 +29,10 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/get_photo_cancel"
+            android:id="@+id/tvCancelChange"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="5dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="4dp"
             android:background="@color/colorWhite"
             android:gravity="center"
             android:text="取消"

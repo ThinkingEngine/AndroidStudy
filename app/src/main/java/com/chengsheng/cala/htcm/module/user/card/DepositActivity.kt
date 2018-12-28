@@ -52,7 +52,7 @@ class DepositActivity : BaseActivity() {
             }
         })
 
-        tvCardNumber.text = StringUtils.addBlank(cardData?.card_number)
+        tvCardNumber.text = StringUtils.addBlank(cardData?.card_number!!)
         tvCardBalance.text = "￥" + cardData?.balance
 
         ivSelectAlipay.isSelected = true

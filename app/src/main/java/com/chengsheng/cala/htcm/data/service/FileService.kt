@@ -2,13 +2,11 @@ package com.chengsheng.cala.htcm.data.service
 
 import com.chengsheng.cala.htcm.constant.API
 import com.chengsheng.cala.htcm.protocol.URLResult
-import okhttp3.MultipartBody
-import retrofit2.Response
 import io.reactivex.Observable
-import retrofit2.http.Multipart
-import retrofit2.http.POST
-import retrofit2.http.Part
-import retrofit2.http.PartMap
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Response
+import retrofit2.http.*
 
 /**
  * Author: 蔡浪
@@ -19,5 +17,7 @@ interface FileService {
 
     @POST(API.HEADER_UP)
     @Multipart
-    fun upHeader(@PartMap map: Map<String,String>, @Part file: MultipartBody.Part):Observable<Response<URLResult>>
+    @Headers("Authorization:true")
+    fun upLoadFile(@PartMap map: Map<String, @JvmSuppressWildcards RequestBody>, @Part file: MultipartBody.Part): Observable<Response<URLResult>>
+
 }

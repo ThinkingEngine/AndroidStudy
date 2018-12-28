@@ -106,7 +106,6 @@ public interface NetService {
     @POST("api/file-storage/files")
     Observable<URLResult> uploadFile(@Header("Authorization") String header, @PartMap Map<String, RequestBody> map, @Part MultipartBody.Part file);//上传文件
 
-
     @FormUrlEncoded
     @POST("api/family/account-family-members")
     Observable<ResponseBody> upLoadFamiliesInfo(@Header("Authorization") String header, @FieldMap Map<String, String> params);

@@ -1,158 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPageBackground"
-    android:orientation="vertical"
-    tools:context=".module.activitys.AccountSettingActivity">
+    android:orientation="vertical">
 
-    <include
-        android:id="@+id/title_header_account_setting"
-        layout="@layout/title_bar_type_two_layout" />
-
-    <RelativeLayout
+    <com.chengsheng.cala.htcm.widget.AppTitleBar
+        android:id="@+id/titleBar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/has_bottom_line_off_bg">
+        android:layout_height="wrap_content"
+        app:title="账户设置" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="14dp"
-            android:text="@string/header_icon"
-            android:textColor="@color/colorText"
-            android:textSize="16sp" />
-
-        <ImageView
-            android:id="@+id/into_header_mod"
-            android:layout_width="6dp"
-            android:layout_height="12dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"
-            android:src="@mipmap/liebiaojinru" />
-
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/user_header_icon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@id/into_header_mod"
-            android:src="@mipmap/touxiang"
-            fresco:actualImageScaleType="centerInside"
-            fresco:backgroundImage="@mipmap/morentouxiang_wode"
-            fresco:roundAsCircle="true" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@drawable/has_bottom_line_off_bg">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/white"
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <FrameLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="14dp"
-            android:text="@string/cellphone_number"
-            android:textColor="@color/colorText"
-            android:textSize="16sp" />
+            android:layout_gravity="center_vertical">
 
-        <ImageView
-            android:id="@+id/into_cellphone_mod"
-            android:layout_width="6dp"
-            android:layout_height="12dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"
-            android:src="@mipmap/liebiaojinru" />
+            <com.allen.library.SuperTextView
+                android:id="@+id/stvAvatar"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                app:sBottomDividerLineMarginLeft="@dimen/dp_10"
+                app:sDividerLineColor="@color/colorF0F0F0"
+                app:sLeftBottomTextString="头像"
+                app:sLeftTextColor="#333333"
+                app:sLeftTextSize="@dimen/sp_14"
+                app:sRightIconRes="@mipmap/liebiaojinru" />
 
-        <TextView
-            android:id="@+id/need_mod_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@id/into_cellphone_mod"
-            android:text="187****8345"
-            android:textColor="@color/colorThrText"
-            android:textSize="14sp" />
+            <ImageView
+                android:id="@+id/ivUserAvatar"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="@dimen/dp_45"
+                android:src="@mipmap/morentouxiang_wode" />
 
-    </RelativeLayout>
+        </FrameLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@drawable/has_bottom_line_off_bg">
+        <com.allen.library.SuperTextView
+            android:id="@+id/stvNickName"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
+            app:sBottomDividerLineMarginLeft="@dimen/dp_10"
+            app:sDividerLineColor="@color/colorF0F0F0"
+            app:sLeftBottomTextString="昵称"
+            app:sLeftTextColor="#333333"
+            app:sLeftTextSize="@dimen/sp_14"
+            app:sRightIconRes="@mipmap/liebiaojinru"
+            app:sRightTextColor="#999999" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="14dp"
-            android:text="@string/nickname"
-            android:textColor="@color/colorText"
-            android:textSize="16sp" />
+        <com.allen.library.SuperTextView
+            android:id="@+id/stvMobile"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
+            app:sBottomDividerLineMarginLeft="@dimen/dp_10"
+            app:sDividerLineColor="@color/colorF0F0F0"
+            app:sLeftBottomTextString="手机号"
+            app:sLeftTextColor="#333333"
+            app:sLeftTextSize="@dimen/sp_14"
+            app:sRightIconRes="@mipmap/liebiaojinru"
+            app:sRightTextColor="#999999" />
 
-        <ImageView
-            android:id="@+id/into_nickname_mod"
-            android:layout_width="6dp"
-            android:layout_height="12dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"
-            android:src="@mipmap/liebiaojinru" />
+        <com.allen.library.SuperTextView
+            android:id="@+id/stvLoginPwd"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
+            app:sDividerLineType="none"
+            app:sLeftBottomTextString="登录密码"
+            app:sLeftTextColor="#333333"
+            app:sLeftTextSize="@dimen/sp_14"
+            app:sRightIconRes="@mipmap/liebiaojinru"
+            app:sRightTextColor="#999999" />
 
-        <TextView
-            android:id="@+id/need_mod_nickname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@id/into_nickname_mod"
-            android:text="周子萱"
-            android:textColor="@color/colorThrText"
-            android:textSize="14sp" />
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@color/white">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="14dp"
-            android:text="@string/login_password"
-            android:textColor="@color/colorText"
-            android:textSize="16sp" />
-
-        <ImageView
-            android:id="@+id/into_login_password_mod"
-            android:layout_width="6dp"
-            android:layout_height="12dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"
-            android:src="@mipmap/liebiaojinru" />
-
-        <TextView
-            android:id="@+id/need_mod_login_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@id/into_login_password_mod"
-            android:text="修改"
-            android:textColor="@color/colorThrText"
-            android:textSize="14sp" />
-    </RelativeLayout>
 </LinearLayout>

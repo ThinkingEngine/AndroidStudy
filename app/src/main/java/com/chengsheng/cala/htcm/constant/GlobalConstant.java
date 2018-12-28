@@ -29,8 +29,6 @@ public class GlobalConstant {
      */
     public static final String UPDATE_AI_ASSISTANT_DATA = "updateAIAssistant";
 
-    public static final int USER_STATE_REGISTER = 1;
-    public static final int USER_STATE_UNREGISTER = 0;
 
     public static final String TEST_URL = "http://account.zz-tech.com.cn:85/";
     public static final String API_URL = "http://api.peis-mobile.zz-tech.com.cn:85/api/physical-exam-item/";

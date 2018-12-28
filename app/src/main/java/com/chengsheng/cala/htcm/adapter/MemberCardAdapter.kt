@@ -20,7 +20,7 @@ import com.chengsheng.cala.htcm.widget.MemberCardPopWindow
 class MemberCardAdapter(private var activity: BaseActivity, data: List<MemberCardProtocol.ItemsBean>) :
         BaseQuickAdapter<MemberCardProtocol.ItemsBean>(R.layout.item_member_card, data) {
     override fun convert(helper: BaseViewHolder?, data: MemberCardProtocol.ItemsBean?) {
-        helper?.setText(R.id.tvCardId, StringUtils.addBlank(data?.card_number))
+        helper?.setText(R.id.tvCardId, StringUtils.addBlank(data?.card_number!!))
         helper?.setText(R.id.tvAvailable, data?.balance)
         try {
             helper?.setText(R.id.tvBindDate, "绑定日期:" + data?.bind_at)

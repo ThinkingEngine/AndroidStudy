@@ -382,7 +382,6 @@ public class AddFamilyFragment extends Fragment {
         });
     }
 
-
     //获取验证码
     private void getCodeFromNet(final String num) {
 
@@ -433,7 +432,7 @@ public class AddFamilyFragment extends Fragment {
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.show();
 
-        dialog.findViewById(R.id.get_photo_camera).setOnClickListener(view1 -> {
+        dialog.findViewById(R.id.tvTakePhoto).setOnClickListener(view1 -> {
             File outputImage = new File(getContext().getExternalCacheDir(), "user_header.jpg");
             if (outputImage.exists()) {
                 outputImage.delete();
@@ -457,7 +456,7 @@ public class AddFamilyFragment extends Fragment {
         });
 
         //从相册获取头像
-        dialog.findViewById(R.id.get_photo_gra).setOnClickListener(view13 -> {
+        dialog.findViewById(R.id.tvChoiceFromGallery).setOnClickListener(view13 -> {
             if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
@@ -469,7 +468,7 @@ public class AddFamilyFragment extends Fragment {
             }
         });
 
-        dialog.findViewById(R.id.get_photo_cancel).setOnClickListener(view12 -> dialog.dismiss());
+        dialog.findViewById(R.id.tvCancelChange).setOnClickListener(view12 -> dialog.dismiss());
     }
 
     @Override

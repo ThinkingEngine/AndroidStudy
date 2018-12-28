@@ -375,7 +375,7 @@ public class EditFamActivity extends BaseActivity implements UpdateStateInterfac
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.show();
 
-        dialog.findViewById(R.id.get_photo_camera).setOnClickListener(view1 -> {
+        dialog.findViewById(R.id.tvTakePhoto).setOnClickListener(view1 -> {
             File outputImage = new File(getExternalCacheDir(), "user_header.jpg");
             if (outputImage.exists()) {
                 outputImage.delete();
@@ -399,7 +399,7 @@ public class EditFamActivity extends BaseActivity implements UpdateStateInterfac
         });
 
         //从相册获取头像
-        dialog.findViewById(R.id.get_photo_gra).setOnClickListener(view13 -> {
+        dialog.findViewById(R.id.tvChoiceFromGallery).setOnClickListener(view13 -> {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
@@ -411,7 +411,7 @@ public class EditFamActivity extends BaseActivity implements UpdateStateInterfac
             }
         });
 
-        dialog.findViewById(R.id.get_photo_cancel).setOnClickListener(view12 -> dialog.dismiss());
+        dialog.findViewById(R.id.tvCancelChange).setOnClickListener(view12 -> dialog.dismiss());
     }
 
     @Override

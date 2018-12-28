@@ -31,7 +31,7 @@ class ChangeCardPwdActivity : BaseActivity() {
     override fun initView() {
         //获取卡数据
         cardData = intent.getParcelableExtra("cardData")
-        tvBindCardNumber.text = StringUtils.addBlank(cardData?.card_number)
+        tvBindCardNumber.text = StringUtils.addBlank(cardData?.card_number!!)
 
         //忘记卡密码
         RxView.clicks(tvForgetPwd).subscribe {

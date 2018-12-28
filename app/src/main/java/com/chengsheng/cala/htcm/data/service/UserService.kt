@@ -4,6 +4,7 @@ import com.chengsheng.cala.htcm.constant.API
 import com.chengsheng.cala.htcm.protocol.childmodela.UserInfo
 import io.reactivex.Observable
 import retrofit2.Response
+import retrofit2.http.FieldMap
 import retrofit2.http.GET
 import retrofit2.http.Headers
 
@@ -14,8 +15,18 @@ import retrofit2.http.Headers
  */
 interface UserService {
 
+    /**
+     * 获取用户信息
+     */
     @GET(API.USER_INFO_URL)
     @Headers("Authorization:true")
     fun getUserInfo(): Observable<Response<UserInfo>>
+
+    /**
+     * 修改用户信息
+     */
+    @GET(API.UPDATE_USER_INFO)
+    @Headers("Authorization:true")
+    fun updateUserInfo(@FieldMap map: Map<String, String>): Observable<Response<Any>>
 
 }

@@ -36,4 +36,21 @@ class UserRepository private constructor() {
         return transformProto(RetrofitHelper.getInstance().userApi.getUserInfo())
     }
 
+    /**
+     * 修改用户信息
+     */
+    fun updateUserInfo(name: String, nickname: String, avatar: String): Observable<Any>? {
+        val map = HashMap<String, String>()
+        if (name.isNotEmpty()) {
+            map["name"] = name
+        }
+        if (nickname.isNotEmpty()) {
+            map["nickname"] = nickname
+        }
+        if (avatar.isNotEmpty()) {
+            map["avatar"] = avatar
+        }
+        return transformProto(RetrofitHelper.getInstance().userApi.updateUserInfo(map))
+    }
+
 }

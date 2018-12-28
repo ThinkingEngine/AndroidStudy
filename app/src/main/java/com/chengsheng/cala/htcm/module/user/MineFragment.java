@@ -17,7 +17,6 @@ import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.base.BaseFragment;
 import com.chengsheng.cala.htcm.data.repository.UserRepository;
 import com.chengsheng.cala.htcm.module.account.LoginActivity;
-import com.chengsheng.cala.htcm.module.activitys.AccountSettingActivity;
 import com.chengsheng.cala.htcm.module.activitys.ExamOrderFormActivity;
 import com.chengsheng.cala.htcm.module.activitys.FamilyManageActivity;
 import com.chengsheng.cala.htcm.module.activitys.MyCollectionActivity;
@@ -27,6 +26,7 @@ import com.chengsheng.cala.htcm.module.activitys.ServiceOrderActivity;
 import com.chengsheng.cala.htcm.module.activitys.SettingActivity;
 import com.chengsheng.cala.htcm.module.user.card.MemberCardActivity;
 import com.chengsheng.cala.htcm.protocol.childmodela.UserInfo;
+import com.chengsheng.cala.htcm.utils.StringUtils;
 import com.chengsheng.cala.htcm.utils.UserUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -94,8 +94,8 @@ public class MineFragment extends BaseFragment {
                 LoginActivity.start(context);
             } else {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("USER_INFO", userInfo);
-                startActivity(new AccountSettingActivity(), bundle);
+                bundle.putParcelable("userInfo", userInfo);
+                startActivity(new UserAccountActivity(), bundle);
             }
         });
 
@@ -186,7 +186,7 @@ public class MineFragment extends BaseFragment {
     void setUserInfo(final UserInfo userInfo) {
         userIcon.setImageURI(userInfo.getAvatar_url());
         userNameText.setText(userInfo.getNickname());
-        String phoneNumber = userInfo.getPhone_number().replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
+        String phoneNumber = StringUtils.formatMobile(userInfo.getPhone_number());
         userCellphoneNum.setText(phoneNumber);
     }
 
@@ -198,14 +198,11 @@ public class MineFragment extends BaseFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("拨号提示");
         builder.setMessage("确认向客服中心拨打电话?");
-        builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                Uri data = Uri.parse("tel:" + "400-028-3020");
-                intent.setData(data);
-                startActivity(intent);
-            }
+        builder.setPositiveButton("确认", (dialog, which) -> {
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            Uri data = Uri.parse("tel:" + "400-028-3020");
+            intent.setData(data);
+            startActivity(intent);
         });
 
         builder.setNegativeButton("暂不", null);

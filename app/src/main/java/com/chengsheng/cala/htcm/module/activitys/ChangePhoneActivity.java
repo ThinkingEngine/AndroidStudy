@@ -1,18 +1,19 @@
 package com.chengsheng.cala.htcm.module.activitys;
 
-import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.base.BaseActivity;
+import com.chengsheng.cala.htcm.utils.StringUtils;
 
+/**
+ * Author: 任和
+ * CreateDate: 2018/12/28 9:54 AM
+ * Description: 修改手机号
+ */
 public class ChangePhoneActivity extends BaseActivity {
 
-    private ImageView back;
-    private TextView title;
     private Button changePhone;
     private TextView phone;
 
@@ -23,21 +24,10 @@ public class ChangePhoneActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        String phoneNum = getIntent().getStringExtra("USER_NUM");
-
-        back = findViewById(R.id.title_header_change_phone).findViewById(R.id.back_login);
-        title = findViewById(R.id.title_header_change_phone).findViewById(R.id.menu_bar_title);
+        String phoneNum = getIntent().getStringExtra("mobile");
         changePhone = findViewById(R.id.change_phone_buton);
         phone = findViewById(R.id.user_phone);
-
-        title.setText("更换手机号");
-        phone.setText("您的手机号为" + phoneNum);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        phone.setText("您的手机号为" + StringUtils.formatMobile(phoneNum));
     }
 
     @Override

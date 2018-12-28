@@ -37,7 +37,7 @@
         <!-- 我的设备 -->
         <activity android:name=".module.activitys.MyDevicesActivity" />
         <!-- 账户设置 -->
-        <activity android:name=".module.activitys.AccountSettingActivity" />
+        <activity android:name=".module.user.UserAccountActivity" />
         <activity android:name=".module.activitys.MessageActivity" />
         <!-- 安全设置页 -->
         <activity android:name=".module.activitys.SecuritySettingsActivity" />
@@ -83,17 +83,6 @@
         <!-- 订单详情 -->
         <activity android:name=".module.activitys.OrderDetailActivity" />
         <activity android:name=".module.activitys.ExamReportCompareActivity" />
-
-        <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.example.cameraalbumtest.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/paths" />
-        </provider>
-
         <!-- 修改家人信息 -->
         <activity android:name=".module.activitys.ModeFamiliesInfoActivity" />
         <!-- 条形码 -->
@@ -110,7 +99,7 @@
         <activity android:name=".module.activitys.EstimateOrderActivity" />
         <activity android:name=".module.activitys.PlusImageActivity" />
         <!-- 用户头像修改 -->
-        <activity android:name=".module.activitys.HeaderIconActivity" />
+        <activity android:name=".module.activitys.ChangeAvatarActivity" />
         <!-- 修改电话号码 -->
         <activity android:name=".module.activitys.ChangePhoneActivity" />
         <!-- 我的收藏 -->
@@ -148,32 +137,26 @@
         <activity android:name=".module.user.card.FindCardPwdAStep1Activity" />
         <!-- 找回卡密码 -->
         <activity android:name=".module.user.card.FindCardPwdAStep2Activity" />
-
-        <!-- 交易记录 -->
-        <activity android:name=".module.user.card.TradeDetailActivity" />
-        <!-- 充值 -->
-        <!--交易记录-->
-        <activity android:name=".module.user.card.TradeRecordActivity" />
-        <!--充值-->
-
         <!--交易记录-->
         <activity android:name=".module.user.card.TradeRecordActivity" />
         <!-- 充值 -->
-
         <activity android:name=".module.user.card.DepositActivity" />
         <!-- 解绑会员卡 -->
         <activity android:name=".module.user.card.DeleteMemberCardActivity" />
-
-
-
-        <service
-            android:name=".model.services.ServiceSMSService"
-            android:enabled="true"
-            android:exported="false" />
-
-        <activity android:name=".module.activitys.EditFamActivity"></activity>
-
+        <!--编辑家庭-->
         <activity android:name=".module.activitys.EditFamActivity" />
+        <!-- 图片裁剪 -->
+        <activity android:name=".utils.crop.UTCropActivity" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.cameraalbumtest.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/paths" />
+        </provider>
 
     </application>
 

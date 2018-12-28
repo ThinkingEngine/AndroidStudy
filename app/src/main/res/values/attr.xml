@@ -39,5 +39,4 @@
         <attr name="starIsFull" format="boolean" />
     </declare-styleable>
 
-
 </resources>

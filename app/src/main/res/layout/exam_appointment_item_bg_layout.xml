@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -19,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
-            android:text="高血压套餐"
+            tools:text="高血压套餐"
             android:textColor="@color/colorText"
             android:textSize="16sp" />
 
@@ -75,7 +76,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="15dp"
-            android:text="118人已检"
+            tools:text="118人已检"
             android:textColor="@color/colorThrText"
             android:textSize="12sp" />
 

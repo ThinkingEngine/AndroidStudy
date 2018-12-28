@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,6 +15,7 @@ import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.adapter.ExamItemExpandableListViewAdapter;
 import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
+import com.chengsheng.cala.htcm.data.repository.MyExamRepository;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
 import com.chengsheng.cala.htcm.protocol.FamiliesListItem;
@@ -21,6 +23,7 @@ import com.chengsheng.cala.htcm.protocol.childmodelb.UserExamDetail;
 import com.chengsheng.cala.htcm.widget.MyExpandableListView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DefaultObserver;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
@@ -42,8 +45,8 @@ public class ExamDetailsActivity extends BaseActivity {
     private SwipeRefreshLayout refreshExamDetail;
     private LinearLayout rButtonBox;
 
-    private Retrofit retrofit;
-    private HTCMApp app;
+    private String orderID;
+
 
     @Override
     public int getLayoutId() {
@@ -52,18 +55,13 @@ public class ExamDetailsActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        app = HTCMApp.create(getApplicationContext());
-
-        String orderID = getIntent().getStringExtra("ORDER_ID");
-
+        orderID = getIntent().getStringExtra("ORDER_ID");
         initViews(orderID);
-
-        getUserExamDetail(orderID);
     }
 
     @Override
     public void getData() {
-
+        getUserExamDetail(orderID);
     }
 
     @SuppressLint("CutPasteId")
@@ -90,12 +88,9 @@ public class ExamDetailsActivity extends BaseActivity {
 
         examItemExpandable.setFocusable(false);
 
-        refreshExamDetail.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getUserExamDetail(orderId);
-                refreshExamDetail.setRefreshing(false);
-            }
+        refreshExamDetail.setOnRefreshListener(() -> {
+            getUserExamDetail(orderId);
+            refreshExamDetail.setRefreshing(false);
         });
     }
 
@@ -171,22 +166,19 @@ public class ExamDetailsActivity extends BaseActivity {
             userNeedNote.setText("暂无内容！");
         }
 
-        examCodeDetail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (examStats.equals(GlobalConstant.RESERVATION)) {
-                    FamiliesListItem familiesListItem = new FamiliesListItem();
-                    familiesListItem.setHealth_card_no(userExamDetail.getCustomer().getReservation_or_registration().getId());
-                    Intent intent = new Intent(ExamDetailsActivity.this, UserCardActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("FAMILIES_INFO", familiesListItem);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                } else {
-                    Intent intent = new Intent(ExamDetailsActivity.this, BarCodeActivity.class);
-                    intent.putExtra("FAMILIES_INFO", userExamDetail.getCustomer().getReservation_or_registration().getId());
-                    startActivity(intent);
-                }
+        examCodeDetail.setOnClickListener(v -> {
+            if (examStats.equals(GlobalConstant.RESERVATION)) {
+                FamiliesListItem familiesListItem = new FamiliesListItem();
+                familiesListItem.setHealth_card_no(userExamDetail.getCustomer().getReservation_or_registration().getId());
+                Intent intent = new Intent(ExamDetailsActivity.this, UserCardActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("FAMILIES_INFO", familiesListItem);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(ExamDetailsActivity.this, BarCodeActivity.class);
+                intent.putExtra("FAMILIES_INFO", userExamDetail.getCustomer().getReservation_or_registration().getId());
+                startActivity(intent);
             }
         });
 
@@ -206,16 +198,11 @@ public class ExamDetailsActivity extends BaseActivity {
 
     private void getUserExamDetail(String orderId) {
 
-        if (retrofit == null) {
-            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
-        }
-
         showLoading();
-        NetService service = retrofit.create(NetService.class);
-        service.getUserExamDetail(app.getTokenType() + " " + app.getAccessToken(), GlobalConstant.USER_EXAM_DETAIL + orderId)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableObserver<UserExamDetail>() {
+        MyExamRepository
+                .Companion.getDefault()
+                .getExamDetail(orderId)
+                .subscribe(new DefaultObserver<UserExamDetail>() {
                     @Override
                     public void onNext(UserExamDetail userExamDetail) {
                         setViews(userExamDetail);
@@ -226,11 +213,13 @@ public class ExamDetailsActivity extends BaseActivity {
                     @Override
                     public void onError(Throwable e) {
                         hideLoading();
+                        Log.e("TAG","getUserExamDetail:"+e.toString());
+                        showError(e);
                     }
 
                     @Override
                     public void onComplete() {
-                        hideLoading();
+
                     }
                 });
     }

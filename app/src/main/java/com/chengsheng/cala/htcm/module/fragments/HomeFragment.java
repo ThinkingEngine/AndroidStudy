@@ -13,7 +13,6 @@ import com.chengsheng.cala.htcm.adapter.AIAssistantAdapter;
 import com.chengsheng.cala.htcm.base.BaseRefreshFragment;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.module.activitys.AiAssistantActivity;
-import com.chengsheng.cala.htcm.module.activitys.AssistantActivity;
 import com.chengsheng.cala.htcm.module.activitys.BarADActivity;
 import com.chengsheng.cala.htcm.module.activitys.ExamAppointmentActivity;
 import com.chengsheng.cala.htcm.module.activitys.ExamReportActivity;

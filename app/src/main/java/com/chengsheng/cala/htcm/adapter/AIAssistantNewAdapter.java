@@ -127,6 +127,7 @@ public class AIAssistantNewAdapter extends BaseQuickAdapter<AssistantItem> {
             }
         });
 
+        //智能助手 卡片点击事件，跳转到 体检详情 （ExamDetailsActivity）需要传递一个 FamiliesListItem对象
         baseViewHolder.setOnClickListener(R.id.ai_assistant_item, v -> {
             Intent intent = new Intent(context, ExamDetailsActivity.class);
             FamiliesListItem familiesListItem = new FamiliesListItem();

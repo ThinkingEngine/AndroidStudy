@@ -33,23 +33,23 @@ public class AiAssistantActivity extends BaseRefreshActivity {
     @Override
     public void getData(int page) {
         AIAssistantRepository.Companion.getDefault()
-                .getAIAssistants("0",String.valueOf(page))
+                .getAIAssistants("0", String.valueOf(page))
                 .subscribe(new DefaultObserver<AssistantList>() {
-            @Override
-            public void onNext(AssistantList assistantList) {
-                fillData(assistantList.getItems());
-            }
+                    @Override
+                    public void onNext(AssistantList assistantList) {
+                        fillData(assistantList.getItems());
+                    }
 
-            @Override
-            public void onError(Throwable e) {
+                    @Override
+                    public void onError(Throwable e) {
+                        showError(e);
+                    }
 
-            }
+                    @Override
+                    public void onComplete() {
 
-            @Override
-            public void onComplete() {
-
-            }
-        });
+                    }
+                });
     }
 
     @Nullable

@@ -3,8 +3,8 @@ package com.chengsheng.cala.htcm.protocol.childmodelb;
 public class ExamItem {
     private int exam_item_id;
     private String name;
-    private int payment_status;
-    private int exam_status;
+    private boolean payment_status;
+    private boolean exam_status;
     private String content;
     private String exam_purpose;
     private String notice;
@@ -28,20 +28,28 @@ public class ExamItem {
         this.name = name;
     }
 
-    public int getPayment_status() {
+    public boolean isPayment_status() {
         return payment_status;
     }
 
-    public void setPayment_status(int payment_status) {
+    public void setPayment_status(boolean payment_status) {
         this.payment_status = payment_status;
     }
 
-    public int getExam_status() {
+    public boolean isExam_status() {
         return exam_status;
     }
 
-    public void setExam_status(int exam_status) {
+    public void setExam_status(boolean exam_status) {
         this.exam_status = exam_status;
+    }
+
+    public int getWait_personal() {
+        return wait_personal;
+    }
+
+    public void setWait_personal(int wait_personal) {
+        this.wait_personal = wait_personal;
     }
 
     public String getContent() {
@@ -103,7 +111,7 @@ public class ExamItem {
                 ", exam_purpose='" + exam_purpose + '\'' +
                 ", notice='" + notice + '\'' +
                 ", before_meal=" + before_meal +
-                ", wait_person=" + wait_personal +
+                ", wait_personal=" + wait_personal +
                 ", exam_address='" + exam_address + '\'' +
                 '}';
     }

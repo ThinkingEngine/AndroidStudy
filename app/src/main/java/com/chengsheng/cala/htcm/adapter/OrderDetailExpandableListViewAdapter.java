@@ -102,12 +102,12 @@ public class OrderDetailExpandableListViewAdapter extends BaseExpandableListAdap
 
         ExamItem data = datas.get(groupPosition).getExam_item_charges().get(childPosition);
         vh.childOrderItemName.setText(data.getName());
-        if(data.getPayment_status() == 0){
-            vh.childOrderItemValue.setText("未付");
-            vh.childOrderItemValue.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark));
-        }else{
+        if(data.isPayment_status()){
             vh.childOrderItemValue.setText("已付");
             vh.childOrderItemValue.setTextColor(context.getResources().getColor(R.color.colorText));
+        }else{
+            vh.childOrderItemValue.setText("未付");
+            vh.childOrderItemValue.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark));
         }
 
         return convertView;

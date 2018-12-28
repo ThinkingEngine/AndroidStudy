@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPageBackground"
-    tools:context=".module.activitys.AIAssistantActivity">
+    android:orientation="vertical"
+    tools:context=".module.activitys.AssistantActivity">
 
-    <include
-        android:id="@+id/title_header_ai_assistant"
-        layout="@layout/message_header_layout"
+    <com.chengsheng.cala.htcm.widget.AppTitleBar
+        android:id="@+id/at_ai_header"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_alignParentTop="true" />
+        android:layout_height="wrap_content" />
 
 
-    <com.jcodecraeer.xrecyclerview.XRecyclerView
-        android:id="@+id/ai_assistant_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/title_header_ai_assistant" />
+    <include layout="@layout/layout_refresh_common" />
 
 
-</RelativeLayout>
+</LinearLayout>

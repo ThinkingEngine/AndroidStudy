@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,6 +15,8 @@ import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.adapter.ExamItemExpandableListViewAdapter;
 import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
+import com.chengsheng.cala.htcm.data.repository.ExamOrderRepository;
+import com.chengsheng.cala.htcm.data.repository.MyExamRepository;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
 import com.chengsheng.cala.htcm.protocol.FamiliesListItem;
@@ -21,8 +24,10 @@ import com.chengsheng.cala.htcm.protocol.childmodelb.UserExamDetail;
 import com.chengsheng.cala.htcm.widget.MyExpandableListView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DefaultObserver;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 
 /**
@@ -42,8 +47,8 @@ public class ExamDetailsActivity extends BaseActivity {
     private SwipeRefreshLayout refreshExamDetail;
     private LinearLayout rButtonBox;
 
-    private Retrofit retrofit;
-    private HTCMApp app;
+    private String orderID;
+
 
     @Override
     public int getLayoutId() {
@@ -52,61 +57,42 @@ public class ExamDetailsActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        app = HTCMApp.create(getApplicationContext());
-
-        String orderID = getIntent().getStringExtra("ORDER_ID");
-
+        orderID = getIntent().getStringExtra("ORDER_ID");
         initViews(orderID);
-
-        getUserExamDetail(orderID);
     }
 
     @Override
     public void getData() {
-
+        getUserExamDetail(orderID);
     }
 
-    @SuppressLint("CutPasteId")
-    private void initViews(final String orderId) {
-        examItemExpandable = findViewById(R.id.exam_item_expandable);
-        examStatsMark = findViewById(R.id.exam_stats_mark);
-        examPerson = findViewById(R.id.exam_person);
-        examNumDetail = findViewById(R.id.exam_num_detail);
-        examCompany = findViewById(R.id.exam_company);
-        examCompanyAddress = findViewById(R.id.exam_company_address);
-        examComboName = findViewById(R.id.exam_combo_name);
-        examDateDetail = findViewById(R.id.exam_date_detail);
-        examCodeDetail = findViewById(R.id.exam_code_detail);
-        checkExamRepot = findViewById(R.id.check_exam_repot);
-        reportWaitNumBox = findViewById(R.id.report_wait_num_box);
-        userNeedNote = findViewById(R.id.user_need_note);
-        examItemNum = findViewById(R.id.exam_item_num);
-        examStateText = findViewById(R.id.exam_state_text);
-        refreshExamDetail = findViewById(R.id.refresh_exam_detail);
-        rButtonBox = findViewById(R.id.r_button_box);
 
-        reportWaitNumBox.setVisibility(View.INVISIBLE);
-        examCodeDetail.setVisibility(View.VISIBLE);
-
-        examItemExpandable.setFocusable(false);
-
-        refreshExamDetail.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getUserExamDetail(orderId);
-                refreshExamDetail.setRefreshing(false);
-            }
-        });
-    }
 
     private void setViews(final UserExamDetail userExamDetail) {
+
         final String examStats = userExamDetail.getExam_status();
+
+        examPerson.setText(userExamDetail.getCustomer().getName());
+        examNumDetail.setText(userExamDetail.getCustomer().getReservation_or_registration().getId());
+        examCompany.setText(userExamDetail.getOrganization().getName());
+        examCompanyAddress.setText(userExamDetail.getOrganization().getAddress());
+        examComboName.setText(userExamDetail.getName());
+        examDateDetail.setText("体检日期：" + userExamDetail.getCustomer().getReservation_or_registration().getDate());
+        examItemNum.setText("(" + userExamDetail.getExam_item().size() + "项)");
+
         if (examStats.equals(GlobalConstant.RESERVATION)) {
             examStatsMark.setText("待体检");
             examStatsMark.setTextColor(getResources().getColor(R.color.colorBule));
             checkExamRepot.setText("检前须知");
             examCodeDetail.setImageResource(R.mipmap.erweima);
             examStateText.setText("预约号：");
+
+            if (userExamDetail.isCan_autonomous()) {
+                rButtonBox.setVisibility(View.VISIBLE);
+            } else {
+                rButtonBox.setVisibility(View.INVISIBLE);
+            }
+
         } else if (examStats.equals(GlobalConstant.CHECKING)) {
             examStatsMark.setText("体检中");
             examStateText.setText("体检号：");
@@ -128,11 +114,9 @@ public class ExamDetailsActivity extends BaseActivity {
 
         }
 
-        if (userExamDetail.isCan_autonomous()) {
-            rButtonBox.setVisibility(View.VISIBLE);
-        } else {
-            rButtonBox.setVisibility(View.INVISIBLE);
-        }
+        //自助登记
+        rButtonBox.setOnClickListener(v -> autoRegister());
+
 
         //检前须知
         checkExamRepot.setOnClickListener(v -> {
@@ -171,22 +155,19 @@ public class ExamDetailsActivity extends BaseActivity {
             userNeedNote.setText("暂无内容！");
         }
 
-        examCodeDetail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (examStats.equals(GlobalConstant.RESERVATION)) {
-                    FamiliesListItem familiesListItem = new FamiliesListItem();
-                    familiesListItem.setHealth_card_no(userExamDetail.getCustomer().getReservation_or_registration().getId());
-                    Intent intent = new Intent(ExamDetailsActivity.this, UserCardActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("FAMILIES_INFO", familiesListItem);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                } else {
-                    Intent intent = new Intent(ExamDetailsActivity.this, BarCodeActivity.class);
-                    intent.putExtra("FAMILIES_INFO", userExamDetail.getCustomer().getReservation_or_registration().getId());
-                    startActivity(intent);
-                }
+        examCodeDetail.setOnClickListener(v -> {
+            if (examStats.equals(GlobalConstant.RESERVATION)) {
+                FamiliesListItem familiesListItem = new FamiliesListItem();
+                familiesListItem.setHealth_card_no(userExamDetail.getCustomer().getReservation_or_registration().getId());
+                Intent intent = new Intent(ExamDetailsActivity.this, UserCardActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("FAMILIES_INFO", familiesListItem);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(ExamDetailsActivity.this, BarCodeActivity.class);
+                intent.putExtra("FAMILIES_INFO", userExamDetail.getCustomer().getReservation_or_registration().getId());
+                startActivity(intent);
             }
         });
 
@@ -194,28 +175,19 @@ public class ExamDetailsActivity extends BaseActivity {
         examItemExpandable.setAdapter(adapter);
         examItemExpandable.setIndicatorBounds(examItemExpandable.getWidth() - 140, examItemExpandable.getWidth() - 10);
 
-        examPerson.setText(userExamDetail.getCustomer().getName());
-        examNumDetail.setText(userExamDetail.getCustomer().getReservation_or_registration().getId());
-        examCompany.setText(userExamDetail.getOrganization().getName());
-        examCompanyAddress.setText(userExamDetail.getOrganization().getAddress());
-        examComboName.setText(userExamDetail.getName());
-        examDateDetail.setText("体检日期：" + userExamDetail.getCustomer().getReservation_or_registration().getDate());
-        examItemNum.setText("(" + userExamDetail.getExam_item().size() + "项)");
+
+
 
     }
 
+    //获取用户体检详情
     private void getUserExamDetail(String orderId) {
 
-        if (retrofit == null) {
-            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
-        }
-
         showLoading();
-        NetService service = retrofit.create(NetService.class);
-        service.getUserExamDetail(app.getTokenType() + " " + app.getAccessToken(), GlobalConstant.USER_EXAM_DETAIL + orderId)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableObserver<UserExamDetail>() {
+        MyExamRepository
+                .Companion.getDefault()
+                .getExamDetail(orderId)
+                .subscribe(new DefaultObserver<UserExamDetail>() {
                     @Override
                     public void onNext(UserExamDetail userExamDetail) {
                         setViews(userExamDetail);
@@ -226,12 +198,69 @@ public class ExamDetailsActivity extends BaseActivity {
                     @Override
                     public void onError(Throwable e) {
                         hideLoading();
+                        showError(e);
                     }
 
                     @Override
                     public void onComplete() {
-                        hideLoading();
+
                     }
                 });
+    }
+    //自助登记
+    private void autoRegister(){
+        showLoading();
+        ExamOrderRepository
+                .Companion.getDefault()
+                .registration(orderID)
+                .subscribe(new DefaultObserver<ResponseBody>() {
+            @Override
+            public void onNext(ResponseBody responseBody) {
+                hideLoading();
+                showShortToast("登记成功");
+                getData();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                hideLoading();
+                showError(e);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    @SuppressLint("CutPasteId")
+    private void initViews(final String orderId) {
+        examItemExpandable = findViewById(R.id.exam_item_expandable);
+        examStatsMark = findViewById(R.id.exam_stats_mark);
+        examPerson = findViewById(R.id.exam_person);
+        examNumDetail = findViewById(R.id.exam_num_detail);
+        examCompany = findViewById(R.id.exam_company);
+        examCompanyAddress = findViewById(R.id.exam_company_address);
+        examComboName = findViewById(R.id.exam_combo_name);
+        examDateDetail = findViewById(R.id.exam_date_detail);
+        examCodeDetail = findViewById(R.id.exam_code_detail);
+        checkExamRepot = findViewById(R.id.check_exam_repot);
+        reportWaitNumBox = findViewById(R.id.report_wait_num_box);
+        userNeedNote = findViewById(R.id.user_need_note);
+        examItemNum = findViewById(R.id.exam_item_num);
+        examStateText = findViewById(R.id.exam_state_text);
+        refreshExamDetail = findViewById(R.id.refresh_exam_detail);
+        rButtonBox = findViewById(R.id.r_button_box);//自助登记
+
+        reportWaitNumBox.setVisibility(View.INVISIBLE);
+        examCodeDetail.setVisibility(View.VISIBLE);
+
+        examItemExpandable.setFocusable(false);
+
+        refreshExamDetail.setOnRefreshListener(() -> {
+            getUserExamDetail(orderId);
+            refreshExamDetail.setRefreshing(false);
+        });
     }
 }

@@ -12,13 +12,14 @@ import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.adapter.AIAssistantAdapter;
 import com.chengsheng.cala.htcm.base.BaseRefreshFragment;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
-import com.chengsheng.cala.htcm.module.activitys.AIAssistantActivity;
+import com.chengsheng.cala.htcm.module.activitys.AiAssistantActivity;
 import com.chengsheng.cala.htcm.module.activitys.BarADActivity;
 import com.chengsheng.cala.htcm.module.activitys.ExamAppointmentActivity;
 import com.chengsheng.cala.htcm.module.activitys.ExamReportActivity;
 import com.chengsheng.cala.htcm.module.activitys.MessageActivity;
 import com.chengsheng.cala.htcm.module.activitys.MyExamActivity;
 import com.chengsheng.cala.htcm.module.activitys.NewsListActivity;
+import com.chengsheng.cala.htcm.module.activitys.ServiceMessageActivity;
 import com.chengsheng.cala.htcm.network.ArticlesService;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
@@ -117,7 +118,7 @@ public class HomeFragment extends BaseRefreshFragment<RecommendedItem> {
 
         //智能助理
         aiAssistant.setOnClickListener(v ->
-                startActivityWithLoginStatus(new AIAssistantActivity()));
+                startActivityWithLoginStatus(new AiAssistantActivity()));
 
         //我的体检
         rootView.findViewById(R.id.tvMyExam).setOnClickListener(v ->
@@ -135,7 +136,7 @@ public class HomeFragment extends BaseRefreshFragment<RecommendedItem> {
                 startActivity(new NewsListActivity()));
 
         newMessage.setOnClickListener(v ->
-                startActivityWithLoginStatus(new MessageActivity()));
+                startActivityWithLoginStatus(new ServiceMessageActivity()));
     }
 
     @Override

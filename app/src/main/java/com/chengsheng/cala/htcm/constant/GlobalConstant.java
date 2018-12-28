@@ -34,7 +34,7 @@ public class GlobalConstant {
     public static final String API_URL = "http://api.peis-mobile.zz-tech.com.cn:85/api/physical-exam-item/";
 //    public static final String ACCOUNT_BASE_URL = "http://api.peis-mobile.zz-tech.com.cn:85/";//线上地址
 
-    public static final String API_BASE_URL = "http://192.168.1.119:8000/";
+    public static final String API_BASE_URL = "http://192.168.1.119:9001/";
 
     public static final String USER_EXAM_DETAIL = "api/physical-exam-order/customer-exams/";
     public static final String INTELLIGENT_CHECK = "api/physical-exam-order/AI/";

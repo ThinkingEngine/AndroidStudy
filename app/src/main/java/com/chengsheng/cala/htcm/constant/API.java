@@ -76,6 +76,9 @@ public class API {
     /* 套餐列表启用的 */
     public static final String EXAM_PACKAGE = SERVICE_BASE_URL + "api/physical-exam-item/exam-packages/enable";
 
+    /*  套餐详情 */
+    public static final String EXAM_PACKAGES = SERVICE_BASE_URL + "api/physical-exam-item/exam-packages/";
+
     /* 获取家人列表 */
     public static final String FAMILY_MEMBER = SERVICE_BASE_URL + "api/family/account-family-members";
 
@@ -114,5 +117,17 @@ public class API {
 
     /* 体检订单 订单 订单详情 */
     public static final String ORDERS = SERVICE_BASE_URL + "api/physical-exam-order/orders/{order_id}";
+
+    /* 智能助理 */
+    public static final String AI = SERVICE_BASE_URL + "api/physical-exam-order/AI";
+
+    /* 我的体检详情 */
+    public static final String EXAM_DETAIL = SERVICE_BASE_URL + "api/physical-exam-order/customer-exams/{orderId}";
+
+    /* 智能导检 */
+    public static final String AI_CHECK = SERVICE_BASE_URL + "api/physical-exam-order/AI/{orderId}";
+
+    /* 消息列表 */
+    public static final String SMS_LIST = SERVICE_BASE_URL + "api/message/messages";
 
 }

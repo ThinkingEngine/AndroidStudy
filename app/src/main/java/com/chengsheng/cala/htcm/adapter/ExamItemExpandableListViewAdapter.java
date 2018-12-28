@@ -65,7 +65,8 @@ public class ExamItemExpandableListViewAdapter extends BaseExpandableListAdapter
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         GroupViewHolder groupViewHolder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.expandable_exam_item_header_layout, null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.expandable_exam_item_header_layout,
+                    null);
             groupViewHolder = new GroupViewHolder(convertView);
             convertView.setTag(groupViewHolder);
         } else {
@@ -73,23 +74,26 @@ public class ExamItemExpandableListViewAdapter extends BaseExpandableListAdapter
         }
 
         if (groupPosition == datas.size() - 1) {
-            groupViewHolder.examResultContainer.setBackgroundColor(context.getResources().getColor(R.color.white));
+            groupViewHolder.examResultContainer.setBackgroundColor(context.getResources()
+                    .getColor(R.color.white));
         }
         if (groupPosition == 0 && datas.size() > 1) {
-            groupViewHolder.examResultContainer.setBackground(context.getResources().getDrawable(R.drawable.has_bottom_line_item_bg));
+            groupViewHolder.examResultContainer.setBackground(context.getResources()
+                    .getDrawable(R.drawable.has_bottom_line_item_bg));
         }
 
-//        groupViewHolder.examItemStatsExpandable.setVisibility(View.INVISIBLE);
         groupViewHolder.examItemNameExpandable.setText(datas.get(groupPosition).getName());
 
         if (type == GlobalConstant.COMBO_DETAIL_MARK) {
             groupViewHolder.examItemStatsExpandable.setVisibility(View.INVISIBLE);
         } else {
             groupViewHolder.examItemNameExpandable.setVisibility(View.VISIBLE);
-            if (datas.get(groupPosition).getExam_status() == 0) {
-                groupViewHolder.examItemStatsExpandable.setText("未检");
-            } else if (datas.get(groupPosition).getExam_status() == 1) {
+            if (datas.get(groupPosition).isExam_status()) {
                 groupViewHolder.examItemStatsExpandable.setText("已检");
+            } else {
+                groupViewHolder.examItemStatsExpandable.setText("未检");
+                groupViewHolder.examItemStatsExpandable.setTextColor(context.getResources()
+                        .getColor(R.color.colorPrimary));
             }
         }
 
@@ -98,10 +102,12 @@ public class ExamItemExpandableListViewAdapter extends BaseExpandableListAdapter
     }
 
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
+                             View convertView, ViewGroup parent) {
         ChildViewHolder childViewHolder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.expandable_exam_item_child_layout, null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.expandable_exam_item_child_layout
+                    , null);
             childViewHolder = new ChildViewHolder(convertView);
             convertView.setTag(childViewHolder);
         } else {

@@ -8,17 +8,11 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,14 +31,12 @@ import com.chengsheng.cala.htcm.widget.MyExpandableListView;
 import com.chengsheng.cala.htcm.widget.ShareDialog;
 import com.chengsheng.cala.htcm.widget.TextViewBorder;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.jakewharton.rxbinding2.view.RxView;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagFlowLayout;
 import com.zyao89.view.zloading.ZLoadingDialog;
 import com.zyao89.view.zloading.Z_TYPE;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -65,27 +57,15 @@ public class ComboDetailActivity extends BaseActivity {
     private TagFlowLayout comboMarks;
     private TextView groupName, groupMark, groupTel, groupAddress;
     private SimpleDraweeView mainPageImage;
-    //    private GridView keyIllnessScreeningItem;
     private TextView comboBriefText;
     private TextView userNeedNote;
     private TextView onlineServiceTel;
     private TextView examItemComboNum;
 
-    private Dialog dialog;
-    private View dialogView;
-    private TranslateAnimation ta;
-    private List<String> shareList;
     private String id;
-    private int[] images = {R.mipmap.pengyouquan,
-            R.mipmap.weixinhaoyou,
-            R.mipmap.qqhaoyou,
-            R.mipmap.qqkongjian,
-            R.mipmap.fuzhilianjie};
-
     private boolean isCollect = false;
     private Retrofit retrofit;
     private HTCMApp app;
-    private ZLoadingDialog loadingDialog;
 
     @Override
     public int getLayoutId() {
@@ -95,11 +75,6 @@ public class ComboDetailActivity extends BaseActivity {
     @Override
     public void initView() {
         app = HTCMApp.create(getApplicationContext());
-        loadingDialog = new ZLoadingDialog(this);
-        loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
-        loadingDialog.setDialogBackgroundColor(getResources().getColor(R.color.colorText));
-        loadingDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
-        loadingDialog.setLoadingColor(getResources().getColor(R.color.colorPrimary));
 
         id = getIntent().getStringExtra("COMBO_ID");
 
@@ -109,14 +84,11 @@ public class ComboDetailActivity extends BaseActivity {
         getComboDetail();
 
         //收藏按钮
-        collect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isCollect) {
-                    cancelCollect();
-                } else {
-                    collectCombo();
-                }
+        collect.setOnClickListener(v -> {
+            if (isCollect) {
+                cancelCollect();
+            } else {
+                collectCombo();
             }
         });
 
@@ -150,16 +122,10 @@ public class ComboDetailActivity extends BaseActivity {
 
 
         //立即预约
-        immediateAppointment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent intent = new Intent(ComboDetailActivity.this, AffirmAppointmentActivity.class);
-//                intent.putExtra("COMBO_ID", id);
-//                startActivity(intent);
-                Bundle bundle = new Bundle();
-                bundle.putString("COMBO_ID",id);
-                startActivityWithLoginStatus(new AffirmAppointmentActivity(),bundle);
-            }
+        immediateAppointment.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("COMBO_ID",id);
+            startActivityWithLoginStatus(new AffirmAppointmentActivity(),bundle);
         });
     }
 
@@ -192,34 +158,23 @@ public class ComboDetailActivity extends BaseActivity {
         onlineServiceTel = findViewById(R.id.online_service_tel);
 
         title.setText("套餐详情");
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        back.setOnClickListener(v -> finish());
 
-        onlineServiceTel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog dialog;
-                AlertDialog.Builder builder = new AlertDialog.Builder(ComboDetailActivity.this);
-                builder.setTitle("在线客服");
-                builder.setMessage("您确定拨打在线客服电话!");
-                builder.setNegativeButton("暂不", null);
-                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(Intent.ACTION_DIAL);
-                        Uri data = Uri.parse("tel:" + "400-028-3020");
-                        intent.setData(data);
-                        startActivity(intent);
-                    }
-                });
+        onlineServiceTel.setOnClickListener(v -> {
+            AlertDialog dialog;
+            AlertDialog.Builder builder = new AlertDialog.Builder(ComboDetailActivity.this);
+            builder.setTitle("在线客服");
+            builder.setMessage("您确定拨打在线客服电话!");
+            builder.setNegativeButton("暂不", null);
+            builder.setPositiveButton("确定", (dialog1, which) -> {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                Uri data = Uri.parse("tel:" + "400-028-3020");
+                intent.setData(data);
+                startActivity(intent);
+            });
 
-                dialog = builder.create();
-                dialog.show();
-            }
+            dialog = builder.create();
+            dialog.show();
         });
     }
 
@@ -264,8 +219,7 @@ public class ComboDetailActivity extends BaseActivity {
         }
 
         NetService service = retrofit.create(NetService.class);
-        loadingDialog.setHintText("加载中....");
-        loadingDialog.show();
+        showLoading();
         examItemComboExpandable.setFocusable(false);
         service.getCombonDetail(GlobalConstant.EXAM_PACKAGES + id, app.getTokenType() + " " + app.getAccessToken())
                 .subscribeOn(Schedulers.newThread())
@@ -274,16 +228,18 @@ public class ComboDetailActivity extends BaseActivity {
                     @Override
                     public void onNext(AppointmentDetail appointmentDetail) {
                         setViews(appointmentDetail);
-                        ExamItemExpandableListViewAdapter adapter = new ExamItemExpandableListViewAdapter(ComboDetailActivity.this, appointmentDetail.getExam_items(),GlobalConstant.COMBO_DETAIL_MARK);
+                        ExamItemExpandableListViewAdapter adapter = new ExamItemExpandableListViewAdapter(
+                                ComboDetailActivity.this, appointmentDetail.getExam_items(),GlobalConstant.COMBO_DETAIL_MARK);
                         examItemComboExpandable.setAdapter(adapter);
-                        examItemComboExpandable.setIndicatorBounds(examItemComboExpandable.getWidth() - 140, examItemComboExpandable.getWidth() - 10);
-                        loadingDialog.cancel();
+                        examItemComboExpandable.setIndicatorBounds(
+                                examItemComboExpandable.getWidth() - 140, examItemComboExpandable.getWidth() - 10);
+                        hideLoading();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         Log.e("TEST", "ComboDetail onError!" + e);
-                        loadingDialog.cancel();
+                        hideLoading();
                     }
 
                     @Override
@@ -299,8 +255,7 @@ public class ComboDetailActivity extends BaseActivity {
             retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
         }
 
-        loadingDialog.setHintText("加载中.....");
-        loadingDialog.show();
+       showLoading();
         NetService service = retrofit.create(NetService.class);
         service.collectCombo(GlobalConstant.COLLECT_EXAM_PACKAGES + id, app.getTokenType() + " " + app.getAccessToken())
                 .subscribeOn(Schedulers.newThread())
@@ -308,7 +263,7 @@ public class ComboDetailActivity extends BaseActivity {
                 .subscribe(new DisposableObserver<ResponseBody>() {
                     @Override
                     public void onNext(ResponseBody o) {
-                        loadingDialog.cancel();
+                        hideLoading();
                         Toast.makeText(ComboDetailActivity.this, "收藏成功", Toast.LENGTH_SHORT).show();
                         isCollect = true;
                         collect.setSelected(isCollect);
@@ -316,8 +271,7 @@ public class ComboDetailActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        loadingDialog.cancel();
-
+                        hideLoading();
                         Toast.makeText(ComboDetailActivity.this, "收藏失败", Toast.LENGTH_SHORT).show();
 
 //                        collect.setSelected(true);
@@ -335,8 +289,7 @@ public class ComboDetailActivity extends BaseActivity {
         if (retrofit == null) {
             retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
         }
-        loadingDialog.setHintText("加载中.....");
-        loadingDialog.show();
+        showLoading();
         NetService service = retrofit.create(NetService.class);
         service.cancelCollect(GlobalConstant.COLLECT_EXAM_PACKAGES + id, app.getTokenType() + " " + app.getAccessToken())
                 .subscribeOn(Schedulers.newThread())
@@ -344,7 +297,7 @@ public class ComboDetailActivity extends BaseActivity {
                 .subscribe(new DisposableObserver<ResponseBody>() {
                     @Override
                     public void onNext(ResponseBody o) {
-                        loadingDialog.cancel();
+                        hideLoading();
                         Toast.makeText(ComboDetailActivity.this, "取消收藏成功", Toast.LENGTH_SHORT).show();
                         isCollect = false;
                         collect.setSelected(isCollect);
@@ -352,7 +305,7 @@ public class ComboDetailActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        loadingDialog.cancel();
+                        hideLoading();
 
                         Toast.makeText(ComboDetailActivity.this, "取消收藏失败", Toast.LENGTH_SHORT).show();
 
@@ -403,39 +356,6 @@ public class ComboDetailActivity extends BaseActivity {
 
                     }
                 });
-
-    }
-
-    public class ShareAdapter extends BaseAdapter {
-
-
-        @Override
-        public int getCount() {
-            return shareList.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return shareList.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (convertView == null) {
-                convertView = LayoutInflater.from(ComboDetailActivity.this).inflate(R.layout.share_way_icon_bg_layout, null);
-            }
-
-            ImageView shareWayIcon = convertView.findViewById(R.id.share_way_icon);
-            TextView textView = convertView.findViewById(R.id.share_way_text);
-            shareWayIcon.setImageResource(images[position]);
-            textView.setText(shareList.get(position));
-            return convertView;
-        }
 
     }
 

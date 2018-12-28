@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -15,6 +13,7 @@ import com.chengsheng.cala.htcm.module.activitys.ModePaymentActivity;
 import com.chengsheng.cala.htcm.module.activitys.OrderDetailActivity;
 import com.chengsheng.cala.htcm.protocol.childmodelb.ExamOrderItem;
 import com.chengsheng.cala.htcm.protocol.childmodelb.PackageAndOptional;
+import com.chengsheng.cala.htcm.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +74,7 @@ public class ExamOrderAdapter extends BaseQuickAdapter<ExamOrderItem> {
                 intent.putExtra("ORDER_ID", String.valueOf(examOrderItem.getId()));
                 context.startActivity(intent);
             } else {
-                Toast.makeText(context, "该订单已取消", Toast.LENGTH_SHORT).show();
+                ToastUtil.showShortToast(context,"该订单已取消");
             }
         });
 

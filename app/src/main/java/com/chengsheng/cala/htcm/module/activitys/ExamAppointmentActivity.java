@@ -50,7 +50,6 @@ public class ExamAppointmentActivity extends BaseActivity implements HeaderScrol
 
     private ExamAppointmentRecyclerAdapter adapter;
     private ExamApponitments examApponitmentsDatas;
-    private ZLoadingDialog loadDialog;
     private Retrofit retrofit;
 
     private String currentFilter = GlobalConstant.COMBO_TYPE_A;
@@ -68,11 +67,6 @@ public class ExamAppointmentActivity extends BaseActivity implements HeaderScrol
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
     }
@@ -85,16 +79,7 @@ public class ExamAppointmentActivity extends BaseActivity implements HeaderScrol
     @Override
     public void initView() {
         CallBackDataAuth.setUpdateStateInterface(this);
-
-        loadDialog = new ZLoadingDialog(this);
-        loadDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
-        loadDialog.setLoadingColor(getResources().getColor(R.color.colorPrimary));
-        loadDialog.setHintText("加载中...");
-        loadDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
-        loadDialog.setDialogBackgroundColor(getResources().getColor(R.color.colorText));
-
         initViews();
-
 
         //下拉刷新
         refreshExamAppointmentPage.setOnRefreshListener(() -> updataComboInfo(String.valueOf(1), currentFilter, false));
@@ -174,6 +159,7 @@ public class ExamAppointmentActivity extends BaseActivity implements HeaderScrol
         updataComboInfo(String.valueOf(1), currentFilter, true);
     }
 
+
     private void setTextState(boolean Synthesize, boolean price, boolean sales) {
         allPriceA.setSelected(price);
         allPriceB.setSelected(price);
@@ -184,13 +170,14 @@ public class ExamAppointmentActivity extends BaseActivity implements HeaderScrol
         comboSalesVolumeB.setSelected(sales);
     }
 
+    //更新订单信息
     private void updataComboInfo(String page, String sortFields, final boolean loading) {
         if (retrofit == null) {
             retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
         }
 
         if (loading) {
-            loadDialog.show();
+            showLoading();
         }
         NetService service = retrofit.create(NetService.class);
         service.getComboInfoFilters(GlobalConstant.COMBO_FILTER, page, sortFields)
@@ -211,7 +198,7 @@ public class ExamAppointmentActivity extends BaseActivity implements HeaderScrol
                         examAppointmentItem.setAdapter(adapter);
                         examAppointmentItem.setNestedScrollingEnabled(false);
                         if (loading) {
-                            loadDialog.cancel();
+                            hideLoading();
                         }
                         refreshExamAppointmentPage.setRefreshing(false);
 
@@ -220,7 +207,7 @@ public class ExamAppointmentActivity extends BaseActivity implements HeaderScrol
                     @Override
                     public void onError(Throwable e) {
                         if (loading) {
-                            loadDialog.cancel();
+                            hideLoading();
                         }
                         refreshExamAppointmentPage.setRefreshing(false);
                         Toast.makeText(ExamAppointmentActivity.this, "网络异常！", Toast.LENGTH_SHORT).show();
@@ -234,7 +221,7 @@ public class ExamAppointmentActivity extends BaseActivity implements HeaderScrol
                     @Override
                     public void onComplete() {
                         if (loading) {
-                            loadDialog.cancel();
+                            hideLoading();
                         }
                         refreshExamAppointmentPage.setRefreshing(false);
                     }

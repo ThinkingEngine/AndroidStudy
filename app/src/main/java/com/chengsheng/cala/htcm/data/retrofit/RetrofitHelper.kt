@@ -136,6 +136,12 @@ class RetrofitHelper private constructor() {
     var memberService = httpCreate(FamilyMemberService::class.java)
 
     //文件上传服务
-    var fileUpService = httpCreate(FileService::class.java);
+    var fileUpService = httpCreate(FileService::class.java)
+
+    //智能助理
+    var AIassistant = httpCreate(AIAssistantService::class.java)
+
+    //消息服务
+    var messageService = httpCreate(Message::class.java)
 
 }

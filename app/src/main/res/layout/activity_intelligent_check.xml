@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPageBackground"
+    android:orientation="vertical"
     tools:context=".module.activitys.IntelligentCheckActivity">
 
-    <include
-        android:id="@+id/title_header_intelligent_check"
-        layout="@layout/title_bar_type_two_layout" />
-
+    <com.chengsheng.cala.htcm.widget.AppTitleBar
+        android:id="@+id/at_ai_check"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/title_header_intelligent_check">
+        android:layout_below="@id/at_ai_check">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,7 +24,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="207dp"
-                android:layout_below="@id/title_header_intelligent_check"
                 android:background="@color/colorWhite">
 
                 <LinearLayout
@@ -144,4 +143,4 @@
 
         </LinearLayout>
     </ScrollView>
-</RelativeLayout>
+</LinearLayout>

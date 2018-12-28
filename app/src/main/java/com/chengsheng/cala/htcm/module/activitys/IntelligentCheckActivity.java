@@ -1,6 +1,5 @@
 package com.chengsheng.cala.htcm.module.activitys;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
@@ -17,12 +16,14 @@ import com.chengsheng.cala.htcm.utils.FuncUtils;
 import com.chengsheng.cala.htcm.utils.QRCodeUtil;
 import com.chengsheng.cala.htcm.adapter.IntelligentCheckARecyclerAdapter;
 import com.chengsheng.cala.htcm.adapter.IntelligentCheckBRecyclerAdapter;
+import com.chengsheng.cala.htcm.widget.AppTitleBar;
 import com.chengsheng.cala.htcm.widget.MyRecyclerView;
+
 import io.reactivex.observers.DefaultObserver;
 
 public class IntelligentCheckActivity extends BaseActivity {
-    private ImageView back;
-    private TextView title;
+
+    private AppTitleBar atHeader;
     private ImageView barCodeMarkIntelligent;
     private TextView numberBarCodeIntelligent;
     private TextView itemPersonName, itemPersonSex, itemPersonAge;
@@ -53,8 +54,7 @@ public class IntelligentCheckActivity extends BaseActivity {
     }
 
     private void initViews() {
-        back = findViewById(R.id.title_header_intelligent_check).findViewById(R.id.back_login);
-        title = findViewById(R.id.title_header_intelligent_check).findViewById(R.id.menu_bar_title);
+        atHeader = findViewById(R.id.at_ai_check);
         barCodeMarkIntelligent = findViewById(R.id.bar_code_mark_intelligent);//条形码图
         numberBarCodeIntelligent = findViewById(R.id.number_bar_code_intelligent);
         itemPersonName = findViewById(R.id.item_person_name);
@@ -64,7 +64,8 @@ public class IntelligentCheckActivity extends BaseActivity {
         intelligentCheckRecyclerB = findViewById(R.id.intelligent_check_recycler_b);
         checkedLine = findViewById(R.id.checked_line);
 
-        title.setText("智能导检");
+        atHeader.setTitle("智能导检");
+        atHeader.setFinishClickListener(() -> finish());
     }
 
     private void setViews(IntelligentCheck intelligentCheck) {

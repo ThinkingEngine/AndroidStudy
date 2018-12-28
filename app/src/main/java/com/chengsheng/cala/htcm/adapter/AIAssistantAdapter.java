@@ -135,15 +135,12 @@ public class AIAssistantAdapter extends RecyclerView.Adapter<AIAssistantAdapter.
                     viewHolder.unscrambleMark.setText("立即支付");
                     viewHolder.itemSecNotes.setText("待支付金额：" + money + "元");
 
-                    viewHolder.unscrambleMark.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(context, ModePaymentActivity.class);
-                            intent.putExtra("ORDER_ID", String.valueOf(data.getOrder().getId()));
-                            intent.putExtra("ORDER_VAL", data.getOrder().getDiscount_receivable());
-                            context.startActivity(intent);
+                    viewHolder.unscrambleMark.setOnClickListener(v -> {
+                        Intent intent = new Intent(context, ModePaymentActivity.class);
+                        intent.putExtra("ORDER_ID", String.valueOf(data.getOrder().getId()));
+                        intent.putExtra("ORDER_VAL", data.getOrder().getDiscount_receivable());
+                        context.startActivity(intent);
 
-                        }
                     });
                 } else {
                     if (data.getOrder().isCan_autonomous()) {
@@ -151,13 +148,10 @@ public class AIAssistantAdapter extends RecyclerView.Adapter<AIAssistantAdapter.
                         viewHolder.unscrambleMark.setText("自助登记");
                         viewHolder.itemSecNotes.setText("您可前往中心登记台或自助完成登记");
 
-                        viewHolder.unscrambleMark.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Bundle bundle = new Bundle();
-                                bundle.putString("ORDER_ID", String.valueOf(data.getOrder().getId()));
-                                ActivityUtil.Companion.startActivity(context, new RegisterDetailActivity(), bundle);
-                            }
+                        viewHolder.unscrambleMark.setOnClickListener(v -> {
+                            Bundle bundle = new Bundle();
+                            bundle.putString("ORDER_ID", String.valueOf(data.getOrder().getId()));
+                            ActivityUtil.Companion.startActivity(context, new RegisterDetailActivity(), bundle);
                         });
                     } else {
                         viewHolder.unscrambleMark.setVisibility(View.INVISIBLE);
@@ -183,15 +177,12 @@ public class AIAssistantAdapter extends RecyclerView.Adapter<AIAssistantAdapter.
                     viewHolder.unscrambleMark.setVisibility(View.VISIBLE);
                     viewHolder.unscrambleMark.setText("查看报告");
                     viewHolder.itemBigNotes.setText("体检报告已生成");
-                    viewHolder.unscrambleMark.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(context, ExamReportDetailActivity.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putString(GlobalConstant.EXAM_REPORT_ID, String.valueOf(data.getOrder().getId()));
-                            intent.putExtras(bundle);
-                            context.startActivity(intent);
-                        }
+                    viewHolder.unscrambleMark.setOnClickListener(v -> {
+                        Intent intent = new Intent(context, ExamReportDetailActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString(GlobalConstant.EXAM_REPORT_ID, String.valueOf(data.getOrder().getId()));
+                        intent.putExtras(bundle);
+                        context.startActivity(intent);
                     });
                 } else {
                     viewHolder.itemBigNotes.setText("体检报告预计2-5个工作日内生成");

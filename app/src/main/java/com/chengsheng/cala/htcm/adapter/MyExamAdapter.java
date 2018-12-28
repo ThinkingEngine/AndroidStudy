@@ -11,10 +11,14 @@ import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.module.activitys.BarCodeActivity;
 import com.chengsheng.cala.htcm.module.activitys.BeforeExamActivity;
+import com.chengsheng.cala.htcm.module.activitys.ExamReportCompareActivity;
+import com.chengsheng.cala.htcm.module.activitys.ExamReportDetailActivity;
 import com.chengsheng.cala.htcm.module.activitys.IntelligentCheckActivity;
 import com.chengsheng.cala.htcm.module.activitys.UserCardActivity;
 import com.chengsheng.cala.htcm.protocol.ExamItems;
 import com.chengsheng.cala.htcm.protocol.FamiliesListItem;
+import com.chengsheng.cala.htcm.utils.ActivityUtil;
+import com.chengsheng.cala.htcm.utils.ToastUtil;
 
 import java.util.List;
 
@@ -36,8 +40,8 @@ public class MyExamAdapter extends BaseQuickAdapter<ExamItems> {
     protected void convert(BaseViewHolder baseViewHolder, ExamItems examItems) {
         baseViewHolder.setText(R.id.my_exam_item_name, examItems.getName());
         baseViewHolder.setText(R.id.tv_wait_person, "3-5" + "\n" + "天");
-        baseViewHolder.setText(R.id.exam_target_name,examItems.getCustomer().getName());
-        baseViewHolder.setText(R.id.appointment_num,examItems.getCustomer()
+        baseViewHolder.setText(R.id.exam_target_name, examItems.getCustomer().getName());
+        baseViewHolder.setText(R.id.appointment_num, examItems.getCustomer()
                 .getReservation_or_registration().getId());
 
         if (examItems.getExam_status().equals(GlobalConstant.RESERVATION)) {
@@ -49,10 +53,27 @@ public class MyExamAdapter extends BaseQuickAdapter<ExamItems> {
         }
 
         if (examItems.getExam_status().equals(GlobalConstant.CHECKING)) {
-            baseViewHolder.setImageResource(R.id.exam_item_stats, R.mipmap.tianxingma);
+            baseViewHolder.setImageResource(R.id.exam_item_code, R.mipmap.tianxingma);
         } else {
-            baseViewHolder.setImageResource(R.id.exam_item_stats, R.mipmap.erweima);
+            baseViewHolder.setImageResource(R.id.exam_item_code, R.mipmap.erweima);
         }
+
+        baseViewHolder.setOnClickListener(R.id.exam_item_code, v -> {
+            if(examItems.getExam_status().equals(GlobalConstant.CHECKING)){
+
+                Bundle bundle = new Bundle();
+                bundle.putString("FAMILIES_INFO", examItems.getCustomer().getReservation_or_registration().getId());
+                ActivityUtil.Companion.startActivity(context,new BarCodeActivity(),bundle);
+            }else{
+                Bundle bundle = new Bundle();
+                FamiliesListItem familiesListItem = new FamiliesListItem();
+                familiesListItem.setFullname(examItems.getCustomer().getName());
+                familiesListItem.setAvatar_path(examItems.getCustomer().getAvatar());
+                familiesListItem.setHealth_card_no(examItems.getCustomer().getReservation_or_registration().getId());
+                bundle.putSerializable("FAMILIES_INFO", familiesListItem);
+                ActivityUtil.Companion.startActivity(context, new UserCardActivity(), bundle);
+            }
+        });
 
         if (examItems.getExam_status().equals(GlobalConstant.CHECKING)) {
             baseViewHolder.setImageResource(R.id.exam_item_stats, R.mipmap.tijianzhongbiaoqian);
@@ -61,11 +82,12 @@ public class MyExamAdapter extends BaseQuickAdapter<ExamItems> {
             baseViewHolder.setImageResource(R.id.exam_item_stats, R.mipmap.yitijian);
             baseViewHolder.setText(R.id.exam_info, "查看报告");
             if (examItems.getReport().isIssued()) {
-                baseViewHolder.setBackgroundRes(R.id.exam_info, R.drawable.gray_gradient_button_bg);
+                baseViewHolder.setBackgroundRes(R.id.exam_info, R.drawable.code_button_bg);
                 baseViewHolder.setTextColor(R.id.exam_info, R.color.colorWhite);
                 baseViewHolder.setVisible(R.id.tv_wait_person, true);
+
             } else {
-                baseViewHolder.setBackgroundRes(R.id.exam_info, R.drawable.code_button_bg);
+                baseViewHolder.setBackgroundRes(R.id.exam_info, R.drawable.gray_gradient_button_bg);
                 baseViewHolder.setVisible(R.id.tv_wait_person, false);
             }
             baseViewHolder.setVisible(R.id.exam_item_code, false);
@@ -103,6 +125,14 @@ public class MyExamAdapter extends BaseQuickAdapter<ExamItems> {
                 Intent intent = new Intent(context, IntelligentCheckActivity.class);
                 intent.putExtra("EXAM_ID", String.valueOf(examItems.getId()));
                 context.startActivity(intent);
+            } else if (examItems.getExam_status().equals(GlobalConstant.CHECKED)
+                    && examItems.getReport().isIssued()) {
+                Bundle bundle = new Bundle();
+                bundle.putString(GlobalConstant.EXAM_REPORT_ID, String.valueOf(examItems.getId()));
+                ActivityUtil.Companion.startActivity(context, new ExamReportDetailActivity(), bundle);
+            } else if (examItems.getExam_status().equals(GlobalConstant.CHECKED)
+                    && !examItems.getReport().isIssued()) {
+                ToastUtil.showShortToast(context, "你还没有报告");
             }
         });
 

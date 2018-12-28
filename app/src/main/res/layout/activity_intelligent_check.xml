@@ -64,7 +64,7 @@
                     android:layout_below="@id/bar_code_mark_intelligent"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
-                    android:text="180 515 000 01"
+                    tools:text="180 515 000 01"
                     android:textColor="@color/colorSecText"
                     android:textSize="14sp" />
 
@@ -81,7 +81,7 @@
                         android:id="@+id/item_person_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="周子萱"
+                        tools:text="周子萱"
                         android:textColor="@color/colorText"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -91,7 +91,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="13dp"
-                        android:text="女"
+                        tools:text="女"
                         android:textColor="@color/colorThrText"
                         android:textSize="14sp" />
 
@@ -100,7 +100,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="13dp"
-                        android:text="26岁"
+                        tools:text="26岁"
                         android:textColor="@color/colorThrText"
                         android:textSize="14sp" />
                 </LinearLayout>

@@ -127,4 +127,7 @@ public class API {
     /* 智能导检 */
     public static final String AI_CHECK = SERVICE_BASE_URL + "api/physical-exam-order/AI/{orderId}";
 
+    /* 消息列表 */
+    public static final String SMS_LIST = SERVICE_BASE_URL + "api/message/messages";
+
 }

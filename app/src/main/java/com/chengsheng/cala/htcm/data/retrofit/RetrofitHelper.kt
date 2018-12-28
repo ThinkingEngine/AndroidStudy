@@ -141,4 +141,7 @@ class RetrofitHelper private constructor() {
     //智能助理
     var AIassistant = httpCreate(AIAssistantService::class.java)
 
+    //消息服务
+    var messageService = httpCreate(Message::class.java)
+
 }

@@ -19,6 +19,7 @@ import com.chengsheng.cala.htcm.module.activitys.ExamReportActivity;
 import com.chengsheng.cala.htcm.module.activitys.MessageActivity;
 import com.chengsheng.cala.htcm.module.activitys.MyExamActivity;
 import com.chengsheng.cala.htcm.module.activitys.NewsListActivity;
+import com.chengsheng.cala.htcm.module.activitys.ServiceMessageActivity;
 import com.chengsheng.cala.htcm.network.ArticlesService;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
@@ -135,7 +136,7 @@ public class HomeFragment extends BaseRefreshFragment<RecommendedItem> {
                 startActivity(new NewsListActivity()));
 
         newMessage.setOnClickListener(v ->
-                startActivityWithLoginStatus(new MessageActivity()));
+                startActivityWithLoginStatus(new ServiceMessageActivity()));
     }
 
     @Override

@@ -2,7 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
         android:id="@+id/ai_assistant_item_date"
@@ -42,7 +43,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="14dp"
             android:layout_toRightOf="@id/user_header_icon_ai_assistant"
-            android:text="周子萱"
+            tools:text="周子萱"
             android:textColor="@color/colorText"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -55,7 +56,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="2dp"
             android:layout_toRightOf="@id/user_header_icon_ai_assistant"
-            android:text="体检号：201803300"
+            tools:text="体检号：201803300"
             android:textColor="@color/colorThrText"
             android:textSize="12sp" />
 
@@ -99,8 +100,6 @@
             android:textColor="@color/colorText"
             android:textSize="16sp" />
 
-
-
         <TextView
             android:id="@+id/item_sec_notes"
             android:layout_width="wrap_content"
@@ -108,7 +107,7 @@
             android:layout_below="@id/item_big_notes"
             android:layout_marginLeft="14dp"
             android:layout_marginTop="12dp"
-            android:text="成都武侯区人民南路四段17号"
+            tools:text="成都武侯区人民南路四段17号"
             android:textColor="@color/colorThrText"
             android:textSize="12sp" />
 

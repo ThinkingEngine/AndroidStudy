@@ -115,4 +115,7 @@ public class API {
     /* 体检订单 订单 订单详情 */
     public static final String ORDERS = SERVICE_BASE_URL + "api/physical-exam-order/orders/{order_id}";
 
+    /* 智能助理 */
+    public static final String AI = SERVICE_BASE_URL + "api/physical-exam-order/AI";
+
 }

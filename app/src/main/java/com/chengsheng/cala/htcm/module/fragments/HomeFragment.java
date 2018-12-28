@@ -12,7 +12,8 @@ import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.adapter.AIAssistantAdapter;
 import com.chengsheng.cala.htcm.base.BaseRefreshFragment;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
-import com.chengsheng.cala.htcm.module.activitys.AIAssistantActivity;
+import com.chengsheng.cala.htcm.module.activitys.AiAssistantActivity;
+import com.chengsheng.cala.htcm.module.activitys.AssistantActivity;
 import com.chengsheng.cala.htcm.module.activitys.BarADActivity;
 import com.chengsheng.cala.htcm.module.activitys.ExamAppointmentActivity;
 import com.chengsheng.cala.htcm.module.activitys.ExamReportActivity;
@@ -117,7 +118,7 @@ public class HomeFragment extends BaseRefreshFragment<RecommendedItem> {
 
         //智能助理
         aiAssistant.setOnClickListener(v ->
-                startActivityWithLoginStatus(new AIAssistantActivity()));
+                startActivityWithLoginStatus(new AiAssistantActivity()));
 
         //我的体检
         rootView.findViewById(R.id.tvMyExam).setOnClickListener(v ->

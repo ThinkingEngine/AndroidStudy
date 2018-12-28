@@ -58,7 +58,7 @@
         <!-- 体检预约 -->
         <activity android:name=".module.activitys.ExamAppointmentActivity" />
         <!-- 智能助理 -->
-        <activity android:name=".module.activitys.AIAssistantActivity" />
+        <activity android:name=".module.activitys.AiAssistantActivity" />
         <!-- 我的体检 -->
         <activity android:name=".module.activitys.MyExamActivity" />
         <!-- 体检详情 -->

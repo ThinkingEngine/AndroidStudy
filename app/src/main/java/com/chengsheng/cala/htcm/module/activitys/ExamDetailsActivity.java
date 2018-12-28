@@ -81,7 +81,7 @@ public class ExamDetailsActivity extends BaseActivity {
         examItemNum = findViewById(R.id.exam_item_num);
         examStateText = findViewById(R.id.exam_state_text);
         refreshExamDetail = findViewById(R.id.refresh_exam_detail);
-        rButtonBox = findViewById(R.id.r_button_box);
+        rButtonBox = findViewById(R.id.r_button_box);//自助登记
 
         reportWaitNumBox.setVisibility(View.INVISIBLE);
         examCodeDetail.setVisibility(View.VISIBLE);

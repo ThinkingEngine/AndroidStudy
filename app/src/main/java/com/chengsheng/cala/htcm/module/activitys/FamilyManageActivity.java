@@ -1,6 +1,5 @@
 package com.chengsheng.cala.htcm.module.activitys;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -14,13 +13,13 @@ import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.module.fragments.AddFamilyFragment;
 import com.chengsheng.cala.htcm.module.fragments.FamiliyManageListFragment;
-import com.chengsheng.cala.htcm.module.home.MainActivity;
 
 public class FamilyManageActivity extends BaseActivity implements AddFamilyFragment.OnAddFamilyFragmentInteractionListener {
 
     private ImageView backHomeButton;
     private TextView titleHeader;
     private TextView addFamily;
+
 
     private FamiliyManageListFragment familyListFragment;
     private AddFamilyFragment addFamilyFragment;
@@ -81,8 +80,7 @@ public class FamilyManageActivity extends BaseActivity implements AddFamilyFragm
                 addFamily.setVisibility(View.VISIBLE);
 
             } else if (stats.equals("manage")) {
-                Intent intent = new Intent(FamilyManageActivity.this, MainActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
     }
@@ -100,6 +98,7 @@ public class FamilyManageActivity extends BaseActivity implements AddFamilyFragm
         titleHeader.setText("家人管理");
         addFamily.setText("添加家人");
 
+        //
         addFamily.setVisibility(View.VISIBLE);
     }
 

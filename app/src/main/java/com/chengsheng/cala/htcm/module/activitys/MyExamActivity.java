@@ -1,53 +1,29 @@
 package com.chengsheng.cala.htcm.module.activitys;
 
-import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.chengsheng.cala.htcm.base.BaseActivity;
-import com.chengsheng.cala.htcm.constant.GlobalConstant;
-import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
-import com.chengsheng.cala.htcm.protocol.FamiliesList;
-import com.chengsheng.cala.htcm.protocol.FamiliesListItem;
-import com.chengsheng.cala.htcm.network.MyRetrofit;
-import com.chengsheng.cala.htcm.network.NetService;
+import com.chengsheng.cala.htcm.module.fragments.MyExamFragment;
 import com.chengsheng.cala.htcm.adapter.MyExamPagerViewAdapter;
-import com.chengsheng.cala.htcm.widget.ConditionPopupWindow;
-import com.chengsheng.cala.htcm.module.fragments.MyExamAllFragment;
-import com.zyao89.view.zloading.ZLoadingDialog;
-import com.zyao89.view.zloading.Z_TYPE;
+import com.chengsheng.cala.htcm.widget.AppTitleBar;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.observers.DisposableObserver;
-import io.reactivex.schedulers.Schedulers;
-import retrofit2.Retrofit;
 
-public class MyExamActivity extends BaseActivity implements TabLayout.OnTabSelectedListener,
-        MyExamAllFragment.OnFragmentInteractionListener {
-    private TextView menuBarTitle;
-    private ImageView searchButton;
+public class MyExamActivity extends BaseActivity implements TabLayout.OnTabSelectedListener{
+
     private TabLayout myExamTabLayout;
     private ViewPager myExamPageView;
+    private AppTitleBar header;//头标题
 
     private String[] tabs = new String[]{"全部", "待体检", "体检中", "已体检"};
-    private FamiliesList familiesList;
 
-    private HTCMApp app;
-    private String token;
-
-    private Retrofit retrofit;
-    private ZLoadingDialog loadingDialog;
     private boolean getFamilies = true;//是否已经获取到家人信息
 
     @Override
@@ -57,25 +33,14 @@ public class MyExamActivity extends BaseActivity implements TabLayout.OnTabSelec
 
     @Override
     public void initView() {
-        app = HTCMApp.create(getApplicationContext());
-        loadingDialog = new ZLoadingDialog(this);
-        loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
-        loadingDialog.setHintText("加载中...");
-        loadingDialog.setLoadingColor(getResources().getColor(R.color.colorPrimary));
-        loadingDialog.setDialogBackgroundColor(getResources().getColor(R.color.colorText));
-        loadingDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
-        loadingDialog.setCancelable(false);
-
-        //初始化Activity数据.
-        token = app.getTokenType() + " " + app.getAccessToken();
-        //获取家人信息
-        getFamilies();
         //初始化界面
         initViews();
         //初始化碎片
         List<Fragment> fragments = new ArrayList<>();
         for (int i = 0; i < tabs.length; i++) {
-            fragments.add(MyExamAllFragment.newInstance(tabs[i], token));
+            MyExamFragment fragment = new MyExamFragment();
+            fragment.setMode(tabs[i]);
+            fragments.add(fragment);
         }
 
         FragmentManager fm = getSupportFragmentManager();
@@ -87,83 +52,55 @@ public class MyExamActivity extends BaseActivity implements TabLayout.OnTabSelec
             myExamTabLayout.getTabAt(i).setText(tabs[i]);
         }
 
-        final List<Map<String, String>> listDatas = new ArrayList<>();
-        final ConditionPopupWindow window = new ConditionPopupWindow(this, listDatas);
-        searchButton.setOnClickListener(v -> {
-            if(familiesList.getItems().isEmpty()){
-                getFamilies();
-            }else{
-                if (familiesList != null && listDatas.isEmpty()) {
-                    Map<String, String> header = new HashMap<>();
-                    header.put("SELECT", "false");
-                    header.put("DATA", "");
-                    header.put("ID", "");
-                    listDatas.add(0, header);
-                    for (FamiliesListItem item : familiesList.getItems()) {
-                        Map<String, String> map = new HashMap<>();
-                        map.put("SELECT", "false");
-                        map.put("DATA", item.getFullname());
-                        map.put("ID", String.valueOf(item.getId()));
-                        listDatas.add(map);
-                    }
-                }
-                window.showAsDropDown(searchButton);
-            }
-
-        });
     }
 
     @Override
     public void getData() {
-
+        //获取家人信息
+//        getFamilies();
     }
 
     //获取家人列表
-    private void getFamilies() {
-
-        if (retrofit == null) {
-            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
-        }
-
-        if(!getFamilies){
-            loadingDialog.show();
-        }
-        NetService service = retrofit.create(NetService.class);
-        service.getFamiliesList(token)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableObserver<FamiliesList>() {
-                    @Override
-                    public void onNext(FamiliesList list) {
-                        familiesList = list;
-                        getFamilies = true;
-                        loadingDialog.cancel();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        showShortToast("未能获取到家人列表,请重试!");
-                        getFamilies = false;
-                        loadingDialog.cancel();
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        loadingDialog.cancel();
-                    }
-                });
-
-
-    }
+//    private void getFamilies() {
+//
+//        if (retrofit == null) {
+//            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
+//        }
+//
+//        if (!getFamilies) {
+//        }
+//        NetService service = retrofit.create(NetService.class);
+//        service.getFamiliesList(token)
+//                .subscribeOn(Schedulers.newThread())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new DisposableObserver<FamiliesList>() {
+//                    @Override
+//                    public void onNext(FamiliesList list) {
+//                        familiesList = list;
+//                        getFamilies = true;
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Log.e("TAG", "lose families");
+//                        getFamilies = false;
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//                    }
+//                });
+//
+//
+//    }
 
     private void initViews() {
-        menuBarTitle = findViewById(R.id.title_header_my_exam).findViewById(R.id.menu_bar_title);
-        searchButton = findViewById(R.id.title_header_my_exam).findViewById(R.id.search_button);
+        header = findViewById(R.id.at_my_exam_header);
         myExamTabLayout = findViewById(R.id.my_exam_tab_layout);
         myExamPageView = findViewById(R.id.my_exam_page_view);
 
-        menuBarTitle.setText("我的体检");
-        searchButton.setImageResource(R.mipmap.tijian_xuanren);
+        header.setTitle("我的体检");
+        header.setFinishClickListener(() -> finish());
 
 
         for (int i = 0; i < tabs.length; i++) {
@@ -187,8 +124,4 @@ public class MyExamActivity extends BaseActivity implements TabLayout.OnTabSelec
 
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
 }

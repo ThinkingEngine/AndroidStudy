@@ -5,17 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".module.activitys.MyExamActivity">
-    <include
-        android:id="@+id/title_header_my_exam"
+    <com.chengsheng.cala.htcm.widget.AppTitleBar
+        android:id="@+id/at_my_exam_header"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_alignParentTop="true"
-        layout="@layout/exam_appointment_header_layout"/>
+        android:layout_height="wrap_content"/>
     <android.support.design.widget.TabLayout
         android:id="@+id/my_exam_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        android:layout_below="@id/title_header_my_exam"
+        android:layout_below="@id/at_my_exam_header"
         app:tabBackground="@color/colorWhite"
         app:tabSelectedTextColor="@color/colorPrimary"
         app:tabIndicatorColor="@color/colorPrimary"

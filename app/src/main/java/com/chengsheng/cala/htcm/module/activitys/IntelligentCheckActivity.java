@@ -1,6 +1,7 @@
 package com.chengsheng.cala.htcm.module.activitys;
 
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -102,6 +103,7 @@ public class IntelligentCheckActivity extends BaseActivity {
             public void onError(Throwable e) {
                 hideLoading();
                 showError(e);
+                Log.e("TAG","getIntelligentCheckInfo:"+e.toString());
             }
 
             @Override

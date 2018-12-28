@@ -9,6 +9,7 @@ import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.data.repository.MessageRepository;
 import com.chengsheng.cala.htcm.protocol.childmodela.MessageItem;
 import com.chengsheng.cala.htcm.protocol.childmodela.MessageList;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
@@ -49,7 +50,6 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
     private ServiceMessageRecyclerViewAdapter adapter;
 
     private HTCMApp app;
-    private ZLoadingDialog loadingDialog;
 
 
     @Override
@@ -90,21 +90,16 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
     //获取服务消息列表
     private void getMessageList(int page, final boolean loading) {
 
-        if (retrofit == null) {
-            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
+        if (loading) {
+            showLoading();
         }
 
-        if (loading) {
-            loadingDialog.show();
-        }
-        NetService service = retrofit.create(NetService.class);
-        service.getMessageList(app.getTokenType() + " " + app.getAccessToken(), String.valueOf(page))
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
+        MessageRepository
+                .Companion.getDefault()
+                .getMessageList(String.valueOf(page))
                 .subscribe(new DefaultObserver<MessageList>() {
                     @Override
                     public void onNext(MessageList messageList) {
-
                         if (!addMode) {
                             dataCollect = messageList.getItems();
                             for (MessageItem messageItem : dataCollect) {
@@ -134,7 +129,7 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
                         }
 
                         if (loading) {
-                            loadingDialog.cancel();
+                            hideLoading();
                         }
 
 
@@ -149,18 +144,16 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
                                         check.add(String.valueOf(item.getId()));
                                     }
                                 }
-//                                CallBackDataAuth.doUpdateStateInterface(true);
                                 postCheckSMS(check);
                             }
                         });
-
-
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        Log.e("TAG", "MessageList:" + e.toString());
                         if (loading) {
-                            loadingDialog.cancel();
+                            hideLoading();
                         }
                         serviceMessageList.loadMoreComplete();
                         serviceMessageList.refreshComplete();
@@ -169,12 +162,11 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
                     @Override
                     public void onComplete() {
                         if (loading) {
-                            loadingDialog.cancel();
+                            hideLoading();
                         }
                         serviceMessageList.loadMoreComplete();
                         serviceMessageList.refreshComplete();
                     }
-
                 });
     }
 
@@ -183,7 +175,6 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
             retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
         }
 
-        loadingDialog.show();
         NetService service = retrofit.create(NetService.class);
         service.markMessageReaded(app.getTokenType() + " " + app.getAccessToken(), checks)
                 .subscribeOn(Schedulers.newThread())
@@ -197,7 +188,6 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
 
                     @Override
                     public void onError(Throwable e) {
-                        loadingDialog.cancel();
                         Log.e("TAG", "Service check fal!");
                     }
 
@@ -249,11 +239,5 @@ public class ServiceMessageActivity extends BaseActivity implements UpdateStateI
         app = HTCMApp.create(getApplicationContext());
         CallBackDataAuth.setUpdateStateInterface(this);
         CallBackDataAuth.setCheckServiceInterface(this);
-        loadingDialog = new ZLoadingDialog(this);
-        loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
-        loadingDialog.setDialogBackgroundColor(getResources().getColor(R.color.colorText));
-        loadingDialog.setHintText("加载中....");
-        loadingDialog.setLoadingColor(getResources().getColor(R.color.colorPrimary));
-        loadingDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
     }
 }

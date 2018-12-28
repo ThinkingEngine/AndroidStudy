@@ -353,6 +353,7 @@
         android:layout_height="58dp"
         android:layout_alignParentBottom="true"
         android:background="@color/colorWhite"
+        android:visibility="invisible"
         android:orientation="vertical">
 
         <Button

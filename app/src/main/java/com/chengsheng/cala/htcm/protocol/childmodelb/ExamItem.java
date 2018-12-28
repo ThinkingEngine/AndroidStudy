@@ -8,7 +8,7 @@ public class ExamItem {
     private String content;
     private String exam_purpose;
     private String notice;
-    private boolean before_meal;
+    private int before_meal;
     private int wait_personal;
     private String exam_address;
 
@@ -76,11 +76,11 @@ public class ExamItem {
         this.notice = notice;
     }
 
-    public boolean isBefore_meal() {
+    public int getBefore_meal() {
         return before_meal;
     }
 
-    public void setBefore_meal(boolean before_meal) {
+    public void setBefore_meal(int before_meal) {
         this.before_meal = before_meal;
     }
 

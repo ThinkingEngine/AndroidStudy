@@ -1,5 +1,7 @@
 package com.chengsheng.cala.htcm.module.activitys;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.widget.ImageView;
@@ -10,6 +12,7 @@ import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.data.repository.AIAssistantRepository;
 import com.chengsheng.cala.htcm.protocol.childmodelb.IntelligentCheck;
+import com.chengsheng.cala.htcm.utils.ActivityUtil;
 import com.chengsheng.cala.htcm.utils.FuncUtils;
 import com.chengsheng.cala.htcm.utils.QRCodeUtil;
 import com.chengsheng.cala.htcm.adapter.IntelligentCheckARecyclerAdapter;
@@ -52,7 +55,7 @@ public class IntelligentCheckActivity extends BaseActivity {
     private void initViews() {
         back = findViewById(R.id.title_header_intelligent_check).findViewById(R.id.back_login);
         title = findViewById(R.id.title_header_intelligent_check).findViewById(R.id.menu_bar_title);
-        barCodeMarkIntelligent = findViewById(R.id.bar_code_mark_intelligent);
+        barCodeMarkIntelligent = findViewById(R.id.bar_code_mark_intelligent);//条形码图
         numberBarCodeIntelligent = findViewById(R.id.number_bar_code_intelligent);
         itemPersonName = findViewById(R.id.item_person_name);
         itemPersonSex = findViewById(R.id.item_person_sex);
@@ -69,6 +72,13 @@ public class IntelligentCheckActivity extends BaseActivity {
         barCodeMarkIntelligent.setImageBitmap(QRCodeUtil.createBarcode(id, FuncUtils.dip2px(280), FuncUtils.dip2px(74)));
         numberBarCodeIntelligent.setText(id);
         itemPersonName.setText(intelligentCheck.getExam_customer().getName());
+
+        //条形码图 点击事件跳转到条形码界面
+        barCodeMarkIntelligent.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("FAMILIES_INFO", id);
+            ActivityUtil.Companion.startActivity(this,new BarCodeActivity(),bundle);
+        });
 
         if (intelligentCheck.getExam_customer().getSex().equals("female")) {
             itemPersonSex.setText("女");

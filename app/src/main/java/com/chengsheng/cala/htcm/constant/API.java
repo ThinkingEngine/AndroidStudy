@@ -151,4 +151,7 @@ public class API {
     /* 报告详情 */
     public static final String EXAM_RESULT = SERVICE_BASE_URL + "api/physical-exam-order/exam-result/{orderID}";
 
+    /* 报告对比 */
+    public static final String COMPARISON = SERVICE_BASE_URL + "api/physical-exam-order/exam-result/comparison";
+
 }

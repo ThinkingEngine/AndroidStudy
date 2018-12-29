@@ -2,13 +2,11 @@ package com.chengsheng.cala.htcm.data.service
 
 import com.chengsheng.cala.htcm.constant.API
 import com.chengsheng.cala.htcm.protocol.ExamReportList
+import com.chengsheng.cala.htcm.protocol.ExamReportModel.CompareModel
 import com.chengsheng.cala.htcm.protocol.childmodela.ExamReportDetial
 import io.reactivex.Observable
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Headers
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 
 /**
@@ -39,4 +37,16 @@ interface ExamReport {
     @GET(API.EXAM_RESULT)
     @Headers("Authorization:true")
     fun getExamResult(@Path("orderID") orderID: String): Observable<Response<ExamReportDetial>>
+
+    /**
+     * 报告对比
+     *
+     *orderID:String 订单的id
+     *
+     * 返回：ExamReportDetial.class
+     * */
+    @POST(API.COMPARISON)
+    @FormUrlEncoded
+    @Headers("Authorization:true")
+    fun comparison(@Field("first_order_id") orderIDA: String, @Field("second_order_id") orderIDB: String): Observable<Response<CompareModel>>
 }

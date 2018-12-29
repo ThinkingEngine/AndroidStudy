@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:maxLength="4"
+            android:maxLines="1"
             tools:text="王洛伊"
             android:textColor="@drawable/selecter_text_color"
             android:textSize="12sp"

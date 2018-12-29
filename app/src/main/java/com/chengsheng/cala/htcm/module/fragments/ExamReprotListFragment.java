@@ -128,6 +128,7 @@ public class ExamReprotListFragment extends Fragment implements ExamReportRecycl
                             for (int i = 0; i < items.size(); i++) {
                                 items.get(i).setSelect(false);
                             }
+                            selectReports.clear();
                             adapter.notifyDataSetChanged();
                             adapter.count = 0;
                             childButtonContainer.setVisibility(View.INVISIBLE);

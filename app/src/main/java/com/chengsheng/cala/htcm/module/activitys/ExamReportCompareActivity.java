@@ -18,22 +18,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chengsheng.cala.htcm.base.BaseActivity;
-import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.data.repository.ExamReportRepository;
 import com.chengsheng.cala.htcm.protocol.ExamReportModel.CompareItem;
 import com.chengsheng.cala.htcm.protocol.ExamReportModel.CompareModel;
-import com.chengsheng.cala.htcm.network.ExamReportInterface;
-import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
 import com.chengsheng.cala.htcm.adapter.CompareReportRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.observers.DisposableObserver;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.observers.DefaultObserver;
 import retrofit2.Retrofit;
 
 /**
@@ -47,7 +43,7 @@ public class ExamReportCompareActivity extends BaseActivity {
     private LinearLayout clickContainer;
     private TextView title;
     private RecyclerView compareItemRecycler;
-    private TextView compareA,compareB;
+    private TextView compareA, compareB;
 
     private Retrofit retrofit;
     private HTCMApp app;
@@ -77,8 +73,8 @@ public class ExamReportCompareActivity extends BaseActivity {
         String secondDate = bundle.getString("SECOND_TIME");
 
         initViews();
-        setViews(firstDate,secondDate);
-        getCompareReport(firstID,secondID);
+        setViews(firstDate, secondDate);
+        getCompareReport(firstID, secondID);
 
         setPopupWindow();
     }
@@ -104,16 +100,11 @@ public class ExamReportCompareActivity extends BaseActivity {
 
     }
 
-    private void setViews(String dataA,String dataB){
-        compareA.setText(dataA.substring(0,10));
-        compareB.setText(dataB.substring(0,10));
+    private void setViews(String dataA, String dataB) {
+        compareA.setText(dataA.substring(0, 10));
+        compareB.setText(dataB.substring(0, 10));
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        back.setOnClickListener(v -> finish());
     }
 
     private void setPopupWindow() {
@@ -131,64 +122,57 @@ public class ExamReportCompareActivity extends BaseActivity {
     }
 
 
-    private void getCompareReport(final String f, String s){
-        if(retrofit == null){
-            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
-        }
+    private void getCompareReport(final String f, String s) {
 
-        ExamReportInterface examReportInterface = retrofit.create(ExamReportInterface.class);
-        examReportInterface.getCompareReport(app.getTokenType()+" "+app.getAccessToken(),f,s)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableObserver<CompareModel>() {
-                    @Override
-                    public void onNext(CompareModel compareModel) {
-                        condition.add("全部");
-                        List<CompareItem> items = compareModel.getItems();
-                        for(int i = 0;i < items.size();i++){
-                            condition.add(items.get(i).getCheck_item_name());
+        showLoading();
+        ExamReportRepository
+                .Companion.getDefault()
+                .comparison(f, s)
+                .subscribe(new DefaultObserver<CompareModel>() {
+            @Override
+            public void onNext(CompareModel compareModel) {
+                hideLoading();
+                condition.add("全部");
+                List<CompareItem> items = compareModel.getItems();
+                for (int i = 0; i < items.size(); i++) {
+                    condition.add(items.get(i).getCheck_item_name());
+                }
+
+                temp = items;
+                adapter = new CompareReportRecyclerAdapter(ExamReportCompareActivity.this, compareModel.getItems());
+                compareItemRecycler.setLayoutManager(new LinearLayoutManager(ExamReportCompareActivity.this));
+                compareItemRecycler.setAdapter(adapter);
+
+                clickContainer.setOnClickListener(v -> {
+                    if (!arrow.isSelected()) {
+                        arrow.setSelected(true);
+                        if (window == null) {
+                            Toast.makeText(ExamReportCompareActivity.this, "window null", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(ExamReportCompareActivity.this, "window ok", Toast.LENGTH_SHORT).show();
                         }
-
-                        temp = items;
-                        adapter = new CompareReportRecyclerAdapter(ExamReportCompareActivity.this,compareModel.getItems());
-                        compareItemRecycler.setLayoutManager(new LinearLayoutManager(ExamReportCompareActivity.this));
-                        compareItemRecycler.setAdapter(adapter);
-
-                        clickContainer.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if(!arrow.isSelected()){
-                                    arrow.setSelected(true);
-                                    if(window == null){
-                                        Toast.makeText(ExamReportCompareActivity.this,"window null",Toast.LENGTH_SHORT).show();
-                                    }else{
-                                        Toast.makeText(ExamReportCompareActivity.this,"window ok",Toast.LENGTH_SHORT).show();
-                                    }
-                                    window.showAsDropDown(clickContainer);
-                                }else{
-                                    arrow.setSelected(false);
-                                    window.dismiss();
-                                }
-
-
-
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("TAG","对比报告错误:"+e.toString());
-                    }
-
-                    @Override
-                    public void onComplete() {
-
+                        window.showAsDropDown(clickContainer);
+                    } else {
+                        arrow.setSelected(false);
+                        window.dismiss();
                     }
                 });
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                hideLoading();
+                Log.e("TAG", "对比报告错误:" + e.toString());
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 
-    public class MyBaseAdapter extends BaseAdapter{
+    public class MyBaseAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
@@ -207,31 +191,28 @@ public class ExamReportCompareActivity extends BaseActivity {
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
-            View view = LayoutInflater.from(ExamReportCompareActivity.this).inflate(R.layout.single_text_layout,null);
+            View view = LayoutInflater.from(ExamReportCompareActivity.this).inflate(R.layout.single_text_layout, null);
 
             TextView textView = view.findViewById(R.id.text_mark);
             textView.setText(condition.get(position));
-            textView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    title.setText(condition.get(position));
-                    arrow.setSelected(false);
-                    List<CompareItem> test = new ArrayList<>(temp);
-                    if(condition.get(position).equals("全部")){
-                        CallBackDataAuth.doConditionInterface(test);
-                    }else{
-                        for(int i = 0;i < test.size();i++){
-                            if(test.get(i).getCheck_item_name().equals(condition.get(position))){
-                                CompareItem t = test.get(i);
-                                test.clear();
-                                test.add(t);
-                            }
+            textView.setOnClickListener(v -> {
+                title.setText(condition.get(position));
+                arrow.setSelected(false);
+                List<CompareItem> test = new ArrayList<>(temp);
+                if (condition.get(position).equals("全部")) {
+                    CallBackDataAuth.doConditionInterface(test);
+                } else {
+                    for (int i = 0; i < test.size(); i++) {
+                        if (test.get(i).getCheck_item_name().equals(condition.get(position))) {
+                            CompareItem t = test.get(i);
+                            test.clear();
+                            test.add(t);
                         }
-                        CallBackDataAuth.doConditionInterface(test);
                     }
-
-                    window.dismiss();
+                    CallBackDataAuth.doConditionInterface(test);
                 }
+
+                window.dismiss();
             });
 
             return view;

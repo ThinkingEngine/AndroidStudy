@@ -19,6 +19,7 @@ import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.data.repository.MemberRepository;
 import com.chengsheng.cala.htcm.module.account.LoginActivity;
 import com.chengsheng.cala.htcm.protocol.FamiliesList;
 import com.chengsheng.cala.htcm.protocol.FamiliesListItem;
@@ -27,6 +28,8 @@ import com.chengsheng.cala.htcm.network.NetService;
 import com.chengsheng.cala.htcm.adapter.MainViewPagerAdapter;
 import com.chengsheng.cala.htcm.module.fragments.ExamReprotListFragment;
 import com.chengsheng.cala.htcm.utils.UserUtil;
+import com.chengsheng.cala.htcm.widget.AppTitleBar;
+import com.chengsheng.cala.htcm.widget.OnViewClickListener;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zyao89.view.zloading.ZLoadingDialog;
 import com.zyao89.view.zloading.Z_TYPE;
@@ -35,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DefaultObserver;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
@@ -46,6 +50,7 @@ public class ExamReportActivity extends BaseActivity implements ExamReprotListFr
     private ImageView back;
     private RelativeLayout noFamiliesContent;
     private ImageView noContentsF;
+    private AppTitleBar atExamReport;
 
     private String[] tabIcons;
 
@@ -77,16 +82,14 @@ public class ExamReportActivity extends BaseActivity implements ExamReprotListFr
     }
 
     private void initViews() {
-        title = findViewById(R.id.title_header_exam_report).findViewById(R.id.menu_bar_title);
-        back = findViewById(R.id.title_header_exam_report).findViewById(R.id.back_login);
+        atExamReport = findViewById(R.id.at_exam_report);
         examReportHeader = findViewById(R.id.exam_report_header);
         examReportPage = findViewById(R.id.exam_report_page);
         noFamiliesContent = findViewById(R.id.no_families_content);
         noContentsF = findViewById(R.id.no_contents_f);
 
-        title.setText("体检报告");
-
-        back.setOnClickListener(v -> finish());
+        atExamReport.setTitle("体检报告");
+        atExamReport.setFinishClickListener(() -> finish());
 
         noContentsF.setOnClickListener(v -> updateFamiliesList());
     }
@@ -190,41 +193,34 @@ public class ExamReportActivity extends BaseActivity implements ExamReprotListFr
     }
 
     private void updateFamiliesList() {
-
-        if (retrofit == null) {
-            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
-        }
-
-        NetService service = retrofit.create(NetService.class);
         showLoading();
-        service.getFamiliesList(authorization)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableObserver<FamiliesList>() {
-                    @Override
-                    public void onNext(FamiliesList familiesList) {
-                        hideLoading();
-                        if (!familiesList.getItems().isEmpty()) {
-                            noFamiliesContent.setVisibility(View.INVISIBLE);
-                            initValue(familiesList.getItems());
-                        } else {
-                            noFamiliesContent.setVisibility(View.VISIBLE);
-                        }
+        MemberRepository
+                .Companion.getDefault()
+                .getMember()
+                .subscribe(new DefaultObserver<FamiliesList>() {
+            @Override
+            public void onNext(FamiliesList familiesList) {
+                hideLoading();
+                if (!familiesList.getItems().isEmpty()) {
+                    noFamiliesContent.setVisibility(View.INVISIBLE);
+                    initValue(familiesList.getItems());
+                } else {
+                    noFamiliesContent.setVisibility(View.VISIBLE);
+                }
+            }
 
-                    }
+            @Override
+            public void onError(Throwable e) {
+                hideLoading();
+                showError(e);
+                finish();
+            }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        hideLoading();
-                        noFamiliesContent.setVisibility(View.VISIBLE);
-                        Toast.makeText(ExamReportActivity.this, "当前没有有报告的家人!", Toast.LENGTH_SHORT).show();
-                    }
+            @Override
+            public void onComplete() {
 
-                    @Override
-                    public void onComplete() {
-                        hideLoading();
-                    }
-                });
+            }
+        });
 
     }
 }

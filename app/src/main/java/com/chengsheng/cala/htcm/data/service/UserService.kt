@@ -52,4 +52,11 @@ interface UserService {
     @Headers("Authorization:true")
     @FormUrlEncoded
     fun bindNewMobile(@FieldMap map: Map<String, String>): Observable<Response<Any>>
+
+    /**
+     * 设置登录密码
+     */
+    @PUT(API.RESET_LOGIN_PASSWORD)
+    @FormUrlEncoded
+    fun resetLoginPassword(@FieldMap map: Map<String, String>): Observable<Response<Any>>
 }

@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
-import com.chengsheng.cala.htcm.module.activitys.ForgetPasswordActivity;
+import com.chengsheng.cala.htcm.module.user.account.FindPasswordS1Activity;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
 import com.chengsheng.cala.htcm.protocol.LoginData;
@@ -31,7 +31,7 @@ public class LoginActivity extends BaseActivity {
     private TextView registerTV;
     private TextView loginTV;
     private TextView retrieveTV;
-    private EditText cellphoneEdittext, passwordEdittext;
+    private EditText etLoginMobile, passwordEdittext;
     private Button deleteInput, previewIcon;
     private TextView loginTelService;
     private ImageView outLoginPage;
@@ -60,9 +60,32 @@ public class LoginActivity extends BaseActivity {
 
         initViews();
 
+        if (UserUtil.getMobile() != null && !UserUtil.getMobile().isEmpty()) {
+            etLoginMobile.setText(UserUtil.getMobile());
+        }
+
         MyRetrofit myRetrofit = MyRetrofit.createInstance();
         Retrofit retrofit = myRetrofit.createDefault();
         final NetService service = myRetrofit.create(retrofit, NetService.class);
+
+        RxTextView.textChanges(etLoginMobile).subscribe(new DefaultObserver<CharSequence>() {
+            @Override
+            public void onNext(CharSequence charSequence) {
+                if (charSequence != null && !charSequence.toString().isEmpty() && charSequence.length() == 11) {
+                    passwordEdittext.requestFocus();
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
 
         RxTextView.textChanges(passwordEdittext).subscribe(new DefaultObserver<CharSequence>() {
             @Override
@@ -82,7 +105,7 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
-        //隐藏密码按钮
+        //隐藏密码
         previewIcon.setOnClickListener(v -> {
             if (!passVisible) {
                 passVisible = true;
@@ -93,22 +116,22 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
-        //清空密码框按钮
+        //清空密码
         deleteInput.setOnClickListener(v -> {
             passwordEdittext.setText("");
         });
 
-        //注册功能按钮
+        //注册
         registerTV.setOnClickListener(v -> startActivity(new RegisterActivity()));
 
-        //忘记密码按钮
-        retrieveTV.setOnClickListener(v -> startActivity(new ForgetPasswordActivity()));
+        //忘记密码
+        retrieveTV.setOnClickListener(v -> startActivity(new FindPasswordS1Activity()));
 
         outLoginPage.setOnClickListener(v -> finish());
 
         //登录
         loginTV.setOnClickListener(v -> {
-            userNameInput = cellphoneEdittext.getText().toString();
+            userNameInput = etLoginMobile.getText().toString();
             passwordInput = passwordEdittext.getText().toString();
             if (userNameInput.equals("") || passwordInput.equals("")) {
                 showShortToast("请输入电话手机号");
@@ -168,29 +191,21 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
-    @Override
-    public void getData() {
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (UserUtil.getMobile() != null && !UserUtil.getMobile().isEmpty()) {
-            cellphoneEdittext.setText(UserUtil.getMobile());
-        }
-    }
-
     private void initViews() {
         registerTV = findViewById(R.id.register_button);
         loginTV = findViewById(R.id.login_button);
         retrieveTV = findViewById(R.id.retrieve_pw_button);
-        cellphoneEdittext = findViewById(R.id.et_login_account);
+        etLoginMobile = findViewById(R.id.et_login_account);
         passwordEdittext = findViewById(R.id.et_login_password);
         deleteInput = findViewById(R.id.delete_input);
         previewIcon = findViewById(R.id.preview_icon);
         loginTelService = findViewById(R.id.login_tel_service);
         outLoginPage = findViewById(R.id.out_login_page);
         deleteInput.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void getData() {
+
     }
 }

@@ -97,4 +97,22 @@ class UserRepository private constructor() {
         map["new_phone_number"] = newMobile
         return transformProto(RetrofitHelper.getInstance().userApi.bindNewMobile(map))
     }
+
+    /**
+     * 重置登录密码
+     * @param newPassword 新密码
+     * @param oldPassword 旧密码
+     * @param codeId codeId
+     * @param type old_password和phone_number
+     */
+    fun resetLoginPassword(newPassword: String, oldPassword: String, codeId: String,
+                           type: String, mobile: String): Observable<Any>? {
+        val map = HashMap<String, String>()
+        map["new_password"] = newPassword
+        map["old_password"] = oldPassword
+        map["phone_number_verification_code_id"] = codeId
+        map["vcerification_type"] = type
+        map["username"] = mobile
+        return transformProto(RetrofitHelper.getInstance().userApi.resetLoginPassword(map))
+    }
 }

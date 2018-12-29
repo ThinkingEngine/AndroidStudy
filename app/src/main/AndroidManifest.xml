@@ -27,11 +27,8 @@
         <!-- APP首页 -->
         <activity android:name=".module.home.MainActivity" />
         <activity android:name=".module.account.RegisterActivity" />
-        <activity
-            android:name=".module.account.LoginActivity"
-            android:launchMode="singleTask" />
+        <activity android:name=".module.account.LoginActivity" />
         <activity android:name=".module.WebActivity" />
-        <activity android:name=".module.activitys.ForgetPasswordActivity" />
         <!-- 设置 -->
         <activity android:name=".module.activitys.SettingActivity" />
         <activity android:name=".module.activitys.FAQActivity" />
@@ -154,6 +151,10 @@
         <activity android:name=".module.user.account.MsmVerificationActivity" />
         <!--更换手机号-->
         <activity android:name=".module.user.account.ChangeMobileActivity" />
+        <!--找回密码第一步:获取短信验证码-->
+        <activity android:name=".module.user.account.FindPasswordS1Activity" />
+        <!--找回密码第一步:设置新密码-->
+        <activity android:name=".module.user.account.FindPasswordS2Activity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

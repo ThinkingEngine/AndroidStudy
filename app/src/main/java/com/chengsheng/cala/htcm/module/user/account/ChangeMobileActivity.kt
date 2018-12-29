@@ -106,6 +106,7 @@ class ChangeMobileActivity : BaseActivity() {
 
                     hideLoading()
                     showShortToast("新手机号已绑定")
+                    UserUtil.setMobile(mobile)
                     EventBus.getDefault().post("", BIND_NEW_MOBILE_SUCCESS)
                     Handler().postDelayed({
                         finish()

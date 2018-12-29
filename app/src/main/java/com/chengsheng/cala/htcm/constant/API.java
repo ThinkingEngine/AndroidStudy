@@ -25,6 +25,9 @@ public class API {
     /* 修改账号手机号 */
     public static final String BIND_NEW_MOBILE = ACCOUNT_BASE_URL + "user/account-phone-numbers";
 
+    /* 修改账号手机号 */
+    public static final String RESET_LOGIN_PASSWORD = ACCOUNT_BASE_URL + "user/account-passwords";
+
     /* 修改用户信息 */
     public static final String UPDATE_USER_INFO = ACCOUNT_BASE_URL + "user/account-infos";
 

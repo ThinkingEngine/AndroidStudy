@@ -1,61 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp"
+    android:background="@color/white">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_marginTop="1dp"
-        android:background="@color/colorWhite">
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/appointment_icon"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="20dp"
+        fresco:actualImageScaleType="centerInside"
+        fresco:backgroundImage="@mipmap/wh_img"
+        fresco:roundAsCircle="false" />
 
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/appointment_icon"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            fresco:actualImageScaleType="centerInside"
-            fresco:backgroundImage="@mipmap/wh_img"
-            fresco:roundAsCircle="false" />
+    <TextView
+        android:id="@+id/appointment_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@id/appointment_icon"
+        android:textColor="@color/colorText"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/appointment_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="20dp"
-            android:layout_toRightOf="@id/appointment_icon"
-            android:textStyle="bold"
-            android:textColor="@color/colorText"
-            android:textSize="18sp" />
+    <TextView
+        android:id="@+id/group_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appointment_name"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@id/appointment_icon"
+        android:maxEms="14"
+        android:maxLines="1"
+        android:textColor="@color/colorSecText"
+        android:textSize="14sp"
+        tools:text="体检机构：成都市中医药大学附属医院" />
 
-        <TextView
-            android:id="@+id/group_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/appointment_name"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="10dp"
-            android:layout_toRightOf="@id/appointment_icon"
-            android:maxLines="1"
-            android:maxEms="14"
-            android:text="体检机构：成都市中医药大学附属医院"
-            android:textColor="@color/colorSecText"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/appointment_total_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/group_name"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="10dp"
-            android:layout_toRightOf="@id/appointment_icon"
-            android:text="¥ 2888.00"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="14sp" />
-    </RelativeLayout>
-
-</FrameLayout>
+    <TextView
+        android:id="@+id/appointment_total_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/group_name"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@id/appointment_icon"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="14sp"
+        tools:text="¥ 2888.00" />
+</RelativeLayout>

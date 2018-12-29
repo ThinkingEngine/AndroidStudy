@@ -3,6 +3,7 @@ package com.chengsheng.cala.htcm.data.repository
 import com.chengsheng.cala.htcm.data.retrofit.RetrofitHelper
 import com.chengsheng.cala.htcm.data.transformProto
 import com.chengsheng.cala.htcm.protocol.ExamReportList
+import com.chengsheng.cala.htcm.protocol.childmodela.ExamReportDetial
 import io.reactivex.Observable
 
 /**
@@ -36,5 +37,14 @@ class ExamReportRepository {
      * */
     fun getIssuedReport(customerID: String): Observable<ExamReportList>? {
         return transformProto(RetrofitHelper.getInstance().examReportService.getIssuedReport(customerID))
+    }
+
+    /**
+     * 报告详情
+     *
+     * 获取用户的体检报告的详细情况
+     * */
+    fun getExamResult(orderId: String): Observable<ExamReportDetial>? {
+        return transformProto(RetrofitHelper.getInstance().examReportService.getExamResult(orderId))
     }
 }

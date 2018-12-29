@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.ArrayMap;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,15 +21,13 @@ import com.chengsheng.cala.htcm.protocol.AppointmentBody;
 import com.chengsheng.cala.htcm.protocol.AppointmentDetail;
 import com.chengsheng.cala.htcm.protocol.FamiliesList;
 import com.chengsheng.cala.htcm.protocol.OrderID;
-import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
-import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
-import com.chengsheng.cala.htcm.utils.ExamDateInterface;
 import com.chengsheng.cala.htcm.utils.FuncUtils;
 import com.chengsheng.cala.htcm.adapter.AffirmAppointmentExamPersonAdapter;
+import com.chengsheng.cala.htcm.utils.StringUtils;
+import com.chengsheng.cala.htcm.widget.AppTitleBar;
+import com.chengsheng.cala.htcm.widget.OnViewClickListener;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.zyao89.view.zloading.ZLoadingDialog;
-import com.zyao89.view.zloading.Z_TYPE;
 
 import org.simple.eventbus.Subscriber;
 import org.simple.eventbus.ThreadMode;
@@ -38,33 +35,25 @@ import org.simple.eventbus.ThreadMode;
 import java.util.Calendar;
 import java.util.Map;
 
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DefaultObserver;
-import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
 public class AffirmAppointmentActivity extends BaseActivity {
 
-    private TextView title;
-    private ImageView back;
-    private TextView test, immediatePay;
+    private TextView immediatePay;
+    private TextView appointmentName;
     private RecyclerView examPersonRecycler;//, otherSelectItemRecycler;
     private SimpleDraweeView appointmentIcon;
     private TextView groupName;
     private TextView appointmentTotalPrice;
     private TextView examTotalPrice;
-    private TextView appointmentDateText;
+    private TextView tvSelectDate;
     private TextView userNeedNote;
-    private LinearLayout selectAppointmentDate;
+    private AppTitleBar atAffApp;
 
     private AppointmentBody uploadBody;//数据上传体
 
     private Calendar calendar;
-
-    private Retrofit retrofit;
-    private NetService service;
 
     private String comboID;
 
@@ -94,7 +83,7 @@ public class AffirmAppointmentActivity extends BaseActivity {
         initViews();
 
         //选择日期
-        selectAppointmentDate.setOnClickListener(v -> getDate(appointmentDateText));
+        tvSelectDate.setOnClickListener(v -> getDate(tvSelectDate));
 
         /**
          * 暂时废弃
@@ -145,28 +134,28 @@ public class AffirmAppointmentActivity extends BaseActivity {
                 .Companion.getDefault()
                 .putOrder(params)
                 .subscribe(new DefaultObserver<OrderID>() {
-            @Override
-            public void onNext(OrderID orderID) {
-                app.setOrderID(orderID.getOrder_id());
-                Intent intent = new Intent(AffirmAppointmentActivity.this,
-                        ModePaymentActivity.class);
-                intent.putExtra("ORDER_ID", String.valueOf(orderID.getOrder_id()));
-                intent.putExtra("ORDER_VAL", FuncUtils.getString("COMBO_CAL", ""));
-                startActivity(intent);
-                hideLoading();
-            }
+                    @Override
+                    public void onNext(OrderID orderID) {
+                        app.setOrderID(orderID.getOrder_id());
+                        Intent intent = new Intent(AffirmAppointmentActivity.this,
+                                ModePaymentActivity.class);
+                        intent.putExtra("ORDER_ID", String.valueOf(orderID.getOrder_id()));
+                        intent.putExtra("ORDER_VAL", FuncUtils.getString("COMBO_CAL", ""));
+                        startActivity(intent);
+                        hideLoading();
+                    }
 
-            @Override
-            public void onError(Throwable e) {
-                hideLoading();
-                showError(e);
-            }
+                    @Override
+                    public void onError(Throwable e) {
+                        hideLoading();
+                        showError(e);
+                    }
 
-            @Override
-            public void onComplete() {
+                    @Override
+                    public void onComplete() {
 
-            }
-        });
+                    }
+                });
     }
 
 
@@ -177,27 +166,27 @@ public class AffirmAppointmentActivity extends BaseActivity {
                 .Companion.getDefault()
                 .getMember()
                 .subscribe(new DefaultObserver<FamiliesList>() {
-            @Override
-            public void onNext(FamiliesList familiesList) {
-                AffirmAppointmentExamPersonAdapter adapter = new AffirmAppointmentExamPersonAdapter(
-                        AffirmAppointmentActivity.this, familiesList.getItems());
-                examPersonRecycler.setLayoutManager(new LinearLayoutManager(AffirmAppointmentActivity.this));
-                examPersonRecycler.setAdapter(adapter);
-                examPersonRecycler.setNestedScrollingEnabled(false);
-                hideLoading();
-            }
+                    @Override
+                    public void onNext(FamiliesList familiesList) {
+                        AffirmAppointmentExamPersonAdapter adapter = new AffirmAppointmentExamPersonAdapter(
+                                AffirmAppointmentActivity.this, familiesList.getItems());
+                        examPersonRecycler.setLayoutManager(new LinearLayoutManager(AffirmAppointmentActivity.this));
+                        examPersonRecycler.setAdapter(adapter);
+                        examPersonRecycler.setNestedScrollingEnabled(false);
+                        hideLoading();
+                    }
 
-            @Override
-            public void onError(Throwable e) {
-                showError(e);
-                hideLoading();
-            }
+                    @Override
+                    public void onError(Throwable e) {
+                        showError(e);
+                        hideLoading();
+                    }
 
-            @Override
-            public void onComplete() {
+                    @Override
+                    public void onComplete() {
 
-            }
-        });
+                    }
+                });
 
     }
 
@@ -229,34 +218,36 @@ public class AffirmAppointmentActivity extends BaseActivity {
     }
 
     private void initViews() {
-        title = findViewById(R.id.title_header_affirm_appointment).findViewById(R.id.menu_bar_title);
-        back = findViewById(R.id.title_header_affirm_appointment).findViewById(R.id.back_login);
-        test = findViewById(R.id.affirm_appointment_model_a).findViewById(R.id.appointment_name);
+        atAffApp = findViewById(R.id.at_aff_app);
+        appointmentName = findViewById(R.id.affirm_appointment_model_a).findViewById(R.id.appointment_name);
         appointmentIcon = findViewById(R.id.affirm_appointment_model_a).findViewById(R.id.appointment_icon);
         groupName = findViewById(R.id.affirm_appointment_model_a).findViewById(R.id.group_name);
         appointmentTotalPrice = findViewById(R.id.affirm_appointment_model_a).findViewById(R.id.appointment_total_price);
         examPersonRecycler = findViewById(R.id.affirm_appointment_model_b).findViewById(R.id.exam_person_recycler);
-        selectAppointmentDate = findViewById(R.id.affirm_appointment_model_c).findViewById(R.id.select_appointment_date);
-        appointmentDateText = findViewById(R.id.affirm_appointment_model_c).findViewById(R.id.appointment_date_text);
+        tvSelectDate = findViewById(R.id.affirm_appointment_model_c).findViewById(R.id.tv_select_date);
         userNeedNote = findViewById(R.id.affirm_appointment_model_f).findViewById(R.id.user_need_note);
 
-//        keyIllnessScreeningCoatiner = findViewById(R.id.affirm_appointment_model_b).findViewById(R.id.key_illness_screening_coatiner);
         examTotalPrice = findViewById(R.id.exam_total_price);
         immediatePay = findViewById(R.id.immediate_pay);
 
-        title.setText("确认预约");
+        atAffApp.setTitle("确认预约");
+        atAffApp.setFinishClickListener(() -> finish());
+
+        tvSelectDate.setText(FuncUtils.getCurrentTimeDay());
+        uploadBody.setReserve_date(StringUtils.getText(tvSelectDate));
+
     }
 
     private void setView(AppointmentDetail detail) {
 
-        test.setText(detail.getName());
+        appointmentName.setText(detail.getName());
         appointmentIcon.setImageURI(detail.getBanner_photo());
         groupName.setText("体检机构：" + detail.getOrganization().getName());
         appointmentTotalPrice.setText("¥ " + detail.getPrice());
         examTotalPrice.setText("合计：¥" + detail.getPrice());
         userNeedNote.setText(detail.getReserve_notice());
         uploadBody.setExam_package_id(detail.getId());
-        uploadBody.setReserve_date(appointmentDateText.getText().toString());
+        uploadBody.setReserve_date(tvSelectDate.getText().toString());
 
 
     }
@@ -276,5 +267,10 @@ public class AffirmAppointmentActivity extends BaseActivity {
     @Subscriber(tag = GlobalConstant.BOARD_EXAM_ID, mode = ThreadMode.MAIN)
     private void selectExamId(int id) {
         uploadBody.setCustomer_id(id);
+    }
+
+    @Subscriber(tag = GlobalConstant.CHANGE_MEM, mode = ThreadMode.MAIN)
+    private void refreshFamilies() {
+        getFamiliesList();
     }
 }

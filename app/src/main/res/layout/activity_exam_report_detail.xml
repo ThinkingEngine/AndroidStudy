@@ -7,14 +7,15 @@
     android:background="@color/colorPageBackground"
     tools:context=".module.activitys.ExamReportDetailActivity">
 
-    <include
-        android:id="@+id/title_header_exam_report_detail"
-        layout="@layout/title_bar_type_two_layout" />
+    <com.chengsheng.cala.htcm.widget.AppTitleBar
+        android:id="@+id/at_person_report"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/title_header_exam_report_detail">
+        android:layout_below="@id/at_person_report">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,7 +35,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="30dp"
-                    android:text="周子萱"
+                    tools:text="周子萱"
                     android:textColor="@color/colorWhite"
                     android:textSize="18sp" />
 
@@ -45,7 +46,7 @@
                     android:layout_below="@id/exam_report_detail_person"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="14dp"
-                    android:text="体检号：9484958403"
+                    tools:text="体检号：9484958403"
                     android:textColor="@color/colorWhite"
                     android:textSize="14sp" />
 
@@ -56,7 +57,7 @@
                     android:layout_below="@id/exam_report_detail_num"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="4dp"
-                    android:text="体检日期：2019-02-10"
+                    tools:text="体检日期：2019-02-10"
                     android:textColor="@color/colorWhite"
                     android:textSize="14sp" />
             </RelativeLayout>

@@ -1,4 +1,4 @@
-package com.chengsheng.cala.htcm.module.user
+package com.chengsheng.cala.htcm.module.user.account
 
 import android.annotation.SuppressLint
 import android.os.Handler

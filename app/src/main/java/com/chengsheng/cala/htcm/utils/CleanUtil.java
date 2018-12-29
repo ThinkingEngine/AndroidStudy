@@ -1,6 +1,7 @@
 package com.chengsheng.cala.htcm.utils;
 
 import static com.chengsheng.cala.htcm.constant.GlobalConstant.ACCESS_TOKEN;
+import static com.chengsheng.cala.htcm.constant.GlobalConstant.PASSWORD;
 import static com.chengsheng.cala.htcm.constant.GlobalConstant.TOKEN_TYPE;
 
 /**
@@ -16,5 +17,6 @@ public class CleanUtil {
     public static void cleanAllLoginInfo() {
         PreferenceUtil.remove(ACCESS_TOKEN);
         PreferenceUtil.remove(TOKEN_TYPE);
+        PreferenceUtil.remove(PASSWORD);
     }
 }

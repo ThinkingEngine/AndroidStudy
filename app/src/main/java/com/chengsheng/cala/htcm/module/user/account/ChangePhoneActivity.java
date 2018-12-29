@@ -1,12 +1,16 @@
-package com.chengsheng.cala.htcm.module.activitys;
+package com.chengsheng.cala.htcm.module.user.account;
 
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.base.BaseActivity;
-import com.chengsheng.cala.htcm.module.user.PwdVerificationActivity;
+import com.chengsheng.cala.htcm.constant.GlobalConstant;
+import com.chengsheng.cala.htcm.module.user.account.PwdVerificationActivity;
 import com.chengsheng.cala.htcm.utils.StringUtils;
+
+import org.simple.eventbus.Subscriber;
+import org.simple.eventbus.ThreadMode;
 
 /**
  * Author: 任和
@@ -26,7 +30,7 @@ public class ChangePhoneActivity extends BaseActivity {
         Button btnChangeMobile = findViewById(R.id.change_phone_buton);
         TextView tvMobile = findViewById(R.id.user_phone);
         tvMobile.setText("您的手机号为" + StringUtils.formatMobile(mobile));
-
+        //更换手机号
         btnChangeMobile.setOnClickListener(view ->
                 startActivity(new PwdVerificationActivity()));
     }
@@ -34,5 +38,10 @@ public class ChangePhoneActivity extends BaseActivity {
     @Override
     public void getData() {
 
+    }
+
+    @Subscriber(mode = ThreadMode.MAIN, tag = GlobalConstant.BIND_NEW_MOBILE_SUCCESS)
+    public void changeMobileSuc(Object event) {
+        finish();
     }
 }

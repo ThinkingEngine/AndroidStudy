@@ -31,14 +31,14 @@
             android:name=".module.account.LoginActivity"
             android:launchMode="singleTask" />
         <activity android:name=".module.WebActivity" />
-        <activity android:name=".module.activitys.RetrievePWActivity" />
+        <activity android:name=".module.activitys.ForgetPasswordActivity" />
         <!-- 设置 -->
         <activity android:name=".module.activitys.SettingActivity" />
         <activity android:name=".module.activitys.FAQActivity" />
         <!-- 我的设备 -->
         <activity android:name=".module.activitys.MyDevicesActivity" />
         <!-- 账户设置 -->
-        <activity android:name=".module.user.UserAccountActivity" />
+        <activity android:name=".module.user.account.UserAccountActivity" />
         <activity android:name=".module.activitys.MessageActivity" />
         <!-- 安全设置页 -->
         <activity android:name=".module.activitys.SecuritySettingsActivity" />
@@ -102,7 +102,7 @@
         <!-- 用户头像修改 -->
         <activity android:name=".module.activitys.ChangeAvatarActivity" />
         <!-- 修改电话号码 -->
-        <activity android:name=".module.activitys.ChangePhoneActivity" />
+        <activity android:name=".module.user.account.ChangePhoneActivity" />
         <!-- 我的收藏 -->
         <activity android:name=".module.activitys.MyCollectionActivity" />
         <!-- BAR页 -->
@@ -147,13 +147,13 @@
         <!--编辑家庭-->
         <activity android:name=".module.activitys.EditFamActivity" />
         <!-- 修改昵称 -->
-        <activity android:name=".module.user.ChangeNickNameActivity" />
+        <activity android:name=".module.user.account.ChangeNickNameActivity" />
         <!--密码验证-->
-        <activity android:name=".module.user.PwdVerificationActivity" />
+        <activity android:name=".module.user.account.PwdVerificationActivity" />
         <!--短信验证-->
-        <activity android:name=".module.user.MsmVerificationActivity" />
+        <activity android:name=".module.user.account.MsmVerificationActivity" />
         <!--更换手机号-->
-        <activity android:name=".module.user.ChangeMobileActivity" />
+        <activity android:name=".module.user.account.ChangeMobileActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

@@ -1,7 +1,6 @@
 package com.chengsheng.cala.htcm.module.user;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,6 +23,7 @@ import com.chengsheng.cala.htcm.module.activitys.MyDevicesActivity;
 import com.chengsheng.cala.htcm.module.activitys.ServiceMessageActivity;
 import com.chengsheng.cala.htcm.module.activitys.ServiceOrderActivity;
 import com.chengsheng.cala.htcm.module.activitys.SettingActivity;
+import com.chengsheng.cala.htcm.module.user.account.UserAccountActivity;
 import com.chengsheng.cala.htcm.module.user.card.MemberCardActivity;
 import com.chengsheng.cala.htcm.protocol.childmodela.UserInfo;
 import com.chengsheng.cala.htcm.utils.StringUtils;

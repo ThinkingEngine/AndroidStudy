@@ -1,4 +1,4 @@
-package com.chengsheng.cala.htcm.module.user
+package com.chengsheng.cala.htcm.module.user.account
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
@@ -12,7 +12,6 @@ import com.chengsheng.cala.htcm.base.BaseActivity
 import com.chengsheng.cala.htcm.constant.GlobalConstant
 import com.chengsheng.cala.htcm.data.repository.UserRepository
 import com.chengsheng.cala.htcm.module.activitys.ChangeAvatarActivity
-import com.chengsheng.cala.htcm.module.activitys.ChangePhoneActivity
 import com.chengsheng.cala.htcm.protocol.childmodela.UserInfo
 import com.chengsheng.cala.htcm.utils.StringUtils
 import com.jakewharton.rxbinding2.view.RxView

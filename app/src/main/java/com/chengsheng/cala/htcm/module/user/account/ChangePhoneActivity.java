@@ -1,4 +1,4 @@
-package com.chengsheng.cala.htcm.module.activitys;
+package com.chengsheng.cala.htcm.module.user.account;
 
 import android.widget.Button;
 import android.widget.TextView;
@@ -6,7 +6,7 @@ import android.widget.TextView;
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
-import com.chengsheng.cala.htcm.module.user.PwdVerificationActivity;
+import com.chengsheng.cala.htcm.module.user.account.PwdVerificationActivity;
 import com.chengsheng.cala.htcm.utils.StringUtils;
 
 import org.simple.eventbus.Subscriber;

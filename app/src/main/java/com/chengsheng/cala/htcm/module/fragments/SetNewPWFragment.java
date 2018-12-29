@@ -1,10 +1,8 @@
 package com.chengsheng.cala.htcm.module.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,29 +11,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.constant.GlobalConstant;
+import com.chengsheng.cala.htcm.module.account.LoginActivity;
 import com.chengsheng.cala.htcm.network.AccountService;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
-import com.chengsheng.cala.htcm.module.account.LoginActivity;
-
-import java.io.IOException;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DefaultObserver;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
-import retrofit2.HttpException;
 import retrofit2.Retrofit;
 
-
 public class SetNewPWFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -45,10 +36,7 @@ public class SetNewPWFragment extends Fragment {
     private EditText newPassWord;
     private EditText okNewPassWord;
 
-    private OnSetNewPWFFragmentInteractionListener mListener;
-
     private Retrofit retrofit;
-
 
     public SetNewPWFragment() {
         // Required empty public constructor
@@ -92,7 +80,6 @@ public class SetNewPWFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("EVENT", "click");
                 bundle.putString("SOURCE", "back");
-                onButtonPressed(bundle);
             }
         });
         //确认新密码
@@ -101,10 +88,10 @@ public class SetNewPWFragment extends Fragment {
             public void onClick(View v) {
                 if (newPassWord.getText().toString().equals("")) {
                     Toast.makeText(getContext(), "新密码不能为空", Toast.LENGTH_SHORT).show();
-                } else if(okNewPassWord.getText().toString().equals("")){
+                } else if (okNewPassWord.getText().toString().equals("")) {
                     Toast.makeText(getContext(), "确认密码不能为空", Toast.LENGTH_SHORT).show();
-                }else if ((!newPassWord.getText().toString().equals("") &&
-                        !okNewPassWord.getText().toString().equals("") )&&
+                } else if ((!newPassWord.getText().toString().equals("") &&
+                        !okNewPassWord.getText().toString().equals("")) &&
                         !newPassWord.getText().toString().equals(okNewPassWord.getText().toString())) {
                     Toast.makeText(getContext(), "两次输入的密码不一致，请重新确认!", Toast.LENGTH_SHORT).show();
                 } else {
@@ -114,35 +101,6 @@ public class SetNewPWFragment extends Fragment {
         });
 
         return rootView;
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Bundle bundle) {
-        if (mListener != null) {
-            mListener.onSetNewPWFFragmentInteraction(bundle);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnSetNewPWFFragmentInteractionListener) {
-            mListener = (OnSetNewPWFFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    public interface OnSetNewPWFFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onSetNewPWFFragmentInteraction(Bundle bundle);
     }
 
     private void updateNewWD() {
@@ -166,19 +124,7 @@ public class SetNewPWFragment extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof HttpException) {
-                            ResponseBody body = ((HttpException) e).response().errorBody();
-                            try {
-                                String str = body.string();
-                                Toast.makeText(getContext(), "修改密码失败!" + str, Toast.LENGTH_SHORT).show();
-                                Bundle bundle = new Bundle();
-                                bundle.putString("EVENT", "click");
-                                bundle.putString("SOURCE", "back");
-                                onButtonPressed(bundle);
-                            } catch (IOException e1) {
-                                e1.printStackTrace();
-                            }
-                        }
+
                     }
 
                     @Override

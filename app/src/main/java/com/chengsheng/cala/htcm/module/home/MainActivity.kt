@@ -52,20 +52,25 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private fun replaceFragment(fragment: Fragment) {
-        beginTransaction = supportFragmentManager.beginTransaction()
 
+    private fun replaceFragment(targetFragment: Fragment) {
+        beginTransaction = supportFragmentManager.beginTransaction()
         if (currentFragment == null) {
-            beginTransaction?.add(R.id.layout_main_content, fragment)?.commit()
-        } else if (currentFragment != fragment) {
-            beginTransaction?.hide(currentFragment!!)
-            if (fragment.isAdded) {
-                beginTransaction?.show(fragment)?.commit()
+            beginTransaction?.add(R.id.layout_main_content, targetFragment)
+                    ?.commit()
+        } else {
+            if (!targetFragment.isAdded) {
+                beginTransaction?.hide(currentFragment!!)
+                        ?.add(R.id.layout_main_content, targetFragment)
+                        ?.commit()
             } else {
-                beginTransaction?.add(R.id.layout_main_content, fragment)?.commit()
+                beginTransaction
+                        ?.hide(currentFragment!!)
+                        ?.show(targetFragment)
+                        ?.commit()
             }
         }
-        currentFragment = fragment
+        currentFragment = targetFragment
     }
 
     override fun getData() {

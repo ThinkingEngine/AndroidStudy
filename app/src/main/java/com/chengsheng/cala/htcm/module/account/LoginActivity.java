@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
-import com.chengsheng.cala.htcm.module.activitys.RetrievePWActivity;
+import com.chengsheng.cala.htcm.module.activitys.ForgetPasswordActivity;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
 import com.chengsheng.cala.htcm.protocol.LoginData;
@@ -42,7 +42,7 @@ public class LoginActivity extends BaseActivity {
     private String passwordInput;
 
     /**
-     * 跳转到登录页面
+     * 打开登录页
      */
     public static void start(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -98,12 +98,11 @@ public class LoginActivity extends BaseActivity {
             passwordEdittext.setText("");
         });
 
-
         //注册功能按钮
         registerTV.setOnClickListener(v -> startActivity(new RegisterActivity()));
 
         //忘记密码按钮
-        retrieveTV.setOnClickListener(v -> startActivity(new RetrievePWActivity()));
+        retrieveTV.setOnClickListener(v -> startActivity(new ForgetPasswordActivity()));
 
         outLoginPage.setOnClickListener(v -> finish());
 

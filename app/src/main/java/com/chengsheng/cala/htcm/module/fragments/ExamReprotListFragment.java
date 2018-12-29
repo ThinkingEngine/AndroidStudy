@@ -112,31 +112,25 @@ public class ExamReprotListFragment extends Fragment implements ExamReportRecycl
                         items = examReportList.getItems();
                         adapter = new ExamReportRecyclerAdapter(getContext(), items, ExamReprotListFragment.this);
                         targetExamReportList.setAdapter(adapter);
-                        reportCompare.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (!items.isEmpty()) {
-                                    for (int i = 0; i < items.size(); i++) {
-                                        items.get(i).setSelect(true);
-                                    }
-                                    adapter.notifyDataSetChanged();
-                                    childButtonContainer.setVisibility(View.VISIBLE);
-                                } else {
-                                    ToastUtil.showShortToast(getContext(),"没有可对比的报告数据!");
+                        reportCompare.setOnClickListener(v -> {
+                            if (!items.isEmpty()) {
+                                for (int i = 0; i < items.size(); i++) {
+                                    items.get(i).setSelect(true);
                                 }
+                                adapter.notifyDataSetChanged();
+                                childButtonContainer.setVisibility(View.VISIBLE);
+                            } else {
+                                ToastUtil.showShortToast(getContext(),"没有可对比的报告数据");
                             }
                         });
 
-                        cancelReportCompare.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                for (int i = 0; i < items.size(); i++) {
-                                    items.get(i).setSelect(false);
-                                }
-                                adapter.notifyDataSetChanged();
-                                adapter.count = 0;
-                                childButtonContainer.setVisibility(View.INVISIBLE);
+                        cancelReportCompare.setOnClickListener(v -> {
+                            for (int i = 0; i < items.size(); i++) {
+                                items.get(i).setSelect(false);
                             }
+                            adapter.notifyDataSetChanged();
+                            adapter.count = 0;
+                            childButtonContainer.setVisibility(View.INVISIBLE);
                         });
                         Log.e("TAG", "请求完成:" + examReportList.toString());
                     }
@@ -155,33 +149,30 @@ public class ExamReprotListFragment extends Fragment implements ExamReportRecycl
         childButtonContainer.setVisibility(View.INVISIBLE);
 
 
-        startReportCompare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (selectReports.isEmpty()) {
-                    if(BuildConfig.DEBUG){
-                        Log.e("TAG", "获取要对比的报告为空!");
-                    }
-                    ToastUtil.showShortToast(getContext(),"获取要对比的报告为空!");
-                } else if (selectReports.size() < 2) {
-                    if(BuildConfig.DEBUG){
-                        Log.e("TAG", "需要两个报告的ID:" + selectReports.size());
-                    }
-                    ToastUtil.showShortToast(getContext(),"需要两个报告的ID!");
-                } else {
-                    if(BuildConfig.DEBUG){
-                        Log.e("TAG", "已选择的报告数:" + selectReports.size());
-                    }
-
-                    Bundle bundle = new Bundle();
-                    bundle.putString("FIRST_ID", String.valueOf(selectReports.get(0).getOrderId()));
-                    bundle.putString("FIRST_TIME", selectReports.get(0).getIssued_date());
-                    bundle.putString("SECOND_ID", String.valueOf(selectReports.get(1).getOrderId()));
-                    bundle.putString("SECOND_TIME", selectReports.get(1).getIssued_date());
-                    ActivityUtil.Companion.startActivity(getContext(),new ExamReportCompareActivity(),bundle);
+        startReportCompare.setOnClickListener(v -> {
+            if (selectReports.isEmpty()) {
+                if(BuildConfig.DEBUG){
+                    Log.e("TAG", "获取要对比的报告为空!");
+                }
+                ToastUtil.showShortToast(getContext(),"获取要对比的报告为空!");
+            } else if (selectReports.size() < 2) {
+                if(BuildConfig.DEBUG){
+                    Log.e("TAG", "需要两个报告的ID:" + selectReports.size());
+                }
+                ToastUtil.showShortToast(getContext(),"需要两个报告的ID!");
+            } else {
+                if(BuildConfig.DEBUG){
+                    Log.e("TAG", "已选择的报告数:" + selectReports.size());
                 }
 
+                Bundle bundle = new Bundle();
+                bundle.putString("FIRST_ID", String.valueOf(selectReports.get(0).getOrderId()));
+                bundle.putString("FIRST_TIME", selectReports.get(0).getIssued_date());
+                bundle.putString("SECOND_ID", String.valueOf(selectReports.get(1).getOrderId()));
+                bundle.putString("SECOND_TIME", selectReports.get(1).getIssued_date());
+                ActivityUtil.Companion.startActivity(getContext(),new ExamReportCompareActivity(),bundle);
             }
+
         });
 
         return rootViews;

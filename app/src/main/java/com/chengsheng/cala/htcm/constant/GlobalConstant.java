@@ -29,6 +29,15 @@ public class GlobalConstant {
      */
     public static final String UPDATE_AI_ASSISTANT_DATA = "updateAIAssistant";
 
+    /**
+     * 刷新主页新闻的浏览量
+     */
+    public static final String UPDATE_NEWS_BOWSE = "updateNewsBowse";
+    /**
+     * 通知 确认预约 用户选择的体检人的id
+     */
+    public static final String BOARD_EXAM_ID = "boardExamID";
+
 
     public static final String TEST_URL = "http://account.zz-tech.com.cn:85/";
     public static final String API_URL = "http://api.peis-mobile.zz-tech.com.cn:85/api/physical-exam-item/";

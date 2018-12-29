@@ -14,9 +14,10 @@ import com.chengsheng.cala.htcm.protocol.articleModel.RecommendedItem;
 import com.chengsheng.cala.htcm.network.ArticlesService;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.widget.ShareDialog;
-import com.zyao89.view.zloading.ZLoadingDialog;
-import com.zyao89.view.zloading.Z_TYPE;
 
+
+import org.simple.eventbus.EventBus;
+import org.simple.eventbus.Subscriber;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
@@ -34,7 +35,6 @@ public class NewsDetailActivity extends BaseActivity {
 
     private Retrofit retrofit;
     private HTCMApp app;
-    private ZLoadingDialog loadingDialog;
 
 
     @Override
@@ -48,12 +48,6 @@ public class NewsDetailActivity extends BaseActivity {
 
         Bundle bundle = getIntent().getExtras();
         final RecommendedItem recommendedItem = (RecommendedItem) bundle.getSerializable("NEWS_DETAIL");
-
-        loadingDialog = new ZLoadingDialog(this);
-        loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
-        loadingDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
-        loadingDialog.setLoadingColor(getResources().getColor(R.color.colorPrimary));
-        loadingDialog.setDialogBackgroundColor(getResources().getColor(R.color.colorText));
 
         initViews();
 
@@ -75,6 +69,7 @@ public class NewsDetailActivity extends BaseActivity {
                     @Override
                     public void onError(Throwable e) {
 
+                        EventBus.getDefault().post("","");
 
                     }
 
@@ -85,6 +80,9 @@ public class NewsDetailActivity extends BaseActivity {
                 });
 
         setViews(recommendedItem);
+
+        //发布事件 通知主页更新新闻浏览数据
+        EventBus.getDefault().post("",GlobalConstant.UPDATE_NEWS_BOWSE);
 
         collectNews.setOnClickListener(v -> {
             if (collectNews.isSelected()) {
@@ -110,6 +108,7 @@ public class NewsDetailActivity extends BaseActivity {
 
         title.setText("资讯详情");
 
+        //新闻分享方法
         shareNews.setOnClickListener(v -> new ShareDialog()
                 .build(this)
                 .showDialog()
@@ -152,8 +151,7 @@ public class NewsDetailActivity extends BaseActivity {
             retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
         }
 
-        loadingDialog.setHintText("收藏中....");
-        loadingDialog.show();
+        showLoading();
         ArticlesService service = retrofit.create(ArticlesService.class);
         service.articleCollect(app.getTokenType() + " " + app.getAccessToken(), GlobalConstant.ARTICLE_COLLECT + recommendedItem.getId())
                 .subscribeOn(Schedulers.newThread())
@@ -162,14 +160,14 @@ public class NewsDetailActivity extends BaseActivity {
                     @Override
                     public void onNext(ResponseBody responseBody) {
                         collectNews.setSelected(true);
-                        loadingDialog.cancel();
+                        hideLoading();
                         showShortToast("收藏成功!");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        loadingDialog.cancel();
-                        showShortToast("收藏失败，请重新再试");
+                        hideLoading();
+                        showShortToast("收藏失败 请重新再试");
                     }
 
                     @Override
@@ -184,8 +182,7 @@ public class NewsDetailActivity extends BaseActivity {
             retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
         }
 
-        loadingDialog.setHintText("取消中....");
-        loadingDialog.show();
+        showLoading();
         ArticlesService service = retrofit.create(ArticlesService.class);
         service.articleCancelCollect(app.getTokenType() + " " + app.getAccessToken(), GlobalConstant.ARTICLE_COLLECT + recommendedItem.getId())
                 .subscribeOn(Schedulers.newThread())
@@ -194,14 +191,14 @@ public class NewsDetailActivity extends BaseActivity {
                     @Override
                     public void onNext(ResponseBody responseBody) {
                         collectNews.setSelected(false);
-                        loadingDialog.cancel();
+                        hideLoading();
                         showShortToast("已取消收藏!");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        loadingDialog.cancel();
-                        showShortToast("取消收藏失败，请重新再试");
+                        hideLoading();
+                        showShortToast("取消收藏失败 请重新再试");
                     }
 
                     @Override
@@ -210,4 +207,7 @@ public class NewsDetailActivity extends BaseActivity {
                     }
                 });
     }
+
+//    @Subscriber(tag = "",mode = )
+//    private
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.ArrayMap;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.data.repository.MemberRepository;
 import com.chengsheng.cala.htcm.protocol.AppointmentBody;
 import com.chengsheng.cala.htcm.protocol.AppointmentDetail;
 import com.chengsheng.cala.htcm.protocol.FamiliesList;
@@ -28,17 +30,21 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.zyao89.view.zloading.ZLoadingDialog;
 import com.zyao89.view.zloading.Z_TYPE;
 
+import org.simple.eventbus.Subscriber;
+import org.simple.eventbus.ThreadMode;
+
 import java.util.Calendar;
 import java.util.Map;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DefaultObserver;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
-public class AffirmAppointmentActivity extends BaseActivity implements ExamDateInterface {
+public class AffirmAppointmentActivity extends BaseActivity {
 
     private TextView title;
     private ImageView back;
@@ -65,10 +71,10 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
     private HTCMApp app;
 
 
-    @Override
-    public void getExamDate(int id) {
-        uploadBody.setCustomer_id(id);
-    }
+//    @Override
+//    public void getExamDate(int id) {
+//        uploadBody.setCustomer_id(id);
+//    }
 
 
     @Override
@@ -79,7 +85,6 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
     @Override
     public void initView() {
 
-        CallBackDataAuth.setExamDateInterface(this);
         Bundle bundle = getIntent().getExtras();
         comboID = bundle.getString("COMBO_ID");
         app = HTCMApp.create(getApplicationContext());
@@ -124,9 +129,9 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
         //立即支付 点击事件
         immediatePay.setOnClickListener(v -> {
             if (uploadBody.getCustomer_id() == -1) {
-                showShortToast("对不起，你还没有选择家人的!");
+                showShortToast("对不起 你还没有选择家人的");
             } else if (uploadBody.getReserve_date().equals("") || uploadBody.getReserve_date().equals("请选择体检日期")) {
-                showShortToast("对不起，你还没有选择体检日期的!");
+                showShortToast("对不起 你还没有选择体检日期的");
             } else {
                 affirmButton();
             }
@@ -180,33 +185,26 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
 
     //获取家人列表
     private void getFamiliesList() {
-        if (retrofit == null) {
-            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
-        }
 
-        NetService service = retrofit.create(NetService.class);
-        service.getFamiliesList(app.getTokenType() + " " + app.getAccessToken())
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableObserver<FamiliesList>() {
-                    @Override
-                    public void onNext(FamiliesList familiesList) {
-                        AffirmAppointmentExamPersonAdapter adapter = new AffirmAppointmentExamPersonAdapter(AffirmAppointmentActivity.this, familiesList.getItems());
-                        examPersonRecycler.setLayoutManager(new LinearLayoutManager(AffirmAppointmentActivity.this));
-                        examPersonRecycler.setAdapter(adapter);
-                        examPersonRecycler.setNestedScrollingEnabled(false);
-                    }
+        MemberRepository.Companion.getDefault().getMember().subscribe(new DefaultObserver<FamiliesList>() {
+            @Override
+            public void onNext(FamiliesList familiesList) {
+                AffirmAppointmentExamPersonAdapter adapter = new AffirmAppointmentExamPersonAdapter(AffirmAppointmentActivity.this, familiesList.getItems());
+                examPersonRecycler.setLayoutManager(new LinearLayoutManager(AffirmAppointmentActivity.this));
+                examPersonRecycler.setAdapter(adapter);
+                examPersonRecycler.setNestedScrollingEnabled(false);
+            }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        showError(e);
-                    }
+            @Override
+            public void onError(Throwable e) {
+                showError(e);
+            }
 
-                    @Override
-                    public void onComplete() {
+            @Override
+            public void onComplete() {
 
-                    }
-                });
+            }
+        });
 
     }
 
@@ -287,5 +285,10 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
             textView.setText(year + "-" + (month + 1) + "-" + dayOfMonth);
             uploadBody.setReserve_date(year + "-" + (month + 1) + "-" + dayOfMonth);
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    @Subscriber(tag = GlobalConstant.BOARD_EXAM_ID, mode = ThreadMode.MAIN)
+    private void selectExamId(int id) {
+        uploadBody.setCustomer_id(id);
     }
 }

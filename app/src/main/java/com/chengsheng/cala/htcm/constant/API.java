@@ -130,4 +130,7 @@ public class API {
     /* 消息列表 */
     public static final String SMS_LIST = SERVICE_BASE_URL + "api/message/messages";
 
+    /* 体检报告列表 */
+    public static final String ISSUED_REPORT = SERVICE_BASE_URL + "api/physical-exam-order/issued-reports";
+
 }

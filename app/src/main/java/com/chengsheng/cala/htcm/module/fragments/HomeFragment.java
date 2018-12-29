@@ -103,8 +103,6 @@ public class HomeFragment extends BaseRefreshFragment<RecommendedItem> {
             }
         });
 
-        //新闻列表
-        getRecommendNews();
 
         BGALocalImageSize localImageSize = new BGALocalImageSize(1080, 504,
                 540, 252);
@@ -142,6 +140,8 @@ public class HomeFragment extends BaseRefreshFragment<RecommendedItem> {
     @Override
     public void getData(int page) {
         updateAIAssistant();
+        //新闻列表
+        getRecommendNews();
         if (UserUtil.isLogin()) {
             getSystemSMS();
         }
@@ -157,6 +157,7 @@ public class HomeFragment extends BaseRefreshFragment<RecommendedItem> {
      * 获取推荐资讯
      */
     private void getRecommendNews() {
+
         if (retrofit == null) {
             retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
         }
@@ -288,6 +289,11 @@ public class HomeFragment extends BaseRefreshFragment<RecommendedItem> {
     @Subscriber(mode = ThreadMode.MAIN, tag = GlobalConstant.UPDATE_AI_ASSISTANT_DATA)
     public void refresh(String event) {
         updateAIAssistant();
+    }
+
+    @Subscriber(mode = ThreadMode.MAIN,tag = GlobalConstant.UPDATE_NEWS_BOWSE)
+    public void refreshNews(String event){
+        getRecommendNews();
     }
 
 }

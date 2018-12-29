@@ -2,6 +2,7 @@ package com.chengsheng.cala.htcm.data.repository
 
 import com.chengsheng.cala.htcm.data.retrofit.RetrofitHelper
 import com.chengsheng.cala.htcm.data.transformProto
+import com.chengsheng.cala.htcm.protocol.OrderID
 import com.chengsheng.cala.htcm.protocol.childmodelb.ExamOrder
 import com.chengsheng.cala.htcm.protocol.childmodelb.ExamOrderDetail
 import com.chengsheng.cala.htcm.protocol.childmodelb.UserExamDetail
@@ -58,6 +59,13 @@ class ExamOrderRepository private constructor() {
      * */
     fun getOrders(orderId: String): Observable<ExamOrderDetail>? {
         return transformProto(RetrofitHelper.getInstance().orderService.getOrders(orderId))
+    }
+
+    /**
+     * 预约订单
+     * */
+    fun putOrder(map: Map<String, String>): Observable<OrderID>? {
+        return transformProto(RetrofitHelper.getInstance().orderService.putOrder(map))
     }
 
 }

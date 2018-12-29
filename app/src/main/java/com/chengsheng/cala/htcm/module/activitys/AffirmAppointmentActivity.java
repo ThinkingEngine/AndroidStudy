@@ -15,6 +15,8 @@ import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
+import com.chengsheng.cala.htcm.data.repository.ComboRepository;
+import com.chengsheng.cala.htcm.data.repository.ExamOrderRepository;
 import com.chengsheng.cala.htcm.data.repository.MemberRepository;
 import com.chengsheng.cala.htcm.protocol.AppointmentBody;
 import com.chengsheng.cala.htcm.protocol.AppointmentDetail;
@@ -40,7 +42,6 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DefaultObserver;
-import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
@@ -50,7 +51,6 @@ public class AffirmAppointmentActivity extends BaseActivity {
     private ImageView back;
     private TextView test, immediatePay;
     private RecyclerView examPersonRecycler;//, otherSelectItemRecycler;
-    //    private RelativeLayout keyIllnessScreeningCoatiner;
     private SimpleDraweeView appointmentIcon;
     private TextView groupName;
     private TextView appointmentTotalPrice;
@@ -69,12 +69,6 @@ public class AffirmAppointmentActivity extends BaseActivity {
     private String comboID;
 
     private HTCMApp app;
-
-
-//    @Override
-//    public void getExamDate(int id) {
-//        uploadBody.setCustomer_id(id);
-//    }
 
 
     @Override
@@ -140,64 +134,63 @@ public class AffirmAppointmentActivity extends BaseActivity {
 
     //确认预约 功能，将预约信息提交到服务器
     private void affirmButton() {
-        if (retrofit == null) {
-            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
-        }
 
-        NetService service = retrofit.create(NetService.class);
         showLoading();
         Map<String, String> params = new ArrayMap<>();
         params.put("customer_id", String.valueOf(uploadBody.getCustomer_id()));
         params.put("reserve_date", uploadBody.getReserve_date());
         params.put("exam_package_id", comboID);
-        service.putAppointment(app.getTokenType() + " " + app.getAccessToken(), params)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<OrderID>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
 
-                    }
+        ExamOrderRepository
+                .Companion.getDefault()
+                .putOrder(params)
+                .subscribe(new DefaultObserver<OrderID>() {
+            @Override
+            public void onNext(OrderID orderID) {
+                app.setOrderID(orderID.getOrder_id());
+                Intent intent = new Intent(AffirmAppointmentActivity.this,
+                        ModePaymentActivity.class);
+                intent.putExtra("ORDER_ID", String.valueOf(orderID.getOrder_id()));
+                intent.putExtra("ORDER_VAL", FuncUtils.getString("COMBO_CAL", ""));
+                startActivity(intent);
+                hideLoading();
+            }
 
-                    @Override
-                    public void onNext(OrderID orderID) {
-                        app.setOrderID(orderID.getOrder_id());
-                        Intent intent = new Intent(AffirmAppointmentActivity.this, ModePaymentActivity.class);
-                        intent.putExtra("ORDER_ID", String.valueOf(orderID.getOrder_id()));
-                        intent.putExtra("ORDER_VAL", FuncUtils.getString("COMBO_CAL", ""));
-                        startActivity(intent);
-                        hideLoading();
-                    }
+            @Override
+            public void onError(Throwable e) {
+                hideLoading();
+                showError(e);
+            }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        hideLoading();
-                        showError(e);
-                    }
+            @Override
+            public void onComplete() {
 
-                    @Override
-                    public void onComplete() {
-                        hideLoading();
-                    }
-                });
+            }
+        });
     }
 
 
     //获取家人列表
     private void getFamiliesList() {
 
-        MemberRepository.Companion.getDefault().getMember().subscribe(new DefaultObserver<FamiliesList>() {
+        MemberRepository
+                .Companion.getDefault()
+                .getMember()
+                .subscribe(new DefaultObserver<FamiliesList>() {
             @Override
             public void onNext(FamiliesList familiesList) {
-                AffirmAppointmentExamPersonAdapter adapter = new AffirmAppointmentExamPersonAdapter(AffirmAppointmentActivity.this, familiesList.getItems());
+                AffirmAppointmentExamPersonAdapter adapter = new AffirmAppointmentExamPersonAdapter(
+                        AffirmAppointmentActivity.this, familiesList.getItems());
                 examPersonRecycler.setLayoutManager(new LinearLayoutManager(AffirmAppointmentActivity.this));
                 examPersonRecycler.setAdapter(adapter);
                 examPersonRecycler.setNestedScrollingEnabled(false);
+                hideLoading();
             }
 
             @Override
             public void onError(Throwable e) {
                 showError(e);
+                hideLoading();
             }
 
             @Override
@@ -210,27 +203,20 @@ public class AffirmAppointmentActivity extends BaseActivity {
 
     //获取套餐详情
     private void getComboDetail(String comboId) {
-        if (retrofit == null) {
-            retrofit = MyRetrofit.createInstance().createURL(GlobalConstant.API_BASE_URL);
-        }
-
-        service = retrofit.create(NetService.class);
         showLoading();
-        service.getCombonDetail(GlobalConstant.EXAM_PACKAGES + comboId, app.getTokenType() + " " + app.getAccessToken())
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableObserver<AppointmentDetail>() {
+        ComboRepository
+                .Companion.getDefault()
+                .getComboDetail(comboId)
+                .subscribe(new DefaultObserver<AppointmentDetail>() {
                     @Override
                     public void onNext(AppointmentDetail appointmentDetail) {
                         FuncUtils.putString("COMBO", String.valueOf(appointmentDetail.getId()));
                         FuncUtils.putString("COMBO_CAL", appointmentDetail.getPrice());
                         setView(appointmentDetail);
-                        hideLoading();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        hideLoading();
                         showError(e);
                     }
 

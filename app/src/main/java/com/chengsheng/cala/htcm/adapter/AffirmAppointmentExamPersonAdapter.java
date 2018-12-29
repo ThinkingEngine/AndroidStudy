@@ -61,9 +61,9 @@ public class AffirmAppointmentExamPersonAdapter extends RecyclerView.Adapter<Aff
 
 
             if(info.isIs_default()){
-                if(select){
+                if(!select){
                     EventBus.getDefault().post(info.getId(),GlobalConstant.BOARD_EXAM_ID);
-                    viewHolder.buttonSelectFamilies.isSelected();
+                    viewHolder.buttonSelectFamilies.setSelected(true);
                 }
             }
 

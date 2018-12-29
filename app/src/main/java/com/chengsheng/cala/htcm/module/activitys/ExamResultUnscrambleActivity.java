@@ -2,9 +2,7 @@ package com.chengsheng.cala.htcm.module.activitys;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chengsheng.cala.htcm.base.BaseActivity;
@@ -12,20 +10,19 @@ import com.chengsheng.cala.htcm.HTCMApp;
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.protocol.childmodela.examItemResult;
 import com.chengsheng.cala.htcm.adapter.ExamDetailTypeARecyclerAdapter;
+import com.chengsheng.cala.htcm.widget.AppTitleBar;
 import com.chengsheng.cala.htcm.widget.MyRecyclerView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 
 public class ExamResultUnscrambleActivity extends BaseActivity {
 
-    private TextView title,childTitle;
-    private ImageView back;
-    private TextView examDetailName,examAbnormalTips;
+    private AppTitleBar atExamDetail;
+    private TextView examDetailName, examAbnormalTips;
     private TextView docResultText;
     private SimpleDraweeView docSignatureMarkB;
     private MyRecyclerView examDetailTypeA;
     private TextView tips;
-
 
 
     @Override
@@ -44,18 +41,18 @@ public class ExamResultUnscrambleActivity extends BaseActivity {
 
         initViews();
         examDetailName.setText(result.getName());
-        if(result.getException_count() == 0){
+        if (result.getException_count() == 0) {
             examAbnormalTips.setVisibility(View.INVISIBLE);
-        }else{
+        } else {
             examAbnormalTips.setVisibility(View.VISIBLE);
-            examAbnormalTips.setText(result.getException_count()+"项异常数");
+            examAbnormalTips.setText(result.getException_count() + "项异常数");
         }
 
-        docResultText.setText("小结:"+result.getSummary());
+        docResultText.setText("小结:" + result.getSummary());
 
         docSignatureMarkB.setImageURI(result.getDoctor_sign());
 
-        ExamDetailTypeARecyclerAdapter adapter = new ExamDetailTypeARecyclerAdapter(this,result.getSingle_item_result(),result.getType());
+        ExamDetailTypeARecyclerAdapter adapter = new ExamDetailTypeARecyclerAdapter(this, result.getSingle_item_result(), result.getType());
         examDetailTypeA.setLayoutManager(new LinearLayoutManager(this));
         examDetailTypeA.setAdapter(adapter);
     }
@@ -65,10 +62,8 @@ public class ExamResultUnscrambleActivity extends BaseActivity {
 
     }
 
-    private void initViews(){
-        title = findViewById(R.id.title_header_exam_result_unscramble).findViewById(R.id.menu_bar_title);
-        childTitle = findViewById(R.id.title_header_exam_result_unscramble).findViewById(R.id.message_mark_text);
-        back = findViewById(R.id.title_header_exam_result_unscramble).findViewById(R.id.back_login);
+    private void initViews() {
+        atExamDetail = findViewById(R.id.at_exam_detail);
         examDetailName = findViewById(R.id.exam_detail_name);
         examAbnormalTips = findViewById(R.id.exam_abnormal_tips);
         docResultText = findViewById(R.id.doc_result_text);
@@ -76,16 +71,10 @@ public class ExamResultUnscrambleActivity extends BaseActivity {
         examDetailTypeA = findViewById(R.id.exam_detail_type_a);
         tips = findViewById(R.id.tips);
 
-        title.setText("检查详情");
-        childTitle.setVisibility(View.INVISIBLE);
+        atExamDetail.setTitle("检查详情");
+        atExamDetail.setFinishClickListener(() -> finish());
 
         examDetailTypeA.setFocusable(false);
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 }

@@ -43,6 +43,11 @@ public class GlobalConstant {
      */
     public static final String UPDATE_NICKNAME_SUCCESS = "updateNickName";
 
+    /**
+     * 家庭成员变更通知
+     */
+    public static final String CHANGE_MEM = "changeMem";
+
 
     public static final String TEST_URL = "http://account.zz-tech.com.cn:85/";
     public static final String API_URL = "http://api.peis-mobile.zz-tech.com.cn:85/api/physical-exam-item/";

@@ -139,4 +139,7 @@ public class API {
     /* 预约订单 */
     public static final String PUT_ORDER = SERVICE_BASE_URL + "api/physical-exam-order/orders";
 
+    /* 报告详情 */
+    public static final String EXAM_RESULT = SERVICE_BASE_URL + "api/physical-exam-order/exam-result/{orderID}";
+
 }

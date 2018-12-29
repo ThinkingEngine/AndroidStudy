@@ -12,8 +12,8 @@ public class singleItemResult implements Serializable {
     private String measure_unit;
     private int type;
     private boolean is_exception;
-    private int low_limit;
-    private int upper_limit;
+    private float low_limit;
+    private float upper_limit;
     private String[] images;
 
     public String getName() {
@@ -56,7 +56,7 @@ public class singleItemResult implements Serializable {
         this.is_exception = is_exception;
     }
 
-    public int getLow_limit() {
+    public float getLow_limit() {
         return low_limit;
     }
 
@@ -64,7 +64,7 @@ public class singleItemResult implements Serializable {
         this.low_limit = low_limit;
     }
 
-    public int getUpper_limit() {
+    public float getUpper_limit() {
         return upper_limit;
     }
 

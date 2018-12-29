@@ -89,7 +89,7 @@ public class API {
     public static final String EXAM_PACKAGE = SERVICE_BASE_URL + "api/physical-exam-item/exam-packages/enable";
 
     /*  套餐详情 */
-    public static final String EXAM_PACKAGES = SERVICE_BASE_URL + "api/physical-exam-item/exam-packages/";
+    public static final String EXAM_PACKAGES = SERVICE_BASE_URL + "api/physical-exam-item/exam-packages/{comboID}";
 
     /* 获取家人列表 */
     public static final String FAMILY_MEMBER = SERVICE_BASE_URL + "api/family/account-family-members";
@@ -141,5 +141,11 @@ public class API {
 
     /* 消息列表 */
     public static final String SMS_LIST = SERVICE_BASE_URL + "api/message/messages";
+
+    /* 体检报告列表 */
+    public static final String ISSUED_REPORT = SERVICE_BASE_URL + "api/physical-exam-order/issued-reports";
+
+    /* 预约订单 */
+    public static final String PUT_ORDER = SERVICE_BASE_URL + "api/physical-exam-order/orders";
 
 }

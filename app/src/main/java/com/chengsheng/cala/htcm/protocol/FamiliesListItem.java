@@ -14,6 +14,7 @@ public class FamiliesListItem implements Serializable {
     private String owner_relationship;
     private String avatar_path;
     private String health_card_no;
+    private boolean is_default;
 
     private boolean is_select = false;
 
@@ -81,7 +82,13 @@ public class FamiliesListItem implements Serializable {
         this.health_card_no = health_card_no;
     }
 
+    public boolean isIs_default() {
+        return is_default;
+    }
 
+    public void setIs_default(boolean is_default) {
+        this.is_default = is_default;
+    }
 
     public boolean isIs_select() {
         return is_select;
@@ -102,6 +109,8 @@ public class FamiliesListItem implements Serializable {
                 ", owner_relationship='" + owner_relationship + '\'' +
                 ", avatar_path='" + avatar_path + '\'' +
                 ", health_card_no='" + health_card_no + '\'' +
+                ", is_default=" + is_default +
+                ", is_select=" + is_select +
                 '}';
     }
 }

@@ -2,6 +2,7 @@ package com.chengsheng.cala.htcm.data.repository
 
 import com.chengsheng.cala.htcm.data.retrofit.RetrofitHelper
 import com.chengsheng.cala.htcm.data.transformProto
+import com.chengsheng.cala.htcm.protocol.AppointmentDetail
 import com.chengsheng.cala.htcm.protocol.ExamApponitments
 import io.reactivex.Observable
 
@@ -36,5 +37,13 @@ class ComboRepository {
 
     fun getComboInfoFilters(filters: String, page: String, sortFields: String): Observable<ExamApponitments>? {
         return transformProto(RetrofitHelper.getInstance().comboService.getComboInfoFilters(filters, page, sortFields))
+    }
+
+    /**
+     * 套餐详情
+     * 获取套餐的详细信息
+     * */
+    fun getComboDetail(comboId: String): Observable<AppointmentDetail>? {
+        return transformProto(RetrofitHelper.getInstance().comboService.getComboDetail(comboId))
     }
 }

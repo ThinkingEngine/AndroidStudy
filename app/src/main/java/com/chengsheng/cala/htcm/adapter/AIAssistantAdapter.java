@@ -284,14 +284,14 @@ public class AIAssistantAdapter extends RecyclerView.Adapter<AIAssistantAdapter.
                             notifyDataSetChanged();
                         }
 
-                        baseFragment.showShortToast("已删除");
+                        baseFragment.showShortToast("已关闭");
                         baseFragment.hideLoading();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         baseFragment.hideLoading();
-                        Toast.makeText(context, "删除失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "关闭失败", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

@@ -21,6 +21,7 @@ import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
 import com.chengsheng.cala.htcm.protocol.FamiliesListItem;
 import com.chengsheng.cala.htcm.protocol.childmodelb.UserExamDetail;
+import com.chengsheng.cala.htcm.utils.ActivityUtil;
 import com.chengsheng.cala.htcm.widget.MyExpandableListView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -134,12 +135,14 @@ public class ExamDetailsActivity extends BaseActivity {
                     break;
                 }
                 case GlobalConstant.CHECKED: {
-                    Intent intent = new Intent(ExamDetailsActivity.this, ExamReportDetailActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString(GlobalConstant.EXAM_REPORT_ID, String.valueOf(userExamDetail.getId()));
-                    bundle.putString(GlobalConstant.EXAM_REPORT_NAME, userExamDetail.getName());
-                    intent.putExtras(bundle);
-                    startActivity(intent);
+                    if(userExamDetail.getReport().isIssued()){
+                        Bundle bundle = new Bundle();
+                        bundle.putString(GlobalConstant.EXAM_REPORT_ID, String.valueOf(userExamDetail.getId()));
+                        bundle.putString(GlobalConstant.EXAM_REPORT_NAME, userExamDetail.getName());
+                        ActivityUtil.Companion.startActivity(this,new ExamReportDetailActivity(),bundle );
+                    }else{
+                        showShortToast("你的体检报告还未生成");
+                    }
                     break;
                 }
             }

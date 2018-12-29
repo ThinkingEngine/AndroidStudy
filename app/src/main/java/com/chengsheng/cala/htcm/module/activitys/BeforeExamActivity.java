@@ -1,6 +1,8 @@
 package com.chengsheng.cala.htcm.module.activitys;
 
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,7 +13,9 @@ import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
+import com.chengsheng.cala.htcm.protocol.FamiliesListItem;
 import com.chengsheng.cala.htcm.protocol.childmodelb.BeforeExam;
+import com.chengsheng.cala.htcm.utils.ActivityUtil;
 import com.chengsheng.cala.htcm.utils.FuncUtils;
 import com.chengsheng.cala.htcm.utils.QRCodeUtil;
 import com.chengsheng.cala.htcm.widget.MyRecyclerView;
@@ -82,6 +86,15 @@ public class BeforeExamActivity extends BaseActivity {
 
         userCode.setImageBitmap(QRCodeUtil.createQRImage(beforeExam.getMeta().getExam_customer().getExam_or_registration().getId(),
                 FuncUtils.dip2px(150), FuncUtils.dip2px(150)));
+
+        userCode.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            FamiliesListItem familiesListItem = new FamiliesListItem();
+            familiesListItem.setFullname(beforeExam.getMeta().getExam_customer().getName());
+            familiesListItem.setHealth_card_no(beforeExam.getMeta().getExam_customer().getExam_or_registration().getId());
+            bundle.putSerializable("FAMILIES_INFO", familiesListItem);
+            ActivityUtil.Companion.startActivity(this, new UserCardActivity(), bundle);
+        });
     }
 
     private void getExamBeforeNotice(String examId) {

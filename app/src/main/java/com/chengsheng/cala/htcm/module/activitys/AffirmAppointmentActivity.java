@@ -6,14 +6,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.ArrayMap;
-import android.util.Log;
-import android.view.View;
-import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
@@ -68,7 +63,6 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
     private String comboID;
 
     private HTCMApp app;
-    private ZLoadingDialog loadingDialog;
 
 
     @Override
@@ -84,12 +78,6 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
 
     @Override
     public void initView() {
-        loadingDialog = new ZLoadingDialog(this);
-        loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
-        loadingDialog.setHintText("加载中....");
-        loadingDialog.setLoadingColor(getResources().getColor(R.color.colorPrimary));
-        loadingDialog.setLoadingColor(getResources().getColor(R.color.colorPrimary));
-        loadingDialog.setDialogBackgroundColor(getResources().getColor(R.color.colorText));
 
         CallBackDataAuth.setExamDateInterface(this);
         Bundle bundle = getIntent().getExtras();
@@ -152,8 +140,7 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
         }
 
         NetService service = retrofit.create(NetService.class);
-        loadingDialog.setHintText("加载中......");
-        loadingDialog.show();
+        showLoading();
         Map<String, String> params = new ArrayMap<>();
         params.put("customer_id", String.valueOf(uploadBody.getCustomer_id()));
         params.put("reserve_date", uploadBody.getReserve_date());
@@ -174,17 +161,18 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
                         intent.putExtra("ORDER_ID", String.valueOf(orderID.getOrder_id()));
                         intent.putExtra("ORDER_VAL", FuncUtils.getString("COMBO_CAL", ""));
                         startActivity(intent);
-                        loadingDialog.cancel();
+                        hideLoading();
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        hideLoading();
                         showError(e);
                     }
 
                     @Override
                     public void onComplete() {
-                        loadingDialog.cancel();
+                        hideLoading();
                     }
                 });
     }
@@ -229,7 +217,7 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
         }
 
         service = retrofit.create(NetService.class);
-        loadingDialog.show();
+        showLoading();
         service.getCombonDetail(GlobalConstant.EXAM_PACKAGES + comboId, app.getTokenType() + " " + app.getAccessToken())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -239,12 +227,12 @@ public class AffirmAppointmentActivity extends BaseActivity implements ExamDateI
                         FuncUtils.putString("COMBO", String.valueOf(appointmentDetail.getId()));
                         FuncUtils.putString("COMBO_CAL", appointmentDetail.getPrice());
                         setView(appointmentDetail);
-                        loadingDialog.cancel();
+                        hideLoading();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        loadingDialog.cancel();
+                        hideLoading();
                         showError(e);
                     }
 

@@ -32,6 +32,7 @@ public class AiAssistantActivity extends BaseRefreshActivity {
 
     @Override
     public void getData(int page) {
+
         AIAssistantRepository.Companion.getDefault()
                 .getAIAssistants("0", String.valueOf(page))
                 .subscribe(new DefaultObserver<AssistantList>() {

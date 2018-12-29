@@ -115,4 +115,9 @@ class UserAccountActivity : BaseActivity() {
     fun changeNickNameSuc(event: Any) {
         finish()
     }
+
+    @Subscriber(mode = ThreadMode.MAIN, tag = GlobalConstant.BIND_NEW_MOBILE_SUCCESS)
+    fun changeMobileSuc(event: Any) {
+        finish()
+    }
 }

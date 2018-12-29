@@ -3,6 +3,7 @@ package com.chengsheng.cala.htcm.data.repository
 import com.chengsheng.cala.htcm.data.retrofit.RetrofitHelper
 import com.chengsheng.cala.htcm.data.transformProto
 import com.chengsheng.cala.htcm.protocol.childmodela.UserInfo
+import com.google.gson.JsonObject
 import io.reactivex.Observable
 
 /**
@@ -51,5 +52,49 @@ class UserRepository private constructor() {
             map["avatar_url"] = avatar
         }
         return transformProto(RetrofitHelper.getInstance().userApi.updateUserInfo(map))
+    }
+
+
+    /**
+     * 发送短信验证码
+     * @param type registration,change_phone_number,verification_user_self,change_password,bind_phone_number
+     */
+    fun sendCaptcha(mobile: String, type: String): Observable<JsonObject>? {
+        val map = HashMap<String, String>()
+        map["phone_number"] = mobile
+        map["type"] = type
+        return transformProto(RetrofitHelper.getInstance().userApi.sendCaptcha(map))
+    }
+
+    /**
+     * 验证短信验证码
+     * @param type registration,change_phone_number,verification_user_self,change_password,bind_phone_number
+     */
+    fun verificationCaptcha(code: String, codeId: String, type: String): Observable<Any>? {
+        val map = HashMap<String, String>()
+        map["code"] = code
+        map["code_id"] = codeId
+        map["type"] = type
+        return transformProto(RetrofitHelper.getInstance().userApi.verificationCaptcha(map))
+    }
+
+    /**
+     * 绑定新手机号
+     * @param type 验证类型，old_phone_number|password
+     * @param password 密码 如果验证类型是password，此参数必传
+     * @param newCodeId 新手机号的code_id
+     * @param oldCodeId 如果验证类型是手机号次参数必填，旧手机号的code_id
+     * @param newMobile 新手机号
+     *
+     */
+    fun bindNewMobile(type: String, password: String, newCodeId: String,
+                      oldCodeId: String, newMobile: String): Observable<Any>? {
+        val map = HashMap<String, String>()
+        map["vcerification_type"] = type
+        map["password"] = password
+        map["new_phone_number_verification_code_id"] = newCodeId
+        map["old_phone_number_verification_code_id"] = oldCodeId
+        map["new_phone_number"] = newMobile
+        return transformProto(RetrofitHelper.getInstance().userApi.bindNewMobile(map))
     }
 }

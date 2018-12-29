@@ -129,6 +129,7 @@ public class LoginActivity extends BaseActivity {
                             UserUtil.setAccessToken(data.getAccess_token());
                             UserUtil.setTokenType(data.getToken_type());
                             UserUtil.setMobile(userNameInput);
+                            UserUtil.setPassword(passwordInput);
                             finish();
                         }
 

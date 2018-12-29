@@ -1,7 +1,6 @@
 package com.chengsheng.cala.htcm.utils
 
 import android.os.CountDownTimer
-import android.view.View
 import android.widget.TextView
 import com.chengsheng.cala.htcm.HTCMApplication
 import com.chengsheng.cala.htcm.R
@@ -20,7 +19,6 @@ private var countDownTimer: CountDownTimer? = null
 fun initCaptchaTimer(textView: TextView) {
     countDownTimer = object : CountDownTimer(60000, 1000) {
         override fun onTick(millisUntilFinished: Long) {
-            textView.visibility = View.VISIBLE
             textView.text = (HTCMApplication.appContext.getString(R.string.count_down_time,
                     millisUntilFinished / 1000))
         }

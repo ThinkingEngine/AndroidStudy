@@ -2,6 +2,7 @@ package com.chengsheng.cala.htcm.utils;
 
 import static com.chengsheng.cala.htcm.constant.GlobalConstant.ACCESS_TOKEN;
 import static com.chengsheng.cala.htcm.constant.GlobalConstant.MOBILE;
+import static com.chengsheng.cala.htcm.constant.GlobalConstant.PASSWORD;
 import static com.chengsheng.cala.htcm.constant.GlobalConstant.TOKEN_TYPE;
 
 /**
@@ -51,6 +52,20 @@ public class UserUtil {
      */
     public static String getMobile() {
         return PreferenceUtil.getPrefString(MOBILE, "");
+    }
+
+    /**
+     * 设置登录密码
+     */
+    public static void setPassword(String password) {
+        PreferenceUtil.setPrefString(PASSWORD, password);
+    }
+
+    /**
+     * 获取登录密码
+     */
+    public static String getPassword() {
+        return PreferenceUtil.getPrefString(PASSWORD, "");
     }
 
     /**

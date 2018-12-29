@@ -19,6 +19,7 @@ public class GlobalConstant {
     public static final String ACCESS_TOKEN = "accessToken";
     public static final String TOKEN_TYPE = "tokenType";
     public static final String MOBILE = "mobile";
+    public static final String PASSWORD = "passWord";
 
     /**
      * 更新会员卡信息
@@ -32,6 +33,10 @@ public class GlobalConstant {
      * 昵称修改成功
      */
     public static final String UPDATE_NICKNAME_SUCCESS = "updateNickName";
+    /**
+     * 昵称修改成功
+     */
+    public static final String BIND_NEW_MOBILE_SUCCESS = "bindNewMobileSuc";
 
     public static final String TEST_URL = "http://account.zz-tech.com.cn:85/";
     public static final String API_URL = "http://api.peis-mobile.zz-tech.com.cn:85/api/physical-exam-item/";

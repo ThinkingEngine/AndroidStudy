@@ -63,14 +63,14 @@ class DepositActivity : BaseActivity() {
 //        RxView.clicks(layoutAlipay).subscribe {
 //            ivSelectAlipay.isSelected = true
 //            ivSelectWechat.isSelected = false
-//            payType = PayType.ALIPAY
+//            payType = PayType.PASSWORD
 //        }
 //
         //选择微信支付
         RxView.clicks(layoutWechatPay).subscribe {
             //            ivSelectAlipay.isSelected = false
 //            ivSelectWechat.isSelected = true
-//            payType = PayType.WECHAT
+//            payType = PayType.MSM
             showShortToast("微信支付即将上线，敬请期待")
         }
 

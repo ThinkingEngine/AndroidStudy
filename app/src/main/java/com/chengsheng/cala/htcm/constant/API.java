@@ -16,6 +16,15 @@ public class API {
     /* 获取用户信息 */
     public static final String USER_INFO_URL = ACCOUNT_BASE_URL + "user/account-infos";
 
+    /* 发送和账号相关的短信验证码 */
+    public static final String SEND_ACCOUNT_CAPTCHA = ACCOUNT_BASE_URL + "sms-verification-codes";
+
+    /* 验证短信验证码 */
+    public static final String VERIFICATION_ACCOUNT_CAPTCHA = ACCOUNT_BASE_URL + "sms-verification-codes";
+
+    /* 修改账号手机号 */
+    public static final String BIND_NEW_MOBILE = ACCOUNT_BASE_URL + "user/account-phone-numbers";
+
     /* 修改用户信息 */
     public static final String UPDATE_USER_INFO = ACCOUNT_BASE_URL + "user/account-infos";
 

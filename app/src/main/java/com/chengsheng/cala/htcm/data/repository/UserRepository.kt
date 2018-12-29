@@ -48,9 +48,8 @@ class UserRepository private constructor() {
             map["nickname"] = nickname
         }
         if (avatar.isNotEmpty()) {
-            map["avatar"] = avatar
+            map["avatar_url"] = avatar
         }
         return transformProto(RetrofitHelper.getInstance().userApi.updateUserInfo(map))
     }
-
 }

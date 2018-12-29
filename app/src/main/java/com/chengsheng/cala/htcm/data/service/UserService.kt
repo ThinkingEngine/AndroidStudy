@@ -23,7 +23,7 @@ interface UserService {
     /**
      * 修改用户信息
      */
-    @POST(API.UPDATE_USER_INFO)
+    @PUT(API.UPDATE_USER_INFO)
     @Headers("Authorization:true")
     @FormUrlEncoded
     fun updateUserInfo(@FieldMap map: Map<String, String>): Observable<Response<Any>>

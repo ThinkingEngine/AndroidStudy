@@ -7,108 +7,107 @@
     android:background="@color/colorPageBackground"
     tools:context=".module.activitys.ExamResultUnscrambleActivity">
 
-    <include
-        android:id="@+id/title_header_exam_result_unscramble"
-        layout="@layout/message_header_layout" />
+    <com.chengsheng.cala.htcm.widget.AppTitleBar
+        android:id="@+id/at_exam_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/tips"
-        android:layout_below="@id/title_header_exam_result_unscramble">
+        android:layout_below="@id/at_exam_detail">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/top_container"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_below="@id/title_header_exam_result_unscramble"
-                android:background="@color/colorWhite">
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
 
                 <ImageView
                     android:id="@+id/exam_item_image_mark"
                     android:layout_width="22dp"
                     android:layout_height="23dp"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="14dp"
+                    android:layout_marginStart="14dp"
                     android:src="@mipmap/xin" />
 
                 <TextView
                     android:id="@+id/exam_detail_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="8dp"
-                    android:layout_toRightOf="@id/exam_item_image_mark"
+                    android:layout_marginStart="8dp"
                     android:textColor="@color/colorText"
                     android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
                 <TextView
                     android:id="@+id/exam_abnormal_tips"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="14dp"
+                    android:layout_marginEnd="14dp"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="14sp" />
 
-            </RelativeLayout>
+            </LinearLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/doc_signature_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/top_container"
-                android:background="@color/colorContainerBG">
+                android:background="@color/colorContainerBG"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/doc_result_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="14dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="40dp"
+                    android:layout_margin="14dp"
                     android:textColor="@color/colorText"
                     android:textSize="14sp" />
 
-                <ImageView
-
-                    android:layout_width="81dp"
-                    android:layout_height="29dp"
-                    android:layout_below="@id/doc_result_text"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="14dp"
-                    android:src="@color/colorPrimary" />
-
-                <com.facebook.drawee.view.SimpleDraweeView
-                    android:id="@+id/doc_signature_mark_b"
-                    android:layout_width="81dp"
-                    android:layout_height="29dp"
-                    android:layout_below="@id/doc_result_text"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginRight="14dp"
-                    android:layout_marginBottom="@dimen/dp_10"
-                    fresco:actualImageScaleType="centerCrop"
-                    fresco:backgroundImage="@mipmap/morentouxiang_wode" />
-
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/doc_result_text"
-                    android:layout_marginRight="4dp"
-                    android:layout_toLeftOf="@id/doc_signature_mark_b"/>
-            </RelativeLayout>
+                    android:layout_gravity="end"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="4dp"
+                        android:text="分检医生" />
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/doc_signature_mark_b"
+                        android:layout_width="81dp"
+                        android:layout_height="29dp"
+                        android:layout_marginEnd="14dp"
+                        fresco:actualImageScaleType="centerCrop"
+                        fresco:backgroundImage="@mipmap/morentouxiang_wode" />
+                </LinearLayout>
+            </LinearLayout>
 
             <com.chengsheng.cala.htcm.widget.MyRecyclerView
                 android:id="@+id/exam_detail_type_a"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/doc_signature_container"
                 android:layout_marginStart="14dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="14dp" />
@@ -117,13 +116,14 @@
 
     <TextView
         android:id="@+id/tips"
-        android:layout_width="299dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginEnd="@dimen/dp_16"
         android:layout_marginBottom="10dp"
-        android:text="温馨提示：此次体检结果，仅对本次查体，检查、检验样本负责。
-本报告不能用于二次诊断或其他任何医学判断目的使用。"
+        android:gravity="center"
+        android:text="温馨提示：此次体检结果，仅对本次查体，检查、检验样本负责。本报告不能用于二次诊断或其他任何医学判断目的使用。"
         android:textColor="@color/colorSecText"
-        android:textSize="10dp" />
+        android:textSize="10sp" />
 </RelativeLayout>

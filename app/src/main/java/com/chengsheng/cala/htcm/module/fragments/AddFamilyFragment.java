@@ -47,6 +47,8 @@ import com.zhy.view.flowlayout.TagFlowLayout;
 import com.zyao89.view.zloading.ZLoadingDialog;
 import com.zyao89.view.zloading.Z_TYPE;
 
+import org.simple.eventbus.EventBus;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -509,11 +511,15 @@ public class AddFamilyFragment extends Fragment {
 
     //提交家人信息
     private void commitFamilies(Map<String, String> map) {
-        MemberRepository.Companion.getDefault().addMem(map).subscribe(new DefaultObserver<ResponseBody>() {
+        MemberRepository
+                .Companion.getDefault()
+                .addMem(map)
+                .subscribe(new DefaultObserver<ResponseBody>() {
             @Override
             public void onNext(ResponseBody responseBody) {
                 loadingDialog.cancel();
                 ToastUtil.showShortToast(getContext(),"添加成功");
+                EventBus.getDefault().post("",GlobalConstant.CHANGE_MEM);//发送家庭成员变更通知
 //                CallBackDataAuth.doAuthStateCallBack(true);
                 inputFamiliesTel.setFocusable(true);
                 Bundle bundle = new Bundle();
@@ -533,10 +539,6 @@ public class AddFamilyFragment extends Fragment {
 
             }
         });
-    }
-
-    private void defaultPage(){
-
     }
 
 

@@ -48,16 +48,13 @@ public class ExamResultRecyclerAdapter extends RecyclerView.Adapter<ExamResultRe
         } else {
             viewHolder.examItemStatsExpandable.setText("");
         }
-        viewHolder.examResultContainer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("ExamResult", data);
-                bundle.putString("TYPE", "table_a");
-                Intent intent = new Intent(context, ExamResultUnscrambleActivity.class);
-                intent.putExtra("mesg", bundle);
-                context.startActivity(intent);
-            }
+        viewHolder.examResultContainer.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("ExamResult", data);
+            bundle.putString("TYPE", "table_a");
+            Intent intent = new Intent(context, ExamResultUnscrambleActivity.class);
+            intent.putExtra("mesg", bundle);
+            context.startActivity(intent);
         });
 
         if (i == (datas.size() - 1)) {

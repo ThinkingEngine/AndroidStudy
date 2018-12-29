@@ -6,18 +6,16 @@
     android:layout_height="match_parent"
     android:background="@color/colorPageBackground"
     tools:context=".module.activitys.AffirmAppointmentActivity">
-    <include 
-        android:id="@+id/title_header_affirm_appointment"
+    <com.chengsheng.cala.htcm.widget.AppTitleBar
+        android:id="@+id/at_aff_app"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_alignParentTop="true"
-        layout="@layout/title_bar_type_two_layout"/>
+        android:layout_height="wrap_content"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="49dp"
-        android:layout_below="@id/title_header_affirm_appointment">
+        android:layout_below="@id/at_aff_app">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

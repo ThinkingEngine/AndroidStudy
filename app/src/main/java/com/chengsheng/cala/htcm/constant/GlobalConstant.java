@@ -28,7 +28,10 @@ public class GlobalConstant {
      * 更新智能助理信息
      */
     public static final String UPDATE_AI_ASSISTANT_DATA = "updateAIAssistant";
-
+    /**
+     * 昵称修改成功
+     */
+    public static final String UPDATE_NICKNAME_SUCCESS = "updateNickName";
 
     public static final String TEST_URL = "http://account.zz-tech.com.cn:85/";
     public static final String API_URL = "http://api.peis-mobile.zz-tech.com.cn:85/api/physical-exam-item/";

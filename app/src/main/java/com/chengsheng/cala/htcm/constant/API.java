@@ -10,6 +10,9 @@ import static com.chengsheng.cala.htcm.constant.BaseAPI.SERVICE_BASE_URL;
  */
 public class API {
 
+    /* 用户协议 */
+    public static final String USER_AGREEMENT = SERVICE_BASE_URL + "api/soft-info/agreement";
+
     /* 获取用户信息 */
     public static final String USER_INFO_URL = ACCOUNT_BASE_URL + "user/account-infos";
 

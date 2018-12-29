@@ -30,6 +30,7 @@
         <activity
             android:name=".module.account.LoginActivity"
             android:launchMode="singleTask" />
+        <activity android:name=".module.WebActivity" />
         <activity android:name=".module.activitys.RetrievePWActivity" />
         <!-- 设置 -->
         <activity android:name=".module.activitys.SettingActivity" />
@@ -145,8 +146,14 @@
         <activity android:name=".module.user.card.DeleteMemberCardActivity" />
         <!--编辑家庭-->
         <activity android:name=".module.activitys.EditFamActivity" />
-        <!-- 图片裁剪 -->
-        <activity android:name=".utils.crop.UTCropActivity" />
+        <!-- 修改昵称 -->
+        <activity android:name=".module.user.ChangeNickNameActivity" />
+        <!--密码验证-->
+        <activity android:name=".module.user.PwdVerificationActivity" />
+        <!--短信验证-->
+        <activity android:name=".module.user.MsmVerificationActivity" />
+        <!--更换手机号-->
+        <activity android:name=".module.user.ChangeMobileActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

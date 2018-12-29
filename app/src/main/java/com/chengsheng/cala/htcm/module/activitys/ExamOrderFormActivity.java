@@ -1,6 +1,5 @@
 package com.chengsheng.cala.htcm.module.activitys;
 
-import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -11,18 +10,12 @@ import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.adapter.MainViewPagerAdapter;
 import com.chengsheng.cala.htcm.base.BaseActivity;
 import com.chengsheng.cala.htcm.constant.GlobalConstant;
-import com.chengsheng.cala.htcm.module.fragments.ExamOrderFormFragment;
 import com.chengsheng.cala.htcm.network.MyRetrofit;
 import com.chengsheng.cala.htcm.network.NetService;
 import com.chengsheng.cala.htcm.protocol.FamiliesList;
 import com.chengsheng.cala.htcm.protocol.FamiliesListItem;
 import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
-import com.chengsheng.cala.htcm.utils.MessageEvent;
 import com.chengsheng.cala.htcm.utils.UpdateConditionInterface;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,11 +44,6 @@ public class ExamOrderFormActivity extends BaseActivity implements UpdateConditi
     private void initViews() {
         orderFormSelectHeader = findViewById(R.id.order_form_select_header);
         orderFormFragment = findViewById(R.id.order_form_fragment);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void Event(MessageEvent messageEvent) {
-        boolean isGetFamilies = messageEvent.getFamiliesListsState();
     }
 
     private void initDatas() {
@@ -121,7 +109,6 @@ public class ExamOrderFormActivity extends BaseActivity implements UpdateConditi
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -132,7 +119,6 @@ public class ExamOrderFormActivity extends BaseActivity implements UpdateConditi
     @Override
     public void initView() {
         app = HTCMApp.create(getApplicationContext());
-        EventBus.getDefault().register(this);
         CallBackDataAuth.setUpdateConditionInterface(this);
 
 

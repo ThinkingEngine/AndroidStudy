@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.chengsheng.cala.htcm.widget.AppTitleBar
+        android:id="@+id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="更换手机号" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:background="@null"
+        android:hint="输入新手机"
+        android:inputType="number"
+        android:maxLength="8"
+        android:padding="@dimen/dp_16"
+        android:textColor="#333333"
+        android:textColorHint="#C7C7C7"
+        android:textSize="@dimen/sp_16" />
+
+    <View
+        style="@style/horizontalLineStyle"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/etFindCaptcha"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_16"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="验证码"
+            android:inputType="number"
+            android:maxLength="8"
+            android:padding="@dimen/dp_16"
+            android:textColor="#333333"
+            android:textColorHint="#C7C7C7"
+            android:textSize="@dimen/sp_16" />
+
+        <Button
+            android:id="@+id/btnGetCardCaptcha"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_34"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="@dimen/dp_16"
+            android:background="@drawable/shape_20d3b3_hollow"
+            android:paddingStart="@dimen/dp_6"
+            android:paddingEnd="@dimen/dp_6"
+            android:text="获取验证码"
+            android:textColor="#20D3B3"
+            android:textSize="@dimen/sp_14" />
+    </LinearLayout>
+
+    <View
+        style="@style/horizontalLineStyle"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16" />
+
+    <Button
+        android:id="@+id/btnNextStep"
+        style="@style/BasicButtonStyle"
+        android:layout_margin="@dimen/dp_20"
+        android:text="确认更改" />
+
+</LinearLayout>

@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import com.chengsheng.cala.htcm.R;
 import com.chengsheng.cala.htcm.base.BaseActivity;
+import com.chengsheng.cala.htcm.module.user.PwdVerificationActivity;
 import com.chengsheng.cala.htcm.utils.StringUtils;
 
 /**
@@ -14,9 +15,6 @@ import com.chengsheng.cala.htcm.utils.StringUtils;
  */
 public class ChangePhoneActivity extends BaseActivity {
 
-    private Button changePhone;
-    private TextView phone;
-
     @Override
     public int getLayoutId() {
         return R.layout.activity_change_phone;
@@ -24,10 +22,13 @@ public class ChangePhoneActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        String phoneNum = getIntent().getStringExtra("mobile");
-        changePhone = findViewById(R.id.change_phone_buton);
-        phone = findViewById(R.id.user_phone);
-        phone.setText("您的手机号为" + StringUtils.formatMobile(phoneNum));
+        String mobile = getIntent().getStringExtra("mobile");
+        Button btnChangeMobile = findViewById(R.id.change_phone_buton);
+        TextView tvMobile = findViewById(R.id.user_phone);
+        tvMobile.setText("您的手机号为" + StringUtils.formatMobile(mobile));
+
+        btnChangeMobile.setOnClickListener(view ->
+                startActivity(new PwdVerificationActivity()));
     }
 
     @Override

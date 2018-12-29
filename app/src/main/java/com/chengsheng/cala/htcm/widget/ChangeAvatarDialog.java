@@ -38,7 +38,6 @@ public class ChangeAvatarDialog extends BaseBottomDialog {
                 listener.onChoiceFromGallery();
             }
             dismissDialog();
-
         });
 
         view.findViewById(R.id.tvCancelChange).setOnClickListener(view1 -> {

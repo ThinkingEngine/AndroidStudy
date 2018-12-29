@@ -28,7 +28,6 @@
             android:layout_marginTop="30dp"
             android:src="@mipmap/shouji" />
 
-
         <TextView
             android:id="@+id/user_phone"
             android:layout_width="wrap_content"
@@ -41,10 +40,7 @@
     <Button
         android:id="@+id/change_phone_buton"
         style="@style/BasicButtonStyle"
-        android:layout_height="44dp"
-        android:layout_marginStart="@dimen/dp_30"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="@dimen/dp_30"
+        android:layout_margin="@dimen/dp_30"
         android:text="更换手机号" />
 
 </LinearLayout>

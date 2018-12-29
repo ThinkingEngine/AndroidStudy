@@ -9,6 +9,7 @@ import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.chengsheng.cala.htcm.R
 import com.chengsheng.cala.htcm.base.BaseActivity
+import com.chengsheng.cala.htcm.constant.GlobalConstant
 import com.chengsheng.cala.htcm.data.repository.UserRepository
 import com.chengsheng.cala.htcm.module.activitys.ChangeAvatarActivity
 import com.chengsheng.cala.htcm.module.activitys.ChangePhoneActivity
@@ -28,6 +29,9 @@ import org.simple.eventbus.ThreadMode
 @SuppressLint("CheckResult")
 class UserAccountActivity : BaseActivity() {
 
+    private var isNeedRefreshAvatar = false
+    private var newAvatar: String = ""
+
     override fun getLayoutId(): Int {
         return R.layout.activity_account_setting
     }
@@ -37,7 +41,11 @@ class UserAccountActivity : BaseActivity() {
         stvNickName?.setRightString(userInfo.nickname)
         stvMobile?.setRightString(StringUtils.formatMobile(userInfo.phone_number))
 
-        setAvatar(userInfo.avatar_url)
+        if (userInfo.avatar_url == null || userInfo.avatar_url.isEmpty()) {
+            ivUserAvatar.setImageResource(R.mipmap.morentouxiang_wode)
+        } else {
+            setAvatar(userInfo.avatar_url)
+        }
 
         //修改头像
         RxView.clicks(stvAvatar).subscribe {
@@ -48,7 +56,9 @@ class UserAccountActivity : BaseActivity() {
 
         //修改昵称
         RxView.clicks(stvNickName).subscribe {
-
+            val bundle = Bundle()
+            bundle.putString("oldNickName", userInfo.nickname)
+            startActivity(ChangeNickNameActivity(), bundle)
         }
 
         //修改绑定的手机号
@@ -56,7 +66,6 @@ class UserAccountActivity : BaseActivity() {
             val bundle = Bundle()
             bundle.putString("mobile", userInfo.phone_number)
             startActivity(ChangePhoneActivity(), bundle)
-
         }
     }
 
@@ -77,19 +86,33 @@ class UserAccountActivity : BaseActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (isNeedRefreshAvatar && newAvatar.isNotEmpty()) {
+            showLoading()
+            UserRepository.default?.updateUserInfo("", "", newAvatar)
+                    ?.subscribe({
+
+                        hideLoading()
+                        showShortToast("头像修改成功")
+                        isNeedRefreshAvatar = false
+
+                    }) {
+                        hideLoading()
+                        isNeedRefreshAvatar = false
+                    }
+        }
+    }
+
     @Subscriber(mode = ThreadMode.MAIN, tag = "updateAvatarSuc")
     fun refresh(event: Any) {
-        val newAvatar = event as String
+        isNeedRefreshAvatar = true
+        newAvatar = event as String
         setAvatar(newAvatar)
-        showLoading()
-        UserRepository.default?.updateUserInfo("", "", newAvatar)
-                ?.subscribe({
+    }
 
-                    hideLoading()
-                    showShortToast("头像修改成功")
-                    
-                }) {
-                    hideLoading()
-                }
+    @Subscriber(mode = ThreadMode.MAIN, tag = GlobalConstant.UPDATE_NICKNAME_SUCCESS)
+    fun changeNickNameSuc(event: Any) {
+        finish()
     }
 }

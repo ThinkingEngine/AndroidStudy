@@ -55,8 +55,6 @@ public class ExamReportActivity extends BaseActivity implements ExamReprotListFr
     private Retrofit retrofit;
     private HTCMApp app;
     private String authorization;
-    private ZLoadingDialog loadingDialog;
-
 
     @Override
     public int getLayoutId() {
@@ -67,12 +65,7 @@ public class ExamReportActivity extends BaseActivity implements ExamReprotListFr
     public void initView() {
         app = HTCMApp.create(getApplicationContext());
         authorization = app.getTokenType() + " " + app.getAccessToken();
-        loadingDialog = new ZLoadingDialog(this);
-        loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
-        loadingDialog.setHintText("加载人员...");
-        loadingDialog.setDialogBackgroundColor(getResources().getColor(R.color.colorText));
-        loadingDialog.setLoadingColor(getResources().getColor(R.color.colorPrimary));
-        loadingDialog.setHintTextColor(getResources().getColor(R.color.colorPrimary));
+
         initViews();
         updateFamiliesList();
 
@@ -93,19 +86,9 @@ public class ExamReportActivity extends BaseActivity implements ExamReprotListFr
 
         title.setText("体检报告");
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        back.setOnClickListener(v -> finish());
 
-        noContentsF.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateFamiliesList();
-            }
-        });
+        noContentsF.setOnClickListener(v -> updateFamiliesList());
     }
 
 
@@ -186,14 +169,11 @@ public class ExamReportActivity extends BaseActivity implements ExamReprotListFr
         final View view = tab.getCustomView();
         @SuppressLint("ObjectAnimatorBinding") ObjectAnimator anim = ObjectAnimator.ofFloat(view, "", 1.0f, 1.1f).setDuration(200);
         anim.start();
-        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float cVal = (Float) animation.getAnimatedValue();
-                view.setAlpha(0.5f + (cVal - 1f) * (0.5f / 0.1f));
-                view.setScaleX(cVal);
-                view.setScaleY(cVal);
-            }
+        anim.addUpdateListener(animation -> {
+            float cVal = (Float) animation.getAnimatedValue();
+            view.setAlpha(0.5f + (cVal - 1f) * (0.5f / 0.1f));
+            view.setScaleX(cVal);
+            view.setScaleY(cVal);
         });
     }
 
@@ -201,14 +181,11 @@ public class ExamReportActivity extends BaseActivity implements ExamReprotListFr
         final View view = tab.getCustomView();
         @SuppressLint("ObjectAnimatorBinding") ObjectAnimator anim = ObjectAnimator.ofFloat(view, "", 1.0f, 0.9f).setDuration(200);
         anim.start();
-        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float cVal = (Float) animation.getAnimatedValue();
-                view.setAlpha(1f - (1f - cVal) * (0.5f / 0.1f));
-                view.setScaleX(cVal);
-                view.setScaleY(cVal);
-            }
+        anim.addUpdateListener(animation -> {
+            float cVal = (Float) animation.getAnimatedValue();
+            view.setAlpha(1f - (1f - cVal) * (0.5f / 0.1f));
+            view.setScaleX(cVal);
+            view.setScaleY(cVal);
         });
     }
 
@@ -219,14 +196,14 @@ public class ExamReportActivity extends BaseActivity implements ExamReprotListFr
         }
 
         NetService service = retrofit.create(NetService.class);
-        loadingDialog.show();
+        showLoading();
         service.getFamiliesList(authorization)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableObserver<FamiliesList>() {
                     @Override
                     public void onNext(FamiliesList familiesList) {
-                        loadingDialog.cancel();
+                        hideLoading();
                         if (!familiesList.getItems().isEmpty()) {
                             noFamiliesContent.setVisibility(View.INVISIBLE);
                             initValue(familiesList.getItems());
@@ -238,15 +215,14 @@ public class ExamReportActivity extends BaseActivity implements ExamReprotListFr
 
                     @Override
                     public void onError(Throwable e) {
-                        loadingDialog.cancel();
+                        hideLoading();
                         noFamiliesContent.setVisibility(View.VISIBLE);
                         Toast.makeText(ExamReportActivity.this, "当前没有有报告的家人!", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onComplete() {
-                        loadingDialog.cancel();
-
+                        hideLoading();
                     }
                 });
 

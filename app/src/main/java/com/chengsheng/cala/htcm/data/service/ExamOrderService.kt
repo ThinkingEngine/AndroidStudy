@@ -1,6 +1,7 @@
 package com.chengsheng.cala.htcm.data.service
 
 import com.chengsheng.cala.htcm.constant.API
+import com.chengsheng.cala.htcm.protocol.OrderID
 import com.chengsheng.cala.htcm.protocol.childmodelb.ExamOrder
 import com.chengsheng.cala.htcm.protocol.childmodelb.ExamOrderDetail
 import com.chengsheng.cala.htcm.protocol.childmodelb.UserExamDetail
@@ -43,5 +44,19 @@ interface ExamOrderService {
     @GET(API.ORDERS)
     @Headers("Authorization:true")
     fun getOrders(@Path("order_id") orderID: String): Observable<Response<ExamOrderDetail>>
+
+    /**
+     * 体检订单>预约>预约订单
+     *
+     * 用户提交订单到服务器
+     *
+     * 提交数据体 "customer_id":186,
+                  "reserve_date":"2019-10-12",
+                  "exam_package_id":2
+     * */
+    @POST(API.PUT_ORDER)
+    @FormUrlEncoded
+    @Headers("Authorization:true")
+    fun putOrder(@FieldMap map: Map<String, String>): Observable<Response<OrderID>>
 
 }

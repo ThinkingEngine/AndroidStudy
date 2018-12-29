@@ -73,23 +73,20 @@ public class ExamReportRecyclerAdapter extends RecyclerView.Adapter<ExamReportRe
             viewHolder.examReportDate.setText(data.getIssued_date());
             viewHolder.examReportNum.setText(data.getId());
 
-            viewHolder.reportRadio.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!viewHolder.reportRadio.isSelected()) {
-                        if (count < 2) {
-                            count++;
-                            viewHolder.reportRadio.setSelected(true);
-                            exams.add(String.valueOf(data.getOrderId()));
-                            setReports(data,true);
-                        }
-                    } else {
-                        count--;
-                        viewHolder.reportRadio.setSelected(false);
-                        setReports(data,false);
+            viewHolder.reportRadio.setOnClickListener(v -> {
+                if (!viewHolder.reportRadio.isSelected()) {
+                    if (count < 2) {
+                        count++;
+                        viewHolder.reportRadio.setSelected(true);
+                        exams.add(String.valueOf(data.getOrderId()));
+                        setReports(data,true);
                     }
-
+                } else {
+                    count--;
+                    viewHolder.reportRadio.setSelected(false);
+                    setReports(data,false);
                 }
+
             });
 
 
@@ -101,17 +98,13 @@ public class ExamReportRecyclerAdapter extends RecyclerView.Adapter<ExamReportRe
                 viewHolder.reportRadio.setSelected(false);
                 viewHolder.reportDetail.setVisibility(View.VISIBLE);
             }
-            viewHolder.reportDetail.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(context, "体检报告细节", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(context, ExamReportDetailActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString(GlobalConstant.EXAM_REPORT_ID, String.valueOf(data.getOrderId()));
-                    bundle.putString(GlobalConstant.EXAM_REPORT_NAME, data.getName());
-                    intent.putExtras(bundle);
-                    context.startActivity(intent);
-                }
+            viewHolder.reportDetail.setOnClickListener(v -> {
+                Intent intent = new Intent(context, ExamReportDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString(GlobalConstant.EXAM_REPORT_ID, String.valueOf(data.getOrderId()));
+                bundle.putString(GlobalConstant.EXAM_REPORT_NAME, data.getName());
+                intent.putExtras(bundle);
+                context.startActivity(intent);
             });
         }
 

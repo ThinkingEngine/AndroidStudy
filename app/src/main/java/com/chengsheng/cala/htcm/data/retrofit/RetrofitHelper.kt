@@ -144,4 +144,7 @@ class RetrofitHelper private constructor() {
     //消息服务
     var messageService = httpCreate(Message::class.java)
 
+    //体检报告
+    var examReportService = httpCreate(ExamReport::class.java)
+
 }

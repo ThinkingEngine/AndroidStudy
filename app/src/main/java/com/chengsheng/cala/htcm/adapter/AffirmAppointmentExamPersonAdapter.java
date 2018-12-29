@@ -14,10 +14,13 @@ import android.widget.TextView;
 
 import com.chengsheng.cala.htcm.R;
 
+import com.chengsheng.cala.htcm.constant.GlobalConstant;
 import com.chengsheng.cala.htcm.protocol.FamiliesListItem;
 import com.chengsheng.cala.htcm.utils.CallBackDataAuth;
 import com.chengsheng.cala.htcm.module.activitys.FamilyManageActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
+
+import org.simple.eventbus.EventBus;
 
 import java.util.List;
 
@@ -25,6 +28,8 @@ public class AffirmAppointmentExamPersonAdapter extends RecyclerView.Adapter<Aff
 
     private Context context;
     private List<FamiliesListItem> datas;
+
+    private boolean select = false;//用户选择标签
 
 
     public AffirmAppointmentExamPersonAdapter(Context context, List<FamiliesListItem> datas) {
@@ -55,37 +60,41 @@ public class AffirmAppointmentExamPersonAdapter extends RecyclerView.Adapter<Aff
             viewHolder.familiesMarkAppointment.setText(info.getOwner_relationship());
 
 
+            if(info.isIs_default()){
+                if(!select){
+                    EventBus.getDefault().post(info.getId(),GlobalConstant.BOARD_EXAM_ID);
+                    viewHolder.buttonSelectFamilies.setSelected(true);
+                }
+            }
+
             if (info.isIs_select()) {
                 viewHolder.buttonSelectFamilies.setSelected(true);
             } else {
                 viewHolder.buttonSelectFamilies.setSelected(false);
             }
-            viewHolder.appointmentAddFamiliesBg.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!viewHolder.buttonSelectFamilies.isSelected()) {
-                        viewHolder.buttonSelectFamilies.setSelected(true);
-                        CallBackDataAuth.doExamDateInterface(info.getId());
-                        for (int i = 0; i < datas.size(); i++) {
-                            if (datas.get(i).getId() != info.getId()) {
-                                datas.get(i).setIs_select(false);
-                                notifyItemChanged(i);
-                            }
+            viewHolder.appointmentAddFamiliesBg.setOnClickListener(v -> {
+                select = true;
+                if (!viewHolder.buttonSelectFamilies.isSelected()) {
+                    viewHolder.buttonSelectFamilies.setSelected(true);
+                    EventBus.getDefault().post(info.getId(),GlobalConstant.BOARD_EXAM_ID);
+//                    CallBackDataAuth.doExamDateInterface(info.getId());
+                    for (int i1 = 0; i1 < datas.size(); i1++) {
+                        if (datas.get(i1).getId() != info.getId()) {
+                            datas.get(i1).setIs_select(false);
+                            notifyItemChanged(i1);
                         }
-
                     }
+
                 }
             });
 
 
         } else {
-            viewHolder.addFamiliesBox.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, FamilyManageActivity.class);
-                    intent.putExtra("ADD_MARK", true);
-                    context.startActivity(intent);
-                }
+            //添加家人
+            viewHolder.addFamiliesBox.setOnClickListener(v -> {
+                Intent intent = new Intent(context, FamilyManageActivity.class);
+                intent.putExtra("ADD_MARK", true);
+                context.startActivity(intent);
             });
         }
     }

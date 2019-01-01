@@ -8,9 +8,10 @@
     android:background="@color/colorPageBackground"
     tools:context=".module.fragments.AddFamilyFragment">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/add_item_a"
@@ -70,13 +71,13 @@
             <EditText
                 android:id="@+id/input_families_name"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="77dp"
+                android:layout_marginStart="77dp"
                 android:background="@null"
+                android:hint="请输入名字"
                 android:inputType="text"
                 android:maxLength="16"
-                android:hint="请输入名字"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -129,7 +130,6 @@
             android:id="@+id/add_item_d"
             android:layout_width="match_parent"
             android:layout_height="44dp"
-            android:layout_below="@id/add_item_c"
             android:background="@drawable/has_bottom_line_item_bg"
             android:orientation="horizontal">
 
@@ -156,9 +156,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-                android:gravity="center_vertical"
-                android:layout_marginLeft="77dp"
+                android:layout_marginStart="77dp"
                 android:background="@null"
+                android:gravity="center_vertical"
                 android:hint="请选择入年龄"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -185,7 +185,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="55dp"
+                android:layout_marginStart="55dp"
                 android:background="@null"
                 android:hint="请输入身份证号"
                 android:inputType="number"
@@ -223,9 +223,9 @@
             <EditText
                 android:id="@+id/input_families_tel"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="62dp"
+                android:layout_marginStart="62dp"
                 android:background="@null"
                 android:hint="此号码将作为体检时登记号码"
                 android:inputType="phone"
@@ -236,7 +236,6 @@
             android:id="@+id/add_item_g"
             android:layout_width="match_parent"
             android:layout_height="44dp"
-            android:layout_below="@id/add_item_f"
             android:background="@color/colorWhite"
             android:orientation="horizontal">
 
@@ -253,7 +252,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="2dp"
+                android:layout_marginStart="2dp"
                 android:gravity="center"
                 android:text="*"
                 android:textColor="@color/colorPrimaryDark" />
@@ -263,7 +262,7 @@
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="62dp"
+                android:layout_marginStart="62dp"
                 android:background="@null"
                 android:hint="请输入验证码"
                 android:inputType="number"
@@ -275,7 +274,7 @@
                 android:layout_width="78dp"
                 android:layout_height="26dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:background="@drawable/code_button_bg"
                 android:text="获取验证码"
                 android:textColor="@color/colorPrimary"
@@ -306,8 +305,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="2dp"
-                android:layout_toRightOf="@id/position_a"
                 android:layout_marginTop="16dp"
+                android:layout_toRightOf="@id/position_a"
                 android:gravity="center"
                 android:text="*"
                 android:textColor="@color/colorPrimaryDark" />
@@ -358,15 +357,13 @@
                     android:textSize="12sp" />
             </LinearLayout>
 
-
         </RelativeLayout>
 
         <Button
             android:id="@+id/commit_families_info_button"
             android:layout_width="311dp"
             android:layout_height="44dp"
-            android:layout_below="@id/add_item_h"
-            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/login_button_bg"
@@ -377,12 +374,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/commit_families_info_button"
-            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="33dp"
             android:layout_marginBottom="20dp"
             android:text="温馨提示：为了保证你顺利的体检和获取报告，请填写准确信息"
             android:textSize="10sp" />
-    </RelativeLayout>
+    </LinearLayout>
 
 </ScrollView>

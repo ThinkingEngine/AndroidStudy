@@ -136,13 +136,13 @@ public class AddFamilyFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        loadingDialog = new ZLoadingDialog(getContext());
-        loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
-        loadingDialog.setHintText("请求中....");
-        loadingDialog.setDialogBackgroundColor(getContext().getResources().getColor(R.color.colorText));
-        loadingDialog.setLoadingColor(getContext().getResources().getColor(R.color.colorPrimary));
-        loadingDialog.setHintTextColor(getContext().getResources().getColor(R.color.colorPrimary));
-        myRetrofit = MyRetrofit.createInstance();
+//        loadingDialog = new ZLoadingDialog(getContext());
+//        loadingDialog.setLoadingBuilder(Z_TYPE.DOUBLE_CIRCLE);
+//        loadingDialog.setHintText("请求中....");
+//        loadingDialog.setDialogBackgroundColor(getContext().getResources().getColor(R.color.colorText));
+//        loadingDialog.setLoadingColor(getContext().getResources().getColor(R.color.colorPrimary));
+//        loadingDialog.setHintTextColor(getContext().getResources().getColor(R.color.colorPrimary));
+//        myRetrofit = MyRetrofit.createInstance();
     }
 
     @Override
@@ -169,11 +169,12 @@ public class AddFamilyFragment extends Fragment {
             if (calendar == null) {
                 calendar = Calendar.getInstance();
             }
-            DatePickerDialog timePickerDialog = new DatePickerDialog(getContext(), R.style.Theme_AppCompat_DayNight_Dialog_Alert, (view, year, month, dayOfMonth) -> {
+            DatePickerDialog timePickerDialog = new DatePickerDialog(getContext(),
+                    R.style.Theme_AppCompat_DayNight_Dialog_Alert, (view, year, month, dayOfMonth) -> {
                 String current = FuncUtils.getCurrentTimeDay();
                 String selectDate = year + "-" + (month + 1) + "-" + dayOfMonth;
                 if (FuncUtils.isDate2Bigger(current, selectDate)) {
-                    Toast.makeText(getContext(), "出生日期选择有误！请重新选择", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "出生日期选择有误 请重新选择", Toast.LENGTH_SHORT).show();
                     inputFamiliesAge.setText("");
                 } else {
                     inputFamiliesAge.setText(selectDate);
@@ -190,11 +191,11 @@ public class AddFamilyFragment extends Fragment {
         getCode.setOnClickListener(v -> {
             final String phone = inputFamiliesTel.getText().toString();
             if (phone == null) {
-                Toast.makeText(getContext(), "手机号码不能为空!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "手机号码不能为空", Toast.LENGTH_SHORT).show();
             } else if (!FuncUtils.isMobileNO(phone)) {
-                Toast.makeText(getContext(), "请输入正确的手机号码!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
             } else if (phone.equals(phoneHasCode)) {
-                Toast.makeText(getContext(), "当前号码已验证!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "当前号码已验证", Toast.LENGTH_SHORT).show();
             } else {
                 inputFamiliesTel.setFocusable(false);
                 getCodeFromNet(phone);
@@ -204,15 +205,15 @@ public class AddFamilyFragment extends Fragment {
         //提交家人信息。
         commitFamiliesInfoButton.setOnClickListener(v -> {
             if (inputFamiliesName.getText().toString().equals("")) {
-                Toast.makeText(getContext(), "请输入姓名!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "请输入姓名", Toast.LENGTH_SHORT).show();
             } else if (inputFamiliesTel.getText().toString().equals("")) {
-                Toast.makeText(getContext(), "电话号码不能为空!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "电话号码不能为空", Toast.LENGTH_SHORT).show();
             } else if (inputFamiliesAge.getText().toString().equals("")) {
-                Toast.makeText(getContext(), "您还未确认你的年龄!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "您还未确认你的年龄", Toast.LENGTH_SHORT).show();
             } else if (!inputFamiliesTel.getText().toString().equals("") && !FuncUtils.isMobileNO(inputFamiliesTel.getText().toString())) {
-                Toast.makeText(getContext(), "请输入正确的电话号码!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "请输入正确的电话号码", Toast.LENGTH_SHORT).show();
             } else if (inputFamiliesCode.getText().toString().equals("")) {
-                Toast.makeText(getContext(), "手机验证码不能为空!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "手机验证码不能为空", Toast.LENGTH_SHORT).show();
             } else if (uuid.equals("") || uuid == null) {
                 Toast.makeText(getContext(), "手机号码验证异常!请重新验证", Toast.LENGTH_SHORT).show();
             } else {
@@ -252,7 +253,7 @@ public class AddFamilyFragment extends Fragment {
                                 public void onError(Throwable e) {
                                     loadingDialog.cancel();
                                     Log.e("UP", "上传图片失败:" + e);
-                                    Toast.makeText(getContext(), "上传图片失败！", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getContext(), "上传图片失败", Toast.LENGTH_SHORT).show();
                                 }
 
                                 @Override
